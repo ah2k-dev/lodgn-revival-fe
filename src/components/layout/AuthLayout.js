@@ -7,8 +7,8 @@ const AuthLayout = () => {
       <Col span={11} className="auth-layout-left">
         <Outlet />
       </Col>
-      <Col span={13} className="auth-layout-right">
-
+      <Col span={13} className="auth-layout-right d-md-block d-none">
+        
       </Col>
     </Row>
   );

@@ -11,13 +11,14 @@ import {
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { clearErrors, signup, login } from "../actions/authActions";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Auth = () => {
   const [active, setActive] = useState("login");
   const [emailVerify, setEmailVerify] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const { loading, error, isAuthenticated } = useSelector(
     (state) => state.auth
   );
@@ -61,7 +62,7 @@ const Auth = () => {
   return (
     <div className="auth-container">
       <div className="auth-inner">
-        <Typography.Title level={3}>Login or Sign up</Typography.Title>
+        <Typography.Title level={5} className='text-green'>Log in or sign up to book</Typography.Title>
         <Row className="auth-form">
           <Form
             ref={formRef}
@@ -74,6 +75,7 @@ const Auth = () => {
           >
             {active == "signup" && (
               <Col span={20}>
+                <label htmlFor="name">User-name</label>
                 <Form.Item
                   name="name"
                   rules={[
@@ -89,6 +91,7 @@ const Auth = () => {
               </Col>
             )}
             <Col span={20}>
+            <label htmlFor="email">E-mail</label>
               <Form.Item
                 name="email"
                 rules={[
@@ -103,6 +106,7 @@ const Auth = () => {
               </Form.Item>
             </Col>
             <Col span={20}>
+            <label htmlFor="password">Password</label>
               <Form.Item
                 name="password"
                 rules={[
@@ -117,7 +121,7 @@ const Auth = () => {
                 <Input type="password" placeholder="Password" />
               </Form.Item>
             </Col>
-            <Col span={20} className="email-senders">
+            {/* <Col span={20} className="email-senders">
               <Form.Item>
                 {emailVerify && (
                   <a className="verify-email" onClick={()=> navigate('/auth/requestToken')}>Request email token</a>
@@ -126,8 +130,8 @@ const Auth = () => {
                   <a className="forgot-password" onClick={()=> navigate('/auth/forgot-password')}>Forgot password?</a>
                 )}
               </Form.Item>
-            </Col>
-            <Col span={20}>
+            </Col> */}
+            <Col span={20} className='mt-4'>
               <Form.Item>
                 <div className="auth-buttons">
                   {active == "login" ? (
@@ -138,7 +142,7 @@ const Auth = () => {
                       loading={loading}
                       // htmlType="submit"
                     >
-                      Login
+                      Log - in
                     </Button>
                   ) : (
                     <Button
@@ -148,7 +152,7 @@ const Auth = () => {
                         setActive("login");
                       }}
                     >
-                      Login
+                      Log - in
                     </Button>
                   )}
                   {active == "signup" ? (
@@ -158,7 +162,7 @@ const Auth = () => {
                       onClick={handleSignUp}
                       loading={loading}
                     >
-                      SignUp
+                      Sign - Up
                     </Button>
                   ) : (
                     <Button
@@ -168,7 +172,7 @@ const Auth = () => {
                         setActive("signup");
                       }}
                     >
-                      SignUp
+                      Sign - Up
                     </Button>
                   )}
                 </div>
@@ -180,6 +184,12 @@ const Auth = () => {
             <Button className="btnGoogle">
               <img src="/assets/icons/google.png" alt="google" />{" "}
               <span>Continue with Google</span>
+            </Button>
+          </Col>
+          <Col span={20}>
+            <Button className="btnGoogle mt-4">
+              <img src="/assets/icons/apple.png" alt="apple" />{" "}
+              <span>Continue with Apple</span>
             </Button>
           </Col>
         </Row>

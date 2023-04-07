@@ -1,10 +1,119 @@
 .header-container {
-  max-height: 80px;
+  /* max-height: 80px; */
   min-height: 60px;
-  height: 10vh;
+  /* height: 10vh; */
   box-shadow: 0px 5px 5px -5px rgba(0, 0, 0, 0.75);
-  padding: 10px 30px;
+  padding: 28px 30px 20px;
 }
+
+.header-middle {
+  display: flex;
+  left: 0;
+  min-width: 100%;
+  position: absolute;
+  justify-content: center;
+  align-items: center;
+}
+
+.header-middle .search-bar {
+  display: grid;
+  /* gap: 5px; */
+  grid-template-columns: 35% 23% 29%;
+  border-radius: 50px;
+  box-shadow: 0px 4px 4px 0px #00000040;
+  border: 1px solid #D1D1D1;
+  padding: 8px 5px;
+}
+
+.header-middle .search-bar .search-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  background-color: #48AF78;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  right: 5px;
+  margin-top: 5px;
+}
+
+/* .header-middle .search-bar .search-icon svg {
+  width: 100%;
+} */
+
+.header-middle .search-bar span {
+  padding: 0 8px;
+  cursor: pointer;
+}
+
+.header-middle .search-bar .date {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-left: 1px solid #d9d9d9;
+  border-right: 1px solid #d9d9d9;
+}
+
+.header-middle .search-bar .ant-picker.ant-picker-range {
+  position: absolute;
+  top: 4px;
+  width: 50px;
+  opacity: 0;
+}
+
+.header-middle .search-bar .rooms-picker {
+  border-radius: 25px;
+}
+
+.header-middle .search-bar .rooms-picker > div {
+  padding: 15px 0;
+  border-bottom: 1px solid #000000C2;
+}
+
+.header-middle .search-bar .rooms-picker > div:last-child {
+  border-bottom: none;
+  padding: 25px 0 5px;
+}
+
+.header-middle .search-bar .rooms-picker .room-details h4 {
+  font-size: 1rem;
+  line-height: 1;
+  margin: 0;
+}
+
+.header-middle .search-bar .rooms-picker .room-details span {
+  font-size: .75rem;
+  padding: 0;
+}
+
+.header-middle .search-bar .rooms-picker .room-counter span {
+  width: 25px;
+  height: 25px;
+}
+
+.header-middle input {
+  width: 100%;
+}
+
+.header-middle input,
+.header-middle span {
+  border: none;
+  color: black;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  font-size: 1rem;
+  outline: none;
+}
+
+.header-middle input::placeholder {
+  color: black;
+}
+
+/* 
+.header-middle input {
+
+} */
 
 .header-right {
   display: flex !important;
@@ -15,3 +124,4 @@
   font-size: 25px;
   color: black;
 }
+

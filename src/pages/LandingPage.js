@@ -1,7 +1,12 @@
 import React from "react";
+import map from '../assets/images/map.jpg'
 
 const LandingPage = () => {
-  return <div>LandingPage</div>;
+  return (
+    <div className="landing-page">
+      <img src={map} />
+    </div>
+  );
 };
 
 export default LandingPage;

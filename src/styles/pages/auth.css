@@ -23,15 +23,18 @@
 
 .auth-buttons {
   display: flex;
+  gap: 10px;
   justify-content: space-between;
 }
 
 .authBtn {
   height: 40px !important;
+  border-color: #48AC78 !important;
   width: 150px;
 }
 
 .activeBtn {
+  background-color: #48AC78 !important;
   width: 200px !important;
 }
 
@@ -58,4 +61,31 @@
 .verify-email:hover {
   cursor: pointer;
   color: black;
+}
+
+.text-green {
+  color: #8CA094 !important;
+}
+
+.ant-divider-horizontal {
+  min-width: 83% !important;
+  width: 83% !important;
+  margin-top: -10px;
+}
+
+.ant-divider-horizontal.ant-divider-with-text::before, 
+.ant-divider-horizontal.ant-divider-with-text::after {
+  top: 0 !important;
+  border-color: black;
+  border-top: 1px solid black !important;
+}
+
+.ant-form-item {
+  margin-bottom: 14px !important;
+}
+
+.auth-inner label {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  margin-bottom: 5px
 }
