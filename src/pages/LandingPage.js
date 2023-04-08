@@ -1,11 +1,10 @@
 import React from "react";
-import DashboardButton from "../components/DasboardButton";
+import map from '../assets/images/map.jpg'
 
 const LandingPage = () => {
   return (
-    <div>
-      {/* <DashboardButton /> */}
-      LandingPage
+    <div className="landing-page">
+      <img src={map} />
     </div>
   );
 };

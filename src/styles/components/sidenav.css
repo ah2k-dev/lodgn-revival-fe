@@ -1,0 +1,35 @@
+.sideNav {
+    min-height: 100vh;
+    min-width: 20vw;
+    width: 20vw;
+    font-family: 'Poppins', sans-serif;
+    z-index: 10;
+}
+
+.sideNav .sideNavLinks {
+    min-height: 40px;
+    border-bottom: 1px solid #0000004A;
+    list-style: none;
+    font-weight: 600;
+    font-size: 1.15rem;
+}
+
+.sideNav .sideNavLinks a {
+    color: #494949;
+    transition: all .5s;
+}
+
+.sideNav .sideNavLinks a:hover {
+    color: #72AA83;
+}
+
+.sideNav .sideNavLinks a.active {
+    color: #72AA83;
+}
+
+.logoutBtn {
+    background: linear-gradient(180deg, #48AF78 0%, #42996B 100%);
+    border-radius: 4px;
+    font-weight: 600;
+    min-height: 40px;
+}

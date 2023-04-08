@@ -1,94 +1,105 @@
-import {
-  Button,
-  Col,
-  Layout,
-  message,
-  Row,
-  Typography,
-  Dropdown,
-  Menu,
-} from "antd";
-import React, { useEffect } from "react";
+import { Button, Col, Layout, message, Row, Typography } from "antd";
+import React, { useEffect, useState } from "react";
 import { useAuth } from "../../hooks/auth";
 import { useDispatch, useSelector } from "react-redux";
 import { clearErrors, logout } from "../../actions/authActions";
 import { FaUserAlt } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import logo from '../../assets/images/LODGN.svg'
+import { DatePicker, Space } from 'antd';
+import RoomPicker from "./RoomPicker";
+
+const { RangePicker } = DatePicker;
 
 const Header = () => {
+
+  const [showRoomPicker, setShowRoomPicker] = useState(false);
+
   const auth = useAuth();
+
   const navigate = useNavigate();
+
   const dispatch = useDispatch();
-  const { user, isAuthenticated } = useSelector((state) => state.auth);
-  // const items = [
-  //   {
-  //     key: "1",
-  //     label: (
-  //       <a
-  //         onClick={() => {
-  //           // dispatch(logout());
-  //           // navigate("/auth");
-  //         }}
-  //       >
-  //         Settings
-  //       </a>
-  //     ),
-  //   },
-  //   {
-  //     key: "2",
-  //     label: (
-  //       <a
-  //         onClick={() => {
-  //           // dispatch(logout());
-  //           // navigate("/auth");
-  //         }}
-  //       >
-  //         Logout
-  //       </a>
-  //     ),
-  //   },
-  // ];
+
+  // const { error } = useSelector((state) => state.auth);
+
+  const location = useLocation();
+
+  const jobDetails = location.state;
 
   return (
     <Row className="header-container" justify="space-between" align="middle">
       <Col span={7} className="header-left">
-        <Typography.Title level={3}>{"{App logo}"}</Typography.Title>
+        <img src={logo} width={90} />
       </Col>
-      <Col span={7} className="header-middle"></Col>
-      <Col span={7} className="header-right">
-        {auth ? (
-          <>
-            {/* <Dropdown
-              overlay={
-                <Menu>
-                  {items.map((item) => (
-                    <Menu.Item key={item.key}>{item.label}</Menu.Item>
-                  ))}
-                </Menu>
-              }
-              trigger={["click"]}
-              placement="bottomLeft"
-            >
-              <a onClick={(e) => e.preventDefault()}>
-                <FaUserAlt className="header-icons" />
-              </a>
-            </Dropdown> */}
-            <a
-              onClick={() =>
-                isAuthenticated && user.userData.role == "admin"
-                  ? navigate("/dashboard/admin")
-                  : navigate("/dashboard/user")
-              }
-            >
-              <FaUserAlt className="header-icons" />
-            </a>
-          </>
+      {location.pathname === '/' ? <div className="header-middle">
+        <Col span={7} className="search-bar">
+          <span>
+            <input type="search" placeholder="Job Location" />
+          </span>
+          <span>
+            <span className="date">Dates</span>
+            <RangePicker />
+          </span>
+          <span onClick={() => setShowRoomPicker(!showRoomPicker)} >
+            Add rooms
+            {showRoomPicker && <div className="position-absolute w-100 mt-3">
+              <RoomPicker singleRooms={0} doubleRooms={0} animals={0} />
+              </div>}
+          </span>
+          <span className="search-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1} stroke="white">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+            </svg>
+          </span>
+        </Col>
+      </div> : null}
+      {location.pathname === '/auth' ? <Col span={14} className="header-right details">
+        <div className='detail pl-0'>
+          <span className='title'>
+            {jobDetails.location}
+          </span>
+          <span className='description'>
+            {jobDetails.location_detail}
+          </span>
+        </div>
+        <div className='detail flex'>
+          <div>
+            <span className='title'>
+              {jobDetails.start_date}
+            </span>
+            <span className='description'>
+              {jobDetails.start_date_month}
+            </span>
+          </div>
+          <span className='title'>
+            -
+          </span>
+          <div>
+            <span className='title'>
+              {jobDetails.end_date}
+            </span>
+            <span className='description'>
+              {jobDetails.end_date_month}
+            </span>
+          </div>
+        </div>
+        <div className='detail'>
+          <span className='title'>
+            {jobDetails.no_of_rooms > 1 ? jobDetails.no_of_rooms + ' Rooms' : jobDetails.no_of_rooms + ' Room'}
+          </span>
+          <span className='description'>
+            {jobDetails.no_of_single_rooms > 0 ? jobDetails.no_of_single_rooms + ' Singles' : null} {jobDetails.no_of_double_rooms > 0 ? ', ' + jobDetails.no_of_double_rooms + ' Doubles' : null}
+          </span>
+        </div>
+        {/* {auth ? (
+          <></>
         ) : (
           <a onClick={() => navigate("/auth")}>
             <FaUserAlt className="header-icons" />
           </a>
-        )}
-      </Col>
+        )} */}
+      </Col> : null}
     </Row>
   );
 };

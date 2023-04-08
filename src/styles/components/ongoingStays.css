@@ -1,0 +1,38 @@
+.haeding-green {
+    color: #5BA343 !important;
+}
+
+.green-span {
+    color: #5BA343 !important;
+}
+
+.update-btn {
+    color: #959595;
+    background: #FFF9F9;
+    border: 1px solid rgba(0, 0, 0, 0.22);
+    box-shadow: inset -1px 1px 4px rgba(0, 0, 0, 0.11);
+    border-radius: 10px;
+}
+
+.rebook-btn {
+    background: #85BE9A;
+    border-radius: 10px;
+}
+
+.update-note-span {
+    color: #959595;
+}
+
+.confirm-changes-btn {
+    background-color: #4FB27C;
+}
+
+.updateDate {
+    font-size: 1rem;
+    border-radius: 14px;
+    cursor: pointer;
+}
+
+.updateDate .ant-picker-range {
+    opacity: 0;
+}

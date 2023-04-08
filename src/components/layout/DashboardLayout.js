@@ -1,13 +1,16 @@
-import { Col, Row } from 'antd'
+import { Col, Divider, Row } from 'antd'
 import React from 'react'
-import { Outlet } from 'react-router-dom'
+import { Outlet, useLocation } from 'react-router-dom'
 import Sidebar from './Sidebar'
 const DashboardLayout = () => {
+
+  const location = useLocation();
+
   return (
-    <Row gutter={[16,16]}>
-        <Col span={5}><Sidebar /></Col>
-        <Col span={18}><Outlet/></Col>
-    </Row>
+    <div className='d-flex dashboard-layout'>
+      { location.pathname !== '/dashboard/user/payment' && <div className='px-0'><Sidebar/></div> }
+      <div className={location.pathname !== '/dashboard/user/payment' ? 'ms-auto dashboard' : 'w-100 dashboard'}><Outlet/></div>
+    </div>
   )
 }
 

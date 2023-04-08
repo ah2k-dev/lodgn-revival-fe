@@ -1,0 +1,31 @@
+.hotel-img {
+    min-width: 320px;
+    min-height: 200px;
+    background-color: #F5F5F5;
+    border-radius: 20px;
+}
+
+.hotel-img span {
+    font-weight: 600;
+    color: #5BA343;
+}
+
+.hotel-name {
+    line-height: 1;
+    margin-bottom: 0;
+    color: #5BA343;
+}
+
+.hotel-address {
+    color: #959595;
+}
+
+.rare-badge {
+    background-color: #D94545;
+    border-radius: 6px;
+}
+
+.total {
+    color: #5BA343;
+    line-height: 1;
+}
