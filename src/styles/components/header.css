@@ -62,32 +62,32 @@
   opacity: 0;
 }
 
-.header-middle .search-bar .rooms-picker {
+.rooms-picker {
   border-radius: 25px;
 }
 
-.header-middle .search-bar .rooms-picker > div {
+.rooms-picker > div {
   padding: 15px 0;
   border-bottom: 1px solid #000000C2;
 }
 
-.header-middle .search-bar .rooms-picker > div:last-child {
+.rooms-picker > div:last-child {
   border-bottom: none;
   padding: 25px 0 5px;
 }
 
-.header-middle .search-bar .rooms-picker .room-details h4 {
+.rooms-picker .room-details h4 {
   font-size: 1rem;
   line-height: 1;
   margin: 0;
 }
 
-.header-middle .search-bar .rooms-picker .room-details span {
+.rooms-picker .room-details span {
   font-size: .75rem;
   padding: 0;
 }
 
-.header-middle .search-bar .rooms-picker .room-counter span {
+.rooms-picker .room-counter span {
   width: 25px;
   height: 25px;
 }

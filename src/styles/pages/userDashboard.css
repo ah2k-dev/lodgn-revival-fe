@@ -1,7 +1,8 @@
 .dashboard {
-    min-width: 80vw;
+    min-width: 79vw;
     min-height: 100vh;
     z-index: 0;
+    padding-right: 20px;
 }
 
 .dashboard-layout {
@@ -24,6 +25,12 @@
     justify-content: center;
 }
 
+.dashboard .status span {
+    font-family: 'Lato', sans-serif;
+    font-weight: 500;
+    color: #959595;
+}
+
 .dashboard .status .active {
     border-radius: 50px;
     background-color: #FDF307;
@@ -37,6 +44,10 @@
 
 .dashboard .completed-status {
     background-color: #44A16F;
+}
+
+.dashboard .details {
+    width: fit-content;
 }
 
 .dashboard .detail-card {
@@ -73,7 +84,7 @@
     position: absolute;
     right: 0;
     margin-top: -15px;
-    margin-right: -5px;
+    margin-right: -25px;
     padding: 10px 25px;
     border-radius: 4px;
     font-family: 'Poppins', sans-serif;

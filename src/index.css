@@ -18,6 +18,10 @@ code {
   font-family: 'Poppins', sans-serif;
 }
 
+.font-lato {
+  font-family: 'Lato', sans-serif;
+}
+
 @import "./styles/general.css";
 @import "./styles/antd.css";
 @import "./styles/components/layout.css";
@@ -25,5 +29,7 @@ code {
 @import "./styles/components/footer.css";
 @import "./styles/components/landingPage.css";
 @import "./styles/components/sidenav.css";
+@import "./styles/components/ongoingStays.css";
 @import "./styles/pages/auth.css";
 @import "./styles/pages/userDashboard.css";
+@import "./styles/pages/payment.css";
