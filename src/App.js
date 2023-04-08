@@ -9,7 +9,10 @@ import AuthLayout from "./components/layout/AuthLayout.js";
 import RequstToken from "./pages/RequstToken.js";
 import DashboardLayout from "./components/layout/DashboardLayout.js";
 import AdminDashboard from "./pages/admin/AdminDashboard.js";
-import UserDashboard from "./pages/user/UserDashboard.js"
+import UserDashboard from "./pages/user/UserDashboard.js";
+import VerifyEmail from "./pages/VerifyEmail.js";
+import ResetPassword from "./pages/ResetPassword.js";
+// import UserDashboard from "./pages/user/UserDashboard.js"
 import Payment from "./pages/user/Payment.js";
 import OngoingStays from "./components/layout/OngoingStays.js";
 import UpdateStay from "./components/layout/UpdateStay.js";
@@ -50,5 +53,7 @@ function App() {
     </div>
   );
 }
+
+
 
 export default App;
