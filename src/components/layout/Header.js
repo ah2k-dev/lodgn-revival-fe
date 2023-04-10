@@ -32,6 +32,28 @@ const Header = () => {
   const [places, setPlaces] = useState([]);
   const [center, setCenter] = useState({ lat: 37.7749, lng: -122.4194 });
   const [hotels, setHotels] = useState([]);
+  const [dateRange, setDateRange] = useState({
+    startDate: null,
+    endDate: null,
+  });
+
+  const [singleRoom, setSingleRoom] = useState(0);
+  const [doubleRoom, setDoubleRoom] = useState(0);
+  const [supportAnimal, setSupportAnimal] = useState(0);
+
+  const [searchResult, setSearchResult] = useState({
+    location: {
+      lat: 0,
+      lang: 0,
+      string: "",
+    },
+    dateRange: ["", ""],
+    roomRequirements: {
+      single: 0,
+      double: 0,
+      animalSupport: 0,
+    },
+  });
 
   const handleSearch = (event) => {
     setSearch(event.target.value);
@@ -88,9 +110,54 @@ const Header = () => {
     });
   };
 
+
+  const handleCalendarChange = (values, dateString) => {
+    if (dateString && dateString.length === 2) {
+      setDateRange({
+        startDate: dateString[0],
+        endDate: dateString[1],
+      });
+
+      console.log(dateRange);
+    }
+  };
+
+  const handleSingleRoom = (rooms) => {
+    setSingleRoom(rooms);
+    console.log("single: ", singleRoom);
+  }
+
+  const handleDoubleRoom = (rooms) => {
+    setDoubleRoom(rooms);
+    console.log("double: ", doubleRoom);
+  }
+
+  const handleAnimal = (animals) => {
+    setSupportAnimal(animals);
+    console.log("animals: ", supportAnimal);
+  }
+
+  const handleSearchResult = () => {
+    setSearchResult({
+      location: {
+        lat: center.lat,
+        lang: center.lng,
+        string: search
+      },
+      dateRange: dateRange,
+      roomRequirements: {
+        single: singleRoom,
+        double: doubleRoom,
+        animalSupport: supportAnimal
+      }
+    });
+
+    console.log(searchResult);
+  }
+
   return (
     <Row className="header-container" justify="space-between" align="middle">
-      {console.log(search, places, center, hotels)}
+      {/* {console.log(search, places, center, hotels)} */}
       <Col span={7} className="header-left">
         <img src={logo} width={90} />
       </Col>
@@ -104,27 +171,27 @@ const Header = () => {
                 onChange={handleSearch}
                 placeholder="Search for a location"
               />
-              <ul>
+              {places.length > 0 && <ul className="auto-complete-list position-absolute mt-3 bg-white py-2 px-3">
                 {places.map((place) => (
                   <li key={place.place_id} onClick={() => handleSelect(place)}>
                     {place.description}
                   </li>
                 ))}
-              </ul>
+              </ul>}
             </span>
             <span>
               <span className="date">Dates</span>
-              <RangePicker />
+              <RangePicker onChange={handleCalendarChange} onCalendarChange={handleCalendarChange} />
             </span>
             <span onClick={() => setShowRoomPicker(!showRoomPicker)}>
               Add rooms
-              {showRoomPicker && (
-                <div className="position-absolute w-100 mt-3">
-                  <RoomPicker singleRooms={0} doubleRooms={0} animals={0} />
-                </div>
-              )}
             </span>
-            <span className="search-icon">
+            {showRoomPicker && (
+              <div style={{ zIndex: 100 }} className="position-absolute w-100 mt-5">
+                <RoomPicker onSingleRoomChange={handleSingleRoom} onDoubleRoomChange={handleDoubleRoom} onAnimalChange={handleAnimal} singleRooms={singleRoom} doubleRooms={doubleRoom} animals={supportAnimal} />
+              </div>
+            )}
+            <span className="search-icon" onClick={() => handleSearchResult()}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"

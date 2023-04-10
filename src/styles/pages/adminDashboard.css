@@ -1,0 +1,91 @@
+.update-status-text {
+    color: #959595;
+}
+
+.update-status input[type='radio'] {
+    -ms-transform: scale(1.5);
+    -webkit-transform: scale(1.5);
+    transform: scale(1.5);
+}
+
+.update-status input[type='radio']:checked {
+    border: 2px solid black !important;
+}
+
+.update-status input[type='radio']:checked:after {
+    width: 9px;
+    height: 9px;
+    border-radius: 15px;
+    top: -5px;
+    left: 2px;
+    position: relative;
+    content: '';
+    display: inline-block;
+    visibility: visible;
+    border: 2px solid black;
+    background-color: black;
+}
+
+.update-status .status-1 {
+    color: #FDF307;
+}
+
+.update-status .status-2 {
+    color: #07A4FD;
+}
+
+.update-status .status-3 {
+    color: #4cd88d;
+}
+
+.update-status .status-4 {
+    color: #0f924c;
+}
+
+.update-status-btn {
+    background: linear-gradient(180deg, #5BA343 0%, rgba(91, 163, 67, 0.77) 100%);
+    border: none;
+    font-weight: 600;
+    border-radius: 10px;
+}
+
+.update-hotel-details label {
+    color: #959595;
+}
+
+.update-hotel-details input {
+    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    border: none;
+    font-size: 1rem;
+    padding: 5px 8px;
+}
+
+.update-hotel-details input:focus {
+    box-shadow: 1px 1px 15px rgba(0, 0, 0, 0.25);
+    outline: none;
+}
+
+.upload-hotel-image .ant-btn {
+    border: none;
+    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    display: flex !important;
+    width: 100%;
+    padding: 40px 0;
+    justify-content: center;
+    align-items: center;
+}
+
+.upload-hotel-image .ant-upload {
+    width: 100%;
+}
+
+span.completed-status {
+    background: linear-gradient(180deg, #5BA343 0%, rgba(91, 163, 67, 0.77) 100%);
+    border-radius: 10px;
+    color: white;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    padding: 10px 25px;
+}

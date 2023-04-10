@@ -9,7 +9,7 @@ const Sidebar = () => {
 
   const navClass = "d-flex cursor-pointer align-items-center outline-none";
 
-  const role = 'user';
+  const role = 'admin';
 
   const userNavs = [
     {

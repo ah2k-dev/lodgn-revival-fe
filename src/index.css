@@ -30,6 +30,7 @@ code {
 @import "./styles/components/landingPage.css";
 @import "./styles/components/sidenav.css";
 @import "./styles/components/ongoingStays.css";
-@import "./styles/pages/auth.css";
 @import "./styles/pages/userDashboard.css";
+@import "./styles/pages/adminDashboard.css";
+@import "./styles/pages/auth.css";
 @import "./styles/pages/payment.css";

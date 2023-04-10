@@ -1,10 +1,8 @@
-import { upload } from '@testing-library/user-event/dist/upload'
 import { Button, DatePicker, message, Upload } from 'antd'
 import React from 'react'
 import { Link } from 'react-router-dom'
-import Card from './Card'
-import JobDetailsGrid from './JobDetailsGrid'
-import RoomPicker from './RoomPicker'
+import JobDetailsGrid from '../../components/layout/JobDetailsGrid'
+import RoomPicker from '../../components/layout/RoomPicker'
 
 const { RangePicker } = DatePicker;
 

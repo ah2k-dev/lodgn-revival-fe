@@ -38,9 +38,23 @@
   margin-top: 5px;
 }
 
-/* .header-middle .search-bar .search-icon svg {
-  width: 100%;
-} */
+.header-middle .search-bar .auto-complete-list {
+  z-index: 100;
+  list-style: none;
+  padding: 0;
+  cursor: default;
+  border-radius: 12px;
+}
+
+.header-middle .search-bar .auto-complete-list li {
+  margin: 8px 0;
+  padding: 5px;
+  cursor: pointer;
+}
+
+.header-middle .search-bar .auto-complete-list li:hover {
+  background-color: rgba(197, 197, 197, 0.486);
+}
 
 .header-middle .search-bar span {
   padding: 0 8px;

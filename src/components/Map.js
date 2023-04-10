@@ -1,5 +1,6 @@
 import React from "react";
 import GoogleMapReact from "google-map-react";
+
 const Marker = ({ text, color }) => (
   <div
     style={{

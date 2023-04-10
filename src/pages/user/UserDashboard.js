@@ -1,5 +1,5 @@
 import React from 'react'
-import CurrentRequest from '../../components/layout/CurrentRequest'
+import CurrentRequest from '../../pages/user/CurrentRequest'
 
 const UserDashboard = () => {
   return (
