@@ -162,3 +162,39 @@ export const clearErrors = () => async (dispatch) => {
     type: authConstants.CLEAR_ERRORS,
   });
 };
+
+export const loginWithRequestPayload = (payload) => async (dispatch) => {
+  dispatch({
+    type: authConstants.LOGIN_REQUEST,
+  });
+  try {
+    const res = await custAxios.post("/auth/login", {
+      email: payload.email,
+      password: payload.password,
+      location: payload.location,
+      dateRange: payload.dateRange,
+      roomRequirements: payload.roomRequirements,
+      withRequest: true,
+    });
+    if (res) {
+      localStorage.setItem("token", res.data.data.jwtToken);
+      localStorage.setItem("user", JSON.stringify(res.data.data.userData));
+      dispatch({
+        type: authConstants.LOGIN_SUCCESS,
+        payload: res.data.data,
+      });
+      message.success({
+        content: "Login Successful",
+        style: {
+          marginTop: "10vh",
+        },
+      });
+      return true;
+    }
+  } catch (error) {
+    dispatch({
+      type: authConstants.LOGIN_FAILURE,
+      payload: error.response.data.message || "Server Error",
+    });
+  }
+};
