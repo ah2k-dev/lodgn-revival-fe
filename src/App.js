@@ -18,6 +18,9 @@ import OngoingStays from "./pages/user/OngoingStays.js";
 import UpdateStay from "./pages/user/UpdateStay.js";
 import PreviousStays from "./pages/user/PreviousStays.js";
 import ViewOngoingStays from "./pages/admin/ViewOngoingStays.js";
+import AdminRoute from "./protected-routes/AdminRoute.js";
+import UserRoute from "./protected-routes/UserRoute.js";
+import NotFound from "./pages/NotFound.js";
 // import * as dotenv from "dotenv";
 // dotenv.config();
 function App() {
@@ -41,21 +44,44 @@ function App() {
               />
             </Route>
           </Route>
-          <Route path="/dashboard" element={<DashboardLayout />}>
-            <Route path="/dashboard/admin" element={<AdminDashboard />} />
-            <Route path="/dashboard/admin/ongoing-stays" element={<ViewOngoingStays />} />
-            <Route path="/dashboard/user" element={<UserDashboard />} />
-            <Route path="/dashboard/user/payment" element={<Payment />} />
-            <Route path="/dashboard/user/ongoing-stays" element={<OngoingStays />} />
-            <Route path="/dashboard/user/update-stay" element={<UpdateStay />} />
-            <Route path="/dashboard/user/previous-stays" element={<PreviousStays />} />
+          <Route
+            path="/dashboard"
+            element={<AuthRoute Component={DashboardLayout} />}
+          >
+            <Route
+              path="/dashboard/admin"
+              element={<AdminRoute Component={AdminDashboard} />}
+            />
+            <Route
+              path="/dashboard/admin/ongoing-stays"
+              element={<AdminRoute Component={ViewOngoingStays} />}
+            />
+            <Route
+              path="/dashboard/user"
+              element={<UserRoute Component={ViewOngoingStays} />}
+            />
+            <Route
+              path="/dashboard/user/payment"
+              element={<UserRoute Component={Payment} />}
+            />
+            <Route
+              path="/dashboard/user/ongoing-stays"
+              element={<UserRoute Component={OngoingStays} />}
+            />
+            <Route
+              path="/dashboard/user/update-stay"
+              element={<UserRoute Component={UpdateStay} />}
+            />
+            <Route
+              path="/dashboard/user/previous-stays"
+              element={<UserRoute Component={PreviousStays} />}
+            />
           </Route>
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
     </div>
   );
 }
-
-
 
 export default App;

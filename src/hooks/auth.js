@@ -17,3 +17,12 @@ export const getToken = () => {
     return false;
   }
 };
+
+export const UseGetRole = () => {
+  const { user } = useSelector((state) => state.auth);
+  if (user) {
+    return user.userData.role;
+  } else {
+    return false;
+  }
+};
