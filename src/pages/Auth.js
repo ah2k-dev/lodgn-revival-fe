@@ -18,6 +18,9 @@ const Auth = () => {
   const [emailVerify, setEmailVerify] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
+
+  console.log(location);
 
   const { loading, error, isAuthenticated } = useSelector(
     (state) => state.auth

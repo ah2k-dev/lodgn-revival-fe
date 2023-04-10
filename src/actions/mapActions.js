@@ -15,3 +15,26 @@ export const setHotelsData = (hotels) => async (dispatch) => {
     })
    
 }
+
+export const setRoomRequirements = (roomRequirements) => async (dispatch) => {
+    dispatch({
+        type: mapConstants.SET_ROOM_REQUIREMENTS,
+        payload: roomRequirements
+    })
+   
+}
+
+export const setDateRangeRedux = (dateRange) => async (dispatch) => {
+    dispatch({
+        type: mapConstants.SET_DATE_RANGE,
+        payload: dateRange
+    })
+   
+}
+
+export const clearState = () => async (dispatch) => {
+    dispatch({
+        type: mapConstants.CLEAR_STATE
+    })
+   
+}

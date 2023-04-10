@@ -1,12 +1,19 @@
 import { mapConstants } from "../constants/mapConstants";
 
-export const mapReducer = (
+export const mapReducer = ( // modified as request reducer
   state = {
     center: {
       lat: "",
       lng: "",
+      search: "",
     },
     hotels: [],
+    roomRequirements: {
+      single: 0,
+      double: 0,
+      animalSupport: 0,
+    },
+    dateRange: [],
   },
   action
 ) => {
@@ -20,6 +27,31 @@ export const mapReducer = (
       return {
         ...state,
         hotels: action.payload,
+      };
+    case mapConstants.SET_ROOM_REQUIREMENTS:
+      return {
+        ...state,
+        roomRequirements: action.payload,
+      };
+    case mapConstants.SET_DATE_RANGE:
+      return {
+        ...state,
+        dateRange: action.payload,
+      };
+    case mapConstants.CLEAR_STATE:
+      return {
+        center: {
+          lat: "",
+          lng: "",
+          search: "",
+        },
+        hotels: [],
+        roomRequirements: {
+          single: 0,
+          double: 0,
+          animalSupport: 0,
+        },
+        dateRange: [],
       };
     default:
       return state;
