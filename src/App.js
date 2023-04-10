@@ -1,7 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Layout } from "antd";
-import Login from "./pages/Login.js";
-import SignUp from "./pages/SignUp.js";
 import Dashboard from "./pages/Dashboard.js";
 import LandingPage from "./pages/LandingPage.js";
 import AuthRoute from "./protected-routes/AuthRoute.js";
@@ -11,7 +9,10 @@ import AuthLayout from "./components/layout/AuthLayout.js";
 import RequstToken from "./pages/RequstToken.js";
 import DashboardLayout from "./components/layout/DashboardLayout.js";
 import AdminDashboard from "./pages/admin/AdminDashboard.js";
-import UserDashboard from "./pages/user/UserDashboard.js"
+import UserDashboard from "./pages/user/UserDashboard.js";
+import VerifyEmail from "./pages/VerifyEmail.js";
+import ResetPassword from "./pages/ResetPassword.js";
+// import UserDashboard from "./pages/user/UserDashboard.js"
 import Payment from "./pages/user/Payment.js";
 import OngoingStays from "./components/layout/OngoingStays.js";
 import UpdateStay from "./components/layout/UpdateStay.js";
@@ -29,6 +30,14 @@ function App() {
               <Route path="/auth" element={<Auth />} />
               <Route path="/auth/requestToken" element={<RequstToken />} />
               <Route path="/auth/forgot-password" element={<RequstToken />} />
+              <Route
+                path="/auth/verifyEmail/:email"
+                element={<VerifyEmail />}
+              />
+              <Route
+                path="/auth/resetPassword/:email"
+                element={<ResetPassword />}
+              />
             </Route>
           </Route>
           <Route path="/dashboard" element={<DashboardLayout />}>
@@ -44,5 +53,7 @@ function App() {
     </div>
   );
 }
+
+
 
 export default App;
