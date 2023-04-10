@@ -51,9 +51,9 @@ const RoomPicker = ({ singleRooms, doubleRooms, animals, onSingleRoomChange, onD
           <span>2 Beds per room</span>
         </div>
         <div className="col-3 d-flex room-counter px-0">
-          <span onClick={() => setDoubleRoom(doubleRoom === 0 ? doubleRoom : doubleRoom - 1)} className="d-flex justify-content-center align-items-center me-2 border border-2 rounded-circle">-</span>
+          <span onClick={() => decreament('doubleRoom')} className="d-flex justify-content-center align-items-center me-2 border border-2 rounded-circle">-</span>
           {doubleRoom}
-          <span onClick={() => setDoubleRoom(doubleRoom + 1)} className="d-flex justify-content-center align-items-center ms-2 border border-2 rounded-circle">+</span>
+          <span onClick={() => increament('doubleRoom')} className="d-flex justify-content-center align-items-center ms-2 border border-2 rounded-circle">+</span>
         </div>
       </div>
       <div className="row justify-content-between mx-2 px-0">
@@ -61,9 +61,9 @@ const RoomPicker = ({ singleRooms, doubleRooms, animals, onSingleRoomChange, onD
           <h4>Support Animal</h4>
         </div>
         <div className="col-3 d-flex room-counter px-0">
-          <span onClick={() => setSupportAnimal(supportAnimal === 0 ? supportAnimal : supportAnimal - 1)} className="d-flex justify-content-center align-items-center me-2 border border-2 rounded-circle">-</span>
+          <span onClick={() => decreament('supportAnimal')} className="d-flex justify-content-center align-items-center me-2 border border-2 rounded-circle">-</span>
           {supportAnimal}
-          <span onClick={() => setSupportAnimal(supportAnimal + 1)} className="d-flex justify-content-center align-items-center ms-2 border border-2 rounded-circle">+</span>
+          <span onClick={() => increament('supportAnimal')} className="d-flex justify-content-center align-items-center ms-2 border border-2 rounded-circle">+</span>
         </div>
       </div>
     </div>
