@@ -3,9 +3,11 @@ import thunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
 import { authReducer } from "./reducers/authReducer";
 import { mapReducer } from "./reducers/mapReducer";
+import { requestReducer } from "./reducers/requestReducer";
 const reducer = combineReducers({
   auth: authReducer,
-  map: mapReducer // modified as request reducer
+  map: mapReducer, // modified to handle create request with login
+  request: requestReducer // added
 });
 
 let initialState = {};

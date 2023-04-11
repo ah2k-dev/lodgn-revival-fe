@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link, useLocation } from 'react-router-dom';
+import { UseGetRole } from '../../hooks/auth';
 
 const Sidebar = () => {
 
@@ -9,7 +10,7 @@ const Sidebar = () => {
 
   const navClass = "d-flex cursor-pointer align-items-center outline-none";
 
-  const role = 'admin';
+  const role = UseGetRole();
 
   const userNavs = [
     {
