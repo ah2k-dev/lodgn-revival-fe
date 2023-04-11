@@ -6,14 +6,17 @@
 }
 
 .auth-inner {
-  width: 32vw;
-  min-width: 320px;
-  max-width: 600px;
-  height: 80%;
+  width: max-content;
+  display: flex;
+  flex-direction: column;
+  /* min-width: 320px; */
+  /* max-width: 600px; */
+  height: auto;
 }
 
 .auth-form {
   margin-top: 30px;
+  justify-content: center;
 }
 
 .labels {
@@ -68,8 +71,9 @@
 }
 
 .ant-divider-horizontal {
-  min-width: 83% !important;
-  width: 83% !important;
+  /* min-width: 83% !important; */
+  margin-left: -20px !important;
+  width: 110% !important;
   margin-top: -10px;
 }
 

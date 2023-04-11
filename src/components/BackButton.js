@@ -9,7 +9,7 @@ const BackButton = () => {
     navigate(-1);
   };
   return (
-    <Button className="backBtn" onClick={handleBack}>
+    <Button className="backBtn d-flex justify-content-center align-items-center py-4 px-4" onClick={handleBack}>
       <RiArrowGoBackLine />
     </Button>
   );

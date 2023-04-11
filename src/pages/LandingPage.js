@@ -8,28 +8,32 @@ import moment from "moment";
 import { clearState } from "../actions/mapActions";
 
 const LandingPage = () => {
+
+  
   const location = useLocation();
   const dispatch = useDispatch();
-
+  
   const navigate = useNavigate();
+  
+  // const jobDetails = {
+    //   location: " St Judes Hospital",
+    //   location_detail: "Sarasota,FL. 33178",
+    //   start_date: 10,
+    //   start_date_month: "October",
+    //   end_date: "17",
+    //   end_date_month: "December",
+    //   no_of_rooms: 20,
+    //   no_of_single_rooms: 10,
+    //   no_of_double_rooms: 10,
+    // };
+    
+    const { hotels, center, roomRequirements, dateRange } = useSelector(
+      (state) => state.map
+      );
 
-  const jobDetails = {
-    location: " St Judes Hospital",
-    location_detail: "Sarasota,FL. 33178",
-    start_date: 10,
-    start_date_month: "October",
-    end_date: "17",
-    end_date_month: "December",
-    no_of_rooms: 20,
-    no_of_single_rooms: 10,
-    no_of_double_rooms: 10,
-  };
-
-  const { hotels, center, roomRequirements, dateRange } = useSelector(
-    (state) => state.map
-  );
-
-  return (
+      const totalRooms = roomRequirements.single + roomRequirements.double;
+      
+      return (
     <div className="landing-page">
       <div className="map-container">
         <Map hotels={hotels} center={center} />
@@ -37,7 +41,7 @@ const LandingPage = () => {
 
       <footer className="footer-container">
         <Row justify="space-between" align="middle">
-          <Col span={14} className="details">
+          <Col className="details col-md-7 col-sm-8 col-12 d-flex justify-content-start">
             <div className="detail pl-0">
               <span className="title">{center?.string}</span>
             </div>
@@ -61,15 +65,18 @@ const LandingPage = () => {
               </div>
             </div>
             <div className="detail">
-              <span className="title">Rooms</span>
+              <span className="title">{totalRooms} Rooms</span>
               <span className="description">
                 {/* {jobDetails.no_of_single_rooms > 0 ? jobDetails.no_of_single_rooms + ' Singles' : null} {jobDetails.no_of_double_rooms > 0 ? ', ' + jobDetails.no_of_double_rooms + ' Doubles' : null} */}
 
                 {roomRequirements.single > 0
                   ? roomRequirements.single + " Singles"
                   : null}
+                {roomRequirements.single > 0 && roomRequirements.double > 0
+                  ? ", "
+                  : null}
                 {roomRequirements.double > 0
-                  ? ", " + roomRequirements.double + " Doubles"
+                  ? roomRequirements.double + " Doubles"
                   : null}
                 {roomRequirements.animalSupport > 0
                   ? ", " + roomRequirements.animalSupport + " Animal Support"
@@ -77,9 +84,10 @@ const LandingPage = () => {
               </span>
             </div>
           </Col>
-          <Col span={5}>
+          <Col className="col-auto footer-btn">
             <button
-              className="footer-btn"
+            disabled={center.search === '' || totalRooms === 0}
+              className="px-3"
               onClick={() => {
                 navigate("/auth", {
                   state: {

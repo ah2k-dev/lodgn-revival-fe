@@ -20,10 +20,10 @@ const AuthLayout = () => {
   }, [isAuthenticated, user]);
   return (
     <Row className="auth-layout-container">
-      <Col span={11} className="auth-layout-left">
+      <div className="auth-layout-left col-xl-5 col-md-6 col-12">
         <Outlet />
-      </Col>
-      <Col span={13} className="auth-layout-right d-md-block d-none"></Col>
+      </div>
+      <div className="auth-layout-right d-sm-block d-none col-xl-7 col-md-6"></div>
     </Row>
   );
 };

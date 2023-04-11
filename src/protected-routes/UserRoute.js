@@ -9,7 +9,7 @@ const UserRoute = ({ Component }) => {
     console.log("not authenticated");
     return <Navigate to="/" />;
   } else {
-    if (role === "admin") {
+    if (role === "user") {
       return <Component />;
     } else {
       return <Navigate to="/not-found" />;
