@@ -5,7 +5,7 @@ import { authReducer } from "./reducers/authReducer";
 import { mapReducer } from "./reducers/mapReducer";
 const reducer = combineReducers({
   auth: authReducer,
-  map: mapReducer
+  map: mapReducer // modified as request reducer
 });
 
 let initialState = {};

@@ -9,7 +9,13 @@ import logo from "../../assets/images/LODGN.svg";
 import { DatePicker, Space } from "antd";
 import RoomPicker from "./RoomPicker";
 import axios from "axios";
-import { setCenterData, setHotelsData } from "../../actions/mapActions";
+import {
+  setCenterData,
+  setHotelsData,
+  setRoomRequirements,
+  setDateRangeRedux,
+} from "../../actions/mapActions";
+import moment from "moment";
 
 const { RangePicker } = DatePicker;
 
@@ -32,28 +38,11 @@ const Header = () => {
   const [places, setPlaces] = useState([]);
   const [center, setCenter] = useState({ lat: 37.7749, lng: -122.4194 });
   const [hotels, setHotels] = useState([]);
-  const [dateRange, setDateRange] = useState({
-    startDate: null,
-    endDate: null,
-  });
+  const [dateRange, setDateRange] = useState([]);
 
   const [singleRoom, setSingleRoom] = useState(0);
   const [doubleRoom, setDoubleRoom] = useState(0);
   const [supportAnimal, setSupportAnimal] = useState(0);
-
-  const [searchResult, setSearchResult] = useState({
-    location: {
-      lat: 0,
-      lang: 0,
-      string: "",
-    },
-    dateRange: ["", ""],
-    roomRequirements: {
-      single: 0,
-      double: 0,
-      animalSupport: 0,
-    },
-  });
 
   const handleSearch = (event) => {
     setSearch(event.target.value);
@@ -89,10 +78,6 @@ const Header = () => {
           lat: result.geometry.location.lat(),
           lng: result.geometry.location.lng(),
         });
-        dispatch(setCenterData({
-          lat: result.geometry.location.lat(),
-          lng: result.geometry.location.lng(),
-        }))
         service.nearbySearch(
           {
             location: result.geometry.location,
@@ -102,7 +87,6 @@ const Header = () => {
           (results, status) => {
             if (status === "OK") {
               setHotels(results);
-              dispatch(setHotelsData(results))
             }
           }
         );
@@ -110,57 +94,62 @@ const Header = () => {
     });
   };
 
-
   const handleCalendarChange = (values, dateString) => {
     if (dateString && dateString.length === 2) {
-      setDateRange({
-        startDate: dateString[0],
-        endDate: dateString[1],
-      });
-
-      console.log(dateRange);
+      // console.log(dateString);
+      setDateRange([
+        moment(new Date(dateString[0])).toISOString(),
+        moment(new Date(dateString[1])).toISOString(),
+      ]);
     }
   };
 
   const handleSingleRoom = (rooms) => {
     setSingleRoom(rooms);
-    console.log("single: ", singleRoom);
-  }
+  };
 
   const handleDoubleRoom = (rooms) => {
     setDoubleRoom(rooms);
-    console.log("double: ", doubleRoom);
-  }
+  };
 
   const handleAnimal = (animals) => {
     setSupportAnimal(animals);
-    console.log("animals: ", supportAnimal);
-  }
+  };
 
   const handleSearchResult = () => {
-    setSearchResult({
-      location: {
+    console.log(
+      center,
+      hotels,
+      dateRange,
+      singleRoom,
+      doubleRoom,
+      supportAnimal
+    );
+    dispatch(
+      setCenterData({
         lat: center.lat,
-        lang: center.lng,
-        string: search
-      },
-      dateRange: dateRange,
-      roomRequirements: {
+        lng: center.lng,
+        string: search,
+      })
+    );
+    dispatch(setHotelsData(hotels));
+    dispatch(
+      setRoomRequirements({
         single: singleRoom,
         double: doubleRoom,
-        animalSupport: supportAnimal
-      }
-    });
-
-    console.log(searchResult);
-  }
+        animalSupport: supportAnimal,
+      })
+    );
+    dispatch(setDateRangeRedux(dateRange));
+    setShowRoomPicker(false);
+  };
 
   return (
     <Row className="header-container" justify="space-between" align="middle">
-      {/* {console.log(search, places, center, hotels)} */}
       <Col span={7} className="header-left">
         <img src={logo} width={90} />
       </Col>
+
       {location.pathname === "/" ? (
         <div className="header-middle">
           <Col span={7} className="search-bar">
@@ -171,24 +160,42 @@ const Header = () => {
                 onChange={handleSearch}
                 placeholder="Search for a location"
               />
-              {places.length > 0 && <ul className="auto-complete-list position-absolute mt-3 bg-white py-2 px-3">
-                {places.map((place) => (
-                  <li key={place.place_id} onClick={() => handleSelect(place)}>
-                    {place.description}
-                  </li>
-                ))}
-              </ul>}
+              {places.length > 0 && (
+                <ul className="auto-complete-list position-absolute mt-3 bg-white py-2 px-3">
+                  {places.map((place) => (
+                    <li
+                      key={place.place_id}
+                      onClick={() => handleSelect(place)}
+                    >
+                      {place.description}
+                    </li>
+                  ))}
+                </ul>
+              )}
             </span>
             <span>
               <span className="date">Dates</span>
-              <RangePicker onChange={handleCalendarChange} onCalendarChange={handleCalendarChange} />
+              <RangePicker
+                onChange={handleCalendarChange}
+                onCalendarChange={handleCalendarChange}
+              />
             </span>
             <span onClick={() => setShowRoomPicker(!showRoomPicker)}>
               Add rooms
             </span>
             {showRoomPicker && (
-              <div style={{ zIndex: 100 }} className="position-absolute w-100 mt-5">
-                <RoomPicker onSingleRoomChange={handleSingleRoom} onDoubleRoomChange={handleDoubleRoom} onAnimalChange={handleAnimal} singleRooms={singleRoom} doubleRooms={doubleRoom} animals={supportAnimal} />
+              <div
+                style={{ zIndex: 100 }}
+                className="position-absolute w-100 mt-5"
+              >
+                <RoomPicker
+                  onSingleRoomChange={handleSingleRoom}
+                  onDoubleRoomChange={handleDoubleRoom}
+                  onAnimalChange={handleAnimal}
+                  singleRooms={singleRoom}
+                  doubleRooms={doubleRoom}
+                  animals={supportAnimal}
+                />
               </div>
             )}
             <span className="search-icon" onClick={() => handleSearchResult()}>
@@ -212,33 +219,37 @@ const Header = () => {
       {location.pathname === "/auth" ? (
         <Col span={14} className="header-right details">
           <div className="detail pl-0">
-            <span className="title">{jobDetails.location}</span>
-            <span className="description">{jobDetails.location_detail}</span>
+            <span className="title">{jobDetails.location.string}</span>
+            {/* <span className="description">{jobDetails.location_detail}</span> */}
           </div>
           <div className="detail flex">
             <div>
-              <span className="title">{jobDetails.start_date}</span>
-              <span className="description">{jobDetails.start_date_month}</span>
+              <span className="title">
+                {moment(jobDetails.dateRange[0]).format("DD")}
+              </span>
+              <span className="description">
+                {moment(jobDetails.dateRange[0]).format("MMMM")}
+              </span>
             </div>
             <span className="title">-</span>
             <div>
-              <span className="title">{jobDetails.end_date}</span>
-              <span className="description">{jobDetails.end_date_month}</span>
+              <span className="title">
+                {moment(jobDetails.dateRange[1]).format("DD")}
+              </span>
+              <span className="description">
+                {moment(jobDetails.dateRange[1]).format("MMMM")}
+              </span>
             </div>
           </div>
           <div className="detail">
-            <span className="title">
-              {jobDetails.no_of_rooms > 1
-                ? jobDetails.no_of_rooms + " Rooms"
-                : jobDetails.no_of_rooms + " Room"}
-            </span>
+            <span className="title">Rooms</span>
             <span className="description">
-              {jobDetails.no_of_single_rooms > 0
-                ? jobDetails.no_of_single_rooms + " Singles"
-                : null}{" "}
-              {jobDetails.no_of_double_rooms > 0
-                ? ", " + jobDetails.no_of_double_rooms + " Doubles"
-                : null}
+              {jobDetails.roomRequirements.single} Single,{" "}
+              {jobDetails.roomRequirements.double} Double,{" "}
+              {jobDetails.roomRequirements.animalSupport > 0
+                ? jobDetails.roomRequirements.animalSupport
+                : "No"}{" "}
+              Support Animal
             </span>
           </div>
           {/* {auth ? (

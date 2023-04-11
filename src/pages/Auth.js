@@ -10,7 +10,7 @@ import {
 } from "antd";
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { clearErrors, signup, login } from "../actions/authActions";
+import { clearErrors, signup, login, loginWithRequestPayload } from "../actions/authActions";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const Auth = () => {
@@ -18,6 +18,9 @@ const Auth = () => {
   const [emailVerify, setEmailVerify] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
+
+  console.log(location);
 
   const { loading, error, isAuthenticated } = useSelector(
     (state) => state.auth
@@ -26,7 +29,17 @@ const Auth = () => {
   const formRef = useRef(null);
   const onFinish = (values) => {
     if (active === "login") {
-      dispatch(login(values.email, values.password));
+      if(location.state){
+        dispatch(loginWithRequestPayload({
+          email: values.email,
+          password: values.password,
+          location: location.state?.location,
+          dateRange: location.state?.dateRange,
+          roomRequirements: location.state?.roomRequirements
+        }))
+      } else {
+        dispatch(login(values.email, values.password));
+      }
     } else {
       const res = dispatch(signup(values.name, values.email, values.password));
       if(res){
