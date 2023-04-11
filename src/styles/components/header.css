@@ -72,8 +72,14 @@
 .header-middle .search-bar .ant-picker.ant-picker-range {
   position: absolute;
   top: 4px;
-  width: 50px;
+  width: 80%;
   opacity: 0;
+}
+
+.ant-picker-dropdown {
+  display: flex;
+  justify-content: center;
+  width: 100%;
 }
 
 .rooms-picker {
@@ -124,6 +130,13 @@
   color: black;
 }
 
+.header-container .searchError {
+  top: 50px;
+  margin-top: 30px;
+  transition: ease-in-out .5s;
+  z-index: 100;
+}
+
 /* 
 .header-middle input {
 
@@ -139,3 +152,35 @@
   color: black;
 }
 
+@media screen and (max-width: 770px) {
+  .header-middle {
+    margin-top: 15px;
+    position: relative;
+  }
+}
+
+@media screen and (max-width: 660px) {
+  .header-right.details {
+    margin-top: 20px;
+  }
+  .ant-picker-panels {
+    width: fit-content;
+    max-width: 50vw;
+    flex-wrap: wrap !important;
+    justify-content: center;
+  }
+}
+
+@media screen and (max-width: 540px) {
+  .header-container {
+    padding: 20px;
+  }
+  .header-middle span {
+    font-size: .85rem;
+    display: flex;
+    align-items: center;
+  }
+  .ant-picker-panels {
+    max-width: 75vw;
+  }
+}

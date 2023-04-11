@@ -1,0 +1,14 @@
+.page-not-found {
+    background-color: #D9D9D93D;
+}
+
+.page-not-found h1 {
+    text-align: center;
+    font-size: 6rem !important;
+    line-height: 1;
+    margin-bottom: 0;
+}
+
+.page-not-found span {
+    font-size: 2.5rem;
+}

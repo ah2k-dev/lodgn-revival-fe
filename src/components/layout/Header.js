@@ -1,4 +1,4 @@
-import { Button, Col, Layout, message, Row, Typography } from "antd";
+import { Alert, Button, Col, Layout, message, Row, Typography } from "antd";
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../../hooks/auth";
 import { useDispatch, useSelector } from "react-redux";
@@ -35,6 +35,7 @@ const Header = () => {
   const jobDetails = location.state;
 
   const [search, setSearch] = useState("");
+  const [searchError, setSearchError] = useState("");
   const [places, setPlaces] = useState([]);
   const [center, setCenter] = useState({ lat: 37.7749, lng: -122.4194 });
   const [hotels, setHotels] = useState([]);
@@ -117,6 +118,17 @@ const Header = () => {
   };
 
   const handleSearchResult = () => {
+    if (search === '') {
+      setSearchError('Please search for a location')
+      setTimeout(() => {
+        setSearchError("");
+      }, 3000);
+    } else if (singleRoom === 0 && doubleRoom === 0) {
+      setSearchError('Please add rooms')
+      setTimeout(() => {
+        setSearchError("");
+      }, 3000);
+    }
     console.log(
       center,
       hotels,
@@ -146,13 +158,17 @@ const Header = () => {
 
   return (
     <Row className="header-container" justify="space-between" align="middle">
-      <Col span={7} className="header-left">
+      <div className="header-left col-2">
         <img src={logo} width={90} />
-      </Col>
-
+      </div>
+      { searchError && 
+      <div className="searchError d-flex position-absolute justify-content-center w-100 align-items-center">
+        <Alert message={searchError} type="error" showIcon />
+      </div>
+      }
       {location.pathname === "/" ? (
         <div className="header-middle">
-          <Col span={7} className="search-bar">
+          <Col className="search-bar col-xl-5 col-md-7 col-sm-10 col-12">
             <span>
               <input
                 type="text"
@@ -173,7 +189,7 @@ const Header = () => {
                 </ul>
               )}
             </span>
-            <span>
+            <span className="position-relative">
               <span className="date">Dates</span>
               <RangePicker
                 onChange={handleCalendarChange}
@@ -186,16 +202,18 @@ const Header = () => {
             {showRoomPicker && (
               <div
                 style={{ zIndex: 100 }}
-                className="position-absolute w-100 mt-5"
+                className="position-absolute w-100 mt-5 row justify-content-end"
               >
-                <RoomPicker
-                  onSingleRoomChange={handleSingleRoom}
-                  onDoubleRoomChange={handleDoubleRoom}
-                  onAnimalChange={handleAnimal}
-                  singleRooms={singleRoom}
-                  doubleRooms={doubleRoom}
-                  animals={supportAnimal}
-                />
+                <div className="col-12 col-sm-8 col-md-7 col-lg-8 px-0">
+                  <RoomPicker
+                    onSingleRoomChange={handleSingleRoom}
+                    onDoubleRoomChange={handleDoubleRoom}
+                    onAnimalChange={handleAnimal}
+                    singleRooms={singleRoom}
+                    doubleRooms={doubleRoom}
+                    animals={supportAnimal}
+                  />
+                </div>
               </div>
             )}
             <span className="search-icon" onClick={() => handleSearchResult()}>
@@ -217,7 +235,7 @@ const Header = () => {
         </div>
       ) : null}
       {location.pathname === "/auth" ? (
-        <Col span={14} className="header-right details">
+        <div className="col-8 header-right details">
           <div className="detail pl-0">
             <span className="title">{jobDetails.location.string}</span>
             {/* <span className="description">{jobDetails.location_detail}</span> */}
@@ -242,7 +260,7 @@ const Header = () => {
             </div>
           </div>
           <div className="detail">
-            <span className="title">Rooms</span>
+            <span className="title">{jobDetails.roomRequirements.single + jobDetails.roomRequirements.double} Rooms</span>
             <span className="description">
               {jobDetails.roomRequirements.single} Single,{" "}
               {jobDetails.roomRequirements.double} Double,{" "}
@@ -259,7 +277,7 @@ const Header = () => {
             <FaUserAlt className="header-icons" />
           </a>
         )} */}
-        </Col>
+        </div>
       ) : null}
     </Row>
   );
