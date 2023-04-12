@@ -1,10 +1,11 @@
 .auth-layout-container {
-  height: calc(100vh - 80px);
+  min-height: calc(100vh - 71px);
 }
 .auth-layout-right {
   background-image: url(../../assets/images/workers.jpg);
   background-repeat: no-repeat;
   background-size: cover;
   /* border: 1px solid; */
+  background-position-x: center;
+  background-position-y: bottom;
 }
-

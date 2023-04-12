@@ -86,7 +86,7 @@ const Auth = () => {
     <div className="auth-container">
       <div className="auth-inner">
         <Row className="auth-form">
-          <div className="col-7 col-md-9 col-lg-8 col-xl-8">
+          <div className="col-8 col-sm-6 col-md-9 col-lg-8 col-xl-8">
             <Typography.Title level={5} className="text-green">
               Log in or sign up to book
             </Typography.Title>

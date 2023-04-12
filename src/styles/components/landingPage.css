@@ -6,7 +6,7 @@
 }
 
 .map-container {
-    height: 80vh;
+    height: calc(100vh - 85px - 100px);
 }
 
 .footer-container {
@@ -85,6 +85,9 @@
     .footer-container button {
         font-size: 1.15rem;
     }
+    .map-container {
+        height: calc(100vh - 135px - 85px)
+    }
 }
 
 @media screen and (max-width: 770px) {
@@ -116,5 +119,8 @@
     }
     .details .detail {
         padding: 0 10px;
+    }
+    .map-container {
+        height: calc(100vh - 130px - 130px)
     }
 }

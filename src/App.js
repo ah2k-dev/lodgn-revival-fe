@@ -59,6 +59,10 @@ function App() {
             />
             <Route
               path="/dashboard/user"
+              element={<UserRoute Component={UserDashboard} />}
+            />
+            <Route
+              path="/dashboard/user/current-requests"
               element={<UserRoute Component={CurrentRequest} />}
             />
             <Route

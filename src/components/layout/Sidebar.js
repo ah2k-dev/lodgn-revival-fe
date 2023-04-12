@@ -10,12 +10,13 @@ const Sidebar = () => {
 
   const navClass = "d-flex cursor-pointer align-items-center outline-none";
 
-  const role = UseGetRole();
+  // const role = UseGetRole();
+  const role = 'user';
 
   const userNavs = [
     {
       id: 1,
-      route: '/dashboard/user',
+      route: '/dashboard/user/current-requests',
       navName: 'Current Requests',
     },
     {

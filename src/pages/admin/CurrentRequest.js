@@ -20,7 +20,7 @@ const CurrentRequest = () => {
     };
 
     return (
-        <>
+        <div className='d-flex flex-column justify-content-between gap-5 align-items-start px-5'>
             <div className='d-flex flex-column justify-content-between w-100'>
                 <h2 className='font-poppins mt-4'>
                     You currently have 3 requests
@@ -89,14 +89,14 @@ const CurrentRequest = () => {
                 </div>
                 <div className='row mt-4 gap-0 justify-content-between'>
                     <h3 className='update-status-text font-poppins text-uppercase fs-6'>UPDATE STATUS TO CLIENT:</h3>
-                    <div className='row gap-2 mt-3 justify-content-between'>
+                    <div className='row mt-3 justify-content-between'>
                         <UpdateHotelDetails/>
                         <UpdateHotelDetails/>
                         <UpdateHotelDetails/>
                     </div>
                 </div>
             </div>}
-        </>
+        </div>
     )
 }
 

@@ -1,8 +1,8 @@
 .dashboard {
-    min-width: 79vw;
+    min-width: 80vw;
     min-height: 100vh;
     z-index: 0;
-    padding-right: 20px;
+    /* padding-right: 20px; */
 }
 
 .dashboard-layout {
@@ -17,12 +17,18 @@
 
 .dashboard .status {
     border-radius: 50px;
+    height: 45px;
     border: 1px solid #959595;
+    overflow: hidden;
 }
 
 .dashboard .status div {
     border-right: 1px solid #959595;
     justify-content: center;
+}
+
+.dashboard .status div:last-child {
+    border-right: none;
 }
 
 .dashboard .status span {
@@ -36,6 +42,16 @@
     background-color: #FDF307;
     border: none;
     justify-content: flex-start;
+}
+
+.dashboard .status .progress {
+    height: 100%;
+    background-color: transparent;
+}
+
+.dashboard .status .progress .progress-bar {
+    border-radius: 50px;
+    font-size: .95rem;
 }
 
 .dashboard .rounded-container {

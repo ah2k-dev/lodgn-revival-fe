@@ -6,7 +6,7 @@
   padding: 28px 30px 20px;
 }
 
-.header-middle {
+.landing-page-searchbar {
   display: flex;
   left: 0;
   min-width: 100%;
@@ -76,22 +76,16 @@
   opacity: 0;
 }
 
-.ant-picker-dropdown {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-}
-
 .rooms-picker {
   border-radius: 25px;
 }
 
-.rooms-picker > div {
+.rooms-picker>div {
   padding: 15px 0;
   border-bottom: 1px solid #000000C2;
 }
 
-.rooms-picker > div:last-child {
+.rooms-picker>div:last-child {
   border-bottom: none;
   padding: 25px 0 5px;
 }
@@ -131,16 +125,18 @@
 }
 
 .header-container .searchError {
+  width: 100%;
+  max-width: 95vw;
   top: 50px;
   margin-top: 30px;
   transition: ease-in-out .5s;
   z-index: 100;
 }
 
-/* 
-.header-middle input {
 
-} */
+.header-container .login-icon {
+  z-index: 1000;
+}
 
 .header-right {
   display: flex !important;
@@ -152,10 +148,31 @@
   color: black;
 }
 
+
+
+@media screen and (max-width: 992px) {
+  .ant-picker-dropdown {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+}
+
 @media screen and (max-width: 770px) {
-  .header-middle {
+  .landing-page-searchbar {
     margin-top: 15px;
     position: relative;
+  }
+
+  .header-container .login-icon {
+    position: absolute;
+    right: 0;
+    top: 0;
+    margin-top: 23px;
+    margin-right: 20px;
+  }
+  .header-container .searchError {
+    margin-top: 90px;
   }
 }
 
@@ -163,6 +180,7 @@
   .header-right.details {
     margin-top: 20px;
   }
+
   .ant-picker-panels {
     width: fit-content;
     max-width: 50vw;
@@ -175,11 +193,13 @@
   .header-container {
     padding: 20px;
   }
+
   .header-middle span {
     font-size: .85rem;
     display: flex;
     align-items: center;
   }
+
   .ant-picker-panels {
     max-width: 75vw;
   }
