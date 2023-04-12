@@ -8,7 +8,7 @@ const initialState = {
   error: null,
 };
 
-export const requestReducer = (state = {}, action) => {
+export const requestReducer = (state = initialState, action) => {
   switch (action.type) {
     case requestConstants.CREATE_REQUEST_REQUEST:
     case requestConstants.GET_ONE_REQUEST_REQUEST:
