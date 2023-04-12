@@ -21,6 +21,7 @@ import ViewOngoingStays from "./pages/admin/ViewOngoingStays.js";
 import AdminRoute from "./protected-routes/AdminRoute.js";
 import UserRoute from "./protected-routes/UserRoute.js";
 import NotFound from "./pages/NotFound.js";
+import CurrentRequest from "./pages/user/CurrentRequest.js";
 // import * as dotenv from "dotenv";
 // dotenv.config();
 function App() {
@@ -58,7 +59,7 @@ function App() {
             />
             <Route
               path="/dashboard/user"
-              element={<UserRoute Component={ViewOngoingStays} />}
+              element={<UserRoute Component={CurrentRequest} />}
             />
             <Route
               path="/dashboard/user/payment"
