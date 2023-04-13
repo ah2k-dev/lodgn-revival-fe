@@ -1,6 +1,7 @@
 .auth-layout-container {
   min-height: calc(100vh - 71px);
 }
+
 .auth-layout-right {
   background-image: url(../../assets/images/workers.jpg);
   background-repeat: no-repeat;
@@ -8,4 +9,58 @@
   /* border: 1px solid; */
   background-position-x: center;
   background-position-y: bottom;
+}
+
+.dashboard-layout {
+  background: rgba(217, 217, 217, 0.24);
+}
+
+.dashboard {
+  padding: 0 65px 0 45px;
+}
+
+.sideNav {
+  transform: translateX(0);
+  transition: ease-out .6s;
+}
+
+.hamburger-icon {
+  position: absolute;
+  z-index: 100;
+  top: 6px;
+  left: 6px;
+  display: none;
+  background-color: white;
+  padding: 5px;
+  border-radius: 6px;
+}
+
+
+@media screen and (max-width: 992px) {
+  .dashboard {
+    max-width: unset;
+    min-width: 100%;
+    padding: 0 50px;
+  }
+  .hamburger-icon {
+    display: block;
+  }
+  .sideNav {
+    transform: translateX(-300px);
+  }
+  .sideNav.active {
+    transform: translateX(0);
+  }
+  .sideNav {
+    width: auto !important;
+  }
+  .dashboard .status {
+    height: 34px !important;
+  }
+}
+
+@media screen and (max-width: 540px) { 
+  .dashboard {
+    padding: 0 10px;
+  }
 }

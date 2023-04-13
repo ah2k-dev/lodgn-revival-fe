@@ -3,13 +3,9 @@
 }
 
 .update-status input[type='radio'] {
-    -ms-transform: scale(1.5);
-    -webkit-transform: scale(1.5);
-    transform: scale(1.5);
-}
-
-.update-status input[type='radio']:checked {
-    border: 2px solid black !important;
+    -ms-transform: scale(1.8);
+    -webkit-transform: scale(1.8);
+    transform: scale(1.8);
 }
 
 .update-status input[type='radio']:checked:after {
@@ -22,8 +18,13 @@
     content: '';
     display: inline-block;
     visibility: visible;
-    border: 2px solid black;
-    background-color: black;
+    outline: 1px solid #494949;
+    outline-offset: 1px;
+    background-color: #494949;
+}
+
+.update-status {
+    margin-top: 3rem;
 }
 
 .update-status .status-1 {
@@ -38,9 +39,18 @@
     color: #4cd88d;
 }
 
-.update-status .status-4 {
+.update-status .status-yellow {
+    color: #FDF307;
+}
+
+.update-status .status-blue {
+    color: #07A4FD;
+}
+
+.update-status .status-green {
     color: #0f924c;
 }
+
 
 .update-status-btn {
     background: linear-gradient(180deg, #5BA343 0%, rgba(91, 163, 67, 0.77) 100%);
@@ -88,4 +98,24 @@ span.completed-status {
     font-family: 'Poppins', sans-serif;
     font-weight: 500;
     padding: 10px 25px;
+}
+
+@media screen and (max-width: 1200px) {
+    .admin-page {
+        align-items: flex-end !important;
+        flex-direction: column;
+    }
+    .update-status-btn {
+        margin-top: 20px;
+    }
+    .update-status {
+        margin-top: 1rem;
+    }
+    .update-status label {
+        font-size: 1rem;
+    }
+    .update-status input[type='radio']:checked:after {
+        top: -8px;
+        left: 2px;
+    }
 }

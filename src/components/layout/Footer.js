@@ -40,8 +40,8 @@ const Footer = () => {
           : "footer-container w-100 bg-white px-4 ms-0"
       }
     >
-      <Row justify="space-between" align="middle">
-        <Col className="details col-md-7 col-sm-8 col-12 d-flex justify-content-start">
+      <Row justify="space-between" align="start">
+        <div className="details col-md-7 col-sm-8 col-12 d-flex justify-content-start">
           <div className="detail pl-0">
             <span className="title">{center?.string}</span>
           </div>
@@ -79,8 +79,8 @@ const Footer = () => {
                 : null}
             </span>
           </div>
-        </Col>
-        <Col className="col-auto footer-btn">
+        </div>
+        <div className="col-auto footer-btn">
           <Button
             disabled={center.search === "" || totalRooms === 0}
             loading={loading}
@@ -123,7 +123,7 @@ const Footer = () => {
           >
             Confirm and request
           </Button>
-        </Col>
+        </div>
       </Row>
     </footer>
   );

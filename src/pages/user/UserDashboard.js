@@ -17,13 +17,7 @@ const UserDashboard = () => {
   const totalRooms = roomRequirements.single + roomRequirements.double;
 
   return (
-    <div className='bg-white d-flex flex-column align-items-end ms-auto'>
-      <Header />
-      <div className="map-container w-100">
-        <Map hotels={hotels} center={center} />
-      </div>
-      <Footer />
-    </div>
+    <div className='bg-white d-flex flex-column align-items-end ms-auto'></div>
   )
 }
 

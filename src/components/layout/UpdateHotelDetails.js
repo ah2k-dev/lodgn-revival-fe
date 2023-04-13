@@ -18,7 +18,7 @@ const props = {
 
 const UpdateHotelDetails = () => {
     return (
-        <div className='col-3 update-hotel-details d-flex flex-column gap-3'>
+        <div className='col-xl-3 col-12 update-hotel-details d-flex flex-column gap-3'>
             <div className='upload-hotel-image d-flex flex-column w-100 gap-2'>
                 <label className='font-lato fw-semibold'>Upload hotel image.</label>
                 <Upload {...props}>

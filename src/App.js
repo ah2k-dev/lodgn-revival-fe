@@ -22,6 +22,7 @@ import AdminRoute from "./protected-routes/AdminRoute.js";
 import UserRoute from "./protected-routes/UserRoute.js";
 import NotFound from "./pages/NotFound.js";
 import CurrentRequest from "./pages/user/CurrentRequest.js";
+import CreateRequest from "./pages/user/CreateRequest.js";
 // import * as dotenv from "dotenv";
 // dotenv.config();
 function App() {
@@ -59,7 +60,11 @@ function App() {
             />
             <Route
               path="/dashboard/user"
-              element={<UserRoute Component={UserDashboard} />}
+              element={<UserRoute Component={CurrentRequest} />}
+            />
+            <Route
+              path="/dashboard/user/create-request"
+              element={<UserRoute Component={CreateRequest} />}
             />
             <Route
               path="/dashboard/user/current-requests"

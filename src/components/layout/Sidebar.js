@@ -2,7 +2,7 @@ import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { UseGetRole } from "../../hooks/auth";
 
-const Sidebar = () => {
+const Sidebar = ({ activeClass }) => {
   // conditionlly render menu items based on user role
 
   const location = useLocation();
@@ -53,7 +53,7 @@ const Sidebar = () => {
   role === "admin" ? (navs = adminNavs) : (navs = userNavs);
 
   return (
-    <nav className="sideNav bg-white shadow px-4 d-flex flex-column justify-content-between pb-4 position-fixed top-0 left-0">
+    <nav className={`sideNav ${ activeClass && 'active' } bg-white shadow px-4 d-flex flex-column justify-content-between pb-4 position-fixed top-0 left-0`}>
       <ul className="relative m-0 list-none py-4 px-0">
         <span>
           <h1 className="text-2xl fst-italic p-4 fw-bold">LODGN</h1>
@@ -81,9 +81,7 @@ const Sidebar = () => {
           <Link
             to="/"
             className="logoutBtn d-flex justify-content-center align-items-center py-2 fs-5 text-white"
-            onClick={() => {
-              localStorage.clear();
-            }}
+            onClick={() => localStorage.clear()}
           >
             Log - Out
           </Link>

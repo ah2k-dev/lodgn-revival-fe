@@ -158,7 +158,7 @@ const Header = () => {
   };
 
   return (
-    <Row className={location.pathname === '/dashboard/user' ? "header-container bg-white w-100 justify-content-end" : 'header-container'} justify="space-between" align="middle">
+    <Row className={location.pathname === '/dashboard/user/create-request' ? "header-container bg-white w-100 justify-content-end" : 'header-container'} justify="space-between" align="middle">
       {location.pathname === '/' || location.pathname === '/auth' ? <div className="header-left col-2">
         <img src={logo} width={90} />
       </div> : null}
@@ -167,9 +167,9 @@ const Header = () => {
           <Alert message={searchError} type="error" showIcon />
         </div>
       }
-      {location.pathname === "/" || location.pathname === '/dashboard/user' ? (
-        <div className={location.pathname === '/dashboard/user' ? 'header-middle d-flex justify-content-center' : "header-middle landing-page-searchbar"}>
-          <Col className={location.pathname === '/dashboard/user' ? "search-bar col-auto" : "search-bar col-xl-5 col-md-7 col-sm-10 col-12"}>
+      {location.pathname === "/" || location.pathname === '/dashboard/user/create-request' ? (
+        <div className={location.pathname === '/dashboard/user/create-request' ? 'header-middle d-flex justify-content-center' : "header-middle landing-page-searchbar"}>
+          <Col className={location.pathname === '/dashboard/user/create-request' ? "search-bar col-auto" : "search-bar col-xl-5 col-md-7 col-sm-10 col-12"}>
             <span>
               <input
                 type="text"
@@ -205,7 +205,7 @@ const Header = () => {
                 style={{ zIndex: 100 }}
                 className="position-absolute w-100 mt-5 row justify-content-end ms-0"
               >
-                <div className={location.pathname === '/dashboard/user' ? "col-11" : "col-12 col-sm-8 col-md-7 col-lg-8 px-0"}>
+                <div className={location.pathname === '/dashboard/user/create-request' ? "col-11" : "col-12 col-sm-8 col-md-7 col-lg-8 px-0"}>
                   <RoomPicker
                     onSingleRoomChange={handleSingleRoom}
                     onDoubleRoomChange={handleDoubleRoom}

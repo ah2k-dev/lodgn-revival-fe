@@ -1,18 +1,26 @@
 .dashboard {
-    min-width: 80vw;
+    max-width: 80vw;
+    width: 100%;
     min-height: 100vh;
     z-index: 0;
     /* padding-right: 20px; */
-}
-
-.dashboard-layout {
-    background: rgba(217, 217, 217, 0.24);
 }
 
 .dashboard h2 {
     color: #72AA83;
     font-size: 1.5rem;
     font-weight: 600;
+}
+
+.dashboard .create-request-btn {
+    background: linear-gradient(180deg, #48AF78 0%, #42996B 100%);
+    border-radius: 4px;
+    font-weight: 600;
+    min-height: 40px;
+    border: none;
+    color: white;
+    padding: 0 25px;
+    margin-top: -20px;
 }
 
 .dashboard .status {
@@ -55,15 +63,28 @@
 }
 
 .dashboard .rounded-container {
-    border-radius: 25px;    
+    border-radius: 25px;
 }
 
 .dashboard .completed-status {
     background-color: #44A16F;
 }
 
-.dashboard .details {
-    width: fit-content;
+.dashboard footer .details .detail:first-child {
+    max-width: 50%;
+    padding-left: 10px;
+}
+
+.dashboard .details .detail {
+    max-width: 50%;
+}
+
+.loader {
+    min-height: 80vh;
+}
+
+.loader svg {
+    fill: #44A16F;
 }
 
 .dashboard .detail-card {
@@ -106,3 +127,71 @@
     font-family: 'Poppins', sans-serif;
     font-weight: 500;
 }
+
+@media screen and (max-width: 992px) {
+    .dashboard .status .progress .progress-bar {
+        font-size: .85rem;
+    }
+
+    .dashboard .status span {
+        font-size: .75rem;
+    }
+}
+
+@media screen and (max-width: 770px) {
+    .dashboard h2 {
+      font-size: 1.4rem;
+    }
+    .dashboard .create-request-btn {
+      margin-top: -10px;
+      font-size: 1rem;
+      padding: 0 20px;
+    }
+  }
+
+@media screen and (max-width: 660px) {
+    .dashboard .details .detail {
+        border-right: none;
+        border-bottom: 2px solid #0000004D;
+        max-width: unset;
+        display: flex !important;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        padding-bottom: 12px;
+    }
+    .dashboard .details .detail:last-child {
+        border-bottom: none;
+    }
+    .title, .description {
+        text-align: center;
+    }
+    .details {
+        width: 100%;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+        gap: 30px;
+    }
+    .details .detail .title {
+        font-size: 1.2rem;
+    }
+    .dashboard h2 {
+      font-size: 1.25rem;
+    }
+    .dashboard .create-request-btn {
+      margin-top: -10px;
+      font-size: 1rem;
+      padding: 0 20px;
+    }
+    .dashboard .create-request-btn {
+        font-size: .85rem;
+    }
+    .dashboard .status span {
+        font-size: .55rem;
+        text-align: center;
+    }
+    .dashboard .status .progress .progress-bar {
+        font-size: .6rem;
+    }
+  }

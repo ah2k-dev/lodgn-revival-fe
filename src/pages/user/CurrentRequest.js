@@ -4,10 +4,16 @@ import JobDetailsGrid from "../../components/layout/JobDetailsGrid";
 import ProgressBar from "../../components/layout/ProgressBar";
 import { useDispatch, useSelector } from "react-redux";
 import { clearErrors, getRequests } from "../../actions/requestActions";
-import { message } from "antd";
+import { message, Spin } from "antd";
 import moment from "moment";
+import { LoadingOutlined } from '@ant-design/icons';
+import { useNavigate } from "react-router";
+
 
 const CurrentRequest = () => {
+
+  const navigator = useNavigate();
+
   const dispatch = useDispatch();
   const { error, loading, requests } = useSelector((state) => state.request);
 
@@ -29,17 +35,21 @@ const CurrentRequest = () => {
 
 
   return (
-    <div className="dashboard d-flex flex-column justify-content-between gap-5 align-items-start px-5 py-5">
-      <div className="d-flex flex-column justify-content-between w-100">
-        <h2 className="font-poppins mt-4">
-          You currently have {requests.length} requests
-        </h2>
-        <div className="d-flex flex-column justify-content-between gap-5 w-100">
-        {requests.map((request) => (
-          <RequestComponent request={request} />
-          ))}
-          </div> 
-      </div>
+    <div className="w-100 d-flex flex-column justify-content-between gap-5 align-items-start px-md-5 py-md-5 px-4 py-4">
+      {loading ? <div className="loader w-100 d-flex justify-content-center align-items-center"><LoadingOutlined style={{ fontSize: 65, }} spin /></div>
+        : <div className="d-flex flex-column justify-content-between w-100">
+          <div className="d-flex justify-content-between align-items-center mt-5 mb-5 gap-5">
+            <h2 className="font-poppins">
+              You currently have {requests.length} requests
+            </h2>
+            <button className="create-request-btn font-poppins fw-bold" onClick={()=> navigator('/dashboard/user/create-request')}>Create Request</button>
+          </div>
+          <div className="d-flex flex-column justify-content-between gap-5 w-100">
+            {requests.map((request, i) => (
+              <RequestComponent request={request} key={i} />
+            ))}
+          </div>
+        </div>}
     </div>
   );
 };
@@ -47,28 +57,26 @@ const CurrentRequest = () => {
 const RequestComponent = ({ request }) => {
   // console.log(request.dateRange[0])
   return (
-    <div className="rounded-container d-flex flex-column justify-content-between bg-white p-5 gap-4 w-100">
-      <div style={{ width: "fit-content" }} className="row">
-        <div className="col-auto">
-          <JobDetailsGrid
-            jobLocation={request.location.string}
-            // jobAddress="Sarasota,FL. 33178"
-            start_date={moment(request?.dateRange[0]).format("DD")}
-            end_date={moment(request?.dateRange[1]).format("DD")}
-            start_date_month={moment(request?.dateRange[0]).format("MMMM")}
-            end_date_month={moment(request?.dateRange[1]).format("MMMM")}
-            total_rooms={
-              request.roomRequirements.single + request.roomRequirements.double
-            }
-            single_rooms={request.roomRequirements.single}
-            double_rooms={request.roomRequirements.double}
-          />
-          <div className="mt-4">
-            <ProgressBar requestStatus={request?.status} />
-          </div>
+    <div className="rounded-container d-flex flex-column justify-content-between bg-white p-lg-5 p-4 gap-4 w-100">
+      <div className="w-100">
+        <JobDetailsGrid
+          jobLocation={request.location.string}
+          // jobAddress="Sarasota,FL. 33178"
+          start_date={moment(request?.dateRange[0]).format("DD")}
+          end_date={moment(request?.dateRange[1]).format("DD")}
+          start_date_month={moment(request?.dateRange[0]).format("MMMM")}
+          end_date_month={moment(request?.dateRange[1]).format("MMMM")}
+          total_rooms={
+            request.roomRequirements.single + request.roomRequirements.double
+          }
+          single_rooms={request.roomRequirements.single}
+          double_rooms={request.roomRequirements.double}
+        />
+        <div className="mt-4">
+          <ProgressBar requestStatus={request?.status} />
         </div>
-        {/* <span className='completed-status col-10 rounded-pill mt-4 py-2 px-4 text-white'>COMPLETED</span> */}
       </div>
+      {/* <span className='completed-status col-10 rounded-pill mt-4 py-2 px-4 text-white'>COMPLETED</span> */}
       {request.offerings.length > 0 && (
         <div className="row mt-4 gap-0 justify-content-between">
           <div className="col-auto position-relative">

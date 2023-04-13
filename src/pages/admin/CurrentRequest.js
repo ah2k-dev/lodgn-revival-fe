@@ -9,8 +9,11 @@ import { clearErrors, getRequests } from "../../actions/requestActions";
 import moment from "moment";
 
 const CurrentRequest = () => {
+
   const dispatch = useDispatch();
   const { error, loading, requests } = useSelector((state) => state.request);
+
+  // console.log(requests);
 
   useEffect(() => {
     dispatch(getRequests());
@@ -29,28 +32,38 @@ const CurrentRequest = () => {
   }, [error, dispatch]);
 
   return (
-    <div className="d-flex flex-column justify-content-between gap-5 align-items-start px-5">
+    <div className="d-flex flex-column justify-content-between gap-5 align-items-start px-md-5 px-3">
       <div className="d-flex flex-column justify-content-between w-100">
-        <h2 className="font-poppins mt-4">
+        <h2 className="font-poppins mt-5 mb-4">
           You currently have {requests.length} requests
         </h2>
-        <div className="d-flex flex-column justify-content-between gap-5 w-100">
-            {requests.map((request) => (    
-                <RequestComponent request={request} />
-            ))}
+        <div className="d-flex flex-column justify-content-between w-100">
+          {requests.map((request, i) => (
+            <RequestComponent request={request} status={request.status} key={i} index={i} />
+          ))}
         </div>
       </div>
     </div>
   );
 };
 
-const RequestComponent = ({ request }) => {
+const RequestComponent = ({ request, status, index }) => {
+
+  const [newStatus, setNewStatus] = useState(status);
+
+  const handleRadioChange = (e) => {
+    const value = e.target.value;
+    setNewStatus(value);
+  }
+
+  // console.log(status);
+
   return (
-    <div className="rounded-container d-flex flex-column justify-content-between bg-white p-5 gap-4 w-100">
-      <div className="ps-4 d-flex justify-content-between">
+    <div className="rounded-container d-flex flex-column justify-content-between bg-white p-lg-5 p-4 gap-4 w-100 mb-5">
+      <div className="admin-page d-flex justify-content-between align-items-start">
         <JobDetailsGrid
           jobLocation={request.location.string}
-        //   jobAddress="Sarasota,FL. 33178"
+          //   jobAddress="Sarasota,FL. 33178"
           start_date={moment(request?.dateRange[0]).format("DD")}
           end_date={moment(request?.dateRange[1]).format("DD")}
           start_date_month={moment(request?.dateRange[0]).format("MMMM")}
@@ -67,30 +80,34 @@ const RequestComponent = ({ request }) => {
         <h3 className="update-status-text font-poppins text-uppercase fs-6">
           UPDATE STATUS TO CLIENT:
         </h3>
-        <div className="d-flex gap-3">
-          <div className="col-3 active d-flex align-items-center py-2">
-            <span className="fw-bold d-flex justify-content-between align-items-center gap-3">
-              <input name="newStatus" type="radio" /> RECEIVED
-            </span>
+        <div className="row justify-content-between gap-3">
+          <div className='col-lg-2 col-sm-4 d-flex align-items-center py-2'>
+            <label className="fw-bold status-yellow d-flex justify-content-between align-items-center gap-3">
+              <input name={'newStatus-' + index} type="radio" value="recieved" defaultChecked={status === 'recieved'} onClick={handleRadioChange} />
+              RECEIVED
+            </label>
           </div>
-          <div className="col-3 d-flex align-items-center py-2">
-            <span className="fw-bold d-flex justify-content-between align-items-center gap-3">
-              <input name="newStatus" type="radio" /> NEGOTIATING
-            </span>
+          <div className='col-lg-2 col-sm-4 d-flex align-items-center py-2'>
+            <label className="fw-bold status-blue d-flex justify-content-between align-items-center gap-3">
+              <input name={'newStatus-' + index} type="radio" value="negotiating" defaultChecked={status === 'negotiating'} onClick={handleRadioChange} />
+              NEGOTIATING
+            </label>
           </div>
-          <div className="col-3 d-flex align-items-center py-2">
-            <span className="fw-bold d-flex justify-content-between align-items-center gap-3">
-              <input name="newStatus" type="radio" /> PAYMENT VERIFIED
-            </span>
+          <div className='col-lg-2 col-sm-4 d-flex align-items-center py-2'>
+            <label className="fw-bold status-green d-flex justify-content-between align-items-center gap-3">
+              <input name={'newStatus-' + index} type="radio" value="completed" defaultChecked={status === 'completed'} onClick={handleRadioChange} />
+              COMPLETED
+            </label>
           </div>
-          <div className="col-3 d-flex align-items-center py-2 border-0">
-            <span className="fw-bold status-4 d-flex justify-content-between align-items-center gap-3">
-              <input name="newStatus" type="radio" checked={true} /> COMPLETED
-            </span>
+          <div className='col-lg-2 col-sm-4 d-flex align-items-center py-2'>
+            <label className="fw-bold status-green d-flex justify-content-between align-items-center gap-3">
+              <input name={'newStatus-' + index} type="radio" value="paymentVerified" defaultChecked={status === 'paymentVerified'} onClick={handleRadioChange} />
+              PAYMENT VERIFIED
+            </label>
           </div>
         </div>
       </div>
-      <div className="row mt-4 gap-0 justify-content-between">
+      {newStatus === 'completed' && <div className="row mt-4 gap-0 justify-content-xl-between justify-content-center">
         <h3 className="update-status-text font-poppins text-uppercase fs-6">
           UPDATE STATUS TO CLIENT:
         </h3>
@@ -99,7 +116,7 @@ const RequestComponent = ({ request }) => {
           <UpdateHotelDetails />
           <UpdateHotelDetails />
         </div>
-      </div>
+      </div>}
     </div>
   );
 };
