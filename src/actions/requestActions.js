@@ -57,13 +57,16 @@ export const getRequests = () => async (dispatch) => {
     type: requestConstants.GET_REQUESTS_REQUEST,
   });
   try {
+    console.log("getting requests");
     attachToken();
-    const res = await custAxios.get("/requests");
+    console.log("getting requests");
+    const res = await custAxios.get("/requests/get");
     dispatch({
       type: requestConstants.GET_REQUESTS_SUCCESS,
       payload: res.data.data.requests,
     });
   } catch (error) {
+    console.log(error);
     dispatch({
       type: requestConstants.GET_REQUESTS_FAILURE,
       payload: error.response.data.message || "Server Error",
