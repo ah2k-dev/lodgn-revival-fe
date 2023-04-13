@@ -5,11 +5,14 @@ import { useState } from "react";
 import { Button, Upload, message } from "antd";
 import UpdateHotelDetails from "../../components/layout/UpdateHotelDetails";
 import { useDispatch, useSelector } from "react-redux";
-import { clearErrors, getRequests } from "../../actions/requestActions";
+import {
+  changeStatus,
+  clearErrors,
+  getRequests,
+} from "../../actions/requestActions";
 import moment from "moment";
 
 const CurrentRequest = () => {
-
   const dispatch = useDispatch();
   const { error, loading, requests } = useSelector((state) => state.request);
 
@@ -39,7 +42,12 @@ const CurrentRequest = () => {
         </h2>
         <div className="d-flex flex-column justify-content-between w-100">
           {requests.map((request, i) => (
-            <RequestComponent request={request} status={request.status} key={i} index={i} />
+            <RequestComponent
+              request={request}
+              status={request.status}
+              key={i}
+              index={i}
+            />
           ))}
         </div>
       </div>
@@ -48,13 +56,58 @@ const CurrentRequest = () => {
 };
 
 const RequestComponent = ({ request, status, index }) => {
-
   const [newStatus, setNewStatus] = useState(status);
+  const [offerings, setOfferings] = useState([]);
+
+  const dispatch = useDispatch();
+  const { loading } = useSelector((state) => state.request);
+
+  let count = [1, 2, 3];
 
   const handleRadioChange = (e) => {
-    const value = e.target.value;
-    setNewStatus(value);
-  }
+    // const value = e.target.value;
+    setNewStatus(e.target.value); // saves the memory usage
+  };
+
+  const handleUpdate = (id) => {
+    if(newStatus !== "completed"){
+      dispatch(
+        changeStatus(id, {
+          status: newStatus,
+          // status: newStatus,
+        })
+      );
+    } else {
+      if(offerings.length === 0){
+        message.error({
+          content: "Please upload the hotel offerings",
+          style: {
+            marginTop: "10vh",
+          },
+        });
+        return;
+      } else {
+        dispatch(
+          changeStatus(id, {
+            status: newStatus,
+            offerings: offerings
+          })
+        );
+      }
+    }
+  };
+
+  // useEffect(() => {
+  //   if (error) {
+  //     message.error({
+  //       content: error,
+  //       style: {
+  //         marginTop: "10vh",
+  //       },
+  //     });
+  //     dispatch(clearErrors());
+  //   }
+  // }, [error, dispatch]);
 
   // console.log(status);
 
@@ -68,55 +121,111 @@ const RequestComponent = ({ request, status, index }) => {
           end_date={moment(request?.dateRange[1]).format("DD")}
           start_date_month={moment(request?.dateRange[0]).format("MMMM")}
           end_date_month={moment(request?.dateRange[1]).format("MMMM")}
-          total_rooms={request?.roomRequirements?.single + request?.roomRequirements?.double}
+          total_rooms={
+            request?.roomRequirements?.single +
+            request?.roomRequirements?.double
+          }
           single_rooms={request?.roomRequirements?.single}
           double_rooms={request?.roomRequirements?.double}
         />
-        <button className="update-status-btn py-2 px-5 font-poppins text-white">
-          Update
-        </button>
+        {newStatus !== request.status && (
+          // <button className="update-status-btn py-2 px-5 font-poppins text-white" onClick={handleUpdate}>
+          //   Update
+          // </button>
+          <Button
+            loading={loading}
+            onClick={() => handleUpdate(request._id)}
+            disabled={newStatus === "completed" && offerings.length == 0}
+          >
+            Update
+          </Button>
+        )}
       </div>
       <div className="update-status row justify-content-center">
         <h3 className="update-status-text font-poppins text-uppercase fs-6">
           UPDATE STATUS TO CLIENT:
         </h3>
         <div className="row justify-content-between gap-3">
-          <div className='col-lg-2 col-sm-4 d-flex align-items-center py-2'>
+          <div className="col-lg-2 col-sm-4 d-flex align-items-center py-2">
             <label className="fw-bold status-yellow d-flex justify-content-between align-items-center gap-3">
-              <input name={'newStatus-' + index} type="radio" value="recieved" defaultChecked={status === 'recieved'} onClick={handleRadioChange} />
+              <input
+                name={"newStatus-" + index}
+                type="radio"
+                value="recieved"
+                defaultChecked={"recieved" === request.status}
+                onClick={handleRadioChange}
+              />
               RECEIVED
             </label>
           </div>
-          <div className='col-lg-2 col-sm-4 d-flex align-items-center py-2'>
+          <div className="col-lg-2 col-sm-4 d-flex align-items-center py-2">
             <label className="fw-bold status-blue d-flex justify-content-between align-items-center gap-3">
-              <input name={'newStatus-' + index} type="radio" value="negotiating" defaultChecked={status === 'negotiating'} onClick={handleRadioChange} />
+              <input
+                name={"newStatus-" + index}
+                type="radio"
+                value="negotiating"
+                defaultChecked={"negotiating" === request.status}
+                disabled={
+                  request.status === "completed" ||
+                  request.status === "paymentVerified"
+                }
+                onClick={handleRadioChange}
+              />
               NEGOTIATING
             </label>
           </div>
-          <div className='col-lg-2 col-sm-4 d-flex align-items-center py-2'>
+          <div className="col-lg-2 col-sm-4 d-flex align-items-center py-2">
             <label className="fw-bold status-green d-flex justify-content-between align-items-center gap-3">
-              <input name={'newStatus-' + index} type="radio" value="completed" defaultChecked={status === 'completed'} onClick={handleRadioChange} />
+              <input
+                name={"newStatus-" + index}
+                type="radio"
+                value="completed"
+                defaultChecked={"completed" === request.status}
+                disabled={
+                  request.status === "paymentVerified" ||
+                  request.status === "recieved"
+                }
+                onClick={handleRadioChange}
+              />
               COMPLETED
             </label>
           </div>
-          <div className='col-lg-2 col-sm-4 d-flex align-items-center py-2'>
+          <div className="col-lg-2 col-sm-4 d-flex align-items-center py-2">
             <label className="fw-bold status-green d-flex justify-content-between align-items-center gap-3">
-              <input name={'newStatus-' + index} type="radio" value="paymentVerified" defaultChecked={status === 'paymentVerified'} onClick={handleRadioChange} />
+              <input
+                name={"newStatus-" + index}
+                type="radio"
+                value="paymentVerified"
+                defaultChecked={"paymentVerfied" === request.status}
+                disabled={
+                  request.status !== "completed" ||
+                  request.status !== "paymentVerified"
+                }
+                onClick={handleRadioChange}
+              />
               PAYMENT VERIFIED
             </label>
           </div>
         </div>
       </div>
-      {newStatus === 'completed' && <div className="row mt-4 gap-0 justify-content-xl-between justify-content-center">
-        <h3 className="update-status-text font-poppins text-uppercase fs-6">
-          UPDATE STATUS TO CLIENT:
-        </h3>
-        <div className="row mt-3 justify-content-between">
-          <UpdateHotelDetails />
-          <UpdateHotelDetails />
-          <UpdateHotelDetails />
+      {newStatus === "completed" && (
+        <div className="row mt-4 gap-0 justify-content-xl-between justify-content-center">
+          <h3 className="update-status-text font-poppins text-uppercase fs-6">
+            UPDATE STATUS TO CLIENT:
+          </h3>
+          <div className="row mt-3 justify-content-between">
+            {count.map((val, ind) => {
+              return (
+                <UpdateHotelDetails
+                  offerings={offerings}
+                  setOfferings={setOfferings}
+                  key={val}
+                />
+              );
+            })}
+          </div>
         </div>
-      </div>}
+      )}
     </div>
   );
 };

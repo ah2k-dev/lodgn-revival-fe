@@ -147,7 +147,7 @@ const Auth = () => {
                   <Input type="password" placeholder="Password" />
                 </Form.Item>
               </div>
-              {/* <div className="email-senders">
+              <div className="email-senders">
               <Form.Item>
                 {emailVerify && (
                   <a className="verify-email" onClick={()=> navigate('/auth/requestToken')}>Request email token</a>
@@ -156,7 +156,7 @@ const Auth = () => {
                   <a className="forgot-password" onClick={()=> navigate('/auth/forgot-password')}>Forgot password?</a>
                 )}
               </Form.Item>
-            </div> */}
+            </div>
               <div className="mt-4 col-12">
                 <Form.Item>
                   <div className="auth-buttons">

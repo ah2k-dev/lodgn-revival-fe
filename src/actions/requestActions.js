@@ -140,7 +140,7 @@ export const changeStatus = (id, data) => async (dispatch) => {
   });
   try {
     attachToken();
-    const res = await custAxios.put(`/requests/${id}/status`, data);
+    const res = await custAxios.put(`/requests/status/${id}`, data);
     if (res) {
       dispatch({
         type: requestConstants.CHANGE_STATUS_SUCCESS,
@@ -161,6 +161,13 @@ export const changeStatus = (id, data) => async (dispatch) => {
       type: requestConstants.CHANGE_STATUS_FAILURE,
       payload: error.response.data.message || "Server Error",
     });
+    message.error({
+      content: error.response.data.message || "Server Error",
+      style: {
+        marginTop: "10vh",
+      },
+    });
+    dispatch(clearErrors())
   }
 };
 
@@ -170,7 +177,7 @@ export const getOngoingRequests = () => async (dispatch) => {
   });
   try {
     attachToken();
-    const res = await custAxios.get("/requests/ongoing");
+    const res = await custAxios.get("/requests/getOngoing");
     dispatch({
       type: requestConstants.GET_ONGOING_REQUESTS_SUCCESS,
       payload: res.data.data.requests,

@@ -1,9 +1,33 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import Card from '../../components/layout/Card'
 import JobDetailsGrid from '../../components/layout/JobDetailsGrid'
+import { useDispatch, useSelector } from 'react-redux'
+import { message } from 'antd'
+import { clearErrors, getOngoingRequests } from '../../actions/requestActions'
 
 const OngoingStays = () => {
+    const dispatch = useDispatch()
+    const { error, loading, onGoing } = useSelector((state) => state.request)
+    useEffect(() => {
+        if(error){
+            message.error({
+                content: error,
+                style: {
+                    marginTop: '10vh'
+                }
+            })
+            dispatch(clearErrors())
+        }
+    }, [error])
+
+    const fetch = () => {
+        dispatch(getOngoingRequests())
+    }
+
+    useEffect(() => {
+        fetch()
+    }, [dispatch])
     return (
         <div className='min-vh-100 w-100 p-5'>
             <div className='row px-4'>

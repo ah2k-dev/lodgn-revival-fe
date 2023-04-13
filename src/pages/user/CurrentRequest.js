@@ -6,12 +6,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { clearErrors, getRequests } from "../../actions/requestActions";
 import { message, Spin } from "antd";
 import moment from "moment";
-import { LoadingOutlined } from '@ant-design/icons';
+import { LoadingOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router";
 
-
 const CurrentRequest = () => {
-
   const navigator = useNavigate();
 
   const dispatch = useDispatch();
@@ -33,23 +31,32 @@ const CurrentRequest = () => {
     }
   }, [error, dispatch]);
 
-
   return (
     <div className="w-100 d-flex flex-column justify-content-between gap-5 align-items-start px-md-5 py-md-5 px-4 py-4">
-      {loading ? <div className="loader w-100 d-flex justify-content-center align-items-center"><LoadingOutlined style={{ fontSize: 65, }} spin /></div>
-        : <div className="d-flex flex-column justify-content-between w-100">
+      {loading ? (
+        <div className="loader w-100 d-flex justify-content-center align-items-center">
+          <LoadingOutlined style={{ fontSize: 65 }} spin />
+        </div>
+      ) : (
+        <div className="d-flex flex-column justify-content-between w-100">
           <div className="d-flex justify-content-between align-items-center mt-5 mb-5 gap-5">
             <h2 className="font-poppins">
               You currently have {requests.length} requests
             </h2>
-            <button className="create-request-btn font-poppins fw-bold" onClick={()=> navigator('/dashboard/user/create-request')}>Create Request</button>
+            <button
+              className="create-request-btn font-poppins fw-bold"
+              onClick={() => navigator("/dashboard/user/create-request")}
+            >
+              Create Request
+            </button>
           </div>
           <div className="d-flex flex-column justify-content-between gap-5 w-100">
             {requests.map((request, i) => (
               <RequestComponent request={request} key={i} />
             ))}
           </div>
-        </div>}
+        </div>
+      )}
     </div>
   );
 };
@@ -77,35 +84,36 @@ const RequestComponent = ({ request }) => {
         </div>
       </div>
       {/* <span className='completed-status col-10 rounded-pill mt-4 py-2 px-4 text-white'>COMPLETED</span> */}
-      {request.offerings.length > 0 && (
-        <div className="row mt-4 gap-0 justify-content-between">
-          <div className="col-auto position-relative">
-            <span className="rare-find-badge">Rare Find</span>
-            <Card
-              svgTxt="Holiday Inn"
-              distance={1.5}
-              singlePrice={120}
-              doublePrice={145}
-            />
+      {request.offerings.length > 0 &&
+        !request.hasOwnProperty("bookedOffering") && (
+          <div className="row mt-4 gap-0 justify-content-between">
+            <div className="col-auto position-relative">
+              <span className="rare-find-badge">Rare Find</span>
+              <Card
+                svgTxt="Holiday Inn"
+                distance={1.5}
+                singlePrice={120}
+                doublePrice={145}
+              />
+            </div>
+            <div className="col-auto">
+              <Card
+                svgTxt="Holiday Inn"
+                distance={1.5}
+                singlePrice={120}
+                doublePrice={145}
+              />
+            </div>
+            <div className="col-auto">
+              <Card
+                svgTxt="Holiday Inn"
+                distance={1.5}
+                singlePrice={120}
+                doublePrice={145}
+              />
+            </div>
           </div>
-          <div className="col-auto">
-            <Card
-              svgTxt="Holiday Inn"
-              distance={1.5}
-              singlePrice={120}
-              doublePrice={145}
-            />
-          </div>
-          <div className="col-auto">
-            <Card
-              svgTxt="Holiday Inn"
-              distance={1.5}
-              singlePrice={120}
-              doublePrice={145}
-            />
-          </div>
-        </div>
-      )}
+        )}
     </div>
   );
 };
