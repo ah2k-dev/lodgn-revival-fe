@@ -1,35 +1,87 @@
 import { Button, Upload } from 'antd'
-import React from 'react'
+import React, { useState } from 'react'
 
-const props = {
-    action: '//jsonplaceholder.typicode.com/posts/',
-    listType: 'picture',
-    previewFile(file) {
-        console.log('Your upload file:', file);
-        // Your process logic. Here we just mock to the same file
-        return fetch('https://next.json-generator.com/api/json/get/4ytyBoLK8', {
-            method: 'POST',
-            body: file,
-        })
-            .then((res) => res.json())
-            .then(({ thumbnail }) => thumbnail);
-    },
-};
 
-const UpdateHotelDetails = ({offerings, setOfferings, key}) => {
-    const [files, setFiles] = React.useState([])
-    const [title, setTitle] = React.useState('')
-    const [description, setDescription] = React.useState('')
-    const [rates, setRates] = React.useState({
-        single: 0,
-        double: 0,
-        animalSupport: 0,
+const UpdateHotelDetails = ({ offerings, setOfferings, key }) => {
+
+    
+    const [files, setFiles] = useState([])
+    const [title, setTitle] = useState('');
+    const [description, setDescription] = useState('');
+    
+    const [singleRates, setSingleRates] = useState(0);
+    const [doubleRates, setDoubleRates] = useState(0);
+    const [animalSupport, setAnimalSupport] = useState(0);
+    // const [rates, setRates] = useState({
+    //     single: 0,
+    //     double: 0,
+    //     animalSupport: 0,
+    // })
+    
+    const [payLink, setPayLink] = useState('');
+    
+    const handleChange = (info) => {
+        let newFileList = [...info.fileList];
+    
+        // 2. Read from response and show file link
+        newFileList = newFileList.map((file) => {
+          if (file.response) {
+            // Component will show file.url as link
+            file.url = file.response.url;
+          }
+          return file;
+        });
+        setFiles(newFileList);
+        console.log(files);
+      };
+    
+    const props = {
+        action: '',
+        multiple: true,
+        onChange: handleChange
+    };
+
+    const [validationError, setValidationError] = useState({
+        filesError: '',
+        titleError: '',
+        descriptionError: '',
+        singleRateError: '',
+        doubleRateError: '',
+        animalSupportError: '',
+        payLinkError: ''
     })
+    
+    const handleValidation = () => {
+        if (files.length < 1) {
+           setValidationError({filesError:'Hotel images are required'});
+        } 
+        else if (title == '') {
+            setValidationError({titleError: 'Hotel title is required'});
+        }
+        else if (description == '') {
+            setValidationError({descriptionError: 'Description is required'});
+        }
+        else if (singleRates == 0) {
+            setValidationError({singleRateError: 'Room rates are required'});
+        }
+        else if (doubleRates == 0) {
+            setValidationError({doubleRateError: 'Room rates are required'});
+        }
+        else if (animalSupport == 0) {
+            setValidationError({animalSupportError: 'Animal support is required'});
+        }
+        else if (payLink == '') {
+            setValidationError({payLinkError: 'Payment link is required'});
+        } else {
+            alert('successss')
+        }
+    }
+
     return (
         <div className='col-xl-3 col-12 update-hotel-details d-flex flex-column gap-3'>
             <div className='upload-hotel-image d-flex flex-column w-100 gap-2'>
                 <label className='font-lato fw-semibold'>Upload hotel image.</label>
-                <Upload {...props}>
+                <Upload {...props} fileList={files}>
                     <Button><svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="48"
@@ -67,22 +119,40 @@ const UpdateHotelDetails = ({offerings, setOfferings, key}) => {
                         ></path>
                     </svg></Button>
                 </Upload>
+                { validationError.filesError && <span className='text-danger fw-semibold'>{validationError.filesError}</span> }
+            </div>
+            <div className='d-flex flex-column gap-2 w-100'>
+                <label className='font-lato fw-semibold'>Add hotel title.</label>
+                <input type='text' onChange={(e)=> setTitle(e.target.value)}/>
+                { validationError.titleError && <span className='text-danger fw-semibold'>{validationError.titleError}</span> }
             </div>
             <div className='d-flex flex-column gap-2 w-100'>
                 <label className='font-lato fw-semibold'>Add text description.</label>
-                <input type='text' />
+                <input type='text' onChange={(e)=> setDescription(e.target.value)}/>
+                { validationError.descriptionError && <span className='text-danger fw-semibold'>{validationError.descriptionError}</span> }
             </div>
             <div className='d-flex flex-column gap-2 w-100'>
-                <label className='font-lato fw-semibold'>Add rates.</label>
-                <input type='text' />
+                <label className='font-lato fw-semibold'>Add single room rates.</label>
+                <input type='number' onChange={(e)=> setSingleRates(e.target.value)}/>
+                { validationError.singleRateError && <span className='text-danger fw-semibold'>{validationError.singleRateError}</span> }
+            </div>
+            <div className='d-flex flex-column gap-2 w-100'>
+                <label className='font-lato fw-semibold'>Add double room rates.</label>
+                <input type='number' onChange={(e)=> setDoubleRates(e.target.value)}/>
+                { validationError.doubleRateError && <span className='text-danger fw-semibold'>{validationError.doubleRateError}</span> }
+            </div>
+            <div className='d-flex flex-column gap-2 w-100'>
+                <label className='font-lato fw-semibold'>Add animal support.</label>
+                <input type='number' onChange={(e)=> setAnimalSupport(e.target.value)}/>
+                { validationError.animalSupportError && <span className='text-danger fw-semibold'>{validationError.animalSupportError}</span> }
             </div>
             <div className='d-flex flex-column gap-2 w-100'>
                 <label className='font-lato fw-semibold'>Add Payment Link.</label>
-                <input type='text' />
+                <input type='text' onChange={(e) => setPayLink(e.target.value)}/>
+                { validationError.payLinkError && <span className='text-danger fw-semibold'>{validationError.payLinkError}</span> }
             </div>
-            <div className='d-flex flex-column gap-2 w-100'>
-                {/* <label className='font-lato fw-semibold'>Add Payment Link.</label> */}
-                <Button type='primary'>Save</Button>
+            <div className='saveBtn d-flex flex-column gap-2 w-100 mt-2'>
+                <Button type='primary' onClick={()=>handleValidation()}>Save</Button>
             </div>
         </div>
     )

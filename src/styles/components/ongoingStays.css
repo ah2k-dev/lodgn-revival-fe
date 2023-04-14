@@ -7,16 +7,21 @@
 }
 
 .update-btn {
-    color: #959595;
-    background: #FFF9F9;
-    border: 1px solid rgba(0, 0, 0, 0.22);
-    box-shadow: inset -1px 1px 4px rgba(0, 0, 0, 0.11);
-    border-radius: 10px;
+    color: #959595 !important;
+    background: #FFF9F9 !important;
+    border: 1px solid rgba(0, 0, 0, 0.22) !important;
+    box-shadow: inset -1px 1px 4px rgba(0, 0, 0, 0.11) !important;
+    border-radius: 10px !important;
 }
 
 .rebook-btn {
-    background: #85BE9A;
-    border-radius: 10px;
+    background: #85BE9A !important;
+    border-radius: 10px !important;
+}
+
+.ongoingStays .btns button {
+    height: 40px !important;
+    padding: 0 25px;
 }
 
 .update-note-span {
@@ -35,4 +40,10 @@
 
 .updateDate .ant-picker-range {
     opacity: 0;
+}
+
+@media screen and (max-width: 1024px) {
+    .ongoingStays .btns button {
+        padding: 0 18px;
+    }
 }

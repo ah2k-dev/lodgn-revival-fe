@@ -17,6 +17,7 @@ import {
   loginWithRequestPayload,
 } from "../actions/authActions";
 import { useLocation, useNavigate } from "react-router-dom";
+import { clearState } from "../actions/mapActions";
 
 const Auth = () => {
   const [active, setActive] = useState("login");
@@ -25,7 +26,9 @@ const Auth = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  console.log(location);
+  // console.log(location.state);
+
+  // const { location , dateRange , roomRequirements } = locate.state;
 
   const { loading, error, isAuthenticated } = useSelector(
     (state) => state.auth
@@ -148,16 +151,24 @@ const Auth = () => {
                 </Form.Item>
               </div>
               <div className="email-senders">
-              <Form.Item>
-                {emailVerify && (
-                  <a className="verify-email" onClick={()=> navigate('/auth/requestToken')}>Request email token</a>
-                )}
-                {!emailVerify && (
-                  <a className="forgot-password" onClick={()=> navigate('/auth/forgot-password')}>Forgot password?</a>
-                )}
-              </Form.Item>
-            </div>
-              <div className="mt-4 col-12">
+                <Form.Item>
+                  {emailVerify && (
+                    <a className="verify-email" onClick={() => navigate('/auth/requestToken')}>Request email token</a>
+                  )}
+                  {!emailVerify && (
+                    <a className="forgot-password" onClick={() => {
+                      navigate("/auth/forgot-password", {
+                        state: {
+                          location: location.state ? location.state.location : '',
+                          dateRange: location.state ? location.state.dateRange : '',
+                          roomRequirements: location.state ? location.state.roomRequirements : '',
+                        },
+                      });
+                    }}>Forgot password?</a>
+                  )}
+                </Form.Item>
+              </div>
+              <div className="mt-1 col-12">
                 <Form.Item>
                   <div className="auth-buttons">
                     {active == "login" ? (
@@ -166,7 +177,7 @@ const Auth = () => {
                         type={active == "login" ? "primary" : "button"}
                         onClick={handleLogin}
                         loading={loading}
-                        // htmlType="submit"
+                      // htmlType="submit"
                       >
                         Log - in
                       </Button>

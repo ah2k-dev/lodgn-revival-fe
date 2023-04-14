@@ -17,7 +17,7 @@ const ProgressBar = ({requestStatus}) => {
     } else if (requestStatus === 'completed') {
         progressBarColor = '#44A16F';
         progressPercent = 75
-    } else if (requestStatus === 'payment verified') {
+    } else if (requestStatus === 'paymentVerified') {
         progressBarColor = '#44A16F';
         progressPercent = 100
     }

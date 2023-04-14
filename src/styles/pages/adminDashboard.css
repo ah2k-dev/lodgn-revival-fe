@@ -51,6 +51,9 @@
     color: #0f924c;
 }
 
+.update-status input[type='radio'] {
+    cursor: pointer;
+}
 
 .update-status-btn {
     background: linear-gradient(180deg, #5BA343 0%, rgba(91, 163, 67, 0.77) 100%);
@@ -91,6 +94,18 @@
     width: 100%;
 }
 
+.update-hotel-details .saveBtn button {
+    background-color: #48AF78 !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+}
+
+/* .update-hotel-details .saveBtn button span {
+    padding: 15px 25px;
+} */
+
 span.completed-status {
     background: linear-gradient(180deg, #5BA343 0%, rgba(91, 163, 67, 0.77) 100%);
     border-radius: 10px;
@@ -117,5 +132,8 @@ span.completed-status {
     .update-status input[type='radio']:checked:after {
         top: -8px;
         left: 2px;
+    }
+    .update-hotel-details .saveBtn {
+        margin-bottom: 20px;
     }
 }

@@ -11,7 +11,7 @@
 
 .footer-container {
     padding: 15px 0 25px;
-    margin: 0 30px;
+    /* margin: 0 30px; */
 }
 
 .footer-container button {
@@ -116,9 +116,9 @@
         margin-top: 15px;
         width: unset;
     }
-    .footer-container {
+    /* .footer-container {
         margin: 0 15px;
-    }
+    } */
     .details .detail {
         padding: 0 10px;
     }

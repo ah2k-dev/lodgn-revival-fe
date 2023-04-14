@@ -15,7 +15,7 @@ const Sidebar = ({ activeClass }) => {
   const userNavs = [
     {
       id: 1,
-      route: "/dashboard/user/current-requests",
+      route: "/dashboard/user",
       navName: "Current Requests",
     },
     {
@@ -52,6 +52,11 @@ const Sidebar = ({ activeClass }) => {
 
   role === "admin" ? (navs = adminNavs) : (navs = userNavs);
 
+  const logout = () => {
+    localStorage.clear();
+    location.reload();
+  }
+
   return (
     <nav className={`sideNav ${ activeClass && 'active' } bg-white shadow px-4 d-flex flex-column justify-content-between pb-4 position-fixed top-0 left-0`}>
       <ul className="relative m-0 list-none py-4 px-0">
@@ -81,7 +86,7 @@ const Sidebar = ({ activeClass }) => {
           <Link
             to="/"
             className="logoutBtn d-flex justify-content-center align-items-center py-2 fs-5 text-white"
-            onClick={() => localStorage.clear()}
+            onClick={() => logout()}
           >
             Log - Out
           </Link>

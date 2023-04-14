@@ -5,6 +5,12 @@
   height: 100%;
 }
 
+.auth-backBtn {
+  top: 50px;
+  margin-top: 60px;
+  margin-left: 20px;
+}
+
 .auth-inner {
   width: max-content;
   display: flex;

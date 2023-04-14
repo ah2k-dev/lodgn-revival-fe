@@ -16,8 +16,13 @@ import {
   setDateRangeRedux,
 } from "../../actions/mapActions";
 import moment from "moment";
+import dayjs from 'dayjs';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
 
 const { RangePicker } = DatePicker;
+
+dayjs.extend(customParseFormat);
+
 
 const Header = () => {
 
@@ -96,6 +101,15 @@ const Header = () => {
     });
   };
 
+
+  const disabledDate = (current) => {
+    // Can not select days before today and today
+    return current < dayjs().endOf('day');
+
+    // Can not select days before today
+    //  return current && current < moment().startOf('day');
+  };
+
   const handleCalendarChange = (values, dateString) => {
     if (dateString && dateString.length === 2) {
       // console.log(dateString);
@@ -159,7 +173,7 @@ const Header = () => {
 
   return (
     <Row className={location.pathname === '/dashboard/user/create-request' ? "header-container bg-white w-100 justify-content-end" : 'header-container'} justify="space-between" align="middle">
-      {location.pathname === '/' || location.pathname === '/auth' ? <div className="header-left col-2">
+      {location.pathname === '/' || location.pathname === '/auth' || location.pathname === 'requestToken' || location.pathname === '/auth/forgot-password' ? <div className="header-left col-2">
         <img src={logo} width={90} />
       </div> : null}
       {searchError &&
@@ -195,6 +209,7 @@ const Header = () => {
               <RangePicker
                 onChange={handleCalendarChange}
                 onCalendarChange={handleCalendarChange}
+                disabledDate={disabledDate}
               />
             </span>
             <span onClick={() => setShowRoomPicker(!showRoomPicker)}>
@@ -235,7 +250,7 @@ const Header = () => {
           </Col>
         </div>
       ) : null}
-      {location.pathname === "/auth" && jobDetails ? (
+      {location.pathname === "/auth" && jobDetails || location.pathname === '/auth/forgot-password' && jobDetails.location !== '' ? (
         <div className="col-8 header-right details">
           <div className="detail pl-0">
             <span className="title">{jobDetails.location.string}</span>

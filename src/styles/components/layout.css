@@ -15,7 +15,7 @@
   background: rgba(217, 217, 217, 0.24);
 }
 
-.dashboard {
+.dashboard-padding {
   padding: 0 65px 0 45px;
 }
 
@@ -40,6 +40,8 @@
   .dashboard {
     max-width: unset;
     min-width: 100%;
+  }
+  .dashboard-padding {
     padding: 0 50px;
   }
   .hamburger-icon {

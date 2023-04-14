@@ -44,49 +44,54 @@ const RequstToken = () => {
 
   return (
     <div className="auth-container">
-      <BackButton />
+      <div className="auth-backBtn position-absolute start-0">
+        <BackButton />
+      </div>
       <div className="auth-inner">
-        <Typography.Title level={3}>Find your Account</Typography.Title>
-        <Typography.Paragraph>
-          Enter your email address and we'll send you a link to get back into
-          your account.
-        </Typography.Paragraph>
-        <Row className="auth-form">
-          <Form
-            className="ant-row"
-            onFinish={onFinish}
-            onFinishFailed={(errorInfo) => {
-              console.log("Failed:", errorInfo);
-            }}
-            style={{ width: "100%" }}
-            autoComplete="off"
-          >
-            <Col span={20}>
-              <Form.Item
-                name="email"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please input your email!",
-                  },
-                ]}
-              >
-                <Input type="email" placeholder="Email" />
-              </Form.Item>
-            </Col>
-            <Col span={20}>
-              <Form.Item>
-                <Button
-                  type="primary"
-                  htmlType="submit"
-                  className="activeBtn"
-                  loading={loading}
+        <Row className="auth-form w-100">
+          <div className="col-8 col-sm-6 col-md-9 col-lg-8 col-xl-8">
+            <Typography.Title level={3}>Find your Account</Typography.Title>
+            <Typography.Paragraph>
+              Enter your email address and we'll send you a link to get back into
+              your account.
+            </Typography.Paragraph>
+            <Form
+              className="ant-row"
+              onFinish={onFinish}
+              onFinishFailed={(errorInfo) => {
+                console.log("Failed:", errorInfo);
+              }}
+              style={{ width: "100%" }}
+              autoComplete="off"
+            >
+              <div className="col-12">
+                <Form.Item
+                  name="email"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please input your email!",
+                    },
+                  ]}
                 >
-                  Send Link
-                </Button>
-              </Form.Item>
-            </Col>
-          </Form>
+                  <Input type="email" placeholder="Email" />
+                </Form.Item>
+              </div>
+              <div className="col-12">
+                <Form.Item>
+                  <Button
+                    type="primary"
+                    htmlType="submit"
+                    className="activeBtn"
+                    loading={loading}
+                  >
+                    Send Link
+                  </Button>
+                </Form.Item>
+              </div>
+
+            </Form>
+          </div>
         </Row>
       </div>
     </div>

@@ -32,6 +32,8 @@ const Footer = () => {
 
   const totalRooms = roomRequirements.single + roomRequirements.double;
 
+  console.log(dateRange.length);
+
   return (
     <footer
       className={
@@ -42,25 +44,25 @@ const Footer = () => {
     >
       <Row justify="space-between" align="start">
         <div className="details col-md-7 col-sm-8 col-12 d-flex justify-content-start">
-          <div className="detail pl-0">
+          {center?.string && <div className="detail pl-0">
             <span className="title">{center?.string}</span>
-          </div>
+          </div> }
           <div className="detail flex">
-            <div>
-              <span className="title">{moment(dateRange[0]).format("DD")}</span>
+          {dateRange.length > 0 && <div>
+              <span className="title">{moment(dateRange[0]).format("DD") }</span>
               <span className="description">
                 {moment(dateRange[0]).format("MMMM")}
               </span>
-            </div>
-            <span className="title">-</span>
-            <div>
+            </div> }
+            {dateRange.length > 0 && <span className="title">-</span> }
+            {dateRange.length > 0 && <div>
               <span className="title">{moment(dateRange[1]).format("DD")}</span>
               <span className="description">
                 {moment(dateRange[1]).format("MMMM")}
               </span>
-            </div>
+            </div> }
           </div>
-          <div className="detail">
+        { totalRooms > 0 && <div className="detail">
             <span className="title">{totalRooms} Rooms</span>
             <span className="description">
               {/* {jobDetails.no_of_single_rooms > 0 ? jobDetails.no_of_single_rooms + ' Singles' : null} {jobDetails.no_of_double_rooms > 0 ? ', ' + jobDetails.no_of_double_rooms + ' Doubles' : null} */}
@@ -78,7 +80,7 @@ const Footer = () => {
                 ? ", " + roomRequirements.animalSupport + " Animal Support"
                 : null}
             </span>
-          </div>
+          </div>}
         </div>
         <div className="col-auto footer-btn">
           <Button
