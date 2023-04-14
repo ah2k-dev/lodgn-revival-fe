@@ -68,28 +68,32 @@ export const requestToken = (email, type) => async (dispatch) => {
     type: authConstants.REQUEST_TOKEN_REQUEST,
   });
   try {
-    let res;
-    if (type == "request") {
-      res = await custAxios.post("/auth/requestEmailToken", {
-        email,
-      });
-    } else {
-      res = await custAxios.post("/auth/forgotPassword", {
-        email,
-      });
-    }
+    // let res;
+    // if (type == "request") {
+    //   res = await custAxios.post("/auth/requestEmailToken", {
+    //     email,
+    //   });
+    // } else {
+    //   res = await custAxios.post("/auth/forgotPassword", {
+    //     email,
+    //   });
+    // }
+    const res = await custAxios.post(`/auth/${type == 'request' ? 'requestEmailToken' : 'forgotPassword'}`, { email });
+    console.log(res);
     if (res) {
       dispatch({
         type: authConstants.REQUEST_TOKEN_SUCCESS,
       });
       message.success({
-        content: res?.data?.message,
+        content: `Email sent to ${email}`,
         style: {
           marginTop: "10vh",
         },
       });
+      return true;
     }
   } catch (error) {
+    console.log(email, type, error);
     dispatch({
       type: authConstants.REQUEST_TOKEN_FAILURE,
       payload: error.response.data.message || "Server Error",
@@ -112,7 +116,7 @@ export const verifyEmail = (token, email) => async (dispatch) => {
         type: authConstants.VERIFY_EMAIL_SUCCESS,
       });
       message.success({
-        content: res?.data?.message,
+        content: `Email verified`,
         style: {
           marginTop: "10vh",
         },
@@ -142,7 +146,7 @@ export const resetPassword = (token, email, password) => async (dispatch) => {
         type: authConstants.RESET_PASSWORD_SUCCESS,
       });
       message.success({
-        content: res?.data?.message,
+        content: `Password reset successful`,
         style: {
           marginTop: "10vh",
         },

@@ -1,6 +1,6 @@
 import React from 'react'
 
-const JobDetailsGrid = ({jobLocation, jobAddress, start_date, start_date_month, end_date, end_date_month, total_rooms, single_rooms, double_rooms}) => {
+const JobDetailsGrid = ({jobLocation, jobAddress, start_date, start_date_month, end_date, end_date_month, total_rooms, single_rooms, double_rooms, animalSupport}) => {
   return (
     <>
     <div className="details">
@@ -38,7 +38,7 @@ const JobDetailsGrid = ({jobLocation, jobAddress, start_date, start_date_month, 
         {total_rooms > 1 ? total_rooms + ' Rooms' : total_rooms + ' Room' }
         </span>
         <span className='description'>
-        { single_rooms > 0 ? single_rooms + ' Singles' : null } { double_rooms > 0 ? ', ' + double_rooms + ' Doubles' : null }
+        { single_rooms > 0 ? single_rooms + ' Singles' : null } { double_rooms > 0 ? ', ' + double_rooms + ' Doubles' : null } { animalSupport ? ', ' + animalSupport + 'Animal Support' : null}
         </span>
       </div>
     </div>

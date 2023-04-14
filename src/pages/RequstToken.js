@@ -6,20 +6,21 @@ import { useDispatch, useSelector } from "react-redux";
 import { clearErrors, requestToken } from "../actions/authActions";
 
 const RequstToken = () => {
-  const { path } = useLocation();
+  const { pathname } = useLocation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { loading, error, isAuthenticated } = useSelector(
     (state) => state.auth
   );
   const onFinish = async (values) => {
-    console.log(values);
+    console.log(pathname);
     let type;
-    if (path === "/auth/requestToken") {
+    if (pathname === "/auth/requestToken") {
       type = "request";
     } else {
       type = "reset";
     }
+    console.log(type);
     const res = await dispatch(requestToken(values.email, type));
     if (res) {
       if (type === "request") {

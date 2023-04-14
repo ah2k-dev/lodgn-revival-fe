@@ -70,7 +70,7 @@ const RequestComponent = ({ request, status, index }) => {
   };
 
   const handleUpdate = (id) => {
-    if(newStatus !== "completed"){
+    if (newStatus !== "completed") {
       dispatch(
         changeStatus(id, {
           status: newStatus,
@@ -78,7 +78,7 @@ const RequestComponent = ({ request, status, index }) => {
         })
       );
     } else {
-      if(offerings.length === 0){
+      if (offerings.length === 0) {
         message.error({
           content: "Please upload the hotel offerings",
           style: {
@@ -90,9 +90,10 @@ const RequestComponent = ({ request, status, index }) => {
         dispatch(
           changeStatus(id, {
             status: newStatus,
-            offerings: offerings
+            offerings: offerings,
           })
         );
+        // console.log(offerings);
       }
     }
   };
@@ -197,10 +198,7 @@ const RequestComponent = ({ request, status, index }) => {
                 type="radio"
                 value="paymentVerified"
                 defaultChecked={"paymentVerfied" === request.status}
-                disabled={
-                  request.status !== "completed" ||
-                  request.status !== "paymentVerified"
-                }
+                disabled={request.status != "completed"}
                 onClick={handleRadioChange}
               />
               PAYMENT VERIFIED
@@ -213,17 +211,38 @@ const RequestComponent = ({ request, status, index }) => {
           <h3 className="update-status-text font-poppins text-uppercase fs-6">
             UPDATE STATUS TO CLIENT:
           </h3>
-          <div className="row mt-3 justify-content-between">
-            {count.map((val, ind) => {
-              return (
-                <UpdateHotelDetails
-                  offerings={offerings}
-                  setOfferings={setOfferings}
-                  key={val}
-                />
-              );
-            })}
-          </div>
+          {!request.hasOwnProperty("bookedOffering") && (
+            <div className="row mt-3 justify-content-between">
+              {count.map((val, ind) => {
+                return (
+                  <UpdateHotelDetails
+                    offerings={offerings}
+                    setOfferings={setOfferings}
+                    key={ind}
+                    flag={val}
+                    request={request}
+                  />
+                );
+              })}
+            </div>
+          )}
+        </div>
+      )}
+      {request.hasOwnProperty("bookedOffering") && (
+        <div className="col-auto position-relative">
+          <span className="rare-find-badge">Booked</span>
+          <Card
+            title={request.bookedOffering.title}
+            description={request.bookedOffering.description}
+            distance={1.5}
+            singlePrice={request.bookedOffering.rates.single}
+            doublePrice={request.bookedOffering.rates.double}
+            animalSupport={request.bookedOffering.rates.animalSupport}
+            images={request.bookedOffering.images}
+            id={request.bookedOffering._id}
+            request={request}
+            paymentLink={request.bookedOffering.paymentLink}
+          />
         </div>
       )}
     </div>
