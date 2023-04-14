@@ -16,7 +16,15 @@ const props = {
     },
 };
 
-const UpdateHotelDetails = () => {
+const UpdateHotelDetails = ({offerings, setOfferings, key}) => {
+    const [files, setFiles] = React.useState([])
+    const [title, setTitle] = React.useState('')
+    const [description, setDescription] = React.useState('')
+    const [rates, setRates] = React.useState({
+        single: 0,
+        double: 0,
+        animalSupport: 0,
+    })
     return (
         <div className='col-xl-3 col-12 update-hotel-details d-flex flex-column gap-3'>
             <div className='upload-hotel-image d-flex flex-column w-100 gap-2'>
@@ -71,6 +79,10 @@ const UpdateHotelDetails = () => {
             <div className='d-flex flex-column gap-2 w-100'>
                 <label className='font-lato fw-semibold'>Add Payment Link.</label>
                 <input type='text' />
+            </div>
+            <div className='d-flex flex-column gap-2 w-100'>
+                {/* <label className='font-lato fw-semibold'>Add Payment Link.</label> */}
+                <Button type='primary'>Save</Button>
             </div>
         </div>
     )

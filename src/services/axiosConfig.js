@@ -2,7 +2,8 @@ import axios from "axios";
 import { getToken } from "../hooks/auth";
 
 const custAxios = axios.create({
-  baseURL: "https://logdn-revival-be-production.up.railway.app",
+  baseURL: "http://localhost:8001",
+  // baseURL: "https://logdn-revival-be-production.up.railway.app",
   headers: {
     "Content-Type": "application/json",
     Accept: "application/json",
