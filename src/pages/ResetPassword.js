@@ -42,82 +42,86 @@ const ResetPassword = () => {
 
   return (
     <div className="auth-container">
-      <BackButton />
+      <div className="auth-backBtn position-absolute start-0">
+        <BackButton />
+      </div>
       <div className="auth-inner">
-        <Typography.Title level={3}>Reset Password</Typography.Title>
-        <Typography.Paragraph>
-          Enter the token that has been sent to your email. If you haven't
-          received the email, please check your spam folder.
-        </Typography.Paragraph>
-        <Typography.Paragraph
-          style={{
-            color: "red",
-          }}
-        >
-          Note: The token will expire in 10 minutes.
-        </Typography.Paragraph>
         <Row className="auth-form">
-          <Form
-            className="ant-row"
-            onFinish={onFinish}
-            onFinishFailed={(errorInfo) => {
-              console.log("Failed:", errorInfo);
-            }}
-            style={{ width: "100%" }}
-            autoComplete="off"
-          >
-            <Col span={20}>
-              <Form.Item
-                name="token"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please input your email!",
-                  },
-                ]}
-              >
-                <Input type="number" placeholder="Token" />
-              </Form.Item>
-            </Col>
-            <Col span={20}>
-              <Form.Item
-                name="password"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please input your email!",
-                  },
-                ]}
-              >
-                <Input type="password" placeholder="Password" />
-              </Form.Item>
-            </Col>
-            <Col span={20}>
-              <Form.Item
-                name="confirmPassword"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please input your email!",
-                  },
-                ]}
-              >
-                <Input type="password" placeholder="Confirm Password" />
-              </Form.Item>
-            </Col>
-            <Col span={20}>
-              <Form.Item>
-                <Button
-                  type="primary"
-                  htmlType="submit"
-                  className="activeBtn"
-                  loading={loading}
+          <div className="col-8 col-sm-6 col-md-9 col-lg-8 col-xl-8">
+            <Typography.Title level={3}>Reset Password</Typography.Title>
+            <Typography.Paragraph>
+              Enter the token that has been sent to your email. If you haven't
+              received the email, please check your spam folder.
+            </Typography.Paragraph>
+            <Typography.Paragraph
+              style={{
+                color: "red",
+              }}
+            >
+              Note: The token will expire in 10 minutes.
+            </Typography.Paragraph>
+            <Form
+              className="ant-row"
+              onFinish={onFinish}
+              onFinishFailed={(errorInfo) => {
+                console.log("Failed:", errorInfo);
+              }}
+              style={{ width: "100%" }}
+              autoComplete="off"
+            >
+              <div className="col-12">
+                <Form.Item
+                  name="token"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please input your email!",
+                    },
+                  ]}
                 >
-                  Verify
-                </Button>
-              </Form.Item>
-            </Col>
-          </Form>
+                  <Input type="number" placeholder="Token" min={0} />
+                </Form.Item>
+              </div>
+              <div className="col-12">
+                <Form.Item
+                  name="password"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please input your email!",
+                    },
+                  ]}
+                >
+                  <Input type="password" placeholder="Password" />
+                </Form.Item>
+              </div>
+              <div className="col-12">
+                <Form.Item
+                  name="confirmPassword"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please input your email!",
+                    },
+                  ]}
+                >
+                  <Input type="password" placeholder="Confirm Password" />
+                </Form.Item>
+              </div>
+              <div className="col-12">
+                <Form.Item>
+                  <Button
+                    type="primary"
+                    htmlType="submit"
+                    className="activeBtn"
+                    loading={loading}
+                  >
+                    Verify
+                  </Button>
+                </Form.Item>
+              </div>
+            </Form>
+          </div>
         </Row>
       </div>
     </div>

@@ -31,7 +31,7 @@ const OngoingStays = () => {
     fetch();
   }, [dispatch]);
   return (
-    <div className="min-vh-100 w-100 px-lg-5 px-md-3 px-0 py-5">
+    <div className="min-vh-100 w-100 px-lg-5 px-md-3 px-4 py-5">
       <div className="d-flex flex-column gap-4 mt-md-0 mt-5">
         <h2 className="font-poppins mt-3 heading-green">
           You currently have {onGoing.length} ongoing stay
@@ -61,7 +61,7 @@ const OngoingStays = () => {
 
 const RequestComponent = ({ request }) => {
   return (
-    <div className="ongoingStays w-100 d-flex flex-column gap-5 rounded-container bg-white p-xl-5 p-lg-4 p-4 shadow">
+    <div className="ongoingStays w-100 d-flex flex-column gap-lg-5 gap-2 rounded-container bg-white p-xl-5 p-lg-4 p-4 shadow">
       <JobDetailsGrid
         jobLocation={request.location.string}
         start_date={moment(request.dateRange[0]).format("DD")}
@@ -75,7 +75,7 @@ const RequestComponent = ({ request }) => {
         double_rooms={request.roomRequirements.double}
       />
       <div className="row gap-3 mt-5 justify-content-center">
-        <div className="col-md-5 col-xl-4 col-lg-5 col-8 position-relative">
+        <div className="col-md-5 col-xl-4 col-lg-5 col-sm-8 col-12 position-relative">
           {/* <span className="rare-find-badge">Rare Find</span> */}
           <Card
             title={request.bookedOffering.title}
@@ -91,7 +91,7 @@ const RequestComponent = ({ request }) => {
           />
         </div>
         <div className="col-md-12 col-xl-7 col-lg-6 ms-3 d-flex flex-column align-items-lg-start align-items-center md-lg-0 mt-4">
-          <h3 className="font-lato fw-bold">
+          <h3 className="font-lato fw-bold text-md-start text-center">
             {moment(request.dateRange[0]).fromNow().replace(/^in /, "")} left on
             this Booking.
           </h3>

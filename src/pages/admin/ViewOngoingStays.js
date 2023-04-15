@@ -63,7 +63,7 @@ const ViewOngoingStays = () => {
 const RequestComponent = ({request}) => {
   return (
     <div className="d-flex flex-column gap-4 rounded-container bg-white p-5 position-relative">
-      <div className="d-flex justify-content-between align-items-center flex-wrap">
+      <div className="d-flex justify-content-md-between align-items-center flex-wrap items justify-content-center">
         <JobDetailsGrid
           jobLocation={request.location.string}
           // jobAddress="Sarasota,FL. 33178"
@@ -76,7 +76,7 @@ const RequestComponent = ({request}) => {
           double_rooms={request.roomRequirements.double}
           animalSupport={request.roomRequirements.animalSupport}
         />
-        <span>
+        <span className="mt-xxl-0 mt-5">
           <span className="fs-5 font-poppins fst-italic green-span text-md font-poppins fw-normal d-flex flex-column align-items-center gap-2">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -96,7 +96,7 @@ const RequestComponent = ({request}) => {
           </span>
         </span>
       </div>
-      <div className="d-flex justify-content-between flex-wrap gap-3">
+      <div className="d-flex justify-content-between align-items-center flex-wrap gap-3">
         <PaidPerNight singles={request.bookedOffering.rates.single} doubles={request.bookedOffering.rates.double} />
         <span className="completed-status">COMPLETED</span>
       </div>

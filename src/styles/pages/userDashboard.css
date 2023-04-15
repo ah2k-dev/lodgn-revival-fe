@@ -80,8 +80,20 @@
     padding-left: 10px;
 }
 
+.dashboard .details{
+    max-width: 75%;
+}
+
 .dashboard .details .detail {
-    max-width: 50%;
+    width: auto;
+}
+
+.dashboard .details .detail:first-child {
+    max-width: 40%;
+}
+
+.dashboard .details .detail:last-child {
+    max-width: 35%;
 }
 
 .loader {
@@ -120,11 +132,26 @@
     font-size: .75rem;
 }
 
-.dashboard .card-container {
+.dashboard .cards-container {
     display: grid;
-    grid-template-columns: auto auto auto;
     flex-wrap: wrap;
-    column-gap: 30px;
+}
+
+.dashboard .cards-container.columns-3 {
+    grid-template-columns: auto auto auto;
+    gap: 25px;
+    justify-content: space-between;
+}
+
+.dashboard .cards-container.columns-2 {
+    grid-template-columns: auto auto;
+    gap: 50px;
+    justify-content: center;
+}
+
+.dashboard .cards-container.columns-1 {
+    grid-template-columns: 40%;
+    justify-content: center;
 }
 
 .dashboard .detail-card .cards-footer {
@@ -148,6 +175,19 @@
     font-size: 2rem;
 }
 
+@media screen and (max-width: 1200px) {
+
+    .dashboard .cards-container.columns-3 {
+        grid-template-columns: 45% 45%;
+        gap: 50px;
+        justify-content: space-between;
+    }
+
+    .dashboard .details{
+        max-width: 100%;
+    }
+}
+
 @media screen and (max-width: 992px) {
     .dashboard .status .progress .progress-bar {
         font-size: .85rem;
@@ -156,18 +196,27 @@
     .dashboard .status span {
         font-size: .75rem;
     }
+
+    .dashboard .cards-container.columns-1 {
+        grid-template-columns: 60%;
+    }
 }
 
 @media screen and (max-width: 770px) {
     .dashboard h2 {
-      font-size: 1.4rem;
+        font-size: 1.4rem;
     }
+
     .dashboard .create-request-btn {
-      margin-top: -10px;
-      font-size: 1rem;
-      padding: 0 20px;
+        margin-top: -10px;
+        font-size: 1rem;
+        padding: 0 20px;
     }
-  }
+    .dashboard .cards-container.columns-3 {
+        grid-template-columns: 60%;
+        justify-content: center;
+    }
+}
 
 @media screen and (max-width: 660px) {
     .dashboard .details .detail {
@@ -180,12 +229,16 @@
         width: 100%;
         padding-bottom: 12px;
     }
+
     .dashboard .details .detail:last-child {
         border-bottom: none;
     }
-    .title, .description {
+
+    .title,
+    .description {
         text-align: center;
     }
+
     .details {
         width: 100%;
         justify-content: center;
@@ -193,25 +246,45 @@
         align-items: center;
         gap: 30px;
     }
+
     .details .detail .title {
         font-size: 1.2rem;
     }
+
     .dashboard h2 {
-      font-size: 1.25rem;
+        font-size: 1.25rem;
     }
+
     .dashboard .create-request-btn {
-      margin-top: -10px;
-      font-size: 1rem;
-      padding: 0 20px;
+        margin-top: -10px;
+        font-size: 1rem;
+        padding: 6px 20px;
     }
+
     .dashboard .create-request-btn {
         font-size: .85rem;
     }
+
     .dashboard .status span {
         font-size: .55rem;
         text-align: center;
     }
+
     .dashboard .status .progress .progress-bar {
         font-size: .6rem;
     }
-  }
+
+    .dashboard .cards-container.columns-1 {
+        grid-template-columns: 90%;
+    }
+    .dashboard .cards-container.columns-3 {
+        grid-template-columns: 90%;
+    }
+    .dashboard .details .detail:first-child {
+        max-width: 100%;
+    }
+    
+    .dashboard .details .detail:last-child {
+        max-width: 100%;
+    }
+}

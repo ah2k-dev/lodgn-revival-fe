@@ -86,17 +86,9 @@ const RequestComponent = ({ request }) => {
       {/* <span className='completed-status col-10 rounded-pill mt-4 py-2 px-4 text-white'>COMPLETED</span> */}
       {request.offerings.length > 0 &&
         !request.hasOwnProperty("bookedOffering") && (
-          <div className="card-container mt-4 justify-content-center">
+          <div className={`cards-container ${request.offerings.length >= 3 ? 'columns-3' : request.offerings.length === 2 ? 'columns-2' : 'columns-1'} mt-4 justify-content-center`}>
             {/* <div className="col-auto position-relative">
               <span className="rare-find-badge">Rare Find</span>
-              <Card
-                svgTxt="Holiday Inn"
-                distance={1.5}
-                singlePrice={120}
-                doublePrice={145}
-              />
-            </div> */}
-            {/* <div className="col-auto">
               <Card
                 svgTxt="Holiday Inn"
                 distance={1.5}
@@ -122,8 +114,9 @@ const RequestComponent = ({ request }) => {
             ))}
           </div>
         )}
-        {request.hasOwnProperty("bookedOffering") && (
-          <div className="card position-relative">
+      {request.hasOwnProperty("bookedOffering") && (
+        <div className={`cards-container columns-1 mt-4 justify-content-center`}>
+          <div className="position-relative">
             <span className="rare-find-badge">Booked</span>
             <Card
               title={request.bookedOffering.title}
@@ -138,7 +131,8 @@ const RequestComponent = ({ request }) => {
               paymentLink={request.bookedOffering.paymentLink}
             />
           </div>
-        )}
+        </div>
+      )}
     </div>
   );
 };
