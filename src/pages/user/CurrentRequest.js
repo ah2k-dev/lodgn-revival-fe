@@ -86,7 +86,7 @@ const RequestComponent = ({ request }) => {
       {/* <span className='completed-status col-10 rounded-pill mt-4 py-2 px-4 text-white'>COMPLETED</span> */}
       {request.offerings.length > 0 &&
         !request.hasOwnProperty("bookedOffering") && (
-          <div className="row mt-4 gap-0 justify-content-between">
+          <div className="card-container mt-4 justify-content-center">
             {/* <div className="col-auto position-relative">
               <span className="rare-find-badge">Rare Find</span>
               <Card
@@ -105,7 +105,7 @@ const RequestComponent = ({ request }) => {
               />
             </div> */}
             {request.offerings.map((offering, i) => (
-              <div className="col-auto" key={i}>
+              <div className="card" key={i}>
                 <Card
                   title={offering.title}
                   description={offering.description}
@@ -123,7 +123,7 @@ const RequestComponent = ({ request }) => {
           </div>
         )}
         {request.hasOwnProperty("bookedOffering") && (
-          <div className="col-auto position-relative">
+          <div className="card position-relative">
             <span className="rare-find-badge">Booked</span>
             <Card
               title={request.bookedOffering.title}

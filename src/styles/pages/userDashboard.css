@@ -6,6 +6,11 @@
     /* padding-right: 20px; */
 }
 
+.payment {
+    max-width: 100vw;
+    width: 100%;
+}
+
 .dashboard h2 {
     color: #72AA83;
     font-size: 1.5rem;
@@ -95,6 +100,10 @@
     background-color: #44A16F;
 }
 
+.dashboard .detail-card .book-now-btn span {
+    color: white;
+}
+
 .dashboard .detail-card .svg-span {
     color: #85C371 !important;
     font-style: italic;
@@ -109,6 +118,13 @@
 
 .dashboard .detail-card .price-span {
     font-size: .75rem;
+}
+
+.dashboard .card-container {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    flex-wrap: wrap;
+    column-gap: 30px;
 }
 
 .dashboard .detail-card .cards-footer {

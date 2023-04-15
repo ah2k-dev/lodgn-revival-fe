@@ -2,6 +2,7 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import { bookOffer } from "../../actions/requestActions";
+import { Button } from "antd";
 
 const Card = (props) => {
   const location = useLocation();
@@ -51,26 +52,24 @@ const Card = (props) => {
         </span>
         <span className="text-sm">{description}</span>
         {location.pathname !== "/dashboard/user/ongoing-stays" ? (
-          <span className="d-flex justify-content-between align-items-center w-100">
-            <span className="d-flex flex-wrap justify-content-center gap-2 text-xs">
+          <span className="d-flex justify-content-center align-items-center w-100">
+            <span className="d-flex justify-content-center gap-2 text-xs">
               <span className="price-span">Singles: ${singlePrice}</span>
               <span className="price-span">Doubles: ${doublePrice}</span>
-              <span className="price-span">
-                Animal Support: ${animalSupport}
-              </span>
+              <span className="price-span">Animal Support: {animalSupport}</span>
             </span>
         {/* handleBook is temp solution to book request as payment flow is pending*/}
             {!request.hasOwnProperty('bookedOffering') && (
-                <Link to="/dashboard/user/payment" onClick={() => handleBook()}> 
-                <span className="px-4 py-2 rounded-3 book-now-btn text-white">
-                  Book now
-                </span>
+                <Link to="/dashboard/user/payment" onClick={() => handleBook()}>
+                  <Button className='book-now-btn text-white'>
+                    Book now
+                  </Button>
               </Link>
             )}
           </span>
         ) : (
           <span className="d-flex justify-content-center align-items-center w-100">
-            <span className="d-flex flex-wrap justify-content-center gap-4 text-xs">
+            <span className="d-flex flex-column flex-wrap flex-wrap justify-content-center gap-4 text-xs">
               <span className="price-span">Singles: ${singlePrice}</span>
               <span className="price-span">Doubles: ${doublePrice}</span>
             </span>

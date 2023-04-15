@@ -31,55 +31,51 @@ const OngoingStays = () => {
     fetch();
   }, [dispatch]);
   return (
-    <div className="min-vh-100 w-100 p-lg-5 p-md-3 p-0">
-      <div className="row px-4">
-        <div className="col-auto">
-          <div className="d-flex flex-column gap-4 mt-md-0 mt-5">
-            <h2 className="font-poppins mt-3 heading-green">
-              You currently have {onGoing.length} ongoing stay
-            </h2>
+    <div className="min-vh-100 w-100 px-lg-5 px-md-3 px-0 py-5">
+      <div className="d-flex flex-column gap-4 mt-md-0 mt-5">
+        <h2 className="font-poppins mt-3 heading-green">
+          You currently have {onGoing.length} ongoing stay
+        </h2>
 
-            {loading ? (
-              <div className="loader w-100 d-flex justify-content-center align-items-center">
-                <LoadingOutlined style={{ fontSize: 65 }} spin />
-              </div>
-            ) : (
-              <>
-                {onGoing.length > 0 ? (
-                  onGoing.map((request, i) => (
-                    <RequestComponent request={request} key={i} />
-                  ))
-                ) : (
-                  <div className="d-flex flex-column justify-content-center align-items-center">
-                    <h2 className="font-poppins">No ongoing stays</h2>
-                  </div>
-                )}
-              </>
-            )}
+        {loading ? (
+          <div className="loader w-100 d-flex justify-content-center align-items-center">
+            <LoadingOutlined style={{ fontSize: 65 }} spin />
           </div>
-        </div>
+        ) : (
+          <>
+            {onGoing.length > 0 ? (
+              onGoing.map((request, i) => (
+                <RequestComponent request={request} key={i} />
+              ))
+            ) : (
+              <div className="d-flex flex-column justify-content-center align-items-center">
+                <h2 className="font-poppins">No ongoing stays</h2>
+              </div>
+            )}
+          </>
+        )}
       </div>
     </div>
   );
 };
 
-const RequestComponent = ({
-  request
-}) => {
+const RequestComponent = ({ request }) => {
   return (
-    <div className="ongoingStays d-flex flex-column gap-5 rounded-container bg-white p-xl-5 p-lg-4 p-4 shadow">
+    <div className="ongoingStays w-100 d-flex flex-column gap-5 rounded-container bg-white p-xl-5 p-lg-4 p-4 shadow">
       <JobDetailsGrid
         jobLocation={request.location.string}
         start_date={moment(request.dateRange[0]).format("DD")}
         end_date={moment(request.dateRange[1]).format("DD")}
         start_date_month={moment(request.dateRange[0]).format("MMMM")}
         end_date_month={moment(request.dateRange[1]).format("MMMM")}
-        total_rooms={request.roomRequirements.single + request.roomRequirements.double}
+        total_rooms={
+          request.roomRequirements.single + request.roomRequirements.double
+        }
         single_rooms={request.roomRequirements.single}
         double_rooms={request.roomRequirements.double}
       />
       <div className="row gap-3 mt-5 justify-content-center">
-        <div className="col-md-5 col-lg-5 col-8 position-relative">
+        <div className="col-md-5 col-xl-4 col-lg-5 col-8 position-relative">
           {/* <span className="rare-find-badge">Rare Find</span> */}
           <Card
             title={request.bookedOffering.title}
@@ -94,8 +90,11 @@ const RequestComponent = ({
             paymentLink={request.bookedOffering.paymentLink}
           />
         </div>
-        <div className="col-md-12 col-lg-6 ms-3 d-flex flex-column align-items-center mt-md-4">
-          <h3 className="font-lato fw-bold">{moment(request.dateRange[0]).fromNow().replace(/^in /, '')} left on this Booking.</h3>
+        <div className="col-md-12 col-xl-7 col-lg-6 ms-3 d-flex flex-column align-items-lg-start align-items-center md-lg-0 mt-4">
+          <h3 className="font-lato fw-bold">
+            {moment(request.dateRange[0]).fromNow().replace(/^in /, "")} left on
+            this Booking.
+          </h3>
           <div>
             <span className="green-span fs-6 font-poppins">Quick actions:</span>
             <div className="mt-4 btns d-flex flex-wrap gap-3">
