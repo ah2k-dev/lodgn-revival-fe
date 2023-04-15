@@ -87,7 +87,7 @@ const RequestComponent = ({ request }) => {
       {request.offerings.length > 0 &&
         !request.hasOwnProperty("bookedOffering") && (
           <div className="row mt-4 gap-0 justify-content-between">
-            <div className="col-auto position-relative">
+            {/* <div className="col-auto position-relative">
               <span className="rare-find-badge">Rare Find</span>
               <Card
                 svgTxt="Holiday Inn"
@@ -95,23 +95,48 @@ const RequestComponent = ({ request }) => {
                 singlePrice={120}
                 doublePrice={145}
               />
-            </div>
-            <div className="col-auto">
+            </div> */}
+            {/* <div className="col-auto">
               <Card
                 svgTxt="Holiday Inn"
                 distance={1.5}
                 singlePrice={120}
                 doublePrice={145}
               />
-            </div>
-            <div className="col-auto">
-              <Card
-                svgTxt="Holiday Inn"
-                distance={1.5}
-                singlePrice={120}
-                doublePrice={145}
-              />
-            </div>
+            </div> */}
+            {request.offerings.map((offering, i) => (
+              <div className="col-auto" key={i}>
+                <Card
+                  title={offering.title}
+                  description={offering.description}
+                  distance={1.5}
+                  singlePrice={offering.rates.single}
+                  doublePrice={offering.rates.double}
+                  animalSupport={offering.rates.animalSupport}
+                  images={offering.images}
+                  id={offering._id}
+                  request={request}
+                  paymentLink={offering.paymentLink}
+                />
+              </div>
+            ))}
+          </div>
+        )}
+        {request.hasOwnProperty("bookedOffering") && (
+          <div className="col-auto position-relative">
+            <span className="rare-find-badge">Booked</span>
+            <Card
+              title={request.bookedOffering.title}
+              description={request.bookedOffering.description}
+              distance={1.5}
+              singlePrice={request.bookedOffering.rates.single}
+              doublePrice={request.bookedOffering.rates.double}
+              animalSupport={request.bookedOffering.rates.animalSupport}
+              images={request.bookedOffering.images}
+              id={request.bookedOffering._id}
+              request={request}
+              paymentLink={request.bookedOffering.paymentLink}
+            />
           </div>
         )}
     </div>

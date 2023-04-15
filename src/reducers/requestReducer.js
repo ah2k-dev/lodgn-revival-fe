@@ -17,12 +17,14 @@ export const requestReducer = (state = initialState, action) => {
     case requestConstants.DELETE_REQUEST_REQUEST:
     case requestConstants.GET_ONGOING_REQUESTS_REQUEST:
     case requestConstants.CHANGE_STATUS_REQUEST:
+    case requestConstants.BOOK_OFFER_REQUEST:
       return {
         ...state,
         loading: true,
       };
 
     case requestConstants.CREATE_REQUEST_SUCCESS:
+    case requestConstants.BOOK_OFFER_SUCCESS:
       return {
         ...state,
         loading: false,
@@ -69,6 +71,7 @@ export const requestReducer = (state = initialState, action) => {
     case requestConstants.DELETE_REQUEST_FAILURE:
     case requestConstants.GET_ONGOING_REQUESTS_FAILURE:
     case requestConstants.CHANGE_STATUS_FAILURE:
+    case requestConstants.BOOK_OFFER_FAILURE:
       return {
         ...state,
         loading: false,

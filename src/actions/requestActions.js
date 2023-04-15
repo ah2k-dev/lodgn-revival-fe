@@ -190,6 +190,40 @@ export const getOngoingRequests = () => async (dispatch) => {
   }
 };
 
+export const bookOffer = (request, offering) => async (dispatch) => {
+  dispatch({
+    type: requestConstants.BOOK_OFFER_REQUEST,
+  });
+  try {
+    attachToken();
+    const res = await custAxios.post("/booking/bookOffer", {
+      requestId: request,
+      offering,
+    });
+    if (res) {
+      dispatch({
+        type: requestConstants.BOOK_OFFER_SUCCESS,
+        payload: res.data.data,
+      });
+      message.success({
+        content: "Offer Booked Successfully",
+        style: {
+          marginTop: "10vh",
+        },
+      });
+      dispatch(getRequests());
+      return true;
+    }
+    return true;
+  } catch (error) {
+    dispatch({
+      type: requestConstants.BOOK_OFFER_FAILURE,
+      payload: error.response.data.message || "Server Error",
+    });
+  }
+};
+
+
 export const clearErrors = () => async (dispatch) => {
   dispatch({
     type: requestConstants.CLEAR_ERRORS,

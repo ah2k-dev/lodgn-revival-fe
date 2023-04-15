@@ -6,6 +6,9 @@ import PaidPerNight from "../../components/layout/PaidPerNight";
 import { useDispatch, useSelector } from "react-redux";
 import { message } from "antd";
 import { clearErrors, getOngoingRequests } from "../../actions/requestActions";
+import { LoadingOutlined } from "@ant-design/icons";
+import moment from "moment";
+
 
 const ViewOngoingStays = () => {
   const dispatch = useDispatch();
@@ -35,26 +38,43 @@ const ViewOngoingStays = () => {
         <h2 className="font-poppins mt-4 heading-green">
           These are the current client stays
         </h2>
-        <RequestComponent />
+        {loading ? (
+          <div className="loader w-100 d-flex justify-content-center align-items-center">
+            <LoadingOutlined style={{ fontSize: 65 }} spin />
+          </div>
+        ) : (
+          <>
+          {onGoing.length > 0 ? (
+            onGoing.map((request, i) => (
+              <RequestComponent request={request} key={i} />
+            ))
+          ) : (
+            <div className="d-flex flex-column justify-content-center align-items-center">
+              <h2 className="font-poppins">No ongoing stays</h2>
+              </div>
+          )}
+          </>
+        )}
       </div>
     </div>
   );
 };
 
-const RequestComponent = () => {
+const RequestComponent = ({request}) => {
   return (
     <div className="d-flex flex-column gap-4 rounded-container bg-white p-5 position-relative">
       <div className="d-flex justify-content-between align-items-center flex-wrap">
         <JobDetailsGrid
-          jobLocation="St Judes Hospital"
-          jobAddress="Sarasota,FL. 33178"
-          start_date={10}
-          end_date={17}
-          start_date_month="October"
-          end_date_month="December"
-          total_rooms={20}
-          single_rooms={10}
-          double_rooms={10}
+          jobLocation={request.location.string}
+          // jobAddress="Sarasota,FL. 33178"
+          start_date={moment(request.dateRange[0]).format("DD")}
+          end_date={moment(request.dateRange[1]).format("DD")}
+          start_date_month={moment(request.dateRange[0]).format("MMM")}
+          end_date_month={moment(request.dateRange[1]).format("MMM")}
+          total_rooms={request.roomRequirements.single + request.roomRequirements.double}
+          single_rooms={request.roomRequirements.single}
+          double_rooms={request.roomRequirements.double}
+          animalSupport={request.roomRequirements.animalSupport}
         />
         <span>
           <span className="fs-5 font-poppins fst-italic green-span text-md font-poppins fw-normal d-flex flex-column align-items-center gap-2">
@@ -77,11 +97,11 @@ const RequestComponent = () => {
         </span>
       </div>
       <div className="d-flex justify-content-between flex-wrap gap-3">
-        <PaidPerNight singles={120} doubles={145} />
+        <PaidPerNight singles={request.bookedOffering.rates.single} doubles={request.bookedOffering.rates.double} />
         <span className="completed-status">COMPLETED</span>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default ViewOngoingStays;
