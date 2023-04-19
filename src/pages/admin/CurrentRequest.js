@@ -133,7 +133,7 @@ const RequestComponent = ({ request, status, index }) => {
           // <button className="update-status-btn py-2 px-5 font-poppins text-white" onClick={handleUpdate}>
           //   Update
           // </button>
-          <Button
+          <Button className="update-status-btn"
             loading={loading}
             onClick={() => handleUpdate(request._id)}
             disabled={newStatus === "completed" && offerings.length == 0}
@@ -229,20 +229,22 @@ const RequestComponent = ({ request, status, index }) => {
         </div>
       )}
       {request.hasOwnProperty("bookedOffering") && (
-        <div className="col-auto position-relative">
-          <span className="rare-find-badge">Booked</span>
-          <Card
-            title={request.bookedOffering.title}
-            description={request.bookedOffering.description}
-            distance={1.5}
-            singlePrice={request.bookedOffering.rates.single}
-            doublePrice={request.bookedOffering.rates.double}
-            animalSupport={request.bookedOffering.rates.animalSupport}
-            images={request.bookedOffering.images}
-            id={request.bookedOffering._id}
-            request={request}
-            paymentLink={request.bookedOffering.paymentLink}
-          />
+        <div className="cards-container columns-1 mt-4 justify-content-center">
+          <div className="position-relative">
+            <span className="rare-find-badge">Booked</span>
+            <Card
+              title={request.bookedOffering.title}
+              description={request.bookedOffering.description}
+              distance={1.5}
+              singlePrice={request.bookedOffering.rates.single}
+              doublePrice={request.bookedOffering.rates.double}
+              animalSupport={request.bookedOffering.rates.animalSupport}
+              images={request.bookedOffering.images}
+              id={request.bookedOffering._id}
+              request={request}
+              paymentLink={request.bookedOffering.paymentLink}
+            />
+          </div>
         </div>
       )}
     </div>

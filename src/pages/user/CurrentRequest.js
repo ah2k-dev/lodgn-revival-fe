@@ -15,6 +15,8 @@ const CurrentRequest = () => {
   const dispatch = useDispatch();
   const { error, loading, requests } = useSelector((state) => state.request);
 
+  // console.log(requests);
+
   useEffect(() => {
     dispatch(getRequests());
   }, [dispatch]);
@@ -78,6 +80,7 @@ const RequestComponent = ({ request }) => {
           }
           single_rooms={request.roomRequirements.single}
           double_rooms={request.roomRequirements.double}
+          animalSupport={request.roomRequirements.animalSupport}
         />
         <div className="mt-4">
           <ProgressBar requestStatus={request?.status} />
@@ -107,6 +110,7 @@ const RequestComponent = ({ request }) => {
                   animalSupport={offering.rates.animalSupport}
                   images={offering.images}
                   id={offering._id}
+                  
                   request={request}
                   paymentLink={offering.paymentLink}
                 />

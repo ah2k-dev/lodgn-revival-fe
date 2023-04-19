@@ -57,24 +57,24 @@ const Card = (props) => {
         {location.pathname !== "/dashboard/user/ongoing-stays" ? (
           <span className="d-flex justify-content-center gap-2 align-items-center w-100">
             <span className={`d-flex ${!request.hasOwnProperty('bookedOffering') && 'flex-column'} justify-content-center gap-2 text-xs`}>
-              <span className="price-span">Singles: ${singlePrice}</span>
-              <span className="price-span">Doubles: ${doublePrice}</span>
-              <span className="price-span">Animal Support: {animalSupport}</span>
+              {singlePrice ? <span className="price-span">Singles: ${singlePrice}</span> : null}
+              {doublePrice ? <span className="price-span">Doubles: ${doublePrice}</span> : null}
+              {animalSupport ? <span className="price-span">Animal Support: ${animalSupport}</span> : null}
             </span>
-        {/* handleBook is temp solution to book request as payment flow is pending*/}
+            {/* handleBook is temp solution to book request as payment flow is pending*/}
             {!request.hasOwnProperty('bookedOffering') && (
-                <Link to="/dashboard/user/payment" onClick={() => handleBook()}>
-                  <Button className='book-now-btn text-white'>
-                    Book now
-                  </Button>
+              <Link to="/dashboard/user/payment" onClick={() => handleBook()}>
+                <Button className='book-now-btn text-white'>
+                  Book now
+                </Button>
               </Link>
             )}
           </span>
         ) : (
           <span className="d-flex justify-content-center align-items-center w-100">
             <span className="d-flex flex-column flex-wrap flex-wrap justify-content-center gap-4 text-xs">
-              <span className="price-span">Singles: ${singlePrice}</span>
-              <span className="price-span">Doubles: ${doublePrice}</span>
+            {singlePrice ? <span className="price-span">Singles: ${singlePrice}</span> : null}
+              {doublePrice ? <span className="price-span">Doubles: ${doublePrice}</span> : null}
             </span>
           </span>
         )}

@@ -28,6 +28,12 @@
     align-items: center;
 }
 
+.footer-container button:hover {
+    background: transparent;
+    border: 1px solid #42996B;
+    color: #42996B;
+}
+
 .details {
     display: flex !important;
 }

@@ -29,22 +29,62 @@
 }
 
 .confirm-changes-btn {
-    background-color: #4FB27C;
+    background: linear-gradient(180deg, #48AF78 0%, #42996B 100%) !important;
+    border-radius: 4px;
+    font-weight: 600;
+    min-height: 40px;
+    transition: .5s ease-in-out;
+}
+
+.confirm-changes-btn span {
+    color: white;
+}
+
+.confirm-changes-btn:hover {
+    background: transparent !important;
+}
+
+.confirm-changes-btn:hover span {
+    color: #42996B;
+}
+
+.upload-roster-btn .ant-upload.ant-upload-select  {
+    width: 100%;
+}
+
+.upload-roster-btn button  {
+    width: 100%;
+}
+
+.upload-roster-btn span {
+    font-size: .75rem;
 }
 
 .updateDate {
-    font-size: 1rem;
+    font-size: .9rem;
     border-radius: 14px;
     cursor: pointer;
 }
 
-.updateDate .ant-picker-range {
+.updateDate .ant-picker {
     opacity: 0;
+    cursor: pointer;
 }
 
+@media screen and (max-width: 1300px) {
+    .updateDate {
+        font-size: .75rem;
+    }
+    .upload-roster-btn span {
+        font-size: .65rem;
+    }
+}
 @media screen and (max-width: 1200px) {
     .ongoingStays .btns button {
         padding: 0 18px;
+    }
+    .updateDate {
+        font-size: .75rem;
     }
 }
 

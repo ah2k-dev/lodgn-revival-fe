@@ -8,7 +8,7 @@
     transform: scale(1.8);
 }
 
-.update-status input[type='radio']:checked:after {
+/* .update-status input[type='radio']:checked:after {
     width: 9px;
     height: 9px;
     border-radius: 15px;
@@ -21,26 +21,14 @@
     outline: 1px solid #494949;
     outline-offset: 1px;
     background-color: #494949;
-}
+} */
 
 .update-status {
     margin-top: 3rem;
 }
 
-.update-status .status-1 {
-    color: #FDF307;
-}
-
-.update-status .status-2 {
-    color: #07A4FD;
-}
-
-.update-status .status-3 {
-    color: #4cd88d;
-}
-
 .update-status .status-yellow {
-    color: #FDF307;
+    color: #d5cc00;
 }
 
 .update-status .status-blue {
@@ -55,11 +43,19 @@
     cursor: pointer;
 }
 
-.update-status-btn {
-    background: linear-gradient(180deg, #5BA343 0%, rgba(91, 163, 67, 0.77) 100%);
+.admin-page .update-status-btn {
+    background: linear-gradient(180deg, #48AF78 0%, #42996B 100%);
+    color: white;
+    border-radius: 4px;
+    min-height: 40px;
+    min-width: 100px;
     border: none;
     font-weight: 600;
-    border-radius: 10px;
+    transition: .5s ease-in-out;
+}
+
+.admin-page .update-status-btn:hover {
+    border: 1px solid #42996B;
 }
 
 .update-hotel-details label {
@@ -95,16 +91,27 @@
 }
 
 .update-hotel-details .saveBtn button {
-    background-color: #48AF78 !important;
+    background: linear-gradient(180deg, #48AF78 0%, #42996B 100%);
+    border-radius: 4px;
+    border: none;
+    font-weight: 600;
+    min-height: 40px;
+    transition: .5s ease-in-out;
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 40px;
 }
 
-/* .update-hotel-details .saveBtn button span {
-    padding: 15px 25px;
-} */
+.update-hotel-details .saveBtn button span {
+    background-color: transparent;
+}
+
+.update-hotel-details .saveBtn button:hover {
+   border: solid 1px #42996B;
+   color: #42996B !important;
+   background: transparent !important;
+   background-color: transparent !important;
+}
 
 span.completed-status {
     background: linear-gradient(180deg, #5BA343 0%, rgba(91, 163, 67, 0.77) 100%);
@@ -129,10 +136,10 @@ span.completed-status {
     .update-status label {
         font-size: 1rem;
     }
-    .update-status input[type='radio']:checked:after {
+    /* .update-status input[type='radio']:checked:after {
         top: -8px;
         left: 2px;
-    }
+    } */
     .update-hotel-details .saveBtn {
         margin-bottom: 20px;
     }

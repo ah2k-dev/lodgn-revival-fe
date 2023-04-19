@@ -86,7 +86,7 @@ const Footer = () => {
           <Button
             disabled={center.search === "" || totalRooms === 0}
             loading={loading}
-            className="px-3"
+            className="px-3 confirm-btn"
             onClick={
               location.pathname === "/"
                 ? () => {

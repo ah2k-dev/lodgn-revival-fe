@@ -26,6 +26,13 @@
     color: white;
     padding: 0 25px;
     margin-top: -20px;
+    transition: ease-in-out .5s;
+}
+
+.dashboard .create-request-btn:hover {
+    background: transparent;
+    border: 1px solid #42996B;
+    color: #42996B;
 }
 
 .dashboard .status {
@@ -109,11 +116,25 @@
 }
 
 .dashboard .detail-card .book-now-btn {
-    background-color: #44A16F;
+    background: linear-gradient(180deg, #48AF78 0%, #42996B 100%);
+    border-radius: 4px;
+    font-weight: 600;
+    min-height: 20px;
+    margin-left: 5px;
+    transition: .5s ease-in-out;
 }
 
 .dashboard .detail-card .book-now-btn span {
     color: white;
+}
+
+.dashboard .detail-card .book-now-btn:hover {
+    background: transparent;
+    color: #42996B;
+}
+
+.dashboard .detail-card .book-now-btn:hover span {
+    color: #42996B;
 }
 
 .dashboard .detail-card .svg-span {

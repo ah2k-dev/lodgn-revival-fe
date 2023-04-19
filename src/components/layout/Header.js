@@ -288,7 +288,7 @@ const Header = () => {
           </div>
         </div>
       ) : null}
-      {!auth && location.pathname === '/' ? <a className="login-icon" onClick={() => navigate("/auth")}>
+      {location.pathname === '/' ? <a className="login-icon" onClick={() => navigate("/auth")}>
         <FaUserAlt className="header-icons" />
       </a> : null}
     </Row>

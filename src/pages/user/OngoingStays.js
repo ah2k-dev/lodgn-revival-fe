@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Card from "../../components/layout/Card";
 import JobDetailsGrid from "../../components/layout/JobDetailsGrid";
 import { useDispatch, useSelector } from "react-redux";
@@ -10,7 +10,9 @@ import moment from "moment";
 
 const OngoingStays = () => {
   const dispatch = useDispatch();
+
   const { error, loading, onGoing } = useSelector((state) => state.request);
+
   useEffect(() => {
     if (error) {
       message.error({
@@ -60,6 +62,9 @@ const OngoingStays = () => {
 };
 
 const RequestComponent = ({ request }) => {
+
+  const navigate = useNavigate();
+
   return (
     <div className="ongoingStays w-100 d-flex flex-column gap-lg-5 gap-2 rounded-container bg-white p-xl-5 p-lg-4 p-4 shadow">
       <JobDetailsGrid
@@ -98,11 +103,9 @@ const RequestComponent = ({ request }) => {
           <div>
             <span className="green-span fs-6 font-poppins">Quick actions:</span>
             <div className="mt-4 btns d-flex flex-wrap gap-3">
-              <Link to="/dashboard/user/update-stay">
-                <Button className="update-btn font-poppins text-white">
-                  Update stay
-                </Button>
-              </Link>
+              <Button className="update-btn font-poppins text-white" onClick={()=> navigate('/dashboard/user/update-stay', { state: request }) }>
+                Update stay
+              </Button>
               <Link>
                 <Button className="rebook-btn font-poppins text-white">
                   Rebook stay
