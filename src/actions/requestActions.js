@@ -74,36 +74,6 @@ export const getRequests = () => async (dispatch) => {
   }
 };
 
-export const updateRequest = (id, data) => async (dispatch) => {
-  dispatch({
-    type: requestConstants.UPDATE_REQUEST_REQUEST,
-  });
-  try {
-    attachToken();
-    const res = await custAxios.put(`/requests/${id}`, data);
-    if (res) {
-      dispatch({
-        type: requestConstants.UPDATE_REQUEST_SUCCESS,
-        payload: res.data.data,
-      });
-      message.success({
-        content: "Request Updated Successfully",
-        style: {
-          marginTop: "10vh",
-        },
-      });
-      dispatch(getOneRequest(id));
-      return true;
-    }
-    return true;
-  } catch (error) {
-    dispatch({
-      type: requestConstants.UPDATE_REQUEST_FAILURE,
-      payload: error.response.data.message || "Server Error",
-    });
-  }
-};
-
 export const deleteRequest = (id) => async (dispatch) => {
   dispatch({
     type: requestConstants.DELETE_REQUEST_REQUEST,
@@ -167,7 +137,7 @@ export const changeStatus = (id, data) => async (dispatch) => {
         marginTop: "10vh",
       },
     });
-    dispatch(clearErrors())
+    dispatch(clearErrors());
   }
 };
 
@@ -223,6 +193,145 @@ export const bookOffer = (request, offering) => async (dispatch) => {
   }
 };
 
+export const getPreviousStays = () => async (dispatch) => {
+  dispatch({
+    type: requestConstants.GET_PREVIOUS_STAYS_REQUEST,
+  });
+  try {
+    attachToken();
+    const res = await custAxios.get("/requests/getPreviousStays");
+    dispatch({
+      type: requestConstants.GET_PREVIOUS_STAYS_SUCCESS,
+      payload: res.data.data.stays,
+    });
+  } catch (error) {
+    console.log(error);
+    dispatch({
+      type: requestConstants.GET_PREVIOUS_STAYS_FAILURE,
+      payload: error.response.data.message || "Server Error",
+    });
+  }
+};
+
+export const updateRequest = (id, data) => async (dispatch) => {
+  dispatch({
+    type: requestConstants.UPDATE_REQUEST_REQUEST,
+  });
+  try {
+    attachToken();
+    const res = await custAxios.post(`/booking/requestUpdate`, data);
+    if (res) {
+      dispatch({
+        type: requestConstants.UPDATE_REQUEST_SUCCESS,
+        payload: res.data.data,
+      });
+      message.success({
+        content: "Request Updated Successfully",
+        style: {
+          marginTop: "10vh",
+        },
+      });
+      // dispatch(getOneRequest(id));
+      return true;
+    }
+    return true;
+  } catch (error) {
+    dispatch({
+      type: requestConstants.UPDATE_REQUEST_FAILURE,
+      payload: error.response.data.message || "Server Error",
+    });
+  }
+};
+
+export const approveRejectUpdate = (data) => async (dispatch) => {
+  dispatch({
+    type: requestConstants.APPROVE_REJECT_UPDATE_REQUEST,
+  });
+  try {
+    attachToken();
+    const res = await custAxios.post(`/booking/approveRejectUpdate`, data);
+    if (res) {
+      dispatch({
+        type: requestConstants.APPROVE_REJECT_UPDATE_SUCCESS,
+        payload: res.data.data,
+      });
+      message.success({
+        content: "Request Updated Successfully",
+        style: {
+          marginTop: "10vh",
+        },
+      });
+      // dispatch(getOneRequest(id));
+      return true;
+    }
+    // return true;
+  } catch (error) {
+    dispatch({
+      type: requestConstants.APPROVE_REJECT_UPDATE_FAILURE,
+      payload: error.response.data.message || "Server Error",
+    });
+  }
+};
+
+export const getRequestUpdates = () => async (dispatch) => {
+  dispatch({
+    type: requestConstants.GET_REQUEST_UPDATES_REQUEST,
+  });
+  try {
+    attachToken();
+    const res = await custAxios.get(`/booking/getRequestUpdates`);
+    if (res) {
+      dispatch({
+        type: requestConstants.GET_REQUEST_UPDATES_SUCCESS,
+        payload: res.data.data.updates,
+      });
+      // message.success({
+      //   content: "Request Updated Successfully",
+      //   style: {
+      //     marginTop: "10vh",
+      //   },
+      // });
+      // dispatch(getOneRequest(id));
+      return true;
+    }
+    // return true;
+  } catch (error) {
+    dispatch({
+      type: requestConstants.GET_REQUEST_UPDATES_FAILURE,
+      payload: error.response.data.message || "Server Error",
+    });
+  }
+};
+
+export const getRejectedReuests = () => async (dispatch) => {
+  dispatch({
+    type: requestConstants.GET_REJECTED_REQUESTS_REQUEST,
+  });
+  try {
+    attachToken();
+    const res = await custAxios.get(`/booking/getRejectedRequests`);
+    if (res) {
+      dispatch({
+        type: requestConstants.GET_REJECTED_REQUESTS_SUCCESS,
+        payload: res.data.data.requests,
+      });
+      // message.success({
+      //   content: "Request Updated Successfully",
+      //   style: {
+      //     marginTop: "10vh",
+      //   },
+      // });
+      // dispatch(getOneRequest(id));
+      return true;
+    }
+    // return true;
+  } catch (error) {
+    dispatch({
+      type: requestConstants.GET_REJECTED_REQUESTS_FAILURE,
+      payload: error.response.data.message || "Server Error",
+    });
+  }
+};
 
 export const clearErrors = () => async (dispatch) => {
   dispatch({
