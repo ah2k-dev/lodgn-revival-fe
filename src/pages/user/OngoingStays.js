@@ -104,14 +104,12 @@ const RequestComponent = ({ request }) => {
           <div>
             <span className="green-span fs-6 font-poppins">Quick actions:</span>
             <div className="mt-4 btns d-flex flex-wrap gap-3">
-              <Button className="update-btn font-poppins text-white" onClick={()=> navigate('/dashboard/user/update-stay', { state: request }) }>
+              <Button className="update-btn font-poppins text-white" onClick={() => navigate('/dashboard/user/update-stay', { state: request })}>
                 Update stay
               </Button>
-              <Link>
-                <Button className="rebook-btn font-poppins text-white">
-                  Rebook stay
-                </Button>
-              </Link>
+              <Button onClick={() => navigate('/dashboard/user/create-request', { state: request })} className="rebook-btn font-poppins text-white">
+                Rebook stay
+              </Button>
             </div>
           </div>
         </div>
