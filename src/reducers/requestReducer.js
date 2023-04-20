@@ -4,6 +4,9 @@ const initialState = {
   requests: [],
   onGoing: [],
   request: {},
+  previousStays: [],
+  requestedUpdates: [],
+  rejected: [],
   loading: false,
   error: null,
 };
@@ -18,6 +21,10 @@ export const requestReducer = (state = initialState, action) => {
     case requestConstants.GET_ONGOING_REQUESTS_REQUEST:
     case requestConstants.CHANGE_STATUS_REQUEST:
     case requestConstants.BOOK_OFFER_REQUEST:
+    case requestConstants.GET_PREVIOUS_STAYS_REQUEST:
+    case requestConstants.GET_REQUEST_UPDATES_REQUEST:
+    case requestConstants.APPROVE_REJECT_UPDATE_REQUEST:
+    case requestConstants.GET_REJECTED_REQUESTS_REQUEST:
       return {
         ...state,
         loading: true,
@@ -59,9 +66,31 @@ export const requestReducer = (state = initialState, action) => {
       };
 
     case requestConstants.CHANGE_STATUS_SUCCESS:
+    case requestConstants.APPROVE_REJECT_UPDATE_SUCCESS:
       return {
         ...state,
         loading: false,
+      };
+
+    case requestConstants.GET_REQUEST_UPDATES_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        requestedUpdates: action.payload,
+      };
+    
+    case requestConstants.GET_PREVIOUS_STAYS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        previousStays: action.payload,
+      };
+
+    case requestConstants.GET_REJECTED_REQUESTS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        rejected: action.payload,
       };
 
     case requestConstants.CREATE_REQUEST_FAILURE:
@@ -72,6 +101,11 @@ export const requestReducer = (state = initialState, action) => {
     case requestConstants.GET_ONGOING_REQUESTS_FAILURE:
     case requestConstants.CHANGE_STATUS_FAILURE:
     case requestConstants.BOOK_OFFER_FAILURE:
+    case requestConstants.GET_PREVIOUS_STAYS_FAILURE:
+    case requestConstants.GET_PREVIOUS_STAYS_FAILURE:
+    case requestConstants.GET_REQUEST_UPDATES_FAILURE:
+    case requestConstants.APPROVE_REJECT_UPDATE_FAILURE:
+    case requestConstants.GET_REJECTED_REQUESTS_FAILURE:
       return {
         ...state,
         loading: false,
