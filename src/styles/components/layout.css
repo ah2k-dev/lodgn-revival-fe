@@ -61,7 +61,7 @@
   }
 }
 
-@media screen and (max-width: 540px) { 
+@media screen and (max-width: 660px) { 
   .dashboard {
     padding: 0 10px;
   }

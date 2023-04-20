@@ -62,24 +62,29 @@ const OngoingStays = () => {
 };
 
 const RequestComponent = ({ request }) => {
-
   const navigate = useNavigate();
 
   return (
     <div className="ongoingStays w-100 d-flex flex-column gap-lg-5 gap-2 rounded-container bg-white p-xl-5 p-lg-4 p-4 shadow position-relative">
-      <span className="position-absolute request-status py-2 px-4 fw-bold rounded-3">Approved</span>
-      <JobDetailsGrid
-        jobLocation={request.location.string}
-        start_date={moment(request.dateRange[0]).format("DD")}
-        end_date={moment(request.dateRange[1]).format("DD")}
-        start_date_month={moment(request.dateRange[0]).format("MMMM")}
-        end_date_month={moment(request.dateRange[1]).format("MMMM")}
-        total_rooms={
-          request.roomRequirements.single + request.roomRequirements.double
-        }
-        single_rooms={request.roomRequirements.single}
-        double_rooms={request.roomRequirements.double}
-      />
+      <div className="d-flex flex-md-row flex-column-reverse justify-content-md-between justify-content-sm-end align-items-center flex-md-nowrap flex-wrap gap-md-0 gap-3 justify-content-center">
+        <JobDetailsGrid
+          jobLocation={request.location.string}
+          start_date={moment(request.dateRange[0]).format("DD")}
+          end_date={moment(request.dateRange[1]).format("DD")}
+          start_date_month={moment(request.dateRange[0]).format("MMMM")}
+          end_date_month={moment(request.dateRange[1]).format("MMMM")}
+          total_rooms={
+            request.roomRequirements.single + request.roomRequirements.double
+          }
+          single_rooms={request.roomRequirements.single}
+          double_rooms={request.roomRequirements.double}
+        />
+        <div className="request-status d-flex justify-content-end">
+          <span className="py-2 px-4 fw-bold rounded-3">
+            Approved
+          </span>
+        </div>
+      </div>
       <div className="row gap-3 mt-5 justify-content-center">
         <div className="col-md-5 col-xl-4 col-lg-5 col-sm-8 col-12 position-relative">
           {/* <span className="rare-find-badge">Rare Find</span> */}
@@ -104,10 +109,20 @@ const RequestComponent = ({ request }) => {
           <div>
             <span className="green-span fs-6 font-poppins">Quick actions:</span>
             <div className="mt-4 btns d-flex flex-wrap gap-3">
-              <Button className="update-btn font-poppins text-white" onClick={() => navigate('/dashboard/user/update-stay', { state: request })}>
+              <Button
+                className="update-btn font-poppins text-white"
+                onClick={() =>
+                  navigate("/dashboard/user/update-stay", { state: request })
+                }
+              >
                 Update stay
               </Button>
-              <Button onClick={() => navigate('/dashboard/user/create-request', { state: request })} className="rebook-btn font-poppins text-white">
+              <Button
+                onClick={() =>
+                  navigate("/dashboard/user/create-request", { state: request })
+                }
+                className="rebook-btn font-poppins text-white"
+              >
                 Rebook stay
               </Button>
             </div>

@@ -14,42 +14,51 @@ const Sidebar = ({ activeClass }) => {
 
   const userNavs = [
     {
-      id: 1,
       route: "/dashboard/user",
       navName: "Current Requests",
     },
     {
-      id: 2,
       route: "/dashboard/user/ongoing-stays",
       navName: "Ongoing Stays",
     },
     {
-      id: 3,
+      route: "/dashboard/user/requested-updates",
+      navName: "Requested Updates",
+    },
+    {
+      route: "/dashboard/user/rejected-requests",
+      navName: "Rejected Requests",
+    },
+    {
       route: "/dashboard/user/previous-stays",
       navName: "Previous Stays",
     },
     {
-      id: 4,
-      route: "/dashboard/reports",
+      route: "/dashboard/user/reports",
       navName: "Reports",
     },
   ];
 
   const adminNavs = [
     {
-      id: 1,
       route: "/dashboard/admin",
       navName: "Current Requests",
     },
     {
-      id: 2,
       route: "/dashboard/admin/ongoing-stays",
       navName: "Ongoing Stays",
     },
     {
-      id: 3,
       route: "/dashboard/admin/update-requests",
       navName: "Update Requests",
+    },
+    {
+      route: "/dashboard/admin/rejected-requests",
+      navName: "Rejected Requests",
+    },
+    {
+      route: "/dashboard/admin/reports",
+      navName: "Reports",
     },
   ];
 
@@ -69,9 +78,9 @@ const Sidebar = ({ activeClass }) => {
           <h1 className="text-2xl fst-italic p-4 fw-bold">LODGN</h1>
         </span>
 
-        {navs.map((nav) => {
+        {navs.map((nav, i) => {
           return (
-            <li className="position-relative sideNavLinks mb-4" key={nav.id}>
+            <li className="position-relative sideNavLinks mb-4" key={i}>
               <Link
                 to={nav.route}
                 className={

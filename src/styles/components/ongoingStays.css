@@ -1,7 +1,14 @@
-.ongoingStays .request-status {
-    right: 50px;
-    background-color: #42996B;
+.ongoingStays .request-status,
+.rejected-status {
     color: white;
+}
+
+.ongoingStays .request-status span {
+    background-color: #42996B;
+}
+
+.rejected-status span {
+    background-color: #de0707;
 }
 
 .haeding-green {
@@ -100,5 +107,12 @@
     }
     .ongoingStays .btns button span {
         font-size: .9rem !important;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .request-status,
+    .rejected-status {
+        width: 100%;
     }
 }

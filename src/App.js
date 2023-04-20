@@ -24,6 +24,11 @@ import NotFound from "./pages/NotFound.js";
 import CurrentRequest from "./pages/user/CurrentRequest.js";
 import CreateRequest from "./pages/user/CreateRequest.js";
 import UpdateRequests from "./pages/admin/UpdateRequests.js";
+import Reports from "./pages/user/Reports.js";
+import AdminReports from "./pages/admin/AdminReports.js";
+import RequestedUpdates from "./pages/user/RequestedUpdates.js";
+import RejectedRequests from "./pages/user/RejectedRequests.js";
+import ViewRejectedRequests from "./pages/admin/ViewRejectedRequests.js";
 // import * as dotenv from "dotenv";
 // dotenv.config();
 function App() {
@@ -64,6 +69,14 @@ function App() {
               element={<AdminRoute Component={UpdateRequests} />}
             />
             <Route
+              path="/dashboard/admin/rejected-requests"
+              element={<AdminRoute Component={ViewRejectedRequests} />}
+            />
+            <Route
+              path="/dashboard/admin/reports"
+              element={<AdminRoute Component={AdminReports} />}
+            />
+            <Route
               path="/dashboard/user"
               element={<UserRoute Component={CurrentRequest} />}
             />
@@ -88,8 +101,20 @@ function App() {
               element={<UserRoute Component={UpdateStay} />}
             />
             <Route
+              path="/dashboard/user/requested-updates"
+              element={<UserRoute Component={RequestedUpdates} />}
+            />
+            <Route
+              path="/dashboard/user/rejected-requests"
+              element={<UserRoute Component={RejectedRequests} />}
+            />
+            <Route
               path="/dashboard/user/previous-stays"
               element={<UserRoute Component={PreviousStays} />}
+            />
+            <Route
+              path="/dashboard/user/reports"
+              element={<UserRoute Component={Reports} />}
             />
           </Route>
           <Route path="*" element={<NotFound />} />

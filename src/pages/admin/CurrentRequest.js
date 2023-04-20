@@ -136,18 +136,21 @@ const RequestComponent = ({ request, status, index }) => {
           single_rooms={request?.roomRequirements?.single}
           double_rooms={request?.roomRequirements?.double}
         />
-        {newStatus !== request.status && (
-          // <button className="update-status-btn py-2 px-5 font-poppins text-white" onClick={handleUpdate}>
-          //   Update
-          // </button>
-          <Button className="update-status-btn"
-            loading={loading}
-            onClick={() => handleUpdate(request._id)}
-            disabled={newStatus === "completed" && offerings.length == 0}
-          >
-            Update
-          </Button>
-        )}
+        <div className="btns d-flex gap-3 justify-content-between mt-lg-0 mt-4">
+          {newStatus !== request.status && (
+            <Button
+              className="update-status-btn"
+              loading={loading}
+              onClick={() => handleUpdate(request._id)}
+              disabled={newStatus === "completed" && offerings.length == 0}
+            >
+              Update
+            </Button>
+          )}
+          {newStatus === "recieved" || newStatus === "negotiating" ? (
+            <Button className="reject-request-btn">Reject Request</Button>
+          ) : null}
+        </div>
       </div>
       <div className="update-status row justify-content-center">
         <h3 className="update-status-text font-poppins text-uppercase fs-6">
@@ -215,9 +218,11 @@ const RequestComponent = ({ request, status, index }) => {
       </div>
       {newStatus === "completed" && (
         <div className="row mt-4 gap-0 justify-content-xl-between justify-content-center">
-          <h3 className="update-status-text font-poppins text-uppercase fs-6">
-            UPDATE STATUS TO CLIENT:
-          </h3>
+          {!request.hasOwnProperty("bookedOffering") && (
+            <h3 className="update-status-text font-poppins text-uppercase fs-6">
+              UPDATE STATUS TO CLIENT:
+            </h3>
+          )}
           {!request.hasOwnProperty("bookedOffering") && (
             <div className="row mt-3 justify-content-between">
               {count.map((val, ind) => {
@@ -235,10 +240,12 @@ const RequestComponent = ({ request, status, index }) => {
           )}
         </div>
       )}
-      {request.hasOwnProperty("bookedOffering") && (
+      {/* {request.hasOwnProperty("bookedOffering") && (
         <div className="cards-container columns-1 mt-4 justify-content-center">
           <div className="position-relative">
-            <span className="rare-find-badge" style={{zIndex:100}}>Booked</span>
+            <span className="rare-find-badge" style={{ zIndex: 100 }}>
+              Booked
+            </span>
             <Card
               title={request.bookedOffering.title}
               description={request.bookedOffering.description}
@@ -253,7 +260,7 @@ const RequestComponent = ({ request, status, index }) => {
             />
           </div>
         </div>
-      )}
+      )} */}
     </div>
   );
 };

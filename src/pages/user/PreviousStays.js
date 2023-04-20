@@ -4,6 +4,7 @@ import JobDetailsGrid from "../../components/layout/JobDetailsGrid";
 import PaidPerNight from "../../components/layout/PaidPerNight";
 import { clearErrors, getPreviousStays } from "../../actions/requestActions";
 import { message } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
 import moment from "moment";
 
 const PreviousStays = () => {
@@ -38,21 +39,27 @@ const PreviousStays = () => {
         <h2 className="font-poppins mt-4 heading-green">
           You currently have {previousStays.length} previous stay
         </h2>
-        {previousStays?.map((stay) => (
-          <PreviousRequests stay={stay} />
-        ))}
+        {loading ? (
+          <div className="loader w-100 d-flex justify-content-center align-items-center">
+            <LoadingOutlined style={{ fontSize: 65 }} spin />
+          </div>
+        ) : (
+          previousStays?.map((stay, i) => (
+            <PreviousRequests stay={stay} key={i} />
+          ))
+        )}
       </div>
     </div>
   );
 };
 
-const PreviousRequests = ({stay}) => {
+const PreviousRequests = ({ stay }) => {
   return (
     <div className="d-flex flex-column gap-4 rounded-container bg-white p-5 position-relative">
       <div className="d-flex justify-content-md-between align-items-center flex-wrap items justify-content-center">
         <JobDetailsGrid
           jobLocation={stay?.request?.location?.string}
-        //   jobAddress="Sarasota,FL. 33178"
+          //   jobAddress="Sarasota,FL. 33178"
           start_date={moment(stay?.request?.dateRange[0]).format("DD")}
           end_date={moment(stay?.request?.dateRange[1]).format("DD")}
           start_date_month={moment(stay?.request?.dateRange[0]).format("MMM")}
