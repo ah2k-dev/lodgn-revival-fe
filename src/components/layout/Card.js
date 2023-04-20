@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import { bookOffer } from "../../actions/requestActions";
 import { Button } from "antd";
+import HotelPhotosCarousel from "./HotelPhotosCarousel";
 
 const Card = (props) => {
   const location = useLocation();
@@ -25,25 +26,23 @@ const Card = (props) => {
 
   console.log(props);
 
+  const imageUrls = [
+    {
+      url: "https://upload.wikimedia.org/wikipedia/en/7/7d/Minions_characters.png"
+    },
+    {
+      url: "https://cdn.vox-cdn.com/thumbor/yJuBQtYK2euiOWE3lj_dtloWkvs=/160x0:1239x607/1600x900/cdn.vox-cdn.com/uploads/chorus_image/image/46708944/manyminions.0.jpg"
+    },
+    {
+      url: "https://i.guim.co.uk/img/static/sys-images/Guardian/Pix/pictures/2015/11/11/1447263891657/Minions-009.jpg?width=620&quality=85&auto=format&fit=max&s=8a643616a29f6832d52a06ceafab39d6"
+    },
+  ] 
+
   return (
     <div className="detail-card rounded-3 d-flex flex-column align-items-center w-100">
-      <span className="svg-span p-4 text-md font-poppins fw-normal d-flex flex-column align-items-center gap-2">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="54"
-          height="59"
-          fill="none"
-          viewBox="0 0 54 59"
-        >
-          <path
-            stroke="#85C371"
-            strokeLinecap="round"
-            strokeWidth="5"
-            d="M22.019 6.563c-2.264 2.82-7.426 15.41-9.962 43.202M38.32 3c-3.774 5.048-11.593 22.714-12.68 53M3 36.849c5.132-6.532 21.917-19.24 48-17.815"
-          ></path>
-        </svg>
-        {svgTxt}
-      </span>
+      <div className="images-container w-100">
+        <HotelPhotosCarousel images={imageUrls} />
+      </div>
       <div className="cards-footer d-flex flex-column align-items-center gap-2 rounded-3 p-4 w-100">
         <span
           style={{
@@ -72,8 +71,8 @@ const Card = (props) => {
           </span>
         ) : (
           <span className="d-flex justify-content-center align-items-center w-100">
-            <span className="d-flex flex-column flex-wrap flex-wrap justify-content-center gap-4 text-xs">
-            {singlePrice ? <span className="price-span">Singles: ${singlePrice}</span> : null}
+            <span className="d-flex flex-column flex-wrap flex-wrap justify-content-center gap-2 text-xs">
+              {singlePrice ? <span className="price-span">Singles: ${singlePrice}</span> : null}
               {doublePrice ? <span className="price-span">Doubles: ${doublePrice}</span> : null}
             </span>
           </span>

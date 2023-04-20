@@ -1,3 +1,9 @@
+.ongoingStays .request-status {
+    right: 50px;
+    background-color: #42996B;
+    color: white;
+}
+
 .haeding-green {
     color: #5BA343 !important;
 }

@@ -189,6 +189,7 @@ const UpdateHotelDetails = ({ offerings, setOfferings, flag, request }) => {
           </label>
           <input
             type="number"
+            min={0}
             onChange={(e) => setSingleRates(e.target.value)}
           />
           {validationError.singleRateError && (
@@ -208,6 +209,7 @@ const UpdateHotelDetails = ({ offerings, setOfferings, flag, request }) => {
           </label>
           <input
             type="number"
+            min={0}
             onChange={(e) => setDoubleRates(e.target.value)}
           />
           {validationError.doubleRateError && (
@@ -225,6 +227,7 @@ const UpdateHotelDetails = ({ offerings, setOfferings, flag, request }) => {
           <label className="font-lato fw-semibold">Add animal support.</label>
           <input
             type="number"
+            min={0}
             onChange={(e) => setAnimalSupport(e.target.value)}
           />
           {validationError.animalSupportError && (
@@ -238,7 +241,7 @@ const UpdateHotelDetails = ({ offerings, setOfferings, flag, request }) => {
       )}
       <div className="d-flex flex-column gap-2 w-100">
         <label className="font-lato fw-semibold">Add Payment Link.</label>
-        <input type="text" onChange={(e) => setPayLink(e.target.value)} />
+        <input type="url" onChange={(e) => setPayLink(e.target.value)} />
         {validationError.payLinkError && (
           <span className="text-danger fw-semibold">
             {validationError.payLinkError}

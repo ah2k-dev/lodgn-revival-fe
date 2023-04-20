@@ -121,7 +121,7 @@ const RequestComponent = ({ request }) => {
       {request.hasOwnProperty("bookedOffering") && (
         <div className={`cards-container columns-1 mt-4 justify-content-center`}>
           <div className="position-relative">
-            <span className="rare-find-badge">Booked</span>
+            <span className="rare-find-badge" style={{zIndex:100}}>Booked</span>
             <Card
               title={request.bookedOffering.title}
               description={request.bookedOffering.description}

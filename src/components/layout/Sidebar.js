@@ -46,6 +46,11 @@ const Sidebar = ({ activeClass }) => {
       route: "/dashboard/admin/ongoing-stays",
       navName: "Ongoing Stays",
     },
+    {
+      id: 3,
+      route: "/dashboard/admin/update-requests",
+      navName: "Update Requests",
+    },
   ];
 
   var navs;

@@ -52,7 +52,10 @@ const Auth = () => {
       }
     } else {
       const res = dispatch(signup(values.name, values.email, values.password));
-      if (res) {
+      console.log(res);
+      if (!res.success) {
+        setActive("signup");
+      } else {
         setActive("login");
       }
     }

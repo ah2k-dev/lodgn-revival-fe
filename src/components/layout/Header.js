@@ -1,5 +1,5 @@
 import { Alert, Button, Col, Layout, message, Row, Typography } from "antd";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useAuth } from "../../hooks/auth";
 import { useDispatch, useSelector } from "react-redux";
 import { clearErrors, logout } from "../../actions/authActions";
@@ -27,6 +27,7 @@ dayjs.extend(customParseFormat);
 const Header = () => {
 
   const [showRoomPicker, setShowRoomPicker] = useState(false);
+  const [showTodayModal, setShowTodayModal] = useState(false);
 
   const auth = useAuth();
 
@@ -103,21 +104,42 @@ const Header = () => {
 
 
   const disabledDate = (current) => {
+
     // Can not select days before today and today
-    return current < dayjs().endOf('day');
+    // return current < dayjs().endOf('day');
 
     // Can not select days before today
-    //  return current && current < moment().startOf('day');
+    // return current && current < moment().startOf('day');
+
+    // Can not select days before today or more than 365 days in the future
+    const today = moment().startOf('day');
+    return current && (current < today || current > today.clone().add(365, 'days').endOf('day'));
   };
 
   const handleCalendarChange = (values, dateString) => {
+    
     if (dateString && dateString.length === 2) {
-      // console.log(dateString);
+      const startDate = moment(new Date(dateString[0]));
+      const endDate = moment(new Date(dateString[1]));
+      const today = moment();
       setDateRange([
-        moment(new Date(dateString[0])).toISOString(),
-        moment(new Date(dateString[1])).toISOString(),
+        startDate.toISOString(),
+        endDate.toISOString(),
       ]);
+      if (startDate.isSame(today, 'day') || endDate.isSame(today, 'day')) {
+        setShowTodayModal(true);
+      }
     }
+    
+    // if (dateString && dateString.length === 2) {
+    //   // console.log(dateString);
+    //   console.log(moment(new Date(dateString[0])).toISOString(),
+    //   moment(new Date(dateString[1])).toISOString());
+    //   setDateRange([
+    //     moment(new Date(dateString[0])).toISOString(),
+    //     moment(new Date(dateString[1])).toISOString(),
+    //   ]);
+    // }
   };
 
   const handleSingleRoom = (rooms) => {
@@ -144,14 +166,16 @@ const Header = () => {
         setSearchError("");
       }, 3000);
     }
-    console.log(
-      center,
-      hotels,
-      dateRange,
-      singleRoom,
-      doubleRoom,
-      supportAnimal
-    );
+
+    // console.log(
+    //   center,
+    //   hotels,
+    //   dateRange,
+    //   singleRoom,
+    //   doubleRoom,
+    //   supportAnimal
+    // );
+
     dispatch(
       setCenterData({
         lat: center.lat,
@@ -291,6 +315,26 @@ const Header = () => {
       {location.pathname === '/' ? <a className="login-icon" onClick={() => navigate("/auth")}>
         <FaUserAlt className="header-icons" />
       </a> : null}
+
+      {showTodayModal &&
+        <div class="modal d-flex justify-content-center align-items-center">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h3 class="modal-title">Urgent Booking</h3>
+                <button type="button" class="btn-close" onClick={() => setShowTodayModal(false)}></button>
+              </div>
+              <div class="modal-body">
+                <h5 className="text-capitalize">For urgent today's date booking please contact us on our Number 786-874 9988</h5>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" onClick={() => setShowTodayModal(false)}>Close</button>
+                {/* <button type="button" class="btn btn-primary">Save changes</button> */}
+              </div>
+            </div>
+          </div>
+        </div>
+      }
     </Row>
   );
 };

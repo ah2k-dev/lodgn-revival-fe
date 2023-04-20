@@ -23,6 +23,7 @@ import UserRoute from "./protected-routes/UserRoute.js";
 import NotFound from "./pages/NotFound.js";
 import CurrentRequest from "./pages/user/CurrentRequest.js";
 import CreateRequest from "./pages/user/CreateRequest.js";
+import UpdateRequests from "./pages/admin/UpdateRequests.js";
 // import * as dotenv from "dotenv";
 // dotenv.config();
 function App() {
@@ -57,6 +58,10 @@ function App() {
             <Route
               path="/dashboard/admin/ongoing-stays"
               element={<AdminRoute Component={ViewOngoingStays} />}
+            />
+            <Route
+              path="/dashboard/admin/update-requests"
+              element={<AdminRoute Component={UpdateRequests} />}
             />
             <Route
               path="/dashboard/user"

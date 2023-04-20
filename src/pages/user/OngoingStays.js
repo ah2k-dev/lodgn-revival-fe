@@ -66,7 +66,8 @@ const RequestComponent = ({ request }) => {
   const navigate = useNavigate();
 
   return (
-    <div className="ongoingStays w-100 d-flex flex-column gap-lg-5 gap-2 rounded-container bg-white p-xl-5 p-lg-4 p-4 shadow">
+    <div className="ongoingStays w-100 d-flex flex-column gap-lg-5 gap-2 rounded-container bg-white p-xl-5 p-lg-4 p-4 shadow position-relative">
+      <span className="position-absolute request-status py-2 px-4 fw-bold rounded-3">Approved</span>
       <JobDetailsGrid
         jobLocation={request.location.string}
         start_date={moment(request.dateRange[0]).format("DD")}

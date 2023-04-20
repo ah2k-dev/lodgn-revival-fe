@@ -32,7 +32,7 @@ const Footer = () => {
 
   const totalRooms = roomRequirements.single + roomRequirements.double;
 
-  console.log(dateRange.length);
+  console.log(dateRange);
 
   return (
     <footer

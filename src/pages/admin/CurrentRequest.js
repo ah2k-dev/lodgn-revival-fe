@@ -3,6 +3,7 @@ import Card from "../../components/layout/Card";
 import JobDetailsGrid from "../../components/layout/JobDetailsGrid";
 import { useState } from "react";
 import { Button, Upload, message } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
 import UpdateHotelDetails from "../../components/layout/UpdateHotelDetails";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -40,16 +41,22 @@ const CurrentRequest = () => {
         <h2 className="font-poppins mt-5 mb-4">
           You currently have {requests.length} requests
         </h2>
-        <div className="d-flex flex-column justify-content-between w-100">
-          {requests.map((request, i) => (
-            <RequestComponent
-              request={request}
-              status={request.status}
-              key={i}
-              index={i}
-            />
-          ))}
-        </div>
+        {loading ? (
+          <div className="loader w-100 d-flex justify-content-center align-items-center">
+            <LoadingOutlined style={{ fontSize: 65 }} spin />
+          </div>
+        ) : (
+          <div className="d-flex flex-column justify-content-between w-100">
+            {requests.map((request, i) => (
+              <RequestComponent
+                request={request}
+                status={request.status}
+                key={i}
+                index={i}
+              />
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
@@ -231,7 +238,7 @@ const RequestComponent = ({ request, status, index }) => {
       {request.hasOwnProperty("bookedOffering") && (
         <div className="cards-container columns-1 mt-4 justify-content-center">
           <div className="position-relative">
-            <span className="rare-find-badge">Booked</span>
+            <span className="rare-find-badge" style={{zIndex:100}}>Booked</span>
             <Card
               title={request.bookedOffering.title}
               description={request.bookedOffering.description}

@@ -35,3 +35,4 @@ code {
 @import "./styles/pages/auth.css";
 @import "./styles/pages/payment.css";
 @import "./styles/pages/pageNotFound.css";
+@import "./styles/pages/updateRequests.css";
