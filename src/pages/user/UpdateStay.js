@@ -4,6 +4,7 @@ import { Link, useLocation } from 'react-router-dom'
 import JobDetailsGrid from '../../components/layout/JobDetailsGrid'
 import RoomPicker from '../../components/layout/RoomPicker'
 import moment from "moment";
+import HotelPhotosCarousel from '../../components/layout/HotelPhotosCarousel'
 
 const { RangePicker } = DatePicker;
 
@@ -43,8 +44,8 @@ const UpdateStay = () => {
                     Edit your stay
                 </h2>
                 <div className="d-flex flex-column gap-4 rounded-container bg-white p-md-5 p-3">
-                    <div className="d-flex flex-column gap-4 rounded-container bg-white position-relative">
-                        <div className="d-flex justify-content-md-between align-items-center flex-wrap items justify-content-center">
+                    <div className="d-flex flex-wrap justify-content-between align-items-center rounded-container bg-white position-relative">
+                        <div className="col-xl-9 col-12 d-flex justify-content-md-between align-items-center flex-wrap items justify-content-center">
                             <JobDetailsGrid
                                 jobLocation={request.location.string}
                                 start_date={moment(request.dateRange[0]).format("DD")}
@@ -58,8 +59,10 @@ const UpdateStay = () => {
                                 double_rooms={request.roomRequirements.double}
                                 animalSupport={request.roomRequirements.animalSupport}
                             />
-                            <span className="mt-xxl-0 mt-5">
-                                <span className="fs-5 font-poppins fst-italic green-span text-md font-poppins fw-normal d-flex flex-column align-items-center gap-2">
+                        </div>
+                        <span className="col-xl-3 col-md-6 col-sm-8 col-12 mt-xl-0 mt-5">
+                            <HotelPhotosCarousel images={[{ url: 'https://cdn.vox-cdn.com/thumbor/yJuBQtYK2euiOWE3lj_dtloWkvs=/160x0:1239x607/1600x900/cdn.vox-cdn.com/uploads/chorus_image/image/46708944/manyminions.0.jpg' }]} />
+                            {/* <span className="fs-5 font-poppins fst-italic green-span text-md font-poppins fw-normal d-flex flex-column align-items-center gap-2">
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
                                         width="54"
@@ -75,9 +78,8 @@ const UpdateStay = () => {
                                         ></path>
                                     </svg>
                                     Holiday Inn
-                                </span>
-                            </span>
-                        </div>
+                                </span> */}
+                        </span>
                     </div>
                     <div className='row justify-content-xl-between justify-content-center mt-5 gap-xl-0 gap-5'>
                         <div className='col-xl-5 col-lg-11 col-12'>

@@ -6,6 +6,7 @@ import { clearErrors, getPreviousStays } from "../../actions/requestActions";
 import { message } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import moment from "moment";
+import HotelPhotosCarousel from "../../components/layout/HotelPhotosCarousel";
 
 const PreviousStays = () => {
   const dispatch = useDispatch();
@@ -56,7 +57,7 @@ const PreviousStays = () => {
 const PreviousRequests = ({ stay }) => {
   return (
     <div className="d-flex flex-column gap-4 rounded-container bg-white p-5 position-relative">
-      <div className="d-flex justify-content-md-between align-items-center flex-wrap items justify-content-center">
+      <div className="d-flex justify-content-md-between align-items-start flex-wrap items justify-content-center">
         <JobDetailsGrid
           jobLocation={stay?.request?.location?.string}
           //   jobAddress="Sarasota,FL. 33178"
@@ -68,8 +69,9 @@ const PreviousRequests = ({ stay }) => {
           single_rooms={stay?.request?.roomRequirements?.single}
           double_rooms={stay?.request?.roomRequirements?.double}
         />
-        <span className="mt-xxl-0 mt-5">
-          <span className="fs-5 font-poppins fst-italic green-span text-md font-poppins fw-normal d-flex flex-column align-items-center gap-2">
+        <span className="col-xl-3 col-md-6 col-sm-8 col-12 mt-xl-0 mt-5">
+        <HotelPhotosCarousel images={[{ url: 'https://cdn.vox-cdn.com/thumbor/yJuBQtYK2euiOWE3lj_dtloWkvs=/160x0:1239x607/1600x900/cdn.vox-cdn.com/uploads/chorus_image/image/46708944/manyminions.0.jpg' }]} />
+          {/* <span className="fs-5 font-poppins fst-italic green-span text-md font-poppins fw-normal d-flex flex-column align-items-center gap-2">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="54"
@@ -85,7 +87,7 @@ const PreviousRequests = ({ stay }) => {
               ></path>
             </svg>
             {stay?.request?.bookedOffering?.title}
-          </span>
+          </span> */}
         </span>
       </div>
       <PaidPerNight singles={stay?.request?.bookedOffering?.rates?.single} doubles={stay?.request?.bookedOffering?.rates?.double} animals={stay?.request?.bookedOffering?.rates?.animalSupport} />

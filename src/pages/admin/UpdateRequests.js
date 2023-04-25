@@ -5,7 +5,7 @@ import JobDetailsGrid from "../../components/layout/JobDetailsGrid";
 import PaidPerNight from "../../components/layout/PaidPerNight";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Form, InputNumber, message } from "antd";
-import { clearErrors, getOngoingRequests } from "../../actions/requestActions";
+import { clearErrors, getRequestUpdates, } from "../../actions/requestActions";
 import { LoadingOutlined } from "@ant-design/icons";
 import moment from "moment";
 
@@ -14,7 +14,7 @@ const UpdateRequests = () => {
 
   const dispatch = useDispatch();
 
-  const { error, loading, onGoing } = useSelector((state) => state.request);
+  const { error, loading, requestedUpdates } = useSelector((state) => state.request);
 
   useEffect(() => {
     if (error) {
@@ -29,7 +29,7 @@ const UpdateRequests = () => {
   }, [error]);
 
   const fetch = () => {
-    dispatch(getOngoingRequests());
+    dispatch(getRequestUpdates());
   };
 
   useEffect(() => {
@@ -37,10 +37,10 @@ const UpdateRequests = () => {
   }, [dispatch]);
 
   return (
-    <div className="min-vh-100 w-100 px-lg-5 px-md-3 px-4 py-5">
+    <div className="w-100 px-lg-5 px-md-3 px-4 py-5">
       <div className="d-flex flex-column gap-5">
         <h2 className="font-poppins mt-4 heading-green">
-          Update stays requests from clients
+          You currently have {requestedUpdates.length} requested updates
         </h2>
         {loading ? (
           <div className="loader w-100 d-flex justify-content-center align-items-center">
@@ -48,15 +48,11 @@ const UpdateRequests = () => {
           </div>
         ) : (
           <>
-            {onGoing.length > 0 ? (
-              onGoing.map((request, i) => (
+            {requestedUpdates.length > 0 ? (
+              requestedUpdates.map((request, i) => (
                 <RequestComponent request={request} key={i} />
               ))
-            ) : (
-              <div className="d-flex flex-column justify-content-center align-items-center">
-                <h2 className="font-poppins">No Update stays Requests</h2>
-              </div>
-            )}
+            ) : null}
           </>
         )}
       </div>
@@ -70,7 +66,7 @@ const RequestComponent = ({ request }) => {
 
   const formRef = useRef();
 
-  const handleSave = ()=> {
+  const handleSave = () => {
     formRef.current.submit();
   }
 
@@ -100,18 +96,28 @@ const RequestComponent = ({ request }) => {
 
         <div className="col-12 d-flex flex-column gap-3">
           <span className="font-lato fw-bold">New Requested Booking Details</span>
-          <JobDetailsGrid
-            jobLocation={request.location.string}
-            // jobAddress="Sarasota,FL. 33178"
-            start_date={moment(request.dateRange[0]).format("DD")}
-            end_date={moment(request.dateRange[1]).format("DD")}
-            start_date_month={moment(request.dateRange[0]).format("MMM")}
-            end_date_month={moment(request.dateRange[1]).format("MMM")}
-            total_rooms={request.roomRequirements.single + request.roomRequirements.double}
-            single_rooms={request.roomRequirements.single}
-            double_rooms={request.roomRequirements.double}
-            animalSupport={request.roomRequirements.animalSupport}
-          />
+          <div className="d-flex flex-md-row flex-column justify-content-between align-items-md-start align-items-center gap-3">
+            <JobDetailsGrid
+              jobLocation={request.location.string}
+              // jobAddress="Sarasota,FL. 33178"
+              start_date={moment(request.dateRange[0]).format("DD")}
+              end_date={moment(request.dateRange[1]).format("DD")}
+              start_date_month={moment(request.dateRange[0]).format("MMM")}
+              end_date_month={moment(request.dateRange[1]).format("MMM")}
+              total_rooms={request.roomRequirements.single + request.roomRequirements.double}
+              single_rooms={request.roomRequirements.single}
+              double_rooms={request.roomRequirements.double}
+              animalSupport={request.roomRequirements.animalSupport}
+            />
+            <span className="d-flex flex-column align-items-center gap-1">
+              <span className="font-lato fw-bold">Download attachments:</span>
+              <span style={{cursor:'pointer'}}>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="" width={24}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                </svg>
+              </span>
+            </span>
+          </div>
         </div>
 
         <div className="col-12 btns d-flex justify-content-md-end justify-content-center gap-3">
@@ -119,7 +125,7 @@ const RequestComponent = ({ request }) => {
           <Button className="approveBtn" onClick={() => setShowCard(true)}>Approve</Button>
         </div>
 
-        { showCard && <div className="row">
+        {showCard && <div className="row">
           <Form
             ref={formRef}
             className="updateRatesContainer col-xxl-5 col-xl-6 d-flex flex-column gap-2 align-items-center"
@@ -132,7 +138,7 @@ const RequestComponent = ({ request }) => {
             <div className="d-flex flex-column gap-2 w-100">
               <label className="font-lato fw-semibold">Add single room rates.</label>
               <Form.Item
-                name="name"
+                name="single_rooms_rate"
                 rules={[
                   {
                     required: true,
@@ -146,7 +152,7 @@ const RequestComponent = ({ request }) => {
             <div className="d-flex flex-column gap-2 w-100">
               <label className="font-lato fw-semibold">Add double room rates.</label>
               <Form.Item
-                name="name"
+                name="double_rooms_rate"
                 rules={[
                   {
                     required: true,
@@ -160,7 +166,7 @@ const RequestComponent = ({ request }) => {
             <div className="d-flex flex-column gap-2 w-100">
               <label className="font-lato fw-semibold">Add animal support.</label>
               <Form.Item
-                name="name"
+                name="animal_rate"
                 rules={[
                   {
                     required: true,
@@ -175,7 +181,7 @@ const RequestComponent = ({ request }) => {
               <Button className="saveBtn" onClick={handleSave}>Save</Button>
             </div>
           </Form>
-        </div> }
+        </div>}
       </div>
     </div>
   );

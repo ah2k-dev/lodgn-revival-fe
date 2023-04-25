@@ -38,5 +38,5 @@
 .logoutBtn:hover {
     background: transparent;
     color: #42996B !important;
-    border: 1px solid #42996B;
+    border: 1px solid #42996B !important;
 }

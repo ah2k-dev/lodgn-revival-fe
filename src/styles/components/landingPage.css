@@ -30,8 +30,8 @@
 
 .footer-container button:hover {
     background: transparent;
-    border: 1px solid #42996B;
-    color: #42996B;
+    border: 1px solid #42996B !important;
+    color: #42996B !important;
 }
 
 .details {

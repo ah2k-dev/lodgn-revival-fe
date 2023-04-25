@@ -65,7 +65,7 @@ function App() {
               element={<AdminRoute Component={ViewOngoingStays} />}
             />
             <Route
-              path="/dashboard/admin/update-requests"
+              path="/dashboard/admin/requested-updates"
               element={<AdminRoute Component={UpdateRequests} />}
             />
             <Route

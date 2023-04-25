@@ -1,5 +1,5 @@
 .auth-layout-container {
-  min-height: calc(100vh - 71px);
+  min-height: calc(100vh - 72px);
 }
 
 .auth-layout-right {
@@ -25,6 +25,7 @@
 }
 
 .hamburger-icon {
+  cursor: pointer;
   position: absolute;
   z-index: 100;
   top: 6px;

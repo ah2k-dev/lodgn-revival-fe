@@ -12,23 +12,16 @@
     justify-content: space-between;
 }
 
-/* .update-status input[type='radio']:checked:after {
-    width: 9px;
-    height: 9px;
-    border-radius: 15px;
-    top: -5px;
-    left: 2px;
-    position: relative;
-    content: '';
-    display: inline-block;
-    visibility: visible;
-    outline: 1px solid #494949;
-    outline-offset: 1px;
-    background-color: #494949;
-} */
+.update-status input[type='radio']:checked {
+    accent-color: black;
+}
 
 .update-status {
     margin-top: 3rem;
+}
+
+.ant-input-number {
+    border-radius: 10px !important;
 }
 
 .update-status .status-yellow {
@@ -43,7 +36,8 @@
     color: #0f924c;
 }
 
-.update-status input[type='radio'] {
+.update-status input[type='radio'],
+.update-status label {
     cursor: pointer;
 }
 
@@ -75,7 +69,7 @@
 }
 
 .admin-page .update-status-btn:hover {
-    border: 1px solid #42996B;
+    border: 1px solid #42996B !important;
 }
 
 .update-hotel-details label {
@@ -124,13 +118,18 @@
 
 .update-hotel-details .saveBtn button span {
     background-color: transparent;
+    color: white;
 }
 
 .update-hotel-details .saveBtn button:hover {
-   border: solid 1px #42996B;
+   border: solid 1px #42996B !important;
    color: #42996B !important;
    background: transparent !important;
    background-color: transparent !important;
+}
+
+.update-hotel-details .saveBtn button:hover span {
+    color: #42996B !important;
 }
 
 span.completed-status {
@@ -153,10 +152,6 @@ span.completed-status {
     .update-status label {
         font-size: 1rem;
     }
-    /* .update-status input[type='radio']:checked:after {
-        top: -8px;
-        left: 2px;
-    } */
     .update-hotel-details .saveBtn {
         margin-bottom: 20px;
     }

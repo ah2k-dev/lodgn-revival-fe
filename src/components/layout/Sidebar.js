@@ -49,8 +49,8 @@ const Sidebar = ({ activeClass }) => {
       navName: "Ongoing Stays",
     },
     {
-      route: "/dashboard/admin/update-requests",
-      navName: "Update Requests",
+      route: "/dashboard/admin/requested-updates",
+      navName: "Requested Updates",
     },
     {
       route: "/dashboard/admin/rejected-requests",

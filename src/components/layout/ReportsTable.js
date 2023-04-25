@@ -117,11 +117,11 @@ const ReportsTable = ({tableData}) => {
     });
     const columns = [
         {
-            title: 'Location',
-            dataIndex: 'location',
-            key: 'location',
+            title: 'Request',
+            dataIndex: 'request',
+            key: 'request',
             // width: '30%',
-            ...getColumnSearchProps('location'),
+            ...getColumnSearchProps('request'),
         },
         {
             title: 'Start date',
@@ -138,67 +138,75 @@ const ReportsTable = ({tableData}) => {
             // ...getColumnSearchProps('end_date'),
         },
         {
-            title: 'Total rooms',
-            dataIndex: 'total_rooms',
-            key: 'total_rooms',
-            // ...getColumnSearchProps('address'),
-            // sorter: (a, b) => a.address.length - b.address.length,
-            // sortDirections: ['descend', 'ascend'],
+            title: 'Total paid',
+            dataIndex: 'total_paid',
+            key: 'total_paid',
+            render: (total_paid) => `$${total_paid}`,
         },
         {
-            title: 'Room details',
-            dataIndex: 'room_details',
-            key: 'room_details',
-            // ...getColumnSearchProps('address'),
-            // sorter: (a, b) => a.address.length - b.address.length,
-            // sortDirections: ['descend', 'ascend'],
+            title: 'Paid per single room',
+            dataIndex: 'paid_per_single_room',
+            key: 'paid_per_single_room',
+            render: (paid_per_single_room) => (paid_per_single_room ? `$${paid_per_single_room}` : "$0.00"),
         },
         {
-            title: 'Status',
-            dataIndex: 'status',
-            key: 'status',
-            filters: [
-                {
-                    text: 'recieved',
-                    value: 'recieved',
-                },
-                {
-                    text: 'negotiating',
-                    value: 'negotiating',
-                },
-                {
-                    text: 'completed',
-                    value: 'completed',
-                },
-                {
-                    text: 'paymentverified',
-                    value: 'paymentverified',
-                },
-            ],
-            onFilter: (value, record) => record.status.indexOf(value) === 0,
-            render: (_, { status }) => (
-                <>
-                    {status.map((s, i) => {
-                        let color = '#d5cc00';
-                        if (s === 'completed') {
-                            color = '#44A16F';
-                        } else if (s === 'paymentverified') {
-                            color = '#44A16F';
-                        } else if (s === 'negotiating') {
-                            color = '#07A4FD';
-                        }
-                        return (
-                            <span style={{color: color}} className="fw-bold font-lato">
-                                {s}
-                            </span>
-                            // <Tag color={color} key={i}>
-                            //     <span className='text-white'>{s}</span>
-                            // </Tag>
-                        );
-                    })}
-                </>
-            ),
+            title: 'Paid per double room',
+            dataIndex: 'paid_per_double_room',
+            key: 'paid_per_double_room',
+            render: (paid_per_double_room) => (paid_per_double_room ? `$${paid_per_double_room}` : "$0.00"),
         },
+        {
+            title: 'Paid for animal',
+            dataIndex: 'paid_for_animals',
+            key: 'paid_for_animals',
+            render: (paid_for_animals) => (paid_for_animals ? `$${paid_for_animals}` : "$0.00"),
+        },
+        // {
+        //     title: 'Status',
+        //     dataIndex: 'status',
+        //     key: 'status',
+        //     filters: [
+        //         {
+        //             text: 'recieved',
+        //             value: 'recieved',
+        //         },
+        //         {
+        //             text: 'negotiating',
+        //             value: 'negotiating',
+        //         },
+        //         {
+        //             text: 'completed',
+        //             value: 'completed',
+        //         },
+        //         {
+        //             text: 'paymentverified',
+        //             value: 'paymentverified',
+        //         },
+        //     ],
+        //     onFilter: (value, record) => record.status.indexOf(value) === 0,
+        //     render: (_, { status }) => (
+        //         <>
+        //             {status.map((s, i) => {
+        //                 let color = '#d5cc00';
+        //                 if (s === 'completed') {
+        //                     color = '#44A16F';
+        //                 } else if (s === 'paymentverified') {
+        //                     color = '#44A16F';
+        //                 } else if (s === 'negotiating') {
+        //                     color = '#07A4FD';
+        //                 }
+        //                 return (
+        //                     <span style={{color: color}} className="fw-bold font-lato" key={i}>
+        //                         {s}
+        //                     </span>
+        //                     // <Tag color={color} key={i}>
+        //                     //     <span className='text-white'>{s}</span>
+        //                     // </Tag>
+        //                 );
+        //             })}
+        //         </>
+        //     ),
+        // },
     ];
     return <Table columns={columns} dataSource={tableData} />;
 };

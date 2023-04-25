@@ -4,7 +4,7 @@
 }
 
 .ongoingStays .request-status span {
-    background-color: #42996B;
+    background-color: #42996B !important;
 }
 
 .rejected-status span {
@@ -58,7 +58,7 @@
 }
 
 .confirm-changes-btn:hover span {
-    color: #42996B;
+    color: #42996B !important;
 }
 
 .upload-roster-btn .ant-upload.ant-upload-select  {

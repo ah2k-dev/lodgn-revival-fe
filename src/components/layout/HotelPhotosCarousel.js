@@ -17,7 +17,7 @@ const HotelPhotosCarousel = ({ images }) => {
                     {images.map((imgsrc, i) => {
                         return <img src={imgsrc.url} width="100%" key={i} />
                     })}
-                </Carousel> : <img src={images[0].url} />
+                </Carousel> : <img src={images[0].url} width="100%" />
             }
         </>
     )
