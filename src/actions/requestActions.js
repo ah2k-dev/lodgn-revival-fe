@@ -309,7 +309,7 @@ export const getRejectedReuests = () => async (dispatch) => {
   });
   try {
     attachToken();
-    const res = await custAxios.get(`/booking/getRejectedRequests`);
+    const res = await custAxios.get(`/requests/getRejected`);
     if (res) {
       dispatch({
         type: requestConstants.GET_REJECTED_REQUESTS_SUCCESS,
@@ -332,6 +332,37 @@ export const getRejectedReuests = () => async (dispatch) => {
     });
   }
 };
+
+export const rejectReuest = (id) => async (dispatch) => {
+  dispatch({
+    type: requestConstants.REJECT_REQUEST_REQUEST,
+  });
+  try {
+    attachToken();
+    const res = await custAxios.put(`/requests/reject/${id}`);
+    if (res) {
+      dispatch({
+        type: requestConstants.REJECT_REQUEST_SUCCESS,
+        payload: res.data.data,
+      });
+      message.success({
+        content: "Request Rejected Successfully",
+        style: {
+          marginTop: "10vh",
+        },
+      });
+      dispatch(getRequests());
+      return true;
+    }
+    // return true;
+  } catch (error) {
+    dispatch({
+      type: requestConstants.REJECT_REQUEST_FAILURE,
+      payload: error.response.data.message || "Server Error",
+    });
+  }
+};
+
 
 export const clearErrors = () => async (dispatch) => {
   dispatch({

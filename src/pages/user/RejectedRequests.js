@@ -5,14 +5,14 @@ import JobDetailsGrid from "../../components/layout/JobDetailsGrid";
 import PaidPerNight from "../../components/layout/PaidPerNight";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Form, InputNumber, message } from "antd";
-import { clearErrors, getOngoingRequests } from "../../actions/requestActions";
+import { clearErrors, getOngoingRequests, getRejectedReuests } from "../../actions/requestActions";
 import { LoadingOutlined } from "@ant-design/icons";
 import moment from "moment";
 
 const RejectedRequests = () => {
   const dispatch = useDispatch();
 
-  const { error, loading, onGoing } = useSelector((state) => state.request);
+  const { error, loading, rejected } = useSelector((state) => state.request);
 
   useEffect(() => {
     if (error) {
@@ -27,7 +27,7 @@ const RejectedRequests = () => {
   }, [error]);
 
   const fetch = () => {
-    dispatch(getOngoingRequests());
+    dispatch(getRejectedReuests());
   };
 
   useEffect(() => {
@@ -38,7 +38,7 @@ const RejectedRequests = () => {
     <div className="min-vh-100 w-100 px-lg-5 px-md-3 px-4 py-5">
       <div className="d-flex flex-column gap-5">
         <h2 className="font-poppins mt-4 heading-green">
-          You currently have {onGoing.length} rejected requests
+          You currently have {rejected.length} rejected requests
         </h2>
         {loading ? (
           <div className="loader w-100 d-flex justify-content-center align-items-center">
@@ -46,8 +46,8 @@ const RejectedRequests = () => {
           </div>
         ) : (
           <>
-            {onGoing.length > 0 ? (
-              onGoing.map((request, i) => (
+            {rejected.length > 0 ? (
+              rejected.map((request, i) => (
                 <RequestComponent request={request} key={i} />
               ))
             ) : (
