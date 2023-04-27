@@ -63,18 +63,10 @@ const RejectedRequests = () => {
 };
 
 const RequestComponent = ({ request }) => {
-  const [showCard, setShowCard] = useState(false);
-
-  const formRef = useRef();
-
-  const handleSave = () => {
-    formRef.current.submit();
-  };
 
   return (
     <div className="ongoingStays w-100 d-flex flex-column gap-lg-5 gap-2 rounded-container bg-white p-xl-5 p-lg-4 p-4 shadow position-relative">
       <div className="d-flex flex-md-row flex-column-reverse justify-content-between align-items-start flex-md-nowrap flex-wrap gap-md-0 gap-3">
-        <div className="row gap-5 justify-content-center">
           <div className="col-12 d-flex flex-column gap-3">
             <span className="font-lato fw-bold fs-6">
               Rejected Request Booking Details
@@ -96,13 +88,7 @@ const RequestComponent = ({ request }) => {
             />
           </div>
         </div>
-        <div className="rejected-status d-flex justify-content-end">
-          <span className="py-2 px-4 fw-bold rounded-3">
-            Rejected
-          </span>
-        </div>
       </div>
-    </div>
   );
 };
 

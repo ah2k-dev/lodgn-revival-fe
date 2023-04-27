@@ -7,7 +7,7 @@ import { getPreviousStays } from '../../actions/requestActions';
 const Reports = () => {
 
     const dispatch = useDispatch();
-    const { error, loading } = useSelector(
+    const { loading } = useSelector(
         (state) => state.request
     );
 

@@ -79,11 +79,6 @@ const RequestComponent = ({ request }) => {
           single_rooms={request.roomRequirements.single}
           double_rooms={request.roomRequirements.double}
         />
-        <div className="request-status d-flex justify-content-end">
-          <span className="py-2 px-4 fw-bold rounded-3">
-            Approved
-          </span>
-        </div>
       </div>
       <div className="row gap-3 mt-5 justify-content-center">
         <div className="col-md-5 col-xl-4 col-lg-5 col-sm-8 col-12 position-relative">

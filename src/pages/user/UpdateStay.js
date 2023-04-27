@@ -1,41 +1,94 @@
 import { Button, DatePicker, message, Upload } from 'antd'
-import React from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import React, { useState } from 'react'
+import { useLocation } from 'react-router-dom'
 import JobDetailsGrid from '../../components/layout/JobDetailsGrid'
 import RoomPicker from '../../components/layout/RoomPicker'
 import moment from "moment";
 import HotelPhotosCarousel from '../../components/layout/HotelPhotosCarousel'
+import UrgentBookingModal from '../../components/UrgentBookingModal'
 
 const { RangePicker } = DatePicker;
-
-const props = {
-    beforeUpload: (file) => {
-        const fileType = file.type;
-        if (fileType === 'application/pdf') {
-            return file.type || Upload.LIST_IGNORE;
-        } else if (fileType === 'application/xls') {
-            return file.type || Upload.LIST_IGNORE;
-        } else if (fileType === 'application/docx') {
-            return file.type || Upload.LIST_IGNORE;
-        } else if (fileType === 'application/pdf') {
-            return file.type || Upload.LIST_IGNORE;
-        } else if (fileType === 'image/jpg') {
-            return file.type || Upload.LIST_IGNORE;
-        } else {
-            message.error(`${file.name} is not a valid file formate`);
-            return Upload.LIST_IGNORE;
-        }
-    },
-    onChange: (info) => {
-        console.log(info.fileList);
-    },
-};
 
 const UpdateStay = () => {
 
     const location = useLocation();
 
     const request = location.state;
+
+    const [showTodayModal, setShowTodayModal] = useState(false);
+
+    const [dateRange, setDateRange] = useState([request.dateRange[0], request.dateRange[1]]);
+
+    const [singleRoom, setSingleRoom] = useState(request.roomRequirements.single);
+    const [doubleRoom, setDoubleRoom] = useState(request.roomRequirements.double);
+    const [animalSupport, setAnimalSupport] = useState(request.roomRequirements.animalSupport);
+
+    const [rosterFile, setRosterFile] = useState([]);
+
+    const handleSingleRoom = (rooms) => {
+        setSingleRoom(rooms);
+    };
+
+    const handleDoubleRoom = (rooms) => {
+        setDoubleRoom(rooms);
+    };
+
+    const handleAnimal = (animals) => {
+        setAnimalSupport(animals);
+    };
+
+    const handleCalendarChange = (values, dateString) => {
+
+        if (dateString && dateString.length === 2) {
+            const startDate = moment(new Date(dateString[0]));
+            const endDate = moment(new Date(dateString[1]));
+            const today = moment();
+            setDateRange([
+                startDate.toISOString(),
+                endDate.toISOString(),
+            ]);
+            if (startDate.isSame(today, 'day') || endDate.isSame(today, 'day')) {
+                setShowTodayModal(true);
+            }
+        }
+    };
+
+    const disabledDate = (current) => {
+
+        const today = moment().startOf('day');
+        return current && (current < today || current > today.clone().add(365, 'days').endOf('day'));
+
+    };
+
+    const handleUpload = (info) => {
+        setRosterFile(info.file);
+        console.log(rosterFile);
+    };
+
+    const props = {
+        beforeUpload: (file) => {
+            const fileType = file.type;
+            if (fileType === 'application/pdf') {
+                return file.type || Upload.LIST_IGNORE;
+            } else if (fileType === 'application/xls') {
+                return file.type || Upload.LIST_IGNORE;
+            } else if (fileType === 'application/docx') {
+                return file.type || Upload.LIST_IGNORE;
+            } else if (fileType === 'application/pdf') {
+                return file.type || Upload.LIST_IGNORE;
+            } else if (fileType === 'image/jpg') {
+                return file.type || Upload.LIST_IGNORE;
+            } else {
+                message.error(`${file.name} is not a valid file formate`);
+                return Upload.LIST_IGNORE;
+            }
+        },
+        onChange: handleUpload,
+    };
+
+    const handleConfirmChanges = () => {
+        console.log([singleRoom, doubleRoom, animalSupport, dateRange, rosterFile])
+    }
 
     return (
         <div className='min-vh-100 w-100 px-md-5 px-2 py-5'>
@@ -84,20 +137,33 @@ const UpdateStay = () => {
                     <div className='row justify-content-xl-between justify-content-center mt-5 gap-xl-0 gap-5'>
                         <div className='col-xl-5 col-lg-11 col-12'>
                             <span className='font-poppins ms-4 fw-semibold'>Add or remove current rooms</span>
-                            <RoomPicker singleRooms={request.roomRequirements.single} doubleRooms={request.roomRequirements.double} animals={request.roomRequirements.animalSupport} />
+                            <RoomPicker
+                                onSingleRoomChange={handleSingleRoom}
+                                onDoubleRoomChange={handleDoubleRoom}
+                                onAnimalChange={handleAnimal}
+                                singleRooms={singleRoom}
+                                doubleRooms={doubleRoom}
+                                animals={animalSupport}
+                            />
+                            {/* <RoomPicker singleRooms={singleRoom} doubleRooms={doubleRoom} animals={animalSupport} /> */}
                         </div>
                         <div className='col-xl-3 col-md-5 col-12 d-flex flex-column justify-content-start position-relative'>
                             <span className='font-poppins fw-semibold'>Edit dates</span>
-                            <span className='updateDate shadow p-3 mt-2 fw-bold'>{moment(request.dateRange[0]).format("MMMM")} {moment(request.dateRange[0]).format("DD")} - {moment(request.dateRange[0]).format("MMMM")} {moment(request.dateRange[1]).format("DD")}
+                            <span className='updateDate shadow p-3 mt-2 fw-bold'>{moment(dateRange[0]).format("MMMM")} {moment(dateRange[0]).format("DD")} - {moment(dateRange[1]).format("MMMM")} {moment(dateRange[1]).format("DD")}
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="black" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" width={18} className='ms-2'>
                                     <path strokeLinecap="round" strokeLinejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125" />
                                 </svg>
-                                <RangePicker className='position-absolute start-0' />
+                                <RangePicker className='position-absolute start-0'
+                                    onChange={handleCalendarChange}
+                                    onCalendarChange={handleCalendarChange}
+                                    disabledDate={disabledDate}
+                                />
                             </span>
+                            {showTodayModal && <UrgentBookingModal setShowModal={setShowTodayModal} />}
                         </div>
                         <div className='col-xl-3 col-md-5 col-12 d-flex items flex-column gap-2 justify-content-start position-relative'>
                             <span className='font-poppins fw-semibold overflow-hidden'>Edit roster</span>
-                            <Upload {...props} className="upload-roster-btn w-100">
+                            <Upload action="" {...props} className="upload-roster-btn w-100">
                                 <Button className='py-4 d-flex align-items-center border-0 shadow font-poppins' icon={<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" width={18} className='me-2'>
                                     <path strokeLinecap="round" strokeLinejoin="round" d="M18.375 12.739l-7.693 7.693a4.5 4.5 0 01-6.364-6.364l10.94-10.94A3 3 0 1119.5 7.372L8.552 18.32m.009-.01l-.01.01m5.699-9.941l-7.81 7.81a1.5 1.5 0 002.112 2.13" />
                                 </svg>
@@ -107,7 +173,7 @@ const UpdateStay = () => {
                         </div>
                     </div>
                     <div className='d-flex justify-content-end'>
-                        <Button className='confirm-changes-btn font-poppins'>
+                        <Button className='confirm-changes-btn font-poppins' onClick={handleConfirmChanges}>
                             Confirm changes
                         </Button>
                     </div>

@@ -18,6 +18,7 @@ import {
 import moment from "moment";
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
+import UrgentBookingModal from "../UrgentBookingModal";
 
 const { RangePicker } = DatePicker;
 
@@ -316,25 +317,7 @@ const Header = () => {
         <FaUserAlt className="header-icons" />
       </a> : null}
 
-      {showTodayModal &&
-        <div class="modal d-flex justify-content-center align-items-center">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h3 class="modal-title">Urgent Booking</h3>
-                <button type="button" class="btn-close" onClick={() => setShowTodayModal(false)}></button>
-              </div>
-              <div class="modal-body">
-                <h5 className="text-capitalize">For urgent today's date booking please contact us on our Number 786-874 9988</h5>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" onClick={() => setShowTodayModal(false)}>Close</button>
-                {/* <button type="button" class="btn btn-primary">Save changes</button> */}
-              </div>
-            </div>
-          </div>
-        </div>
-      }
+      {showTodayModal && <UrgentBookingModal setShowModal={setShowTodayModal} />}
     </Row>
   );
 };

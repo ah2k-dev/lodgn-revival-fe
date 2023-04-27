@@ -1,8 +1,7 @@
 import React, { useEffect } from "react";
-import Card from "../../components/layout/Card";
 import JobDetailsGrid from "../../components/layout/JobDetailsGrid";
 import { useState } from "react";
-import { Button, Upload, message } from "antd";
+import { Button, message } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import UpdateHotelDetails from "../../components/layout/UpdateHotelDetails";
 import { useDispatch, useSelector } from "react-redux";
@@ -174,6 +173,10 @@ const RequestComponent = ({ request, status, index }) => {
                 type="radio"
                 value="recieved"
                 defaultChecked={"recieved" === request.status}
+                disabled={
+                  request.status === "completed" ||
+                  request.status === "paymentVerified"
+                }
                 onClick={handleRadioChange}
               />
               RECEIVED
