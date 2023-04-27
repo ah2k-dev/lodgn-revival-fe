@@ -1,11 +1,13 @@
 import { Button, DatePicker, message, Upload } from 'antd'
 import React, { useState } from 'react'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import JobDetailsGrid from '../../components/layout/JobDetailsGrid'
 import RoomPicker from '../../components/layout/RoomPicker'
 import moment from "moment";
 import HotelPhotosCarousel from '../../components/layout/HotelPhotosCarousel'
 import UrgentBookingModal from '../../components/UrgentBookingModal'
+import { useDispatch } from 'react-redux'
+import { updateRequest } from '../../actions/requestActions'
 
 const { RangePicker } = DatePicker;
 
@@ -19,11 +21,14 @@ const UpdateStay = () => {
 
     const [dateRange, setDateRange] = useState([request.dateRange[0], request.dateRange[1]]);
 
-    const [singleRoom, setSingleRoom] = useState(request.roomRequirements.single);
-    const [doubleRoom, setDoubleRoom] = useState(request.roomRequirements.double);
-    const [animalSupport, setAnimalSupport] = useState(request.roomRequirements.animalSupport);
+    const [singleRoom, setSingleRoom] = useState(request?.roomRequirements?.single || 0);
+    const [doubleRoom, setDoubleRoom] = useState(request?.roomRequirements?.double || 0);
+    const [animalSupport, setAnimalSupport] = useState(request?.roomRequirements?.animalSupport || 0);
 
     const [rosterFile, setRosterFile] = useState([]);
+
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const handleSingleRoom = (rooms) => {
         setSingleRoom(rooms);
@@ -86,8 +91,24 @@ const UpdateStay = () => {
         onChange: handleUpload,
     };
 
-    const handleConfirmChanges = () => {
-        console.log([singleRoom, doubleRoom, animalSupport, dateRange, rosterFile])
+    const handleConfirmChanges = async() => {
+        const roomRequirements = {
+                single: singleRoom,
+                double: doubleRoom,
+                animalSupport,
+            }
+        const formData = new FormData();
+        formData.append('dateRange', JSON.stringify(dateRange));
+        formData.append('roomRequirements', JSON.stringify(roomRequirements));
+        formData.append('roaster', rosterFile);
+        formData.append('requestId', request._id);
+
+        const res = await dispatch(updateRequest(formData))
+        if(res){
+            // navigate to request page
+            navigate('/dashboard/user/requested-updates')
+        }
+        
     }
 
     return (
@@ -163,12 +184,15 @@ const UpdateStay = () => {
                         </div>
                         <div className='col-xl-3 col-md-5 col-12 d-flex items flex-column gap-2 justify-content-start position-relative'>
                             <span className='font-poppins fw-semibold overflow-hidden'>Edit roster</span>
-                            <Upload action="" {...props} className="upload-roster-btn w-100">
+                            <input type="file" id="file" onChange={() => {
+                                setRosterFile(document.getElementById('file').files[0])
+                            }} />
+                            {/* <Upload action="" {...props} className="upload-roster-btn w-100">
                                 <Button className='py-4 d-flex align-items-center border-0 shadow font-poppins' icon={<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" width={18} className='me-2'>
                                     <path strokeLinecap="round" strokeLinejoin="round" d="M18.375 12.739l-7.693 7.693a4.5 4.5 0 01-6.364-6.364l10.94-10.94A3 3 0 1119.5 7.372L8.552 18.32m.009-.01l-.01.01m5.699-9.941l-7.81 7.81a1.5 1.5 0 002.112 2.13" />
                                 </svg>
                                 }>Upload updated roster</Button>
-                            </Upload>
+                            </Upload> */}
                             <span style={{ color: '#959595' }} className='ms-2'>xls , pdf , word , jpg</span>
                         </div>
                     </div>

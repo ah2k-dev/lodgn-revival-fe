@@ -5,7 +5,7 @@ import JobDetailsGrid from "../../components/layout/JobDetailsGrid";
 import PaidPerNight from "../../components/layout/PaidPerNight";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Form, InputNumber, message } from "antd";
-import { clearErrors, getRequestUpdates, } from "../../actions/requestActions";
+import { approveRejectUpdate, clearErrors, getRequestUpdates, } from "../../actions/requestActions";
 import { LoadingOutlined } from "@ant-design/icons";
 import moment from "moment";
 
@@ -49,8 +49,8 @@ const UpdateRequests = () => {
         ) : (
           <>
             {requestedUpdates.length > 0 ? (
-              requestedUpdates.map((request, i) => (
-                <RequestComponent request={request} key={i} />
+              requestedUpdates.map((requestedUpdate, i) => (
+                <RequestComponent request={requestedUpdate.request} update={requestedUpdate} key={i} />
               ))
             ) : null}
           </>
@@ -60,7 +60,7 @@ const UpdateRequests = () => {
   );
 };
 
-const RequestComponent = ({ request }) => {
+const RequestComponent = ({ request, update }) => {
 
   const [showCard, setShowCard] = useState(false);
 
@@ -69,6 +69,8 @@ const RequestComponent = ({ request }) => {
   const handleSave = () => {
     formRef.current.submit();
   }
+
+  const dispatch = useDispatch();
 
   return (
     <div className="d-flex flex-column gap-4 rounded-container bg-white p-5 position-relative">
@@ -100,14 +102,14 @@ const RequestComponent = ({ request }) => {
             <JobDetailsGrid
               jobLocation={request.location.string}
               // jobAddress="Sarasota,FL. 33178"
-              start_date={moment(request.dateRange[0]).format("DD")}
-              end_date={moment(request.dateRange[1]).format("DD")}
-              start_date_month={moment(request.dateRange[0]).format("MMM")}
-              end_date_month={moment(request.dateRange[1]).format("MMM")}
-              total_rooms={request.roomRequirements.single + request.roomRequirements.double}
-              single_rooms={request.roomRequirements.single}
-              double_rooms={request.roomRequirements.double}
-              animalSupport={request.roomRequirements.animalSupport}
+              start_date={moment(update?.dateRange[0]).format("DD")}
+              end_date={moment(update?.dateRange[1]).format("DD")}
+              start_date_month={moment(update?.dateRange[0]).format("MMM")}
+              end_date_month={moment(update?.dateRange[1]).format("MMM")}
+              total_rooms={update?.roomRequirements.single + update?.roomRequirements.double}
+              single_rooms={update?.roomRequirements.single}
+              double_rooms={update?.roomRequirements.double}
+              animalSupport={update?.roomRequirements.animalSupport}
             />
             <span className="d-flex flex-column align-items-center gap-1">
               <span className="font-lato fw-bold">Download attachments:</span>
@@ -121,7 +123,12 @@ const RequestComponent = ({ request }) => {
         </div>
 
         <div className="col-12 btns d-flex justify-content-md-end justify-content-center gap-3">
-          <Button className="declineBtn" onClick={() => setShowCard(false)}>Decline</Button>
+          <Button className="declineBtn" onClick={() => {
+            dispatch(approveRejectUpdate({
+              id: update._id,
+              status: 'rejected'
+            }))
+          }}>Decline</Button>
           <Button className="approveBtn" onClick={() => setShowCard(true)}>Approve</Button>
         </div>
 
@@ -129,7 +136,21 @@ const RequestComponent = ({ request }) => {
           <Form
             ref={formRef}
             className="updateRatesContainer col-xxl-5 col-xl-6 d-flex flex-column gap-2 align-items-center"
-            onFinish={console.log('success')}
+            onFinish={async(values)=>{
+              const res = await dispatch(approveRejectUpdate({
+                id: update._id,
+                status: 'approved',
+                rates: {
+                  single: values.single_rooms_rate,
+                  double: values.double_rooms_rate,
+                  animalSupport: values.animal_rate
+                }
+              }))
+              if(res){
+                setShowCard(false);
+              }
+              // setShowCard(false);
+            }}
             onFinishFailed={(errorInfo) => {
               console.log("Failed:", errorInfo);
             }}

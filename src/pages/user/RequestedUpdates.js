@@ -5,14 +5,14 @@ import JobDetailsGrid from "../../components/layout/JobDetailsGrid";
 import PaidPerNight from "../../components/layout/PaidPerNight";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Form, InputNumber, message } from "antd";
-import { clearErrors, getOngoingRequests } from "../../actions/requestActions";
+import { clearErrors, getOngoingRequests, getRequestUpdates } from "../../actions/requestActions";
 import { LoadingOutlined } from "@ant-design/icons";
 import moment from "moment";
 
 const RequestedUpdates = () => {
   const dispatch = useDispatch();
 
-  const { error, loading, onGoing } = useSelector((state) => state.request);
+  const { error, loading, requestedUpdates } = useSelector((state) => state.request);
 
   useEffect(() => {
     if (error) {
@@ -27,7 +27,7 @@ const RequestedUpdates = () => {
   }, [error]);
 
   const fetch = () => {
-    dispatch(getOngoingRequests());
+    dispatch(getRequestUpdates());
   };
 
   useEffect(() => {
@@ -38,7 +38,7 @@ const RequestedUpdates = () => {
     <div className="min-vh-100 w-100 px-lg-5 px-md-3 px-4 py-5">
       <div className="d-flex flex-column gap-5">
         <h2 className="font-poppins mt-4 heading-green">
-          You currently have {onGoing.length} requested updates
+          You currently have {requestedUpdates.length} requested updates
         </h2>
         {loading ? (
           <div className="loader w-100 d-flex justify-content-center align-items-center">
@@ -46,9 +46,10 @@ const RequestedUpdates = () => {
           </div>
         ) : (
           <>
-            {onGoing.length > 0 ? (
-              onGoing.map((request, i) => (
-                <RequestComponent request={request} key={i} />
+            {requestedUpdates.length > 0 ? (
+              requestedUpdates.map((requestedUpdate, i) => (
+                <RequestComponent request={requestedUpdate.request} update={requestedUpdate} key={i} />
+                // <></>
               ))
             ) : (
               <div className="d-flex flex-column justify-content-center align-items-center">
@@ -62,7 +63,7 @@ const RequestedUpdates = () => {
   );
 };
 
-const RequestComponent = ({ request }) => {
+const RequestComponent = ({ request, update }) => {
 
   const formRef = useRef();
 
@@ -97,24 +98,30 @@ const RequestComponent = ({ request }) => {
               New Requested Booking Details
             </span>
             <JobDetailsGrid
-              jobLocation={request.location.string}
+              jobLocation={request?.location.string}
               // jobAddress="Sarasota,FL. 33178"
-              start_date={moment(request.dateRange[0]).format("DD")}
-              end_date={moment(request.dateRange[1]).format("DD")}
-              start_date_month={moment(request.dateRange[0]).format("MMM")}
-              end_date_month={moment(request.dateRange[1]).format("MMM")}
+              start_date={moment(update?.dateRange[0]).format("DD")}
+              end_date={moment(update?.dateRange[1]).format("DD")}
+              start_date_month={moment(update?.dateRange[0]).format("MMM")}
+              end_date_month={moment(update?.dateRange[1]).format("MMM")}
               total_rooms={
-                request.roomRequirements.single + request.roomRequirements.double
+                update?.roomRequirements.single + update?.roomRequirements.double
               }
-              single_rooms={request.roomRequirements.single}
-              double_rooms={request.roomRequirements.double}
-              animalSupport={request.roomRequirements.animalSupport}
+              single_rooms={update?.roomRequirements.single}
+              double_rooms={update?.roomRequirements.double}
+              animalSupport={update?.roomRequirements.animalSupport}
             />
           </div>
         </div>
         <div className="request-status d-flex justify-content-end">
           <span className="py-2 px-4 fw-bold rounded-3">
-            Approved
+            {update?.status === "pending" ? (
+              <span className="text-warning">Pending</span>
+            ) : update?.status === "approved" ? (
+              <span className="text-success">Approved</span>
+            ) : (
+              <span className="text-danger">Rejected</span>
+            )}
           </span>
         </div>
       </div>
