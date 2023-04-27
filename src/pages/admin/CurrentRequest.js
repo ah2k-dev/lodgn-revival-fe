@@ -10,6 +10,7 @@ import {
   changeStatus,
   clearErrors,
   getRequests,
+  rejectReuest,
 } from "../../actions/requestActions";
 import moment from "moment";
 
@@ -105,6 +106,10 @@ const RequestComponent = ({ request, status, index }) => {
     }
   };
 
+  const rejectRequestFunc = (id) => {
+    dispatch(rejectReuest(id));
+  };
+
   // useEffect(() => {
   //   if (error) {
   //     message.error({
@@ -148,7 +153,12 @@ const RequestComponent = ({ request, status, index }) => {
             </Button>
           )}
           {newStatus === "recieved" || newStatus === "negotiating" ? (
-            <Button className="reject-request-btn">Reject Request</Button>
+            <Button
+              className="reject-request-btn"
+              onClick={() => rejectRequestFunc(request._id)}
+            >
+              Reject Request
+            </Button>
           ) : null}
         </div>
       </div>
@@ -218,26 +228,26 @@ const RequestComponent = ({ request, status, index }) => {
       </div>
       {newStatus === "completed" && (
         <div className="row mt-4 gap-0 justify-content-xl-between justify-content-center">
-          {!request.hasOwnProperty("bookedOffering") && (
-            <h3 className="update-status-text font-poppins text-uppercase fs-6">
-              UPDATE STATUS TO CLIENT:
-            </h3>
-          )}
-          {!request.hasOwnProperty("bookedOffering") && (
-            <div className="row mt-3 justify-content-between">
-              {count.map((val, ind) => {
-                return (
-                  <UpdateHotelDetails
-                    offerings={offerings}
-                    setOfferings={setOfferings}
-                    key={ind}
-                    flag={val}
-                    request={request}
-                  />
-                );
-              })}
-            </div>
-          )}
+          {/* {!request.hasOwnProperty("bookedOffering") && ( */}
+          <h3 className="update-status-text font-poppins text-uppercase fs-6">
+            UPDATE STATUS TO CLIENT:
+          </h3>
+          {/* // )} */}
+          {/* {!request.hasOwnProperty("bookedOffering") && ( */}
+          <div className="row mt-3 justify-content-between">
+            {count.map((val, ind) => {
+              return (
+                <UpdateHotelDetails
+                  offerings={offerings}
+                  setOfferings={setOfferings}
+                  key={ind}
+                  flag={val}
+                  request={request}
+                />
+              );
+            })}
+          </div>
+          {/* // )} */}
         </div>
       )}
       {/* {request.hasOwnProperty("bookedOffering") && (

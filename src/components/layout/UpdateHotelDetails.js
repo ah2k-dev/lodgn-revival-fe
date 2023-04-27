@@ -2,7 +2,6 @@ import { Button, Form, Input, InputNumber, Upload } from "antd";
 import React, { useRef, useState } from "react";
 
 const UpdateHotelDetails = ({ offerings, setOfferings, flag, request }) => {
-
   const formRef = useRef();
 
   const [files, setFiles] = useState([]);
@@ -120,9 +119,25 @@ const UpdateHotelDetails = ({ offerings, setOfferings, flag, request }) => {
   // };
 
   const handleFinish = (values) => {
-    setOfferings([
-      ...offerings,
-      {
+    // setOfferings([
+    //   ...offerings,
+    //   {
+    //     // images: values.files,
+    //     title: values.hotel_title,
+    //     description: values.description,
+    //     rates: {
+    //       single: values.single_rooms_rate > 0 && values.single_rooms_rate,
+    //       double: values.double_rooms_rate > 0 && values.double_rooms_rate,
+    //       animalSupport: values.animal_rate > 0 && values.animal_rate,
+    //     },
+    //     paymentLink: values.payment_link,
+    //     flag: flag,
+    //   },
+    // ]);
+    let prvOffering = offerings.filter((offering) => offering.flag == flag);
+    if(prvOffering){
+      let index = offerings.indexOf(prvOffering[0]);
+      offerings[index] = {
         // images: values.files,
         title: values.hotel_title,
         description: values.description,
@@ -133,14 +148,31 @@ const UpdateHotelDetails = ({ offerings, setOfferings, flag, request }) => {
         },
         paymentLink: values.payment_link,
         flag: flag,
-      },
-    ]);
-  }
-  
+      };
+      setOfferings([...offerings]);
+    } else {
+      setOfferings([
+        ...offerings,
+        {
+          // images: values.files,  
+          title: values.hotel_title,
+          description: values.description,
+          rates: {
+            single: values.single_rooms_rate > 0 && values.single_rooms_rate,
+            double: values.double_rooms_rate > 0 && values.double_rooms_rate,
+            animalSupport: values.animal_rate > 0 && values.animal_rate,
+          },
+          paymentLink: values.payment_link,
+          flag: flag,
+        },
+      ]);
+    }
+  };
+
   const handleSave = () => {
     console.log(offerings);
     formRef.current.submit();
-  }
+  };
 
   return (
     <Form
@@ -151,7 +183,16 @@ const UpdateHotelDetails = ({ offerings, setOfferings, flag, request }) => {
         console.log("Failed:", errorInfo);
       }}
       autoComplete="off"
+      initialValues={{
+        hotel_title: request?.offerings[flag - 1] && request?.offerings[flag - 1].title,
+        description: request?.offerings[flag - 1] && request?.offerings[flag - 1].description,
+        single_rooms_rate: request?.offerings[flag - 1] && request?.offerings[flag - 1].rates.single,
+        double_rooms_rate: request?.offerings[flag - 1] && request?.offerings[flag - 1].rates.double,
+        animal_rate: request?.offerings[flag - 1] && request?.offerings[flag - 1].rates.animalSupport,
+        payment_link: request?.offerings[flag - 1] && request?.offerings[flag - 1].paymentLink,
+      }}
     >
+      {/* {console.log(request.offerings[flag - 1])} */}
       <div className="upload-hotel-image d-flex flex-column w-100 gap-2">
         <label className="font-lato fw-semibold">Upload hotel image.</label>
         <Form.Item
@@ -234,9 +275,11 @@ const UpdateHotelDetails = ({ offerings, setOfferings, flag, request }) => {
         </Form.Item>
       </div>
       {request.roomRequirements.single &&
-        request.roomRequirements.single > 0 ? (
+      request.roomRequirements.single > 0 ? (
         <div className="d-flex flex-column gap-2 w-100">
-          <label className="font-lato fw-semibold">Add single room rates.</label>
+          <label className="font-lato fw-semibold">
+            Add single room rates.
+          </label>
           <Form.Item
             name="single_rooms_rate"
             rules={[
@@ -248,11 +291,14 @@ const UpdateHotelDetails = ({ offerings, setOfferings, flag, request }) => {
           >
             <InputNumber min={0} />
           </Form.Item>
-        </div>) : null}
+        </div>
+      ) : null}
       {request.roomRequirements.double &&
-        request.roomRequirements.double > 0 ? (
+      request.roomRequirements.double > 0 ? (
         <div className="d-flex flex-column gap-2 w-100">
-          <label className="font-lato fw-semibold">Add double room rates.</label>
+          <label className="font-lato fw-semibold">
+            Add double room rates.
+          </label>
           <Form.Item
             name="double_rooms_rate"
             rules={[
@@ -264,9 +310,10 @@ const UpdateHotelDetails = ({ offerings, setOfferings, flag, request }) => {
           >
             <InputNumber min={0} />
           </Form.Item>
-        </div>) : null}
+        </div>
+      ) : null}
       {request.roomRequirements.animalSupport &&
-        request.roomRequirements.animalSupport > 0 ? (
+      request.roomRequirements.animalSupport > 0 ? (
         <div className="d-flex flex-column gap-2 w-100">
           <label className="font-lato fw-semibold">Add animal support.</label>
           <Form.Item
@@ -280,7 +327,8 @@ const UpdateHotelDetails = ({ offerings, setOfferings, flag, request }) => {
           >
             <InputNumber min={0} />
           </Form.Item>
-        </div>) : null}
+        </div>
+      ) : null}
       <div className="d-flex flex-column gap-2 w-100">
         <label className="font-lato fw-semibold">Add Payment Link.</label>
         <Form.Item
@@ -292,8 +340,8 @@ const UpdateHotelDetails = ({ offerings, setOfferings, flag, request }) => {
             },
             {
               type: "url",
-              message: "Please enter a valid url."
-            }
+              message: "Please enter a valid url.",
+            },
           ]}
         >
           <Input />
@@ -301,13 +349,14 @@ const UpdateHotelDetails = ({ offerings, setOfferings, flag, request }) => {
       </div>
       <div className="row mt-2 w-100">
         <Button className="saveBtn" onClick={handleSave}>
-          {offerings.find((offering => offering.flag == flag)) ? "Update" : "Save"}
+          {offerings.find((offering) => offering.flag == flag)
+            ? "Update"
+            : "Save"}
         </Button>
       </div>
     </Form>
 
-
-        // Old Form
+    // Old Form
 
     // <div className="col-xl-4 px-xxl-4 px-xl-3 col-12 update-hotel-details d-flex flex-column gap-3">
     //   <div className="upload-hotel-image d-flex flex-column w-100 gap-2">
