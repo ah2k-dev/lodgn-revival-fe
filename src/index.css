@@ -22,6 +22,24 @@ code {
   font-family: 'Lato', sans-serif;
 }
 
+.span-note {
+  color: #959595;
+}
+
+.green-badge {
+  background-color: #48AF78;
+  font-size: 0.75rem;
+  text-align: center;
+}
+
+.rejected-status {
+  background-color: #de0707;
+}
+
+.approved-status {
+  background-color: #42996B;
+}
+
 @import "./styles/general.css";
 @import "./styles/antd.css";
 @import "./styles/components/layout.css";

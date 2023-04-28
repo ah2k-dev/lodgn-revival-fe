@@ -3,15 +3,11 @@
     color: white;
 }
 
-.ongoingStays .request-status span {
+/* .ongoingStays .request-status span {
     background-color: #42996B !important;
-}
+} */
 
-.rejected-status span {
-    background-color: #de0707;
-}
-
-.haeding-green {
+.heading-green {
     color: #5BA343 !important;
 }
 
@@ -25,6 +21,11 @@
     border: 1px solid rgba(0, 0, 0, 0.22) !important;
     box-shadow: inset -1px 1px 4px rgba(0, 0, 0, 0.11) !important;
     border-radius: 10px !important;
+}
+
+.update-btn:disabled:hover {
+    color: #959595 !important;
+    border: 1px solid rgba(0, 0, 0, 0.22) !important;
 }
 
 .rebook-btn {
@@ -110,9 +111,9 @@
     }
 }
 
-@media screen and (max-width: 767px) {
+/* @media screen and (max-width: 767px) {
     .request-status,
     .rejected-status {
         width: 100%;
     }
-}
+} */

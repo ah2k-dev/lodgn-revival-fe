@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import JobDetailsGrid from "../../components/layout/JobDetailsGrid";
 import { useState } from "react";
-import { Button, message } from "antd";
+import { Button, message, Select } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import UpdateHotelDetails from "../../components/layout/UpdateHotelDetails";
 import { useDispatch, useSelector } from "react-redux";
@@ -63,8 +63,11 @@ const CurrentRequest = () => {
 };
 
 const RequestComponent = ({ request, status, index }) => {
+  console.log(request.offerings);
+
   const [newStatus, setNewStatus] = useState(status);
   const [offerings, setOfferings] = useState([]);
+  const [selectedOffer, setSelectedOffer] = useState("");
 
   const dispatch = useDispatch();
   const { loading } = useSelector((state) => state.request);
@@ -123,6 +126,11 @@ const RequestComponent = ({ request, status, index }) => {
 
   // console.log(status);
 
+  const handleSelect = (value) => {
+    setSelectedOffer(value)
+    console.log(`selected ${value}`);
+  };
+
   return (
     <div className="rounded-container d-flex flex-column justify-content-between bg-white p-lg-5 p-4 gap-4 w-100 mb-5">
       <div className="admin-page d-flex justify-content-between align-items-start">
@@ -140,7 +148,22 @@ const RequestComponent = ({ request, status, index }) => {
           single_rooms={request?.roomRequirements?.single}
           double_rooms={request?.roomRequirements?.double}
         />
-        <div className="btns d-flex gap-3 justify-content-between mt-lg-0 mt-4">
+        <div className="btns d-flex gap-3 justify-content-between align-items-center mt-lg-0 mt-4">
+          {newStatus === "paymentVerified" && (
+            <Select
+              showSearch
+              placeholder="Select an offering"
+              optionFilterProp="children"
+              onChange={handleSelect}
+              filterOption={(input, option) =>
+                (option?.label ?? "").includes(input)
+              }
+              options={request?.offerings.map((offer) => ({
+                value: offer.title,
+                label: offer.title,
+              }))}
+            />
+          )}
           {newStatus !== request.status && (
             <Button
               className="update-status-btn"

@@ -62,11 +62,14 @@ const OngoingStays = () => {
 };
 
 const RequestComponent = ({ request }) => {
+
+  console.log(request.updateRequested);
+
   const navigate = useNavigate();
 
   return (
     <div className="ongoingStays w-100 d-flex flex-column gap-lg-5 gap-2 rounded-container bg-white p-xl-5 p-lg-4 p-4 shadow position-relative">
-      <div className="d-flex flex-md-row flex-column-reverse justify-content-md-between justify-content-sm-end align-items-center flex-md-nowrap flex-wrap gap-md-0 gap-3 justify-content-center">
+      <div className="d-flex flex-md-row flex-column-reverse justify-content-md-between justify-content-sm-end align-items-md-center align-items-end flex-md-nowrap flex-wrap gap-md-0 gap-4 justify-content-center">
         <JobDetailsGrid
           jobLocation={request.location.string}
           start_date={moment(request.dateRange[0]).format("DD")}
@@ -79,6 +82,7 @@ const RequestComponent = ({ request }) => {
           single_rooms={request.roomRequirements.single}
           double_rooms={request.roomRequirements.double}
         />
+        { request?.updateRequested && <span className="update-Requested-badge green-badge text-white px-3 py-2 rounded-3 fw-bold font-poppins">Update Requested</span> }
       </div>
       <div className="row gap-3 mt-5 justify-content-center">
         <div className="col-md-5 col-xl-4 col-lg-5 col-sm-8 col-12 position-relative">
@@ -106,6 +110,7 @@ const RequestComponent = ({ request }) => {
             <div className="mt-4 btns d-flex flex-wrap gap-3">
               <Button
                 className="update-btn font-poppins text-white"
+                disabled={request?.updateRequested}
                 onClick={() =>
                   navigate("/dashboard/user/update-stay", { state: request })
                 }
