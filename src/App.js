@@ -34,7 +34,7 @@ import { useSelector } from "react-redux";
 // import * as dotenv from "dotenv";
 // dotenv.config();
 function App() {
-  const {isAuthenticated, user} = useSelector((state) => state.auth);
+  const { isAuthenticated, user } = useSelector((state) => state.auth);
   return (
     <div>
       <BrowserRouter>
@@ -123,7 +123,7 @@ function App() {
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
-      {isAuthenticated && user.role === "user" && <Livechat />}
+      {isAuthenticated && user?.userData?.role === "user" && <Livechat />}
     </div>
   );
 }
