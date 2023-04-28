@@ -213,13 +213,19 @@ export const getPreviousStays = () => async (dispatch) => {
   }
 };
 
-export const updateRequest = (id, data) => async (dispatch) => {
+export const updateRequest = (data) => async (dispatch) => {
   dispatch({
     type: requestConstants.UPDATE_REQUEST_REQUEST,
   });
   try {
+    // console.log(data);
+    const config = {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    }
     attachToken();
-    const res = await custAxios.post(`/booking/requestUpdate`, data);
+    const res = await custAxios.post(`/booking/requestUpdate`, data, config);
     if (res) {
       dispatch({
         type: requestConstants.UPDATE_REQUEST_SUCCESS,
@@ -249,7 +255,7 @@ export const approveRejectUpdate = (data) => async (dispatch) => {
   });
   try {
     attachToken();
-    const res = await custAxios.post(`/booking/approveRejectUpdate`, data);
+    const res = await custAxios.put(`/booking/approveRejectUpdate`, data);
     if (res) {
       dispatch({
         type: requestConstants.APPROVE_REJECT_UPDATE_SUCCESS,
@@ -261,7 +267,7 @@ export const approveRejectUpdate = (data) => async (dispatch) => {
           marginTop: "10vh",
         },
       });
-      // dispatch(getOneRequest(id));
+      dispatch(getRequestUpdates());
       return true;
     }
     // return true;

@@ -88,7 +88,7 @@ const RequestComponent = ({ request }) => {
       </div>
       {/* <span className='completed-status col-10 rounded-pill mt-4 py-2 px-4 text-white'>COMPLETED</span> */}
       {request.offerings.length > 0 &&
-        !request.hasOwnProperty("bookedOffering") && (
+        // !request.hasOwnProperty("bookedOffering") && (
           <div className={`cards-container ${request.offerings.length >= 3 ? 'columns-3' : request.offerings.length === 2 ? 'columns-2' : 'columns-1'} mt-4 justify-content-center`}>
             {/* <div className="col-auto position-relative">
               <span className="rare-find-badge">Rare Find</span>
@@ -117,7 +117,7 @@ const RequestComponent = ({ request }) => {
               </div>
             ))}
           </div>
-        )}
+        }
       {/* {request.hasOwnProperty("bookedOffering") && (
         <div className={`cards-container columns-1 mt-4 justify-content-center`}>
           <div className="position-relative">
