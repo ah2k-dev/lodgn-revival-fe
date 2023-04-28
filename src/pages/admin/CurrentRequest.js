@@ -81,12 +81,22 @@ const RequestComponent = ({ request, status, index }) => {
 
   const handleUpdate = (id) => {
     if (newStatus !== "completed") {
-      dispatch(
-        changeStatus(id, {
-          status: newStatus,
-          // status: newStatus,
-        })
-      );
+      if(newStatus === "paymentVerified"){
+        dispatch(
+          changeStatus(id, {
+            status: newStatus,
+            selectedOffer: selectedOffer,
+            // status: newStatus,
+          })
+        );
+      } else {
+        dispatch(
+          changeStatus(id, {
+            status: newStatus,
+            // status: newStatus,
+          })
+        );
+      }
     } else {
       if (offerings.length === 0) {
         message.error({
@@ -159,7 +169,7 @@ const RequestComponent = ({ request, status, index }) => {
                 (option?.label ?? "").includes(input)
               }
               options={request?.offerings.map((offer) => ({
-                value: offer.title,
+                value: offer._id,
                 label: offer.title,
               }))}
             />
@@ -169,7 +179,7 @@ const RequestComponent = ({ request, status, index }) => {
               className="update-status-btn"
               loading={loading}
               onClick={() => handleUpdate(request._id)}
-              disabled={newStatus === "completed" && offerings.length == 0}
+              disabled={(newStatus === "completed" && offerings.length == 0) || (newStatus === "paymentVerified" && selectedOffer === "")}
             >
               Update
             </Button>

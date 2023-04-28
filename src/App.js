@@ -29,9 +29,12 @@ import AdminReports from "./pages/admin/AdminReports.js";
 import RequestedUpdates from "./pages/user/RequestedUpdates.js";
 import RejectedRequests from "./pages/user/RejectedRequests.js";
 import ViewRejectedRequests from "./pages/admin/ViewRejectedRequests.js";
+import Livechat from "./components/LiveChat.js";
+import { useSelector } from "react-redux";
 // import * as dotenv from "dotenv";
 // dotenv.config();
 function App() {
+  const {isAuthenticated, user} = useSelector((state) => state.auth);
   return (
     <div>
       <BrowserRouter>
@@ -120,6 +123,7 @@ function App() {
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
+      {isAuthenticated && user.role === "user" && <Livechat />}
     </div>
   );
 }
