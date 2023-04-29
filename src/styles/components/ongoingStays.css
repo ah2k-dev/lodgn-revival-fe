@@ -1,114 +1,148 @@
 .ongoingStays .request-status,
 .rejected-status {
-    color: white;
+  color: white;
 }
 
 /* .ongoingStays .request-status span {
     background-color: #42996B !important;
 } */
 
+.upload-btn {
+  justify-content: flex-start;
+  display: flex !important;
+  align-items: center !important;
+  gap: 5px;
+  background: #ffffff;
+  font-size: 15px !important;
+  font-family: 'Poppins', sans-serif;
+  width: 100% !important;
+  height: 65px !important;
+  border: 1px solid rgba(0, 0, 0, 0.0003) !important;
+  box-shadow: 0.86px 0.86px 8.86px rgba(0, 0, 0, 0.25) !important;
+  border-radius: 10px !important;
+  outline: none !important;
+}
+
+.ant-btn.upload-btn {
+    border: none !important;
+    outline: none !important;
+}
+
+.upload-btn:hover {
+    box-shadow: 0px 0px 14px rgba(0, 0, 0, 0.25) !important;
+    border: none !important;
+    outline: none !important;
+    color: #42996b !important;
+}
+
+.upload-btn:hover span {
+    border: none !important;
+    outline: none !important;
+    color: #42996b !important;
+}
+
 .heading-green {
-    color: #5BA343 !important;
+  color: #5ba343 !important;
 }
 
 .green-span {
-    color: #5BA343 !important;
+  color: #5ba343 !important;
 }
 
 .update-btn {
-    color: #959595 !important;
-    background: #FFF9F9 !important;
-    border: 1px solid rgba(0, 0, 0, 0.22) !important;
-    box-shadow: inset -1px 1px 4px rgba(0, 0, 0, 0.11) !important;
-    border-radius: 10px !important;
+  color: #959595 !important;
+  background: #fff9f9 !important;
+  border: 1px solid rgba(0, 0, 0, 0.22) !important;
+  box-shadow: inset -1px 1px 4px rgba(0, 0, 0, 0.11) !important;
+  border-radius: 10px !important;
 }
 
 .update-btn:disabled:hover {
-    color: #959595 !important;
-    border: 1px solid rgba(0, 0, 0, 0.22) !important;
+  color: #959595 !important;
+  border: 1px solid rgba(0, 0, 0, 0.22) !important;
 }
 
 .rebook-btn {
-    background: #85BE9A !important;
-    border-radius: 10px !important;
+  background: #85be9a !important;
+  border-radius: 10px !important;
 }
 
 .ongoingStays .btns button {
-    height: 40px !important;
-    padding: 0 25px;
+  height: 40px !important;
+  padding: 0 25px;
 }
 
 .update-note-span {
-    color: #959595;
+  color: #959595;
 }
 
 .confirm-changes-btn {
-    background: linear-gradient(180deg, #48AF78 0%, #42996B 100%) !important;
-    border-radius: 4px;
-    font-weight: 600;
-    min-height: 40px;
-    transition: .5s ease-in-out;
+  background: linear-gradient(180deg, #48af78 0%, #42996b 100%) !important;
+  border-radius: 4px;
+  font-weight: 600;
+  min-height: 40px;
+  transition: 0.5s ease-in-out;
 }
 
 .confirm-changes-btn span {
-    color: white;
+  color: white;
 }
 
 .confirm-changes-btn:hover {
-    background: transparent !important;
+  background: transparent !important;
 }
 
 .confirm-changes-btn:hover span {
-    color: #42996B !important;
+  color: #42996b !important;
 }
 
-.upload-roster-btn .ant-upload.ant-upload-select  {
-    width: 100%;
+.upload-roster-btn .ant-upload.ant-upload-select {
+  width: 100%;
 }
 
-.upload-roster-btn button  {
-    width: 100%;
+.upload-roster-btn button {
+  width: 100%;
 }
 
 .upload-roster-btn span {
-    font-size: .75rem;
+  font-size: 0.75rem;
 }
 
 .updateDate {
-    font-size: .9rem;
-    border-radius: 14px;
-    cursor: pointer;
+  font-size: 0.9rem;
+  border-radius: 14px;
+  cursor: pointer;
 }
 
 .updateDate .ant-picker {
-    opacity: 0;
-    cursor: pointer;
+  opacity: 0;
+  cursor: pointer;
 }
 
 @media screen and (max-width: 1300px) {
-    .updateDate {
-        font-size: .75rem;
-    }
-    .upload-roster-btn span {
-        font-size: .65rem;
-    }
+  .updateDate {
+    font-size: 0.75rem;
+  }
+  .upload-roster-btn span {
+    font-size: 0.65rem;
+  }
 }
 @media screen and (max-width: 1200px) {
-    .ongoingStays .btns button {
-        padding: 0 18px;
-    }
-    .updateDate {
-        font-size: .75rem;
-    }
+  .ongoingStays .btns button {
+    padding: 0 18px;
+  }
+  .updateDate {
+    font-size: 0.75rem;
+  }
 }
 
 @media screen and (max-width: 1024px) {
-    .ongoingStays .btns button {
-        padding: 0 14px;
-    }
-    .ongoingStays .btns button span {
-        font-size: .9rem !important;
-    }
+  .ongoingStays .btns button {
+    padding: 0 14px;
+  }
+  .ongoingStays .btns button span {
+    font-size: 0.9rem !important;
+  }
 }
 
 /* @media screen and (max-width: 767px) {

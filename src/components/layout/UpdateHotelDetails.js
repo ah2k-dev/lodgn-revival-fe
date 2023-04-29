@@ -1,4 +1,4 @@
-import { Button, Form, Input, InputNumber, Upload } from "antd";
+import { Button, Form, Input, InputNumber, message, Upload } from "antd";
 import React, { useRef, useState } from "react";
 import HotelPhotosCarousel from "./HotelPhotosCarousel";
 
@@ -38,26 +38,63 @@ const UpdateHotelDetails = ({ offerings, setOfferings, flag, request }) => {
 
   const [payLink, setPayLink] = useState("");
 
-  const handleChange = (info) => {
-    let newFileList = [...info.fileList];
+  const hiddenFileInput = useRef(null);
 
-    // 2. Read from response and show file link
-    newFileList = newFileList.map((file) => {
-      if (file.response) {
+  // Programatically click the hidden file input element
+  // when the Button component is clicked
+  const handleClick = (event) => {
+    hiddenFileInput.current.click();
+  };
+
+  // Call a function (passed as a prop from the parent component)
+  // to handle the user-selected file
+  const handleChange = (event) => {
+    let uploadedFiles = [...event.target.files];
+    // console.log(uploadedFiles);
+
+    uploadedFiles = uploadedFiles.map((file) => {
+      if (file) {
+        const fileType = file.type;
+
+        if (
+          fileType === "image/png" ||
+          fileType === "image/jpeg" ||
+          fileType === "image/WebP" ||
+          fileType === "image/jpg"
+        ) {
+          uploadedFiles.push(file);
+        } else {
+          message.error(`${file.name} is not a valid file formate`);
+        }
+        return file;
         // Component will show file.url as link
-        file.url = file.response.url;
       }
-      return file;
     });
-    setFiles(newFileList);
-    console.log(files);
+
+    setFiles(uploadedFiles);
+    console.log(uploadedFiles);
   };
 
-  const props = {
-    action: "",
-    multiple: true,
-    onChange: handleChange,
-  };
+  // const handleChange = (info) => {
+  //   let newFileList = [...info.fileList];
+
+  //   // 2. Read from response and show file link
+  //   newFileList = newFileList.map((file) => {
+  //     if (file.response) {
+  //       // Component will show file.url as link
+  //       file.url = file.response.url;
+  //     }
+  //     return file;
+  //   });
+  //   setFiles(newFileList);
+  //   console.log(files);
+  // };
+
+  // const props = {
+  //   action: "",
+  //   multiple: true,
+  //   onChange: handleChange,
+  // };
 
   // const [validationError, setValidationError] = useState({
   //   filesError: "",
@@ -124,8 +161,8 @@ const UpdateHotelDetails = ({ offerings, setOfferings, flag, request }) => {
   //         title: title,
   //         description: description,
   //         rates: {
-  //           single: singleRates > 0 && singleRates,
-  //           double: doubleRates > 0 && doubleRates,
+    //           single: singleRates > 0 && singleRates,
+    //           double: doubleRates > 0 && doubleRates,
   //           animalSupport: animalSupport > 0 && animalSupport,
   //         },
   //         paymentLink: payLink,
@@ -134,7 +171,12 @@ const UpdateHotelDetails = ({ offerings, setOfferings, flag, request }) => {
   //     ]);
   //   }
   // };
-
+  
+  const handleSave = () => {
+    formRef.current.submit();
+    console.log(offerings);
+  };
+  
   const handleFinish = (values) => {
     // setOfferings([
     //   ...offerings,
@@ -186,10 +228,6 @@ const UpdateHotelDetails = ({ offerings, setOfferings, flag, request }) => {
     }
   };
 
-  const handleSave = () => {
-    console.log(offerings);
-    formRef.current.submit();
-  };
 
   return (
     <Form
@@ -246,7 +284,58 @@ const UpdateHotelDetails = ({ offerings, setOfferings, flag, request }) => {
                 },
               ]}
             >
-              <Upload {...props} fileList={files}>
+              <Button className="upload-btn d-flex justify-content-center py-5" onClick={handleClick}>
+                <svg
+                  width="48"
+                  height="31"
+                  viewBox="0 0 48 31"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <mask id="path-1-inside-1_6_2634" fill="white">
+                    <rect width="42.3387" height="28.5219" rx="0.986916" />
+                  </mask>
+                  <rect
+                    width="42.3387"
+                    height="28.5219"
+                    rx="0.986916"
+                    stroke="#494949"
+                    strokeWidth="2"
+                    mask="url(#path-1-inside-1_6_2634)"
+                  />
+                  <path
+                    d="M9.94462 15.0946L0.19831 20.9757L0 21.0773V28.8001L42.24 28.6984V19.6038L33.4152 10.5601L18.2445 20.9757L9.94462 15.0946Z"
+                    fill="#494949"
+                  />
+                  <circle
+                    cx="9.57292"
+                    cy="7.00705"
+                    r="4.04635"
+                    fill="#494949"
+                  />
+                  <circle
+                    cx="42.24"
+                    cy="24.96"
+                    r="5.28"
+                    fill="white"
+                    stroke="#494949"
+                    strokeWidth="0.96"
+                  />
+                  <path
+                    d="M41.9439 27.876C41.9439 28.0395 42.0765 28.1721 42.24 28.1721C42.4035 28.1721 42.5361 28.0395 42.5361 27.876L41.9439 27.876ZM42.4494 22.8307C42.3337 22.7151 42.1463 22.7151 42.0306 22.8307L40.1464 24.7149C40.0308 24.8306 40.0308 25.018 40.1464 25.1337C40.2621 25.2493 40.4495 25.2493 40.5652 25.1337L42.24 23.4588L43.9149 25.1337C44.0305 25.2493 44.2179 25.2493 44.3336 25.1337C44.4492 25.018 44.4492 24.8306 44.3336 24.7149L42.4494 22.8307ZM42.5361 27.876L42.5361 23.0401L41.9439 23.0401L41.9439 27.876L42.5361 27.876Z"
+                    fill="#494949"
+                  />
+                </svg>
+                <input
+                  type="file"
+                  id="file"
+                  ref={hiddenFileInput}
+                  onChange={handleChange}
+                  style={{ display: "none" }}
+                  multiple={true}
+                />
+              </Button>
+              {/* <Upload {...props} fileList={files}>
                 <Button>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -290,7 +379,7 @@ const UpdateHotelDetails = ({ offerings, setOfferings, flag, request }) => {
                     ></path>
                   </svg>
                 </Button>
-              </Upload>
+              </Upload> */}
             </Form.Item>
           </>
         )}

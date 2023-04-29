@@ -4,11 +4,31 @@
 
 .page-not-found h1 {
     text-align: center;
-    font-size: 6rem !important;
+    font-size: 5.85rem;
     line-height: 1;
     margin-bottom: 0;
 }
 
 .page-not-found span {
-    font-size: 2.5rem;
+    font-size: 2rem;
 }
+
+@media screen and (max-width:767px) {
+    .page-not-found h1 {
+      font-size: 4rem;
+    }
+
+    .page-not-found span {
+        font-size: 1.65rem;
+    }
+  }
+
+@media screen and (max-width:540px) {
+    .page-not-found h1 {
+      font-size: 2.25rem;
+    }
+
+    .page-not-found span {
+        font-size: 0.85rem;
+    }
+  }
