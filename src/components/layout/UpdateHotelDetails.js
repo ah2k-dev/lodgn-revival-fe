@@ -171,10 +171,9 @@ const UpdateHotelDetails = ({ offerings, setOfferings, flag, request }) => {
   //     ]);
   //   }
   // };
-  
+
   const handleSave = () => {
     formRef.current.submit();
-    console.log(offerings);
   };
   
   const handleFinish = (values) => {
@@ -205,10 +204,11 @@ const UpdateHotelDetails = ({ offerings, setOfferings, flag, request }) => {
           double: values.double_rooms_rate > 0 && values.double_rooms_rate,
           animalSupport: values.animal_rate > 0 && values.animal_rate,
         },
-        paymentLink: values.payment_link,
+        paymentLink: values.payment_link.indexOf("https://") == 0 ? values.payment_link : "https://"+values.payment_link,
         flag: flag,
       };
       setOfferings([...offerings]);
+      console.log(offerings);
     } else {
       setOfferings([
         ...offerings,
@@ -221,10 +221,12 @@ const UpdateHotelDetails = ({ offerings, setOfferings, flag, request }) => {
             double: values.double_rooms_rate > 0 && values.double_rooms_rate,
             animalSupport: values.animal_rate > 0 && values.animal_rate,
           },
-          paymentLink: values.payment_link,
+          paymentLink: values.payment_link.indexOf("https://") == 0 ? values.payment_link : "https://"+values.payment_link,
           flag: flag,
         },
       ]);
+
+      console.log(offerings);
     }
   };
 
@@ -484,10 +486,10 @@ const UpdateHotelDetails = ({ offerings, setOfferings, flag, request }) => {
         >
           <Input />
         </Form.Item>
-        <span className="d-block span-note">
+        {/* <span className="d-block span-note">
           <span className="text-danger">*</span>payment link must include
           https://
-        </span>
+        </span> */}
       </div>
       <div className="row mt-2 w-100">
         <Button className="saveBtn" onClick={handleSave}>

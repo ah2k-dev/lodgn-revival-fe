@@ -99,3 +99,9 @@
   font-weight: 500;
   margin-bottom: 5px
 }
+
+.eye-icon {
+  margin-top: 14px;
+  margin-right: 8px;
+  cursor: pointer;
+}

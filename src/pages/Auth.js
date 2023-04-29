@@ -26,6 +26,8 @@ const Auth = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
+  const [showPassword, setShowPassword] = useState(false);
+
   // console.log(location.state);
 
   // const { location , dateRange , roomRequirements } = locate.state;
@@ -139,35 +141,63 @@ const Auth = () => {
               </div>
               <div className="col-12">
                 <label htmlFor="password">Password</label>
-                <Form.Item
-                  name="password"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please input your password!",
-                    },
-                  ]}
-                  style={{ marginBottom: "0" }}
-                >
-                  {/* <p className="labels">Password</p> */}
-                  <Input type="password" placeholder="Password" />
-                </Form.Item>
+                <div className="d-flex justify-content-end position-relative">
+                  <Form.Item
+                    className="w-100"
+                    name="password"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please input your password!",
+                      },
+                    ]}
+                    style={{ marginBottom: "0" }}
+                  >
+                    {/* <p className="labels">Password</p> */}
+                    <Input
+                      type={!showPassword ? "password" : "text"}
+                      placeholder="Password"
+                    />
+                  </Form.Item>
+                  <i
+                    className={`far ${
+                      !showPassword ? "fa-eye-slash" : "fa-eye"
+                    } position-absolute eye-icon cursor-pointer`}
+                    onClick={() => setShowPassword(!showPassword)}
+                  ></i>
+                </div>
               </div>
               <div className="email-senders">
                 <Form.Item>
                   {emailVerify && (
-                    <a className="verify-email" onClick={() => navigate('/auth/requestToken')}>Request email token</a>
+                    <a
+                      className="verify-email"
+                      onClick={() => navigate("/auth/requestToken")}
+                    >
+                      Request email token
+                    </a>
                   )}
                   {!emailVerify && (
-                    <a className="forgot-password" onClick={() => {
-                      navigate("/auth/forgot-password", {
-                        state: {
-                          location: location.state ? location.state.location : '',
-                          dateRange: location.state ? location.state.dateRange : '',
-                          roomRequirements: location.state ? location.state.roomRequirements : '',
-                        },
-                      });
-                    }}>Forgot password?</a>
+                    <a
+                      className="forgot-password"
+                      onClick={() => {
+                        navigate("/auth/forgot-password", {
+                          state: {
+                            location: location.state
+                              ? location.state.location
+                              : "",
+                            dateRange: location.state
+                              ? location.state.dateRange
+                              : "",
+                            roomRequirements: location.state
+                              ? location.state.roomRequirements
+                              : "",
+                          },
+                        });
+                      }}
+                    >
+                      Forgot password?
+                    </a>
                   )}
                 </Form.Item>
               </div>
@@ -180,7 +210,7 @@ const Auth = () => {
                         type={active == "login" ? "primary" : "button"}
                         onClick={handleLogin}
                         loading={loading}
-                      // htmlType="submit"
+                        // htmlType="submit"
                       >
                         Log - in
                       </Button>
