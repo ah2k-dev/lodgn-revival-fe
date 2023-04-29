@@ -3,8 +3,8 @@ import { mapConstants } from "../constants/mapConstants";
 export const mapReducer = ( // modified as request reducer
   state = {
     center: {
-      lat: "",
-      lng: "",
+      lat: 40.730610,
+      lng: -73.935242,
       search: "",
     },
     hotels: [],

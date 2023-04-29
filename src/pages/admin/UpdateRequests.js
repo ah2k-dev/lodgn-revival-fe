@@ -12,6 +12,7 @@ import {
 } from "../../actions/requestActions";
 import { LoadingOutlined } from "@ant-design/icons";
 import moment from "moment";
+import { baseURL } from "../../services/axiosConfig";
 
 const UpdateRequests = () => {
   const dispatch = useDispatch();
@@ -87,8 +88,14 @@ const RequestComponent = ({ request, update }) => {
         {/* Previous Booking Details */}
 
         <div className="col-12 d-flex flex-column gap-3">
-          { update.status !== "pending" && (
-            <span className={`update-Requested-badge text-white px-3 py-2 rounded-3 fw-bold font-poppins ${ update.status === "approved" ? "approved-status" : "rejected-status" } align-self-end`}>
+          {update.status !== "pending" && (
+            <span
+              className={`update-Requested-badge text-white px-3 py-2 rounded-3 fw-bold font-poppins ${
+                update.status === "approved"
+                  ? "approved-status"
+                  : "rejected-status"
+              } align-self-end`}
+            >
               {update.status}
             </span>
           )}
@@ -133,26 +140,30 @@ const RequestComponent = ({ request, update }) => {
               double_rooms={update?.roomRequirements.double}
               animalSupport={update?.roomRequirements.animalSupport}
             />
-            <span className="d-flex flex-column align-items-center gap-1">
-              <span className="font-lato fw-bold">Download attachments:</span>
-              <span style={{ cursor: "pointer" }}>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={1.5}
-                  stroke="currentColor"
-                  className=""
-                  width={24}
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"
-                  />
-                </svg>
+            {update?.roaster && (
+              <span className="d-flex flex-column align-items-center gap-1">
+                <span className="font-lato fw-bold">Download attachments:</span>
+                <a href={`${baseURL}${update.roaster}`} target="_blank">
+                  <span style={{ cursor: "pointer" }}>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={1.5}
+                      stroke="currentColor"
+                      className=""
+                      width={24}
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"
+                      />
+                    </svg>
+                  </span>
+                </a>
               </span>
-            </span>
+            )}
           </div>
         </div>
 

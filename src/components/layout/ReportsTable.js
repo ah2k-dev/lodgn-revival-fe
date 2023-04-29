@@ -212,3 +212,4 @@ const ReportsTable = ({tableData}) => {
 };
 
 export default ReportsTable;
+// 

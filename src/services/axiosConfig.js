@@ -1,9 +1,11 @@
 import axios from "axios";
 import { getToken } from "../hooks/auth";
 
+// export const baseURL = "http://localhost:8001";
+
+export const baseURL = "https://logdn-revival-be-production.up.railway.app";
 const custAxios = axios.create({
-  // baseURL: "http://localhost:8001",
-  baseURL: "https://logdn-revival-be-production.up.railway.app",
+  baseURL: baseURL,
   headers: {
     "Content-Type": "application/json",
     Accept: "application/json",
@@ -18,6 +20,5 @@ export const attachToken = () => {
     custAxios.defaults.headers.common["Authorization"] = `${token}`;
   }
 };
-
 
 export default custAxios;

@@ -26,10 +26,11 @@ const Marker2 = () => <div style={{ color: "red", fontSize: "20px" }}>
 </svg>
 </div>;
 const Map = ({ hotels, center }) => {
+  console.log(center, 'center');
   return (
     <GoogleMapReact
       bootstrapURLKeys={{ key: "AIzaSyC7-xAxxhgl4VQLTURgqKdFlXrsiff4GUM" }}
-      center={center}
+      center={center.lat !== "" ? center : { lat: 40.7127753, lng: -74.0059728 }}
       defaultZoom={15}
       draggable={false}
     >

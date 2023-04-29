@@ -123,6 +123,9 @@ export const changeStatus = (id, data) => async (dispatch) => {
         },
       });
       dispatch(getRequests());
+      if(data.selectedOffer && data.selectedOffer !== ""){
+        dispatch(bookOffer(id, data.selectedOffer));
+      }
       return true;
     }
     return true;
@@ -364,6 +367,36 @@ export const rejectReuest = (id) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: requestConstants.REJECT_REQUEST_FAILURE,
+      payload: error.response.data.message || "Server Error",
+    });
+  }
+};
+
+export const fetchReports = () => async (dispatch) => {
+  dispatch({
+    type: requestConstants.GET_REPORTS_REQUEST,
+  });
+  try {
+    attachToken();
+    const res = await custAxios.get(`/booking/getReports`);
+    if (res) {
+      dispatch({
+        type: requestConstants.GET_REPORTS_SUCCESS,
+        payload: res.data.data.response,
+      });
+      // message.success({
+      //   content: "Request Updated Successfully",
+      //   style: {
+      //     marginTop: "10vh",
+      //   },
+      // });
+      // dispatch(getOneRequest(id));
+      return true;
+    }
+    // return true;
+  } catch (error) {
+    dispatch({
+      type: requestConstants.GET_REPORTS_FAILURE,
       payload: error.response.data.message || "Server Error",
     });
   }
