@@ -34,14 +34,14 @@ const Map = ({ hotels, center }) => {
       defaultZoom={15}
       draggable={false}
     >
-      <Marker2
+      {/* <Marker2
         lat={center?.lat}
         lng={center?.lng}
         text="You are here"
         color="blue"
-      />
+      /> */}
       {hotels?.map((hotel, index) => (
-        <Marker
+        <Marker2
           key={hotel.place_id}
           lat={hotel.geometry.location.lat()}
           lng={hotel.geometry.location.lng()}

@@ -1,13 +1,4 @@
-import {
-  Row,
-  Typography,
-  Form,
-  Input,
-  Col,
-  Button,
-  Divider,
-  message,
-} from "antd";
+import { Row, Typography, Form, Input, Button, Divider, message } from "antd";
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -25,8 +16,6 @@ const Auth = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-
-  const [showPassword, setShowPassword] = useState(false);
 
   // console.log(location.state);
 
@@ -119,7 +108,6 @@ const Auth = () => {
                       },
                     ]}
                   >
-                    {/* <p className="labels">Name</p> */}
                     <Input placeholder="Name" />
                   </Form.Item>
                 </div>
@@ -135,37 +123,24 @@ const Auth = () => {
                     },
                   ]}
                 >
-                  {/* <p className="labels">E-mail</p> */}
                   <Input type="email" placeholder="Email" />
                 </Form.Item>
               </div>
               <div className="col-12">
                 <label htmlFor="password">Password</label>
-                <div className="d-flex justify-content-end position-relative">
-                  <Form.Item
-                    className="w-100"
-                    name="password"
-                    rules={[
-                      {
-                        required: true,
-                        message: "Please input your password!",
-                      },
-                    ]}
-                    style={{ marginBottom: "0" }}
-                  >
-                    {/* <p className="labels">Password</p> */}
-                    <Input
-                      type={!showPassword ? "password" : "text"}
-                      placeholder="Password"
-                    />
-                  </Form.Item>
-                  <i
-                    className={`far ${
-                      !showPassword ? "fa-eye-slash" : "fa-eye"
-                    } position-absolute eye-icon cursor-pointer`}
-                    onClick={() => setShowPassword(!showPassword)}
-                  ></i>
-                </div>
+                <Form.Item
+                  className="w-100"
+                  name="password"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please input your password!",
+                    },
+                  ]}
+                  style={{ marginBottom: "0" }}
+                >
+                  <Input.Password placeholder="Password" />
+                </Form.Item>
               </div>
               <div className="email-senders">
                 <Form.Item>

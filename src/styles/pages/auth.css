@@ -94,6 +94,11 @@
   margin-bottom: 14px !important;
 }
 
+.ant-input-affix-wrapper {
+  padding: 0px 11px !important;
+  border-radius: 10px !important;
+}
+
 .auth-inner label {
   font-family: 'Poppins', sans-serif;
   font-weight: 500;

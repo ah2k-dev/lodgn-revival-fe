@@ -236,7 +236,7 @@ const UpdateStay = () => {
                 />
               </span>
               {showTodayModal && (
-                <UrgentBookingModal setShowModal={setShowTodayModal} />
+                <UrgentBookingModal showModal={showTodayModal} setShowModal={setShowTodayModal} />
               )}
             </div>
             <div className="col-xl-3 col-md-5 col-12 d-flex items flex-column gap-2 justify-content-start position-relative">

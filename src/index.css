@@ -22,8 +22,73 @@ code {
   font-family: "Lato", sans-serif;
 }
 
-.span-note {
-  color: #959595;
+.modal {
+  background-color: rgba(0, 0, 0, 0.0);
+}
+
+.modal.in {
+  animation: fadeIn .5s ease-in-out .3s 1 forwards;
+}
+
+.modal.out {
+  animation: fadeOut .5s ease-in-out 1 forwards;
+}
+
+.fade-scale {
+  opacity: 0;
+  transform: scale(0);
+}
+
+.fade-scale.in {
+  animation: fadeScale .5s ease-in-out .3s 1 forwards;
+}
+
+.fade-scale.out {
+  animation: fadeScaleOut .5s ease-in-out 1 forwards;
+}
+
+@keyframes fadeIn {
+  0% {
+    background-color: rgba(0, 0, 0, 0.0);
+    opacity: 0;
+  }
+  100% {
+    background-color: rgba(0, 0, 0, 0.45);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  0% {
+    background-color: rgba(0, 0, 0, 0.45);
+    opacity: 1;
+  }
+  100% {
+    background-color: rgba(0, 0, 0, 0.0);
+    opacity: 0;
+  }
+}
+
+@keyframes fadeScale {
+  0% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes fadeScaleOut {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0);
+  }
 }
 
 .green-badge {
