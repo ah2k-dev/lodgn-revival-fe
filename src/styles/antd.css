@@ -8,18 +8,18 @@
   outline-color: green !important;
 }
 
-.ant-input :hover {
+/* .ant-input :hover {
   outline-color: green !important;
   border-color: green !important;
-}
+} */
 .ant-btn {
   border-radius: 10px !important;
 }
 
-.ant-btn:hover {
+/* .ant-btn:hover {
   border-color: green !important;
   color: green !important;
-}
+} */
 
 .ant-btn-primary {
   color: white !important;

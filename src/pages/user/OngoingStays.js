@@ -102,7 +102,7 @@ const RequestComponent = ({ request }) => {
         </div>
         <div className="col-md-12 col-xl-7 col-lg-6 ms-3 d-flex flex-column align-items-lg-start align-items-center md-lg-0 mt-4">
           <h3 className="font-lato fw-bold text-md-start text-center">
-            {moment(request.dateRange[0]).fromNow().replace(/^in /, "")} left on
+            {moment(request.dateRange[0]).fromNow().replace(/^in /, "").replace(/ ago$/, "")} left on
             this Booking.
           </h3>
           <div>

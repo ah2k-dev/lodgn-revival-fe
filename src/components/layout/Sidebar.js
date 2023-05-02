@@ -34,6 +34,10 @@ const Sidebar = ({ activeClass }) => {
       navName: "Previous Stays",
     },
     {
+      route: "/dashboard/user/manage-profile",
+      navName: "Manage Profile",
+    },
+    {
       route: "/dashboard/user/reports",
       navName: "Reports",
     },
@@ -55,6 +59,10 @@ const Sidebar = ({ activeClass }) => {
     {
       route: "/dashboard/admin/rejected-requests",
       navName: "Rejected Requests",
+    },
+    {
+      route: "/dashboard/admin/manage-users",
+      navName: "Manage Users",
     },
     {
       route: "/dashboard/admin/reports",

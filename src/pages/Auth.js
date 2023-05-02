@@ -11,6 +11,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { clearState } from "../actions/mapActions";
 
 const Auth = () => {
+  
   const [active, setActive] = useState("login");
   const [emailVerify, setEmailVerify] = useState(false);
   const dispatch = useDispatch();

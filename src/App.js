@@ -31,6 +31,8 @@ import RejectedRequests from "./pages/user/RejectedRequests.js";
 import ViewRejectedRequests from "./pages/admin/ViewRejectedRequests.js";
 import Livechat from "./components/LiveChat.js";
 import { useSelector } from "react-redux";
+import ManageUsers from "./pages/admin/ManageUsers.js";
+import ManageProfile from "./pages/user/ManageProfile.js";
 // import * as dotenv from "dotenv";
 // dotenv.config();
 function App() {
@@ -76,6 +78,10 @@ function App() {
               element={<AdminRoute Component={ViewRejectedRequests} />}
             />
             <Route
+              path="/dashboard/admin/manage-users"
+              element={<AdminRoute Component={ManageUsers} />}
+            />
+            <Route
               path="/dashboard/admin/reports"
               element={<AdminRoute Component={AdminReports} />}
             />
@@ -92,8 +98,8 @@ function App() {
               element={<UserRoute Component={CurrentRequest} />}
             />
             <Route
-              path="/dashboard/user/payment"
-              element={<UserRoute Component={Payment} />}
+              path="/dashboard/user/manage-profile"
+              element={<UserRoute Component={ManageProfile} />}
             />
             <Route
               path="/dashboard/user/ongoing-stays"
