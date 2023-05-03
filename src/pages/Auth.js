@@ -26,7 +26,7 @@ const Auth = () => {
   );
 
   const formRef = useRef(null);
-  const onFinish = (values) => {
+  const onFinish = async (values) => {
     if (active === "login") {
       if (location.state) {
         dispatch(
@@ -42,16 +42,17 @@ const Auth = () => {
         dispatch(login(values.email, values.password));
       }
     } else {
-      const res = dispatch(
+      const res = await dispatch(
         signup(values.name, values.email, values.password)
-      ).then((res) => {
-        navigate("/auth/requestToken");
-      });
-      console.log(res);
-      if (!res.success) {
-        setActive("signup");
-      } else {
-        setActive("login");
+      )
+      // .then((res) => {
+        // });
+        console.log(res);
+        if (!res) {
+          setActive("signup");
+        } else {
+          navigate("/auth/requestToken");
+          // setActive("login");
       }
     }
   };
