@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 
 body {
   margin: 0;
@@ -15,19 +15,84 @@ code {
 }
 
 .font-poppins {
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 
 .font-lato {
-  font-family: 'Lato', sans-serif;
+  font-family: "Lato", sans-serif;
 }
 
-.span-note {
-  color: #959595;
+.modal {
+  background-color: rgba(0, 0, 0, 0.0);
+}
+
+.modal.in {
+  animation: fadeIn .5s ease-in-out .3s 1 forwards;
+}
+
+.modal.out {
+  animation: fadeOut .5s ease-in-out 1 forwards;
+}
+
+.fade-scale {
+  opacity: 0;
+  transform: scale(0);
+}
+
+.fade-scale.in {
+  animation: fadeScale .5s ease-in-out .3s 1 forwards;
+}
+
+.fade-scale.out {
+  animation: fadeScaleOut .5s ease-in-out 1 forwards;
+}
+
+@keyframes fadeIn {
+  0% {
+    background-color: rgba(0, 0, 0, 0.0);
+    opacity: 0;
+  }
+  100% {
+    background-color: rgba(0, 0, 0, 0.45);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  0% {
+    background-color: rgba(0, 0, 0, 0.45);
+    opacity: 1;
+  }
+  100% {
+    background-color: rgba(0, 0, 0, 0.0);
+    opacity: 0;
+  }
+}
+
+@keyframes fadeScale {
+  0% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes fadeScaleOut {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0);
+  }
 }
 
 .green-badge {
-  background-color: #48AF78;
+  background-color: #48af78;
   font-size: 0.75rem;
   text-align: center;
 }
@@ -37,7 +102,36 @@ code {
 }
 
 .approved-status {
-  background-color: #42996B;
+  background-color: #42996b;
+}
+
+.backBtn {
+  height: 45px !important;
+  background: linear-gradient(180deg, #48af78 0%, #42996b 100%) !important;
+  border-radius: 4px;
+  font-weight: 600;
+  min-height: 40px;
+  transition: 0.5s ease-in-out;
+}
+
+.backBtn svg {
+  color: white;
+  transform: translateX(-3px) !important;
+  transition: 0.4s all;
+}
+
+.backBtn:hover svg {
+  transform: translateX(-7px) !important;
+}
+
+.backBtn span {
+  color: white;
+  font-size: 1.5rem !important;
+}
+
+/* Chat Icon */
+.woot-widget-bubble.woot-elements--right {
+  background: linear-gradient(180deg, #48AF78 0%, #42996B 100%) !important;
 }
 
 @import "./styles/general.css";
@@ -55,3 +149,4 @@ code {
 @import "./styles/pages/pageNotFound.css";
 @import "./styles/pages/updateRequests.css";
 @import "./styles/pages/reports.css";
+@import "./styles/pages/manageUsers.css";

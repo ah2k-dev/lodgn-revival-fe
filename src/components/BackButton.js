@@ -9,10 +9,11 @@ const BackButton = () => {
     navigate(-1);
   };
   return (
-    <Button className="backBtn d-flex justify-content-center align-items-center border-0 p-0 shadow-none" onClick={handleBack}>
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" width={20}>
+    <Button className="backBtn d-flex justify-content-center align-items-center shadow-none" onClick={handleBack}>
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={3} stroke="currentColor" width={22}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
       </svg>
+      Go Back
     </Button>
   );
 };

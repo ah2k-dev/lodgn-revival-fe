@@ -1,13 +1,4 @@
-import {
-  Row,
-  Typography,
-  Form,
-  Input,
-  Col,
-  Button,
-  Divider,
-  message,
-} from "antd";
+import { Row, Typography, Form, Input, Button, Divider, message } from "antd";
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -51,7 +42,11 @@ const Auth = () => {
         dispatch(login(values.email, values.password));
       }
     } else {
-      const res = dispatch(signup(values.name, values.email, values.password));
+      const res = dispatch(
+        signup(values.name, values.email, values.password)
+      ).then((res) => {
+        navigate("/auth/requestToken");
+      });
       console.log(res);
       if (!res.success) {
         setActive("signup");
@@ -117,7 +112,6 @@ const Auth = () => {
                       },
                     ]}
                   >
-                    {/* <p className="labels">Name</p> */}
                     <Input placeholder="Name" />
                   </Form.Item>
                 </div>
@@ -133,13 +127,13 @@ const Auth = () => {
                     },
                   ]}
                 >
-                  {/* <p className="labels">E-mail</p> */}
                   <Input type="email" placeholder="Email" />
                 </Form.Item>
               </div>
               <div className="col-12">
                 <label htmlFor="password">Password</label>
                 <Form.Item
+                  className="w-100"
                   name="password"
                   rules={[
                     {
@@ -149,25 +143,40 @@ const Auth = () => {
                   ]}
                   style={{ marginBottom: "0" }}
                 >
-                  {/* <p className="labels">Password</p> */}
-                  <Input type="password" placeholder="Password" />
+                  <Input.Password placeholder="Password" />
                 </Form.Item>
               </div>
               <div className="email-senders">
                 <Form.Item>
                   {emailVerify && (
-                    <a className="verify-email" onClick={() => navigate('/auth/requestToken')}>Request email token</a>
+                    <a
+                      className="verify-email"
+                      onClick={() => navigate("/auth/requestToken")}
+                    >
+                      Request email token
+                    </a>
                   )}
                   {!emailVerify && (
-                    <a className="forgot-password" onClick={() => {
-                      navigate("/auth/forgot-password", {
-                        state: {
-                          location: location.state ? location.state.location : '',
-                          dateRange: location.state ? location.state.dateRange : '',
-                          roomRequirements: location.state ? location.state.roomRequirements : '',
-                        },
-                      });
-                    }}>Forgot password?</a>
+                    <a
+                      className="forgot-password"
+                      onClick={() => {
+                        navigate("/auth/forgot-password", {
+                          state: {
+                            location: location.state
+                              ? location.state.location
+                              : "",
+                            dateRange: location.state
+                              ? location.state.dateRange
+                              : "",
+                            roomRequirements: location.state
+                              ? location.state.roomRequirements
+                              : "",
+                          },
+                        });
+                      }}
+                    >
+                      Forgot password?
+                    </a>
                   )}
                 </Form.Item>
               </div>
@@ -180,7 +189,7 @@ const Auth = () => {
                         type={active == "login" ? "primary" : "button"}
                         onClick={handleLogin}
                         loading={loading}
-                      // htmlType="submit"
+                        // htmlType="submit"
                       >
                         Log - in
                       </Button>

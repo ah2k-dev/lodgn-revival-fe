@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { clearErrors, verifyEmail } from "../actions/authActions";
 import { Button, Col, Form, Input, Row, Typography, message } from "antd";
@@ -7,6 +7,7 @@ import BackButton from "../components/BackButton";
 
 const VerifyEmail = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { email } = useParams();
   const dispatch = useDispatch();
   const { loading, error, isAuthenticated } = useSelector(

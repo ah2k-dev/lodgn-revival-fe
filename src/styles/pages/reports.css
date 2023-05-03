@@ -1,4 +1,5 @@
-.reports .ant-table {
+.reports .ant-table,
+.manage-users .ant-table {
     height: auto;
     width: auto;
     /* min-height: 300px; */
@@ -8,7 +9,8 @@
     overflow: auto;
 }
 
-.reports .ant-table-thead {
+.reports .ant-table-thead,
+.manage-users .ant-table-thead {
     position: sticky;
     top: 0;
     z-index: 10;

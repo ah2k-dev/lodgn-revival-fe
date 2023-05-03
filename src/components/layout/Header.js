@@ -317,7 +317,7 @@ const Header = () => {
         <FaUserAlt className="header-icons" />
       </a> : null}
 
-      {showTodayModal && <UrgentBookingModal setShowModal={setShowTodayModal} />}
+      {showTodayModal && <UrgentBookingModal showModal={showTodayModal} setShowModal={setShowTodayModal} />}
     </Row>
   );
 };

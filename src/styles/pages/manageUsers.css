@@ -1,0 +1,38 @@
+.manage-users .ant-tabs-tab .ant-tabs-tab-btn {
+    color: #494949;
+    font-size: 1.15rem;
+    font-weight: 600;
+}
+
+.manage-users .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+    color: #72AA83;
+}
+
+.manage-users .ant-tabs-ink-bar {
+    background: #72AA83;
+}
+
+.manage-users .ant-tabs-tab:hover {
+    color: #72AA83;
+}
+
+.manage-users .edit-btn {
+    background-color: #40a9ff !important;
+    color: white !important;
+    border: 1px solid #40a9ff !important;
+}
+
+.manage-users .edit-btn:hover {
+    background-color: transparent !important;
+    color: #40a9ff !important;
+}
+
+.manage-users .block-btn {
+    background-color: #ff4d4f !important;
+    color: white !important;
+}
+
+.manage-users .block-btn:hover {
+    background-color: transparent !important;
+    color: #ff4d4f !important;
+}

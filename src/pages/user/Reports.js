@@ -29,6 +29,8 @@ const Reports = () => {
     }
   }, [error]);
 
+  console.log(reports);
+
   const data = [
     {
       key: "1",
@@ -76,7 +78,7 @@ const Reports = () => {
         ) : (
           <>
             {data.length > 0 ? (
-              <ReportsTable tableData={data} />
+              <ReportsTable tableData={reports} />
             ) : (
               <h2 className="font-poppins mt-4 heading-green">
                 Reports not found

@@ -2,6 +2,7 @@ import { SearchOutlined } from '@ant-design/icons';
 import { Button, Input, Space, Table, Tag } from 'antd';
 import React, { useRef, useState } from 'react';
 import Highlighter from 'react-highlight-words';
+import moment from "moment";
 
 const ReportsTable = ({tableData}) => {
 
@@ -125,23 +126,21 @@ const ReportsTable = ({tableData}) => {
         },
         {
             title: 'Start date',
-            dataIndex: 'start_date',
-            key: 'start_date',
-            // width: '20%',
-            // ...getColumnSearchProps('start_date'),
+            dataIndex: 'startDate',
+            key: 'startDate',
+            render: (startDate) => (moment(startDate).format("DD MMMM")),
         },
         {
             title: 'End date',
-            dataIndex: 'end_date',
-            key: 'end_date',
-            // width: '20%',
-            // ...getColumnSearchProps('end_date'),
+            dataIndex: 'endDate',
+            key: 'endDate',
+            render: (endDate) => (moment(endDate).format("DD MMMM")),
         },
         {
             title: 'Total paid',
-            dataIndex: 'total_paid',
-            key: 'total_paid',
-            render: (total_paid) => `$${total_paid}`,
+            dataIndex: 'totalPaid',
+            key: 'totalPaid',
+            render: (totalPaid) => `$${totalPaid}`,
         },
         {
             title: 'Paid per single room',
@@ -151,15 +150,15 @@ const ReportsTable = ({tableData}) => {
         },
         {
             title: 'Paid per double room',
-            dataIndex: 'paid_per_double_room',
-            key: 'paid_per_double_room',
-            render: (paid_per_double_room) => (paid_per_double_room ? `$${paid_per_double_room}` : "$0.00"),
+            dataIndex: 'paidPerDouble',
+            key: 'paidPerDouble',
+            render: (paidPerDouble) => (paidPerDouble ? `$${paidPerDouble}` : "$0.00"),
         },
         {
             title: 'Paid for animal',
-            dataIndex: 'paid_for_animals',
-            key: 'paid_for_animals',
-            render: (paid_for_animals) => (paid_for_animals ? `$${paid_for_animals}` : "$0.00"),
+            dataIndex: 'paidPerAnimal',
+            key: 'paidPerAnimal',
+            render: (paidPerAnimal) => (paidPerAnimal ? `$${paidPerAnimal}` : "$0.00"),
         },
         // {
         //     title: 'Status',
@@ -208,6 +207,17 @@ const ReportsTable = ({tableData}) => {
         //     ),
         // },
     ];
+
+    if (tableData.some(item => item.user)) {
+        columns.push(
+            {
+                title: 'User',
+                dataIndex: 'user',
+                key: 'user',
+            },
+        )
+    }
+
     return <Table columns={columns} dataSource={tableData} />;
 };
 
