@@ -11,7 +11,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { clearState } from "../actions/mapActions";
 
 const Auth = () => {
-  
   const [active, setActive] = useState("login");
   const [emailVerify, setEmailVerify] = useState(false);
   const dispatch = useDispatch();
@@ -43,7 +42,11 @@ const Auth = () => {
         dispatch(login(values.email, values.password));
       }
     } else {
-      const res = dispatch(signup(values.name, values.email, values.password));
+      const res = dispatch(
+        signup(values.name, values.email, values.password)
+      ).then((res) => {
+        navigate("/auth/requestToken");
+      });
       console.log(res);
       if (!res.success) {
         setActive("signup");

@@ -4,6 +4,7 @@ import { getToken } from "../hooks/auth";
 // export const baseURL = "http://localhost:8001";
 
 export const baseURL = "https://logdn-revival-be-production.up.railway.app";
+
 const custAxios = axios.create({
   baseURL: baseURL,
   headers: {

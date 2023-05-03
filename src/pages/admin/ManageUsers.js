@@ -453,18 +453,25 @@ const UsersTable = ({ tabIndex, data, handleEditModal }) => {
         dataIndex: "permissions",
         key: "permissions",
         render: (permissions) => {
-          return permissions?.map((permission) => {
+          return permissions
+            ?.map((permission) => {
               switch (permission) {
-                case "verifyPayment":
-                  return "Verify Payment";
+                case "rejectRequest":
+                  return "Reject Requests";
                 case "negotiate":
                   return "Negotiate";
-                case "rejectRequest":
-                  return "Reject Request";
+                case "complete":
+                  return "Complete";
+                case "verifyPayment":
+                  return "Verify Payment";
+                case "approveUpdates":
+                  return "Approve Requested Updates";
+                case "declineUpdates":
+                  return "Decline Requested Updates";
                 case "block":
-                  return "Block";
+                  return "Block Users";
                 case "unblock":
-                  return "Unblock";
+                  return "Unblock Users";
                 default:
                   return permission;
               }

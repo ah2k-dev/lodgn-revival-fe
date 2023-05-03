@@ -129,6 +129,11 @@ code {
   font-size: 1.5rem !important;
 }
 
+/* Chat Icon */
+.woot-widget-bubble.woot-elements--right {
+  background: linear-gradient(180deg, #48AF78 0%, #42996B 100%) !important;
+}
+
 @import "./styles/general.css";
 @import "./styles/antd.css";
 @import "./styles/components/layout.css";

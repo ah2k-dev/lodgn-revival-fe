@@ -17,17 +17,22 @@
 }
 
 .manage-users .edit-btn {
-    background-color: transparent !important;
-    color: #40a9ff !important;
+    background-color: #40a9ff !important;
+    color: white !important;
     border: 1px solid #40a9ff !important;
 }
 
 .manage-users .edit-btn:hover {
-    background-color: #40a9ff !important;
+    background-color: transparent !important;
+    color: #40a9ff !important;
+}
+
+.manage-users .block-btn {
+    background-color: #ff4d4f !important;
     color: white !important;
 }
 
 .manage-users .block-btn:hover {
-    background-color: #ff4d4f !important;
-    color: white !important;
+    background-color: transparent !important;
+    color: #ff4d4f !important;
 }

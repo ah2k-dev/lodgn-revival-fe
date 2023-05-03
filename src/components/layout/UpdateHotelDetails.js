@@ -1,4 +1,5 @@
 import { Button, Form, Input, InputNumber, message, Upload } from "antd";
+import axios from "axios";
 import React, { useRef, useState } from "react";
 import HotelPhotosCarousel from "./HotelPhotosCarousel";
 
@@ -20,6 +21,7 @@ const UpdateHotelDetails = ({ offerings, setOfferings, flag, request }) => {
   const formRef = useRef();
 
   const [files, setFiles] = useState([]);
+  const [uploadedImagesUrls, setUploadedImagesUrls] = useState([]);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [singleRates, setSingleRates] = useState(0);
@@ -49,7 +51,14 @@ const UpdateHotelDetails = ({ offerings, setOfferings, flag, request }) => {
   // Call a function (passed as a prop from the parent component)
   // to handle the user-selected file
   const handleChange = (event) => {
+
     let uploadedFiles = [...event.target.files];
+
+    if (uploadedFiles.length > 10) {
+      message.error(`Maximum image selection limit is 10.`);
+      uploadedFiles.slice(10, uploadedFiles.length - 10);
+    }
+
     // console.log(uploadedFiles);
 
     uploadedFiles = uploadedFiles.map((file) => {
@@ -59,7 +68,7 @@ const UpdateHotelDetails = ({ offerings, setOfferings, flag, request }) => {
         if (
           fileType === "image/png" ||
           fileType === "image/jpeg" ||
-          fileType === "image/WebP" ||
+          fileType === "image/webp" ||
           fileType === "image/jpg"
         ) {
           uploadedFiles.push(file);
@@ -72,7 +81,21 @@ const UpdateHotelDetails = ({ offerings, setOfferings, flag, request }) => {
     });
 
     setFiles(uploadedFiles);
-    console.log(uploadedFiles);
+
+    console.log(files);
+
+    if (uploadedFiles.length === 1) {
+      message.success({
+        content: `${uploadedFiles.length} Image Added`,
+      });
+    } else if (uploadedFiles.length <= 10) {
+      message.success({
+        content: `${uploadedFiles.length} Images Added`,
+      });
+    } else if (uploadedFiles.length > 10) {
+      return 0;
+    }
+
   };
 
   // const handleChange = (info) => {
@@ -161,8 +184,8 @@ const UpdateHotelDetails = ({ offerings, setOfferings, flag, request }) => {
   //         title: title,
   //         description: description,
   //         rates: {
-    //           single: singleRates > 0 && singleRates,
-    //           double: doubleRates > 0 && doubleRates,
+  //           single: singleRates > 0 && singleRates,
+  //           double: doubleRates > 0 && doubleRates,
   //           animalSupport: animalSupport > 0 && animalSupport,
   //         },
   //         paymentLink: payLink,
@@ -173,9 +196,48 @@ const UpdateHotelDetails = ({ offerings, setOfferings, flag, request }) => {
   // };
 
   const handleSave = () => {
-    formRef.current.submit();
+    // console.log(formRef.current);
+
+    const uploadedFiles = files.map( async (image) => {
+
+      const formData = new FormData();
+
+      const upload_preset = "lodgn_app";
+      const cloud_name = "dusn1ns53";
+
+      formData.append("file", image);
+      formData.append("upload_preset", upload_preset);
+      formData.append("cloud_name", cloud_name);
+
+      return await axios
+        .post(
+          `https://api.cloudinary.com/v1_1/${cloud_name}/auto/upload`,
+          formData,
+          {
+            headers: { "Content-Type": "multipart/form-data" },
+            // onUploadProgress: function (e) {
+            //   console.log(e.loaded / e.total);
+            // },
+          }
+        )
+        .then((response) => {
+          const data = response.data;
+          const fileURL = data.url;
+          setUploadedImagesUrls([...uploadedImagesUrls, fileURL]); // You should store this URL for future references in your app
+          console.log(data);
+        });
+      // console.log(cloudinaryResponse.data);
+    });
+
+    
+    // Once all the files are uploaded
+    axios.all(uploadedFiles).then(() => {
+      console.log(uploadedImagesUrls);
+      // ... perform after upload is successful operation
+      formRef.current.submit();
+    });
   };
-  
+
   const handleFinish = (values) => {
     // setOfferings([
     //   ...offerings,
@@ -193,10 +255,10 @@ const UpdateHotelDetails = ({ offerings, setOfferings, flag, request }) => {
     //   },
     // ]);
     let prvOffering = offerings.filter((offering) => offering.flag == flag);
-    if (prvOffering) {
+    if (prvOffering.length > 0) {
       let index = offerings.indexOf(prvOffering[0]);
       offerings[index] = {
-        // images: values.files,
+        images: uploadedImagesUrls,
         title: values.hotel_title,
         description: values.description,
         rates: {
@@ -204,7 +266,10 @@ const UpdateHotelDetails = ({ offerings, setOfferings, flag, request }) => {
           double: values.double_rooms_rate > 0 && values.double_rooms_rate,
           animalSupport: values.animal_rate > 0 && values.animal_rate,
         },
-        paymentLink: values.payment_link.indexOf("https://") == 0 ? values.payment_link : "https://"+values.payment_link,
+        paymentLink:
+          values.payment_link.indexOf("https://") == 0
+            ? values.payment_link
+            : "https://" + values.payment_link,
         flag: flag,
       };
       setOfferings([...offerings]);
@@ -213,7 +278,7 @@ const UpdateHotelDetails = ({ offerings, setOfferings, flag, request }) => {
       setOfferings([
         ...offerings,
         {
-          // images: values.files,
+          images: uploadedImagesUrls,
           title: values.hotel_title,
           description: values.description,
           rates: {
@@ -221,7 +286,10 @@ const UpdateHotelDetails = ({ offerings, setOfferings, flag, request }) => {
             double: values.double_rooms_rate > 0 && values.double_rooms_rate,
             animalSupport: values.animal_rate > 0 && values.animal_rate,
           },
-          paymentLink: values.payment_link.indexOf("https://") == 0 ? values.payment_link : "https://"+values.payment_link,
+          paymentLink:
+            values.payment_link.indexOf("https://") == 0
+              ? values.payment_link
+              : "https://" + values.payment_link,
           flag: flag,
         },
       ]);
@@ -229,7 +297,6 @@ const UpdateHotelDetails = ({ offerings, setOfferings, flag, request }) => {
       console.log(offerings);
     }
   };
-
 
   return (
     <Form
@@ -286,7 +353,10 @@ const UpdateHotelDetails = ({ offerings, setOfferings, flag, request }) => {
                 },
               ]}
             >
-              <Button className="upload-btn d-flex justify-content-center py-5" onClick={handleClick}>
+              <Button
+                className="upload-btn d-flex justify-content-center py-5"
+                onClick={handleClick}
+              >
                 <svg
                   width="48"
                   height="31"

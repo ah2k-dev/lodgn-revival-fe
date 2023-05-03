@@ -26,7 +26,7 @@ const ManageProfile = () => {
     <div className="manage-profile min-vh-100 w-100 px-lg-5 px-md-3 px-4 py-5">
       <div className="d-flex flex-column gap-4 mt-md-0 mt-5">
         <h2 className="font-poppins mt-4 heading-green">Manage your Profile</h2>
-        <div className="ongoingStays w-100 d-flex flex-column gap-lg-5 gap-2 rounded-container bg-white p-xl-5 p-lg-4 p-4 shadow position-relative">
+        <div className="w-100 d-flex flex-column gap-lg-5 gap-2 rounded-container bg-white p-xl-5 p-lg-4 py-4 px-2 shadow position-relative">
           <Form
             initialValues={{
                 name:"User 01",
@@ -42,7 +42,7 @@ const ManageProfile = () => {
             autoComplete="off"
             validateMessages={validateMessages}
           >
-            <div className="col-6 px-3">
+            <div className="col-sm-6 col-12 px-3">
               <label htmlFor="name" className="mb-1">
                 Username
               </label>
@@ -58,7 +58,7 @@ const ManageProfile = () => {
                 <Input placeholder="input moderator's name" />
               </Form.Item>
             </div>
-            <div className="col-6 px-3">
+            <div className="col-sm-6 col-12 px-3">
               <label htmlFor="email" className="mb-1">
                 Email Address
               </label>
