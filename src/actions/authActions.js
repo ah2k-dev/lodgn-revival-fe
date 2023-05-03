@@ -12,17 +12,19 @@ export const signup = (name, email, password) => async (dispatch) => {
       email,
       password,
     });
-    dispatch({
-      type: authConstants.SIGNUP_SUCCESS,
-      payload: res.data.data,
-    });
-    message.success({
-      content: "Signup Successful",
-      style: {
-        marginTop: "10vh",
-      },
-    });
-    return true;
+    if (res) {
+      dispatch({
+        type: authConstants.SIGNUP_SUCCESS,
+        payload: res.data.data,
+      });
+      message.success({
+        content: "Signup Successful",
+        style: {
+          marginTop: "10vh",
+        },
+      });
+      return true;
+    }
   } catch (error) {
     dispatch({
       type: authConstants.SIGNUP_FAILURE,
@@ -78,7 +80,10 @@ export const requestToken = (email, type) => async (dispatch) => {
     //     email,
     //   });
     // }
-    const res = await custAxios.post(`/auth/${type == 'request' ? 'requestEmailToken' : 'forgotPassword'}`, { email });
+    const res = await custAxios.post(
+      `/auth/${type == "request" ? "requestEmailToken" : "forgotPassword"}`,
+      { email }
+    );
     console.log(res);
     if (res) {
       dispatch({

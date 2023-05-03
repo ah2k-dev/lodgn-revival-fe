@@ -56,7 +56,7 @@ const UpdateHotelDetails = ({ offerings, setOfferings, flag, request }) => {
 
     if (uploadedFiles.length > 10) {
       message.error(`Maximum image selection limit is 10.`);
-      uploadedFiles.slice(10, uploadedFiles.length - 10);
+      return;
     }
 
     // console.log(uploadedFiles);
@@ -93,7 +93,7 @@ const UpdateHotelDetails = ({ offerings, setOfferings, flag, request }) => {
         content: `${uploadedFiles.length} Images Added`,
       });
     } else if (uploadedFiles.length > 10) {
-      return 0;
+      return;
     }
 
   };
