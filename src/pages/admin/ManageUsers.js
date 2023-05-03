@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { SearchOutlined } from "@ant-design/icons";
 import {
   Tabs,
@@ -15,6 +15,8 @@ import {
 } from "antd";
 import { useRef, useState } from "react";
 import Highlighter from "react-highlight-words";
+import { useDispatch } from "react-redux";
+import { fetchUsers } from "../../actions/userActions";
 
 const ManageUsers = () => {
   const [tabIndex, setTabIndex] = useState("1");
@@ -111,6 +113,13 @@ const ManageUsers = () => {
       setTabIndex("2");
     }
   };
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchUsers());
+    // dispatch(fetchPersonalInfo());
+  }, [dispatch]);
 
   const items = [
     {

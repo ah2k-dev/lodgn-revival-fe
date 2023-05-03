@@ -4,10 +4,12 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import { authReducer } from "./reducers/authReducer";
 import { mapReducer } from "./reducers/mapReducer";
 import { requestReducer } from "./reducers/requestReducer";
+import { userReducer } from "./reducers/userReducer";
 const reducer = combineReducers({
   auth: authReducer,
   map: mapReducer, // modified to handle create request with login
-  request: requestReducer // added
+  request: requestReducer, // added
+  user: userReducer,
 });
 
 let initialState = {};
