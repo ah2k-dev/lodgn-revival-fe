@@ -10,7 +10,7 @@ const DashboardButton = () => {
   const navigate = useNavigate();
   const handleClick = () => {
     if (user.userData) {
-      if (user.userData.role === "admin") {
+      if (user.userData.role === "admin" || user.userData.role === "moderator") {
         navigate("/dashboard/admin");
       } else {
         navigate("/dashboard/user");

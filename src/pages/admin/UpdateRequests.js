@@ -13,16 +13,9 @@ import {
 import { LoadingOutlined } from "@ant-design/icons";
 import moment from "moment";
 import { baseURL } from "../../services/axiosConfig";
+import { GetPermissions, UseGetRole } from "../../hooks/auth";
 
 const UpdateRequests = () => {
-  
-  const role = "moderator";
-
-  const permissions = [
-    "negotiate",
-    "blockUser",
-    "unblockUser",
-  ];
 
   const dispatch = useDispatch();
 
@@ -68,7 +61,7 @@ const UpdateRequests = () => {
                     request={requestedUpdate.request}
                     update={requestedUpdate}
                     key={i}
-                    rolePermissions={permissions}
+                    // rolePermissions={permissions}
                   />
                 ))
               : null}
@@ -79,7 +72,12 @@ const UpdateRequests = () => {
   );
 };
 
-const RequestComponent = ({ request, update, rolePermissions }) => {
+const RequestComponent = ({ request, update }) => {
+
+  const role = UseGetRole();
+
+  const permissions = GetPermissions();
+
   const [showCard, setShowCard] = useState(false);
 
   const formRef = useRef();
@@ -181,7 +179,9 @@ const RequestComponent = ({ request, update, rolePermissions }) => {
           <div className="col-12 btns d-flex justify-content-md-end justify-content-center gap-3">
             <Button
               className="declineBtn"
-              disabled={!rolePermissions.includes("declineUpdates")}
+              disabled={
+                role === "moderator" && !permissions.includes("declineUpdates")
+              }
               onClick={() => {
                 dispatch(
                   approveRejectUpdate({
@@ -194,7 +194,9 @@ const RequestComponent = ({ request, update, rolePermissions }) => {
               Decline
             </Button>
             <Button
-              disabled={!rolePermissions.includes("approveUpdates")}
+              disabled={
+                role === "moderator" && !permissions.includes("approveUpdates")
+              }
               className="approveBtn"
               onClick={() => setShowCard(true)}
             >

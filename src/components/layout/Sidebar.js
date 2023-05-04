@@ -72,7 +72,7 @@ const Sidebar = ({ activeClass }) => {
 
   var navs;
 
-  role === "admin" ? (navs = adminNavs) : (navs = userNavs);
+  role === "admin" || role === "moderator" ? (navs = adminNavs) : (navs = userNavs);
 
   const logout = () => {
     localStorage.clear();

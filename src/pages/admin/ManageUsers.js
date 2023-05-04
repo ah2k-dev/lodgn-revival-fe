@@ -15,11 +15,15 @@ import {
 } from "antd";
 import { useRef, useState } from "react";
 import Highlighter from "react-highlight-words";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { createModerator, fetchUsers } from "../../actions/userActions";
 
 const ManageUsers = () => {
-  const role = "moderator";
+  const role = "admin";
+
+  const { error, loading, users, moderators } = useSelector(
+    (state) => state.user
+  );
 
   // const permissions = [
   //   "rejectRequest",
@@ -158,7 +162,7 @@ const ManageUsers = () => {
         children: (
           <UsersTable
             tabIndex={tabIndex}
-            data={usersData}
+            data={users}
             rolePermissions={permissions}
           />
         ),
@@ -169,7 +173,7 @@ const ManageUsers = () => {
       {
         key: "1",
         label: `Users`,
-        children: <UsersTable tabIndex={tabIndex} data={usersData} />,
+        children: <UsersTable tabIndex={tabIndex} data={users} />,
       },
       {
         key: "2",
@@ -177,7 +181,7 @@ const ManageUsers = () => {
         children: (
           <UsersTable
             tabIndex={tabIndex}
-            data={ModeratorsData}
+            data={moderators}
             handleEditModal={openEditModal}
           />
         ),
@@ -218,7 +222,7 @@ const ManageUsers = () => {
         >
           <div className="col-12">
             <label htmlFor="name" className="mb-1">
-              name
+              Name
             </label>
             <Form.Item
               name="name"
@@ -487,19 +491,20 @@ const UsersTable = ({ tabIndex, data, handleEditModal, rolePermissions }) => {
     columns.push(
       {
         title: "Email Verified",
-        dataIndex: "email_verified",
-        key: "email_verified",
+        dataIndex: "emailVerified",
+        key: "emailVerified",
+        render: (item) => (item === true ? "Yes" : "No"),
       },
       {
         title: "Quick Actions",
-        render: (_, record) => (
+        render: (record) => (
           <div className="d-flex justify-content-center">
             <Button
-              disabled={!rolePermissions.includes("blockUser")}
+              // disabled={!rolePermissions.includes("blockUser")}
               danger
               className="block-btn"
             >
-              Block
+              {!record.isBlocked ? "Block" : "Unblock"}
             </Button>
           </div>
         ),
@@ -551,7 +556,7 @@ const UsersTable = ({ tabIndex, data, handleEditModal, rolePermissions }) => {
               Edit
             </Button>
             <Button danger className="block-btn">
-              Block
+              {!record.isBlocked ? "Block" : "Unblock"}
             </Button>
           </div>
         ),
