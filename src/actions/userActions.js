@@ -44,7 +44,7 @@ export const createModerator = (moderator) => async (dispatch) => {
   dispatch({ type: userConstants.CREATE_MODERATOR_REQUEST });
   try {
     attachToken();
-    const res = await custAxios.post("/user/moderator", moderator);
+    const res = await custAxios.post("/user/createModerator", moderator);
     if (res) {
       dispatch({
         type: userConstants.CREATE_MODERATOR_SUCCESS,

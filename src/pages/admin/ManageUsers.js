@@ -16,20 +16,10 @@ import {
 import { useRef, useState } from "react";
 import Highlighter from "react-highlight-words";
 import { useDispatch } from "react-redux";
-import { fetchUsers } from "../../actions/userActions";
+import { createModerator, fetchUsers } from "../../actions/userActions";
 
 const ManageUsers = () => {
-  
   const role = "moderator";
-
-  const permissions = [
-    "rejectRequest",
-    "negotiate",
-    "complete",
-    "verifyPayment",
-    "approveUpdates",
-    "declineUpdates",
-  ];
 
   // const permissions = [
   //   "rejectRequest",
@@ -38,9 +28,18 @@ const ManageUsers = () => {
   //   "verifyPayment",
   //   "approveUpdates",
   //   "declineUpdates",
-  //   "blockUser",
-  //   "unblockUser",
   // ];
+
+  const permissions = [
+    "rejectRequest",
+    "negotiate",
+    "complete",
+    "verifyPayment",
+    "approveUpdates",
+    "declineUpdates",
+    "blockUser",
+    "unblockUser",
+  ];
 
   const [tabIndex, setTabIndex] = useState("1");
 
@@ -50,10 +49,15 @@ const ManageUsers = () => {
 
   const [form] = Form.useForm();
 
-  const handleFinish = (values) => {
-    console.log(values);
-    form.resetFields();
-    setIsModalOpen(false);
+  const handleFinish = async (values) => {
+    // console.log(values);
+    // form.resetFields();
+    // setIsModalOpen(false);
+    const res = await dispatch(createModerator(values));
+    if (res) {
+      form.resetFields();
+      setIsModalOpen(false);
+    }
   };
 
   const validateMessages = {
@@ -151,7 +155,13 @@ const ManageUsers = () => {
       {
         key: "1",
         label: `Users`,
-        children: <UsersTable tabIndex={tabIndex} data={usersData} rolePermissions={permissions} />,
+        children: (
+          <UsersTable
+            tabIndex={tabIndex}
+            data={usersData}
+            rolePermissions={permissions}
+          />
+        ),
       },
     ];
   } else {
@@ -334,7 +344,6 @@ const ManageUsers = () => {
 };
 
 const UsersTable = ({ tabIndex, data, handleEditModal, rolePermissions }) => {
-
   console.log(rolePermissions);
 
   const [searchText, setSearchText] = useState("");
@@ -485,7 +494,11 @@ const UsersTable = ({ tabIndex, data, handleEditModal, rolePermissions }) => {
         title: "Quick Actions",
         render: (_, record) => (
           <div className="d-flex justify-content-center">
-            <Button disabled={!rolePermissions.includes("blockUser")} danger className="block-btn">
+            <Button
+              disabled={!rolePermissions.includes("blockUser")}
+              danger
+              className="block-btn"
+            >
               Block
             </Button>
           </div>
