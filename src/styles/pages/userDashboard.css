@@ -23,7 +23,8 @@
 
 .dashboard .create-request-btn,
 .manage-users .add-mod-btn,
-.manage-profile .update-btn {
+.manage-profile .update-btn,
+.reports .download-reports-btn {
   background: linear-gradient(180deg, #48af78 0%, #42996b 100%) !important;
   border-radius: 4px !important;
   font-weight: 600 !important;
@@ -36,7 +37,8 @@
 
 .dashboard .create-request-btn:hover,
 .manage-users .add-mod-btn:hover,
-.manage-profile .update-btn:hover {
+.manage-profile .update-btn:hover,
+.reports .download-reports-btn:hover {
   background: transparent !important;
   border: 1px solid #42996b !important;
   color: #42996b !important;
@@ -246,7 +248,8 @@
 
   .dashboard .create-request-btn,
   .manage-users .add-mod-btn,
-  .manage-profile .update-btn {
+  .manage-profile .update-btn,
+  .reports .download-reports-btn {
     font-size: 1rem !important;
     padding: 0 20px !important;
   }
@@ -295,14 +298,16 @@
 
   .dashboard .create-request-btn,
   .manage-users .add-mod-btn,
-  .manage-profile .update-btn {
+  .manage-profile .update-btn,
+  .reports .download-reports-btn {
     font-size: 1rem;
     padding: 6px 20px;
   }
 
   .dashboard .create-request-btn,
   .manage-users .add-mod-btn,
-  .manage-profile .update-btn {
+  .manage-profile .update-btn,
+  .reports .download-reports-btn {
     font-size: 0.85rem;
   }
 

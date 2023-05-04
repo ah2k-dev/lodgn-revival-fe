@@ -91,7 +91,7 @@ const AdminReports = () => {
           <>
             {data.length > 0 ? (
               <div className="row justify-content-end gap-4">
-                <Button className="w-auto d-flex gap-2 align-items-center me-3">
+                <Button className="download-reports-btn w-auto d-flex gap-2 align-items-center me-3">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"

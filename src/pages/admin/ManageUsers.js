@@ -19,6 +19,29 @@ import { useDispatch } from "react-redux";
 import { fetchUsers } from "../../actions/userActions";
 
 const ManageUsers = () => {
+  
+  const role = "moderator";
+
+  const permissions = [
+    "rejectRequest",
+    "negotiate",
+    "complete",
+    "verifyPayment",
+    "approveUpdates",
+    "declineUpdates",
+  ];
+
+  // const permissions = [
+  //   "rejectRequest",
+  //   "negotiate",
+  //   "complete",
+  //   "verifyPayment",
+  //   "approveUpdates",
+  //   "declineUpdates",
+  //   "blockUser",
+  //   "unblockUser",
+  // ];
+
   const [tabIndex, setTabIndex] = useState("1");
 
   const formRef = useRef(null);
@@ -92,7 +115,7 @@ const ManageUsers = () => {
       key: "2",
       name: "Jack White",
       email: "jack@example.com",
-      permissions: ["block", "unblock"],
+      permissions: ["blockUser", "unblockUser"],
     },
   ];
 
@@ -121,24 +144,36 @@ const ManageUsers = () => {
     // dispatch(fetchPersonalInfo());
   }, [dispatch]);
 
-  const items = [
-    {
-      key: "1",
-      label: `Users`,
-      children: <UsersTable tabIndex={tabIndex} data={usersData} />,
-    },
-    {
-      key: "2",
-      label: `Moderators`,
-      children: (
-        <UsersTable
-          tabIndex={tabIndex}
-          data={ModeratorsData}
-          handleEditModal={openEditModal}
-        />
-      ),
-    },
-  ];
+  let items;
+
+  if (role === "moderator") {
+    items = [
+      {
+        key: "1",
+        label: `Users`,
+        children: <UsersTable tabIndex={tabIndex} data={usersData} rolePermissions={permissions} />,
+      },
+    ];
+  } else {
+    items = [
+      {
+        key: "1",
+        label: `Users`,
+        children: <UsersTable tabIndex={tabIndex} data={usersData} />,
+      },
+      {
+        key: "2",
+        label: `Moderators`,
+        children: (
+          <UsersTable
+            tabIndex={tabIndex}
+            data={ModeratorsData}
+            handleEditModal={openEditModal}
+          />
+        ),
+      },
+    ];
+  }
 
   return (
     <div className="manage-users py-5 d-flex flex-column gap-2 align-items-end">
@@ -279,12 +314,12 @@ const ManageUsers = () => {
                   {/* <Checkbox.Group>
                 <Row> */}
                   <Col span={12}>
-                    <Checkbox value="block" className="mb-1">
+                    <Checkbox value="blockUser" className="mb-1">
                       Block Users
                     </Checkbox>
                   </Col>
                   <Col span={12}>
-                    <Checkbox value="unblock" className="mb-1">
+                    <Checkbox value="unblockUser" className="mb-1">
                       Unblock Users
                     </Checkbox>
                   </Col>
@@ -298,7 +333,10 @@ const ManageUsers = () => {
   );
 };
 
-const UsersTable = ({ tabIndex, data, handleEditModal }) => {
+const UsersTable = ({ tabIndex, data, handleEditModal, rolePermissions }) => {
+
+  console.log(rolePermissions);
+
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
   const searchInput = useRef(null);
@@ -446,8 +484,8 @@ const UsersTable = ({ tabIndex, data, handleEditModal }) => {
       {
         title: "Quick Actions",
         render: (_, record) => (
-          <div className="d-flex justify-content-end">
-            <Button danger className="block-btn">
+          <div className="d-flex justify-content-center">
+            <Button disabled={!rolePermissions.includes("blockUser")} danger className="block-btn">
               Block
             </Button>
           </div>
@@ -477,9 +515,9 @@ const UsersTable = ({ tabIndex, data, handleEditModal }) => {
                   return "Approve Requested Updates";
                 case "declineUpdates":
                   return "Decline Requested Updates";
-                case "block":
+                case "blockUser":
                   return "Block Users";
-                case "unblock":
+                case "unblockUser":
                   return "Unblock Users";
                 default:
                   return permission;
@@ -491,7 +529,7 @@ const UsersTable = ({ tabIndex, data, handleEditModal }) => {
       {
         title: "Quick Actions",
         render: (_, record) => (
-          <div className="d-flex justify-content-end gap-3">
+          <div className="d-flex justify-content-center gap-3">
             <Button
               danger
               className="edit-btn"
@@ -500,7 +538,7 @@ const UsersTable = ({ tabIndex, data, handleEditModal }) => {
               Edit
             </Button>
             <Button danger className="block-btn">
-              Remove
+              Block
             </Button>
           </div>
         ),

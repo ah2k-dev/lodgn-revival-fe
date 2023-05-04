@@ -15,6 +15,15 @@ import moment from "moment";
 import { baseURL } from "../../services/axiosConfig";
 
 const UpdateRequests = () => {
+  
+  const role = "moderator";
+
+  const permissions = [
+    "negotiate",
+    "blockUser",
+    "unblockUser",
+  ];
+
   const dispatch = useDispatch();
 
   const { error, loading, requestedUpdates } = useSelector(
@@ -59,6 +68,7 @@ const UpdateRequests = () => {
                     request={requestedUpdate.request}
                     update={requestedUpdate}
                     key={i}
+                    rolePermissions={permissions}
                   />
                 ))
               : null}
@@ -69,7 +79,7 @@ const UpdateRequests = () => {
   );
 };
 
-const RequestComponent = ({ request, update }) => {
+const RequestComponent = ({ request, update, rolePermissions }) => {
   const [showCard, setShowCard] = useState(false);
 
   const formRef = useRef();
@@ -171,6 +181,7 @@ const RequestComponent = ({ request, update }) => {
           <div className="col-12 btns d-flex justify-content-md-end justify-content-center gap-3">
             <Button
               className="declineBtn"
+              disabled={!rolePermissions.includes("declineUpdates")}
               onClick={() => {
                 dispatch(
                   approveRejectUpdate({
@@ -182,7 +193,11 @@ const RequestComponent = ({ request, update }) => {
             >
               Decline
             </Button>
-            <Button className="approveBtn" onClick={() => setShowCard(true)}>
+            <Button
+              disabled={!rolePermissions.includes("approveUpdates")}
+              className="approveBtn"
+              onClick={() => setShowCard(true)}
+            >
               Approve
             </Button>
           </div>

@@ -22,6 +22,7 @@ const UpdateHotelDetails = ({ offerings, setOfferings, flag, request }) => {
 
   const [files, setFiles] = useState([]);
   const [uploadedImagesUrls, setUploadedImagesUrls] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [singleRates, setSingleRates] = useState(0);
@@ -198,6 +199,8 @@ const UpdateHotelDetails = ({ offerings, setOfferings, flag, request }) => {
   const handleSave = () => {
     // console.log(formRef.current);
 
+    setLoading(true);
+
     const uploadedFiles = files.map( async (image) => {
 
       const formData = new FormData();
@@ -274,6 +277,7 @@ const UpdateHotelDetails = ({ offerings, setOfferings, flag, request }) => {
       };
       setOfferings([...offerings]);
       console.log(offerings);
+      setLoading(false);
     } else {
       setOfferings([
         ...offerings,
@@ -293,7 +297,7 @@ const UpdateHotelDetails = ({ offerings, setOfferings, flag, request }) => {
           flag: flag,
         },
       ]);
-
+      setLoading(false);
       console.log(offerings);
     }
   };
@@ -562,7 +566,7 @@ const UpdateHotelDetails = ({ offerings, setOfferings, flag, request }) => {
         </span> */}
       </div>
       <div className="row mt-2 w-100">
-        <Button className="saveBtn" onClick={handleSave}>
+        <Button loading={loading} className="saveBtn" onClick={handleSave}>
           {offerings.find((offering) => offering.flag == flag)
             ? "Update"
             : "Save"}

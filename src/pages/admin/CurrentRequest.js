@@ -14,6 +14,17 @@ import {
 import moment from "moment";
 
 const CurrentRequest = () => {
+  
+  const role = "moderator";
+
+  const permissions = [
+    "negotiate",
+    "approveUpdates",
+    "declineUpdates",
+    "blockUser",
+    "unblockUser",
+  ];
+
   const dispatch = useDispatch();
   const { error, loading, requests } = useSelector((state) => state.request);
 
@@ -53,6 +64,7 @@ const CurrentRequest = () => {
                 status={request.status}
                 key={i}
                 index={i}
+                rolePermissions={permissions}
               />
             ))}
           </div>
@@ -62,7 +74,7 @@ const CurrentRequest = () => {
   );
 };
 
-const RequestComponent = ({ request, status, index }) => {
+const RequestComponent = ({ request, status, index, rolePermissions }) => {
   console.log(request.offerings);
 
   const [newStatus, setNewStatus] = useState(status);
@@ -81,7 +93,7 @@ const RequestComponent = ({ request, status, index }) => {
 
   const handleUpdate = (id) => {
     if (newStatus !== "completed") {
-      if(newStatus === "paymentVerified"){
+      if (newStatus === "paymentVerified") {
         dispatch(
           changeStatus(id, {
             status: newStatus,
@@ -137,7 +149,7 @@ const RequestComponent = ({ request, status, index }) => {
   // console.log(status);
 
   const handleSelect = (value) => {
-    setSelectedOffer(value)
+    setSelectedOffer(value);
     console.log(`selected ${value}`);
   };
 
@@ -179,13 +191,17 @@ const RequestComponent = ({ request, status, index }) => {
               className="update-status-btn"
               loading={loading}
               onClick={() => handleUpdate(request._id)}
-              disabled={(newStatus === "completed" && offerings.length == 0) || (newStatus === "paymentVerified" && selectedOffer === "")}
+              disabled={
+                (newStatus === "completed" && offerings.length == 0) ||
+                (newStatus === "paymentVerified" && selectedOffer === "")
+              }
             >
               Update
             </Button>
           )}
           {newStatus === "recieved" || newStatus === "negotiating" ? (
             <Button
+              disabled={!rolePermissions.includes("rejectRequest")}
               className="reject-request-btn"
               onClick={() => rejectRequestFunc(request._id)}
             >
@@ -224,7 +240,8 @@ const RequestComponent = ({ request, status, index }) => {
                 defaultChecked={"negotiating" === request.status}
                 disabled={
                   request.status === "completed" ||
-                  request.status === "paymentVerified"
+                  request.status === "paymentVerified" ||
+                  !rolePermissions.includes("negotiate")
                 }
                 onClick={handleRadioChange}
               />
@@ -240,7 +257,8 @@ const RequestComponent = ({ request, status, index }) => {
                 defaultChecked={"completed" === request.status}
                 disabled={
                   request.status === "paymentVerified" ||
-                  request.status === "recieved"
+                  request.status === "recieved" ||
+                  !rolePermissions.includes("complete")
                 }
                 onClick={handleRadioChange}
               />
@@ -254,7 +272,10 @@ const RequestComponent = ({ request, status, index }) => {
                 type="radio"
                 value="paymentVerified"
                 defaultChecked={"paymentVerfied" === request.status}
-                disabled={request.status != "completed"}
+                disabled={
+                  request.status != "completed" ||
+                  !rolePermissions.includes("verifyPayment")
+                }
                 onClick={handleRadioChange}
               />
               PAYMENT VERIFIED
