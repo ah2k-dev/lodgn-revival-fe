@@ -23,11 +23,12 @@ export const userReducer = (
       };
 
     case userConstants.FETCH_USERS_SUCCESS:
+      console.log(action.payload);
       return {
         ...state,
         loading: false,
-        users: action.payload.users,
-        moderators: action.payload.moderators,
+        users: action.payload.data.users,
+        moderators: action.payload.data.moderators,
       };
     case userConstants.BLOCKUNBLOCK_USER_SUCCESS:
     case userConstants.CREATE_MODERATOR_SUCCESS:
