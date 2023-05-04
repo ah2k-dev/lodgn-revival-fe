@@ -23,6 +23,8 @@ const ManageUsers = () => {
 
   const role = UseGetRole();
 
+  console.log(role);
+
   const { error, loading, users, moderators } = useSelector(
     (state) => state.user
   );
