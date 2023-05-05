@@ -1,6 +1,6 @@
 import { Button, Form, Input, InputNumber, message, Upload } from "antd";
 import axios from "axios";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import HotelPhotosCarousel from "./HotelPhotosCarousel";
 
 const UpdateHotelDetails = ({ offerings, setOfferings, flag, request }) => {
@@ -30,6 +30,12 @@ const UpdateHotelDetails = ({ offerings, setOfferings, flag, request }) => {
   const [animalSupport, setAnimalSupport] = useState(0);
 
   const [showCarousel, setShowCarousel] = useState(true);
+
+  // useEffect(() => {
+  //   if(uploadedImagesUrls.length > 0){
+  //     formRef.current.submit()
+  //   }
+  // }, [uploadedImagesUrls]);
 
   // const [rates, setRates] = useState({
   //     single: 0,
@@ -194,22 +200,22 @@ const UpdateHotelDetails = ({ offerings, setOfferings, flag, request }) => {
   //   }
   // };
 
-  const handleSave = async() => {
+  const handleSave = async () => {
     // console.log(formRef.current);
 
     // let images = [];
     await Promise.all(
-       files.map(async (image) => {
-        let uploadedImage = ''
+      files.map(async (image) => {
+        let uploadedImage = "";
         const formData = new FormData();
-  
+
         const upload_preset = "lodgn_app";
         const cloud_name = "dusn1ns53";
-  
+
         formData.append("file", image);
         formData.append("upload_preset", upload_preset);
         formData.append("cloud_name", cloud_name);
-  
+
         await axios
           .post(
             `https://api.cloudinary.com/v1_1/${cloud_name}/auto/upload`,
@@ -224,27 +230,36 @@ const UpdateHotelDetails = ({ offerings, setOfferings, flag, request }) => {
           .then(async (response) => {
             const data = await response.data;
             uploadedImage = data.url;
+            // formRef.current.setFieldsValue({
+            //   uploaded: [...uploadedImagesUrls, uploadedImage],
+            // });
           });
-          return uploadedImage;
+        return uploadedImage;
       })
-    ).then((result)=> {
-      console.log(result, "result");
-      setUploadedImagesUrls(result);
-      formRef.current.submit();
-    }).catch((err)=>{
-      console.log(err);
-    })
+    )
+      .then((result) => {
+        // console.log(result, "result");
+        setUploadedImagesUrls(result);
+        formRef.current.setFieldsValue({
+          files: result,
+        });
+        formRef.current.submit();
+        // formRef.current.submit({ uploaded: result });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const handleFinish = (values) => {
-    // console.log(uploadedImagesUrls, 'in fininsh')
+    console.log(values, 'in fininsh')
     setLoading(true);
     if (!updateDb) {
       let prvOffering = offerings.filter((offering) => offering.flag == flag);
       if (prvOffering.length > 0) {
         let index = offerings.indexOf(prvOffering[0]);
         offerings[index] = {
-          images: uploadedImagesUrls,
+          images: values.files,
           title: values.hotel_title,
           description: values.description,
           rates: {
@@ -265,7 +280,7 @@ const UpdateHotelDetails = ({ offerings, setOfferings, flag, request }) => {
         setOfferings([
           ...offerings,
           {
-            images: uploadedImagesUrls,
+            images: values.files,
             title: values.hotel_title,
             description: values.description,
             rates: {
@@ -290,7 +305,7 @@ const UpdateHotelDetails = ({ offerings, setOfferings, flag, request }) => {
         request?.offerings?.find((offering) => offering.flag == flag)._id
       );
       let payload = {
-        images: uploadedImagesUrls,
+        images: values.files,
         title: values.hotel_title,
         description: values.description,
         rates: {
@@ -341,9 +356,10 @@ const UpdateHotelDetails = ({ offerings, setOfferings, flag, request }) => {
         payment_link:
           request?.offerings[flag - 1] &&
           request?.offerings[flag - 1].paymentLink,
+        files: request?.offerings[flag - 1] && request?.offerings[flag - 1].images,
       }}
     >
-      {console.log('uploaded ',uploadedImagesUrls)}
+      {console.log("uploaded ", uploadedImagesUrls)}
       {/* {console.log(request.offerings[flag - 1])} */}
       <div className="upload-hotel-image d-flex flex-column w-100 gap-2">
         {showCarousel &&
