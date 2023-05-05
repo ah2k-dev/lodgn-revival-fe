@@ -10,7 +10,7 @@ const AuthLayout = () => {
   const { isAuthenticated, user } = useSelector((state) => state.auth);
   useEffect(() => {
     if (isAuthenticated) {
-      if (user?.userData?.role === "admin") {
+      if (user?.userData?.role === "admin" || user?.userData?.role === "moderator") {
         navigate("/dashboard/admin");
       } else {
         navigate("/dashboard/user");

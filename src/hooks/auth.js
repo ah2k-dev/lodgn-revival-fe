@@ -26,3 +26,12 @@ export const UseGetRole = () => {
     return false;
   }
 };
+
+export const GetPermissions = () => {
+  const { user } = useSelector((state) => state.auth);
+  if (user) {
+    return user.userData.permissions;
+  } else {
+    return false;
+  }
+};

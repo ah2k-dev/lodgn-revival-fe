@@ -12,18 +12,11 @@ import {
   rejectReuest,
 } from "../../actions/requestActions";
 import moment from "moment";
+import { GetPermissions, UseGetRole } from "../../hooks/auth";
 
 const CurrentRequest = () => {
   
-  const role = "moderator";
-
-  const permissions = [
-    "negotiate",
-    "approveUpdates",
-    "declineUpdates",
-    "blockUser",
-    "unblockUser",
-  ];
+  // const role = "moderator";
 
   const dispatch = useDispatch();
   const { error, loading, requests } = useSelector((state) => state.request);
@@ -64,7 +57,6 @@ const CurrentRequest = () => {
                 status={request.status}
                 key={i}
                 index={i}
-                rolePermissions={permissions}
               />
             ))}
           </div>
@@ -74,7 +66,14 @@ const CurrentRequest = () => {
   );
 };
 
-const RequestComponent = ({ request, status, index, rolePermissions }) => {
+const RequestComponent = ({ request, status, index }) => {
+
+  const role = UseGetRole();
+
+  const permissions = GetPermissions();
+
+  console.log(role, permissions);
+
   console.log(request.offerings);
 
   const [newStatus, setNewStatus] = useState(status);
@@ -201,7 +200,7 @@ const RequestComponent = ({ request, status, index, rolePermissions }) => {
           )}
           {newStatus === "recieved" || newStatus === "negotiating" ? (
             <Button
-              disabled={!rolePermissions.includes("rejectRequest")}
+              disabled={role === "moderator" && !permissions.includes("rejectRequest")}
               className="reject-request-btn"
               onClick={() => rejectRequestFunc(request._id)}
             >
@@ -241,7 +240,7 @@ const RequestComponent = ({ request, status, index, rolePermissions }) => {
                 disabled={
                   request.status === "completed" ||
                   request.status === "paymentVerified" ||
-                  !rolePermissions.includes("negotiate")
+                  role === "moderator" && !permissions.includes("negotiate")
                 }
                 onClick={handleRadioChange}
               />
@@ -258,7 +257,7 @@ const RequestComponent = ({ request, status, index, rolePermissions }) => {
                 disabled={
                   request.status === "paymentVerified" ||
                   request.status === "recieved" ||
-                  !rolePermissions.includes("complete")
+                  role === "moderator" && !permissions.includes("complete")
                 }
                 onClick={handleRadioChange}
               />
@@ -274,7 +273,7 @@ const RequestComponent = ({ request, status, index, rolePermissions }) => {
                 defaultChecked={"paymentVerfied" === request.status}
                 disabled={
                   request.status != "completed" ||
-                  !rolePermissions.includes("verifyPayment")
+                  role === "moderator" && !permissions.includes("verifyPayment")
                 }
                 onClick={handleRadioChange}
               />
