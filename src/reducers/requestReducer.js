@@ -27,6 +27,7 @@ export const requestReducer = (state = initialState, action) => {
     case requestConstants.APPROVE_REJECT_UPDATE_REQUEST:
     case requestConstants.GET_REJECTED_REQUESTS_REQUEST:
     case requestConstants.GET_REPORTS_REQUEST:
+    case requestConstants.UPDATE_OFFER_REQUEST:
       return {
         ...state,
         loading: true,
@@ -56,6 +57,7 @@ export const requestReducer = (state = initialState, action) => {
         loading: false,
       };
     case requestConstants.DELETE_REQUEST_SUCCESS:
+    case requestConstants.UPDATE_OFFER_SUCCESS:
       return {
         ...state,
         loading: false,
@@ -116,6 +118,7 @@ export const requestReducer = (state = initialState, action) => {
     case requestConstants.APPROVE_REJECT_UPDATE_FAILURE:
     case requestConstants.GET_REJECTED_REQUESTS_FAILURE:
     case requestConstants.GET_REPORTS_FAILURE:
+    case requestConstants.UPDATE_OFFER_FAILURE:
       return {
         ...state,
         loading: false,
