@@ -23,7 +23,7 @@ const UpdateHotelDetails = ({ offerings, setOfferings, flag, request }) => {
   const [files, setFiles] = useState([]);
   const [uploadedImagesUrls, setUploadedImagesUrls] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [title, setTitle] = useState("");
+  const [updateDb, setUpdateDb] = useState(false);
   const [description, setDescription] = useState("");
   const [singleRates, setSingleRates] = useState(0);
   const [doubleRates, setDoubleRates] = useState(0);
@@ -52,7 +52,6 @@ const UpdateHotelDetails = ({ offerings, setOfferings, flag, request }) => {
   // Call a function (passed as a prop from the parent component)
   // to handle the user-selected file
   const handleChange = (event) => {
-
     let uploadedFiles = [...event.target.files];
 
     if (uploadedFiles.length > 10) {
@@ -96,7 +95,6 @@ const UpdateHotelDetails = ({ offerings, setOfferings, flag, request }) => {
     } else if (uploadedFiles.length > 10) {
       return;
     }
-
   };
 
   // const handleChange = (info) => {
@@ -201,8 +199,8 @@ const UpdateHotelDetails = ({ offerings, setOfferings, flag, request }) => {
 
     setLoading(true);
 
-    const uploadedFiles = files.map( async (image) => {
-
+    let images = []
+    const uploadedFiles = files.map(async (image) => {
       const formData = new FormData();
 
       const upload_preset = "lodgn_app";
@@ -211,6 +209,7 @@ const UpdateHotelDetails = ({ offerings, setOfferings, flag, request }) => {
       formData.append("file", image);
       formData.append("upload_preset", upload_preset);
       formData.append("cloud_name", cloud_name);
+
 
       return await axios
         .post(
@@ -226,17 +225,18 @@ const UpdateHotelDetails = ({ offerings, setOfferings, flag, request }) => {
         .then((response) => {
           const data = response.data;
           const fileURL = data.url;
-          setUploadedImagesUrls([...uploadedImagesUrls, fileURL]); // You should store this URL for future references in your app
+          images.push(fileURL)
+          // setUploadedImagesUrls([...uploadedImagesUrls, fileURL]); // You should store this URL for future references in your app
           console.log(data);
         });
       // console.log(cloudinaryResponse.data);
     });
 
-    
     // Once all the files are uploaded
     axios.all(uploadedFiles).then(() => {
       console.log(uploadedImagesUrls);
       // ... perform after upload is successful operation
+      setUploadedImagesUrls(images)
       formRef.current.submit();
     });
   };
@@ -257,10 +257,57 @@ const UpdateHotelDetails = ({ offerings, setOfferings, flag, request }) => {
     //     flag: flag,
     //   },
     // ]);
-    let prvOffering = offerings.filter((offering) => offering.flag == flag);
-    if (prvOffering.length > 0) {
-      let index = offerings.indexOf(prvOffering[0]);
-      offerings[index] = {
+    if (!updateDb) {
+      let prvOffering = offerings.filter((offering) => offering.flag == flag);
+      if (prvOffering.length > 0) {
+        let index = offerings.indexOf(prvOffering[0]);
+        offerings[index] = {
+          images: uploadedImagesUrls,
+          title: values.hotel_title,
+          description: values.description,
+          rates: {
+            single: values.single_rooms_rate > 0 && values.single_rooms_rate,
+            double: values.double_rooms_rate > 0 && values.double_rooms_rate,
+            animalSupport: values.animal_rate > 0 && values.animal_rate,
+          },
+          paymentLink:
+            values.payment_link.indexOf("https://") == 0
+              ? values.payment_link
+              : "https://" + values.payment_link,
+          flag: flag,
+        };
+        setOfferings([...offerings]);
+        console.log(offerings);
+        setLoading(false);
+      } else {
+        setOfferings([
+          ...offerings,
+          {
+            images: uploadedImagesUrls,
+            title: values.hotel_title,
+            description: values.description,
+            rates: {
+              single: values.single_rooms_rate > 0 && values.single_rooms_rate,
+              double: values.double_rooms_rate > 0 && values.double_rooms_rate,
+              animalSupport: values.animal_rate > 0 && values.animal_rate,
+            },
+            paymentLink:
+              values.payment_link.indexOf("https://") == 0
+                ? values.payment_link
+                : "https://" + values.payment_link,
+            flag: flag,
+          },
+        ]);
+        setLoading(false);
+        console.log(offerings);
+      }
+    } else {
+      console.log("api call here");
+      console.log(values);
+      console.log(
+        request?.offerings?.find((offering) => offering.flag == flag)._id
+      );
+      let payload = {
         images: uploadedImagesUrls,
         title: values.hotel_title,
         description: values.description,
@@ -275,31 +322,14 @@ const UpdateHotelDetails = ({ offerings, setOfferings, flag, request }) => {
             : "https://" + values.payment_link,
         flag: flag,
       };
-      setOfferings([...offerings]);
-      console.log(offerings);
-      setLoading(false);
-    } else {
-      setOfferings([
-        ...offerings,
-        {
-          images: uploadedImagesUrls,
-          title: values.hotel_title,
-          description: values.description,
-          rates: {
-            single: values.single_rooms_rate > 0 && values.single_rooms_rate,
-            double: values.double_rooms_rate > 0 && values.double_rooms_rate,
-            animalSupport: values.animal_rate > 0 && values.animal_rate,
-          },
-          paymentLink:
-            values.payment_link.indexOf("https://") == 0
-              ? values.payment_link
-              : "https://" + values.payment_link,
-          flag: flag,
-        },
-      ]);
-      setLoading(false);
-      console.log(offerings);
+      console.log(payload);
     }
+  };
+
+  const handleSaveDb = () => {
+    setUpdateDb(true);
+    formRef.current.submit();
+    // setLoading(true);
   };
 
   return (
@@ -566,11 +596,21 @@ const UpdateHotelDetails = ({ offerings, setOfferings, flag, request }) => {
         </span> */}
       </div>
       <div className="row mt-2 w-100">
-        <Button loading={loading} className="saveBtn" onClick={handleSave}>
-          {offerings.find((offering) => offering.flag == flag)
-            ? "Update"
-            : "Save"}
-        </Button>
+        {request?.offerings?.find((offering) => offering.flag == flag) ? (
+          <Button
+            loading={loading}
+            className="saveBtn"
+            onClick={() => handleSaveDb()}
+          >
+            Update in DB
+          </Button>
+        ) : (
+          <Button loading={loading} className="saveBtn" onClick={handleSave}>
+            {offerings.find((offering) => offering.flag == flag)
+              ? "Update"
+              : "Save"}
+          </Button>
+        )}
       </div>
     </Form>
 
