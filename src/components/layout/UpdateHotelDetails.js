@@ -194,69 +194,51 @@ const UpdateHotelDetails = ({ offerings, setOfferings, flag, request }) => {
   //   }
   // };
 
-  const handleSave = () => {
+  const handleSave = async() => {
     // console.log(formRef.current);
 
-    let images = [];
-    const uploadedFiles = files.map(async (image) => {
-      const formData = new FormData();
-
-      const upload_preset = "lodgn_app";
-      const cloud_name = "dusn1ns53";
-
-      formData.append("file", image);
-      formData.append("upload_preset", upload_preset);
-      formData.append("cloud_name", cloud_name);
-
-      return await axios
-        .post(
-          `https://api.cloudinary.com/v1_1/${cloud_name}/auto/upload`,
-          formData,
-          {
-            headers: { "Content-Type": "multipart/form-data" },
-            // onUploadProgress: function (e) {
-            //   console.log(e.loaded / e.total);
-            // },
-          }
-        )
-        .then((response) => {
-          const data = response.data;
-          const fileURL = data.url;
-          images.push(fileURL);
-          // setUploadedImagesUrls([...uploadedImagesUrls, fileURL]); // You should store this URL for future references in your app
-          // console.log(images);
-        });
-      // console.log(cloudinaryResponse.data);
-    });
-
-    console.log(images);
-    // Once all the files are uploaded
-    axios.all(uploadedFiles).then(() => {
-      setLoading(false);
-      console.log(uploadedImagesUrls);
-      // ... perform after upload is successful operation
-      setUploadedImagesUrls(images);
+    // let images = [];
+    await Promise.all(
+       files.map(async (image) => {
+        let uploadedImage = ''
+        const formData = new FormData();
+  
+        const upload_preset = "lodgn_app";
+        const cloud_name = "dusn1ns53";
+  
+        formData.append("file", image);
+        formData.append("upload_preset", upload_preset);
+        formData.append("cloud_name", cloud_name);
+  
+        await axios
+          .post(
+            `https://api.cloudinary.com/v1_1/${cloud_name}/auto/upload`,
+            formData,
+            {
+              headers: { "Content-Type": "multipart/form-data" },
+              // onUploadProgress: function (e) {
+              //   console.log(e.loaded / e.total);
+              // },
+            }
+          )
+          .then(async (response) => {
+            const data = await response.data;
+            uploadedImage = data.url;
+          });
+          return uploadedImage;
+      })
+    ).then((result)=> {
+      console.log(result, "result");
+      setUploadedImagesUrls(result);
       formRef.current.submit();
-    });
+    }).catch((err)=>{
+      console.log(err);
+    })
   };
 
   const handleFinish = (values) => {
+    // console.log(uploadedImagesUrls, 'in fininsh')
     setLoading(true);
-    // setOfferings([
-    //   ...offerings,
-    //   {
-    //     // images: values.files,
-    //     title: values.hotel_title,
-    //     description: values.description,
-    //     rates: {
-    //       single: values.single_rooms_rate > 0 && values.single_rooms_rate,
-    //       double: values.double_rooms_rate > 0 && values.double_rooms_rate,
-    //       animalSupport: values.animal_rate > 0 && values.animal_rate,
-    //     },
-    //     paymentLink: values.payment_link,
-    //     flag: flag,
-    //   },
-    // ]);
     if (!updateDb) {
       let prvOffering = offerings.filter((offering) => offering.flag == flag);
       if (prvOffering.length > 0) {
