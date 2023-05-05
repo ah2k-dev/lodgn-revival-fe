@@ -55,6 +55,7 @@ export const createModerator = (moderator) => async (dispatch) => {
           marginTop: "20vh",
         },
       });
+      dispatch(fetchUsers());
       return true;
     }
   } catch (error) {
@@ -105,6 +106,7 @@ export const updateModerator = (moderator) => async (dispatch) => {
           marginTop: "20vh",
         },
       });
+      dispatch(fetchUsers());
       return true;
     }
   } catch (error) {
@@ -130,6 +132,7 @@ export const blockUnblockUser = (userId) => async (dispatch) => {
           marginTop: "20vh",
         },
       });
+      dispatch(fetchUsers());
       return true;
     }
   } catch (error) {
