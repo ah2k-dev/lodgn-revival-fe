@@ -17,33 +17,17 @@ import { useRef, useState } from "react";
 import Highlighter from "react-highlight-words";
 import { useDispatch, useSelector } from "react-redux";
 import { createModerator, fetchUsers } from "../../actions/userActions";
+import { GetPermissions, UseGetRole } from "../../hooks/auth";
 
 const ManageUsers = () => {
-  const role = "admin";
+
+  const role = UseGetRole();
+
+  console.log(role);
 
   const { error, loading, users, moderators } = useSelector(
     (state) => state.user
   );
-
-  // const permissions = [
-  //   "rejectRequest",
-  //   "negotiate",
-  //   "complete",
-  //   "verifyPayment",
-  //   "approveUpdates",
-  //   "declineUpdates",
-  // ];
-
-  const permissions = [
-    "rejectRequest",
-    "negotiate",
-    "complete",
-    "verifyPayment",
-    "approveUpdates",
-    "declineUpdates",
-    "blockUser",
-    "unblockUser",
-  ];
 
   const [tabIndex, setTabIndex] = useState("1");
 
@@ -85,48 +69,6 @@ const ManageUsers = () => {
     setIsModalOpen(true);
   };
 
-  const usersData = [
-    {
-      key: "1",
-      name: "John Brown",
-      email: "john@example.com",
-      email_verified: "yes",
-    },
-    {
-      key: "2",
-      name: "Joe Black",
-      email: "joe@example.com",
-      email_verified: "no",
-    },
-    {
-      key: "3",
-      name: "Jim Green",
-      email: "jim@example.com",
-      email_verified: "yes",
-    },
-    {
-      key: "4",
-      name: "Jim Red",
-      email: "jim_2@example.com",
-      email_verified: "yes",
-    },
-  ];
-
-  const ModeratorsData = [
-    {
-      key: "1",
-      name: "James Green",
-      email: "james@example.com",
-      permissions: ["verifyPayment", "negotiate", "rejectRequest"],
-    },
-    {
-      key: "2",
-      name: "Jack White",
-      email: "jack@example.com",
-      permissions: ["blockUser", "unblockUser"],
-    },
-  ];
-
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleOk = () => {
@@ -163,7 +105,6 @@ const ManageUsers = () => {
           <UsersTable
             tabIndex={tabIndex}
             data={users}
-            rolePermissions={permissions}
           />
         ),
       },
@@ -347,8 +288,13 @@ const ManageUsers = () => {
   );
 };
 
-const UsersTable = ({ tabIndex, data, handleEditModal, rolePermissions }) => {
-  console.log(rolePermissions);
+const UsersTable = ({ tabIndex, data, handleEditModal }) => {
+
+  const role = UseGetRole();
+
+  const permissions = GetPermissions();
+
+  console.log(role, permissions);
 
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
@@ -500,7 +446,7 @@ const UsersTable = ({ tabIndex, data, handleEditModal, rolePermissions }) => {
         render: (record) => (
           <div className="d-flex justify-content-center">
             <Button
-              // disabled={!rolePermissions.includes("blockUser")}
+              disabled={role === "moderator" && !permissions.includes("blockUser")}
               danger
               className="block-btn"
             >
