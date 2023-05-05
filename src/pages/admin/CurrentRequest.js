@@ -185,7 +185,7 @@ const RequestComponent = ({ request, status, index }) => {
               }))}
             />
           )}
-          {newStatus !== request.status || offerings.length > 0 && (
+          {(newStatus !== request.status || offerings.length > 0) && (
             <Button
               className="update-status-btn"
               loading={loading}

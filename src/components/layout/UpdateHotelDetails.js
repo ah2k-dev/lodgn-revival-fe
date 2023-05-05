@@ -197,9 +197,7 @@ const UpdateHotelDetails = ({ offerings, setOfferings, flag, request }) => {
   const handleSave = () => {
     // console.log(formRef.current);
 
-    setLoading(true);
-
-    let images = []
+    let images = [];
     const uploadedFiles = files.map(async (image) => {
       const formData = new FormData();
 
@@ -209,7 +207,6 @@ const UpdateHotelDetails = ({ offerings, setOfferings, flag, request }) => {
       formData.append("file", image);
       formData.append("upload_preset", upload_preset);
       formData.append("cloud_name", cloud_name);
-
 
       return await axios
         .post(
@@ -225,23 +222,26 @@ const UpdateHotelDetails = ({ offerings, setOfferings, flag, request }) => {
         .then((response) => {
           const data = response.data;
           const fileURL = data.url;
-          images.push(fileURL)
+          images.push(fileURL);
           // setUploadedImagesUrls([...uploadedImagesUrls, fileURL]); // You should store this URL for future references in your app
-          console.log(data);
+          // console.log(images);
         });
       // console.log(cloudinaryResponse.data);
     });
 
+    console.log(images);
     // Once all the files are uploaded
     axios.all(uploadedFiles).then(() => {
+      setLoading(false);
       console.log(uploadedImagesUrls);
       // ... perform after upload is successful operation
-      setUploadedImagesUrls(images)
+      setUploadedImagesUrls(images);
       formRef.current.submit();
     });
   };
 
   const handleFinish = (values) => {
+    setLoading(true);
     // setOfferings([
     //   ...offerings,
     //   {
@@ -338,7 +338,7 @@ const UpdateHotelDetails = ({ offerings, setOfferings, flag, request }) => {
       className="mt-xl-0 mt-4 add-hotel-form col-xl-4 px-xxl-4 px-xl-3 col-12 d-flex flex-column align-items-center gap-3"
       onFinish={handleFinish}
       onFinishFailed={(errorInfo) => {
-        console.log("Failed:", errorInfo);
+        setLoading(false);
       }}
       autoComplete="off"
       initialValues={{
@@ -361,13 +361,14 @@ const UpdateHotelDetails = ({ offerings, setOfferings, flag, request }) => {
           request?.offerings[flag - 1].paymentLink,
       }}
     >
+      {console.log('uploaded ',uploadedImagesUrls)}
       {/* {console.log(request.offerings[flag - 1])} */}
       <div className="upload-hotel-image d-flex flex-column w-100 gap-2">
         {showCarousel &&
         request?.offerings[flag - 1] &&
         request?.offerings[flag - 1].images ? (
           <>
-            <HotelPhotosCarousel images={image_urls} />
+            <HotelPhotosCarousel images={request?.offerings[flag - 1].images} />
             <button
               className="btn logoutBtn text-white"
               onClick={() => setShowCarousel(false)}

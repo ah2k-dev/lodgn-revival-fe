@@ -79,6 +79,7 @@ const RequestComponent = ({request}) => {
     },
   ] 
 
+  console.log(request);
 
   return (
     <div className="d-flex flex-column gap-4 rounded-container bg-white p-5 position-relative">
@@ -96,7 +97,7 @@ const RequestComponent = ({request}) => {
           animalSupport={request.roomRequirements.animalSupport}
         />
         <div className="col-xl-3 col-sm-6 mt-xl-0 mt-4 col-12">
-          <HotelPhotosCarousel images={imageUrls}/>
+          <HotelPhotosCarousel images={request?.bookedOffering?.images}/>
         </div>
       </div>
       <div className="d-flex justify-content-between align-items-center flex-wrap gap-3">

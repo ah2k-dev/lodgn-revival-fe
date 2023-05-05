@@ -15,9 +15,9 @@ const HotelPhotosCarousel = ({ images }) => {
             {
                 images.length > 1 ? <Carousel autoplay>
                     {images.map((imgsrc, i) => {
-                        return <img src={imgsrc.url} width="100%" key={i} />
+                        return <img src={imgsrc} width="100%" key={i} />
                     })}
-                </Carousel> : <img src={images[0].url} width="100%" />
+                </Carousel> : <img src={images[0]} width="100%" />
             }
         </>
     )
