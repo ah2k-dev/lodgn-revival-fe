@@ -55,6 +55,9 @@ const PreviousStays = () => {
 };
 
 const PreviousRequests = ({ stay }) => {
+
+  console.log(stay);
+
   return (
     <div className="d-flex flex-column gap-4 rounded-container bg-white p-5 position-relative">
       <div className="d-flex justify-content-md-between align-items-start flex-wrap items justify-content-center">
@@ -70,7 +73,7 @@ const PreviousRequests = ({ stay }) => {
           double_rooms={stay?.request?.roomRequirements?.double}
         />
         <span className="col-xl-3 col-md-6 col-sm-8 col-12 mt-xl-0 mt-5">
-        <HotelPhotosCarousel images={[{ url: 'https://cdn.vox-cdn.com/thumbor/yJuBQtYK2euiOWE3lj_dtloWkvs=/160x0:1239x607/1600x900/cdn.vox-cdn.com/uploads/chorus_image/image/46708944/manyminions.0.jpg' }]} />
+        <HotelPhotosCarousel images={stay?.request?.bookedOffering?.images} />
           {/* <span className="fs-5 font-poppins fst-italic green-span text-md font-poppins fw-normal d-flex flex-column align-items-center gap-2">
             <svg
               xmlns="http://www.w3.org/2000/svg"

@@ -102,17 +102,17 @@ const RequestComponent = ({ request }) => {
             {request.offerings.map((offering, i) => (
               <div className="card" key={i}>
                 <Card
-                  title={offering.title}
-                  description={offering.description}
+                  title={offering?.title}
+                  description={offering?.description}
                   distance={1.5}
-                  singlePrice={offering.rates.single}
-                  doublePrice={offering.rates.double}
-                  animalSupport={offering.rates.animalSupport}
-                  images={offering.images}
-                  id={offering._id}
+                  singlePrice={offering?.rates.single}
+                  doublePrice={offering?.rates.double}
+                  animalSupport={offering?.rates.animalSupport}
+                  images={offering?.images}
+                  id={offering?._id}
                   
                   request={request}
-                  paymentLink={offering.paymentLink}
+                  paymentLink={offering?.paymentLink}
                 />
               </div>
             ))}

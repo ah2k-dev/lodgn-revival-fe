@@ -1,9 +1,9 @@
 import axios from "axios";
 import { getToken } from "../hooks/auth";
 
-export const baseURL = "http://192.168.0.196:8001";
+// export const baseURL = "http://192.168.0.196:8001";
 
-// export const baseURL = "https://logdn-revival-be-production.up.railway.app";
+export const baseURL = "https://logdn-revival-be-production.up.railway.app";
 
 const custAxios = axios.create({
   baseURL: baseURL,
