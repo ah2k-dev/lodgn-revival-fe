@@ -1,6 +1,6 @@
 import { Button, Form, Input, InputNumber, message, Upload } from "antd";
 import axios from "axios";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import HotelPhotosCarousel from "./HotelPhotosCarousel";
 
 const UpdateHotelDetails = ({ offerings, setOfferings, flag, request }) => {
@@ -30,6 +30,12 @@ const UpdateHotelDetails = ({ offerings, setOfferings, flag, request }) => {
   const [animalSupport, setAnimalSupport] = useState(0);
 
   const [showCarousel, setShowCarousel] = useState(true);
+
+  // useEffect(() => {
+  //   if(uploadedImagesUrls.length > 0){
+  //     formRef.current.submit()
+  //   }
+  // }, [uploadedImagesUrls]);
 
   // const [rates, setRates] = useState({
   //     single: 0,
@@ -194,75 +200,66 @@ const UpdateHotelDetails = ({ offerings, setOfferings, flag, request }) => {
   //   }
   // };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     // console.log(formRef.current);
 
-    let images = [];
-    const uploadedFiles = files.map(async (image) => {
-      const formData = new FormData();
+    // let images = [];
+    await Promise.all(
+      files.map(async (image) => {
+        let uploadedImage = "";
+        const formData = new FormData();
 
-      const upload_preset = "lodgn_app";
-      const cloud_name = "dusn1ns53";
+        const upload_preset = "lodgn_app";
+        const cloud_name = "dusn1ns53";
 
-      formData.append("file", image);
-      formData.append("upload_preset", upload_preset);
-      formData.append("cloud_name", cloud_name);
+        formData.append("file", image);
+        formData.append("upload_preset", upload_preset);
+        formData.append("cloud_name", cloud_name);
 
-      return await axios
-        .post(
-          `https://api.cloudinary.com/v1_1/${cloud_name}/auto/upload`,
-          formData,
-          {
-            headers: { "Content-Type": "multipart/form-data" },
-            // onUploadProgress: function (e) {
-            //   console.log(e.loaded / e.total);
-            // },
-          }
-        )
-        .then((response) => {
-          const data = response.data;
-          const fileURL = data.url;
-          images.push(fileURL);
-          // setUploadedImagesUrls([...uploadedImagesUrls, fileURL]); // You should store this URL for future references in your app
-          // console.log(images);
+        await axios
+          .post(
+            `https://api.cloudinary.com/v1_1/${cloud_name}/auto/upload`,
+            formData,
+            {
+              headers: { "Content-Type": "multipart/form-data" },
+              // onUploadProgress: function (e) {
+              //   console.log(e.loaded / e.total);
+              // },
+            }
+          )
+          .then(async (response) => {
+            const data = await response.data;
+            uploadedImage = data.url;
+            // formRef.current.setFieldsValue({
+            //   uploaded: [...uploadedImagesUrls, uploadedImage],
+            // });
+          });
+        return uploadedImage;
+      })
+    )
+      .then((result) => {
+        // console.log(result, "result");
+        setUploadedImagesUrls(result);
+        formRef.current.setFieldsValue({
+          files: result,
         });
-      // console.log(cloudinaryResponse.data);
-    });
-
-    console.log(images);
-    // Once all the files are uploaded
-    axios.all(uploadedFiles).then(() => {
-      setLoading(false);
-      console.log(uploadedImagesUrls);
-      // ... perform after upload is successful operation
-      setUploadedImagesUrls(images);
-      formRef.current.submit();
-    });
+        formRef.current.submit();
+        // formRef.current.submit({ uploaded: result });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const handleFinish = (values) => {
+    console.log(values, 'in fininsh')
     setLoading(true);
-    // setOfferings([
-    //   ...offerings,
-    //   {
-    //     // images: values.files,
-    //     title: values.hotel_title,
-    //     description: values.description,
-    //     rates: {
-    //       single: values.single_rooms_rate > 0 && values.single_rooms_rate,
-    //       double: values.double_rooms_rate > 0 && values.double_rooms_rate,
-    //       animalSupport: values.animal_rate > 0 && values.animal_rate,
-    //     },
-    //     paymentLink: values.payment_link,
-    //     flag: flag,
-    //   },
-    // ]);
     if (!updateDb) {
       let prvOffering = offerings.filter((offering) => offering.flag == flag);
       if (prvOffering.length > 0) {
         let index = offerings.indexOf(prvOffering[0]);
         offerings[index] = {
-          images: uploadedImagesUrls,
+          images: values.files,
           title: values.hotel_title,
           description: values.description,
           rates: {
@@ -283,7 +280,7 @@ const UpdateHotelDetails = ({ offerings, setOfferings, flag, request }) => {
         setOfferings([
           ...offerings,
           {
-            images: uploadedImagesUrls,
+            images: values.files,
             title: values.hotel_title,
             description: values.description,
             rates: {
@@ -308,7 +305,7 @@ const UpdateHotelDetails = ({ offerings, setOfferings, flag, request }) => {
         request?.offerings?.find((offering) => offering.flag == flag)._id
       );
       let payload = {
-        images: uploadedImagesUrls,
+        images: values.files,
         title: values.hotel_title,
         description: values.description,
         rates: {
@@ -359,9 +356,10 @@ const UpdateHotelDetails = ({ offerings, setOfferings, flag, request }) => {
         payment_link:
           request?.offerings[flag - 1] &&
           request?.offerings[flag - 1].paymentLink,
+        files: request?.offerings[flag - 1] && request?.offerings[flag - 1].images,
       }}
     >
-      {console.log('uploaded ',uploadedImagesUrls)}
+      {console.log("uploaded ", uploadedImagesUrls)}
       {/* {console.log(request.offerings[flag - 1])} */}
       <div className="upload-hotel-image d-flex flex-column w-100 gap-2">
         {showCarousel &&
