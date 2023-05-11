@@ -1,7 +1,7 @@
 import axios from "axios";
 import { getToken } from "../hooks/auth";
 
-export const baseURL = "http://192.168.0.196:8001";
+export const baseURL = "http://18.116.215.83";
 
 // export const baseURL = "https://logdn-revival-be-production.up.railway.app";
 
