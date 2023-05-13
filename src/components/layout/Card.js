@@ -28,22 +28,10 @@ const Card = (props) => {
 
   console.log(props);
 
-  const imageUrls = [
-    {
-      url: "https://upload.wikimedia.org/wikipedia/en/7/7d/Minions_characters.png",
-    },
-    {
-      url: "https://cdn.vox-cdn.com/thumbor/yJuBQtYK2euiOWE3lj_dtloWkvs=/160x0:1239x607/1600x900/cdn.vox-cdn.com/uploads/chorus_image/image/46708944/manyminions.0.jpg",
-    },
-    {
-      url: "https://i.guim.co.uk/img/static/sys-images/Guardian/Pix/pictures/2015/11/11/1447263891657/Minions-009.jpg?width=620&quality=85&auto=format&fit=max&s=8a643616a29f6832d52a06ceafab39d6",
-    },
-  ];
-
   return (
     <div className="detail-card rounded-3 d-flex flex-column align-items-center w-100">
       <div className="images-container w-100">
-        <HotelPhotosCarousel images={imageUrls} />
+        <HotelPhotosCarousel images={images} />
       </div>
       <div className="cards-footer d-flex flex-column align-items-center gap-2 rounded-3 p-4 w-100">
         <span

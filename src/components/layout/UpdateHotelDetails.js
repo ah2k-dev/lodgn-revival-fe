@@ -204,6 +204,9 @@ const UpdateHotelDetails = ({ offerings, setOfferings, flag, request }) => {
     // console.log(formRef.current);
 
     // let images = [];
+
+    setLoading(true);
+
     await Promise.all(
       files.map(async (image) => {
         let uploadedImage = "";
@@ -253,7 +256,7 @@ const UpdateHotelDetails = ({ offerings, setOfferings, flag, request }) => {
 
   const handleFinish = (values) => {
     console.log(values, 'in fininsh')
-    setLoading(true);
+    // setLoading(true);
     if (!updateDb) {
       let prvOffering = offerings.filter((offering) => offering.flag == flag);
       if (prvOffering.length > 0) {
@@ -320,6 +323,7 @@ const UpdateHotelDetails = ({ offerings, setOfferings, flag, request }) => {
         flag: flag,
       };
       console.log(payload);
+      setLoading(false);
     }
   };
 

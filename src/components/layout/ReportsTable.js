@@ -218,7 +218,7 @@ const ReportsTable = ({tableData}) => {
         )
     }
 
-    return <Table columns={columns} dataSource={tableData} />;
+    return <Table columns={columns} dataSource={tableData} rowKey={(record) => record._id} />;
 };
 
 export default ReportsTable;

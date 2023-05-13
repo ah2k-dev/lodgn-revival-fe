@@ -83,7 +83,7 @@ const RequestComponent = ({request}) => {
 
   return (
     <div className="d-flex flex-column gap-4 rounded-container bg-white p-5 position-relative">
-      <div className="d-flex justify-content-md-between align-items-center flex-wrap items justify-content-center">
+      <div className="d-flex justify-content-md-between flex-wrap align-items-start justify-content-center">
         <JobDetailsGrid
           jobLocation={request.location.string}
           // jobAddress="Sarasota,FL. 33178"
