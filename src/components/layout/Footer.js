@@ -44,43 +44,63 @@ const Footer = () => {
     >
       <Row justify="space-between" align="start">
         <div className="details col-md-7 col-sm-8 col-12 d-flex justify-content-start">
-          {center?.string && <div className="detail pl-0">
-            <span className="title">{center?.string}</span>
-          </div> }
+          {center?.string && (
+            <div className="detail pl-0">
+              <span className="title">{center?.string}</span>
+            </div>
+          )}
           <div className="detail flex">
-          {dateRange.length > 0 && <div>
-              <span className="title">{moment(dateRange[0]).format("DD") }</span>
-              <span className="description">
-                {moment(dateRange[0]).format("MMMM")}
-              </span>
-            </div> }
-            {dateRange.length > 0 && <span className="title">-</span> }
-            {dateRange.length > 0 && <div>
-              <span className="title">{moment(dateRange[1]).format("DD")}</span>
-              <span className="description">
-                {moment(dateRange[1]).format("MMMM")}
-              </span>
-            </div> }
+            {dateRange.length > 0 && (
+              <div>
+                <span className="title">
+                  {dateRange[0] !== null
+                    ? moment(dateRange[0]).format("DD")
+                    : ""}
+                </span>
+                <span className="description">
+                  {dateRange[0] !== null
+                    ? moment(dateRange[0]).format("MMMM")
+                    : ""}
+                </span>
+              </div>
+            )}
+            {dateRange[1] !== null && <span className="title">-</span>}
+            {dateRange.length > 0 && (
+              <div>
+                <span className="title">
+                  {dateRange[1] !== null
+                    ? moment(dateRange[1]).format("DD")
+                    : ""}
+                </span>
+                <span className="description">
+                  {dateRange[1] !== null
+                    ? moment(dateRange[1]).format("MMM")
+                    : ""}
+                </span>
+              </div>
+            )}
           </div>
-        { totalRooms > 0 && <div className="detail">
-            <span className="title">{totalRooms} Rooms</span>
-            <span className="description">
-              {/* {jobDetails.no_of_single_rooms > 0 ? jobDetails.no_of_single_rooms + ' Singles' : null} {jobDetails.no_of_double_rooms > 0 ? ', ' + jobDetails.no_of_double_rooms + ' Doubles' : null} */}
+          {totalRooms > 0 && (
+            <div className="detail">
+              <span className="title">{totalRooms} Rooms</span>
+              <span className="description">
+                {/* {jobDetails.no_of_single_rooms > 0 ? jobDetails.no_of_single_rooms + ' Singles' : null} {jobDetails.no_of_double_rooms > 0 ? ', ' + jobDetails.no_of_double_rooms + ' Doubles' : null} */}
 
-              {roomRequirements.single > 0
-                ? roomRequirements.single + " Singles"
-                : null}
-              {roomRequirements.single > 0 && roomRequirements.double > 0
-                ? ", "
-                : null}
-              {roomRequirements.double > 0
-                ? roomRequirements.double + " Doubles"
-                : null}
-              {roomRequirements.animalSupport > 0
-                ? ", " + roomRequirements.animalSupport + " Animal Support"
-                : null}
-            </span>
-          </div>}
+                {roomRequirements.single > 0
+                  ? roomRequirements.single + " Singles"
+                  : null}
+                {roomRequirements.single > 0 && roomRequirements.double > 0
+                  ? ", "
+                  : null}
+                {roomRequirements.double > 0
+                  ? roomRequirements.double + " Doubles"
+                  : null}
+                {roomRequirements.animalSupport > 0
+                  ? ", " + roomRequirements.animalSupport + " Animal Support"
+                  : null}
+              </span>
+            </div>
+          )}
         </div>
         <div className="col-auto footer-btn">
           <Button

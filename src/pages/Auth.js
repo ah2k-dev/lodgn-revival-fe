@@ -44,15 +44,15 @@ const Auth = () => {
     } else {
       const res = await dispatch(
         signup(values.name, values.email, values.password)
-      )
+      );
       // .then((res) => {
-        // });
-        console.log(res);
-        if (!res) {
-          setActive("signup");
-        } else {
-          navigate("/auth/requestToken");
-          // setActive("login");
+      // });
+      console.log(res);
+      if (!res) {
+        setActive("signup");
+      } else {
+        navigate("/auth/requestToken");
+        // setActive("login");
       }
     }
   };
@@ -88,7 +88,7 @@ const Auth = () => {
     <div className="auth-container">
       <div className="auth-inner">
         <Row className="auth-form">
-          <div className="col-8 col-sm-6 col-md-9 col-lg-8 col-xl-8">
+          <div className="col-8 col-sm-6 col-md-9 col-lg-8 col-xl-8 pb-5">
             <Typography.Title level={5} className="text-green">
               Log in or sign up to book
             </Typography.Title>
@@ -102,19 +102,35 @@ const Auth = () => {
               autoComplete="off"
             >
               {active == "signup" && (
-                <div className="col-12">
-                  <label htmlFor="name">User-name</label>
-                  <Form.Item
-                    name="name"
-                    rules={[
-                      {
-                        required: true,
-                        message: "Please input your name!",
-                      },
-                    ]}
-                  >
-                    <Input placeholder="Name" />
-                  </Form.Item>
+                <div className="col-12 d-flex justify-content-between">
+                  <div className="col-auto">
+                    <label htmlFor="first_name">First Name</label>
+                    <Form.Item
+                      name="first_name"
+                      rules={[
+                        {
+                          required: true,
+                          message: "Please input your first name!",
+                        },
+                      ]}
+                    >
+                      <Input placeholder="First Name" />
+                    </Form.Item>
+                  </div>
+                  <div className="col-auto">
+                    <label htmlFor="last_name">Last Name</label>
+                    <Form.Item
+                      name="last_name"
+                      rules={[
+                        {
+                          required: true,
+                          message: "Please input your last name!",
+                        },
+                      ]}
+                    >
+                      <Input placeholder="Last Name" />
+                    </Form.Item>
+                  </div>
                 </div>
               )}
               <div className="col-12">
@@ -147,6 +163,38 @@ const Auth = () => {
                   <Input.Password placeholder="Password" />
                 </Form.Item>
               </div>
+              {active === "signup" && (
+                <>
+                  <div className="col-12">
+                    <label htmlFor="phone_number">Phone Number</label>
+                    <Form.Item
+                      name="phone_number"
+                      rules={[
+                        {
+                          required: true,
+                          message: "Please input your phone number!",
+                        },
+                      ]}
+                    >
+                      <Input placeholder="Phone number" />
+                    </Form.Item>
+                  </div>
+                  <div className="col-12">
+                    <label htmlFor="company">Company</label>
+                    <Form.Item
+                      name="company"
+                      rules={[
+                        {
+                          required: true,
+                          message: "Please input your company name!",
+                        },
+                      ]}
+                    >
+                      <Input placeholder="Company" />
+                    </Form.Item>
+                  </div>
+                </>
+              )}
               <div className="email-senders">
                 <Form.Item>
                   {emailVerify && (

@@ -16,17 +16,15 @@ import {
   setDateRangeRedux,
 } from "../../actions/mapActions";
 import moment from "moment";
-import dayjs from 'dayjs';
-import customParseFormat from 'dayjs/plugin/customParseFormat';
+import dayjs from "dayjs";
+import customParseFormat from "dayjs/plugin/customParseFormat";
 import UrgentBookingModal from "../UrgentBookingModal";
 
 const { RangePicker } = DatePicker;
 
 dayjs.extend(customParseFormat);
 
-
 const Header = () => {
-
   const [showRoomPicker, setShowRoomPicker] = useState(false);
   const [showTodayModal, setShowTodayModal] = useState(false);
 
@@ -103,9 +101,7 @@ const Header = () => {
     });
   };
 
-
   const disabledDate = (current) => {
-
     // Can not select days before today and today
     // return current < dayjs().endOf('day');
 
@@ -113,25 +109,24 @@ const Header = () => {
     // return current && current < moment().startOf('day');
 
     // Can not select days before today or more than 365 days in the future
-    const today = moment().startOf('day');
-    return current && (current < today || current > today.clone().add(365, 'days').endOf('day'));
+    const today = moment().startOf("day");
+    return (
+      current &&
+      (current < today || current > today.clone().add(365, "days").endOf("day"))
+    );
   };
 
   const handleCalendarChange = (values, dateString) => {
-    
     if (dateString && dateString.length === 2) {
       const startDate = moment(new Date(dateString[0]));
       const endDate = moment(new Date(dateString[1]));
       const today = moment();
-      setDateRange([
-        startDate.toISOString(),
-        endDate.toISOString(),
-      ]);
-      if (startDate.isSame(today, 'day') || endDate.isSame(today, 'day')) {
+      setDateRange([startDate.toISOString(), endDate.toISOString()]);
+      if (startDate.isSame(today, "day") || endDate.isSame(today, "day")) {
         setShowTodayModal(true);
       }
     }
-    
+
     // if (dateString && dateString.length === 2) {
     //   // console.log(dateString);
     //   console.log(moment(new Date(dateString[0])).toISOString(),
@@ -156,13 +151,13 @@ const Header = () => {
   };
 
   const handleSearchResult = () => {
-    if (search === '') {
-      setSearchError('Please search for a location')
+    if (search === "") {
+      setSearchError("Please search for a location");
       setTimeout(() => {
         setSearchError("");
       }, 3000);
     } else if (singleRoom === 0 && doubleRoom === 0) {
-      setSearchError('Please add rooms')
+      setSearchError("Please add rooms");
       setTimeout(() => {
         setSearchError("");
       }, 3000);
@@ -197,18 +192,44 @@ const Header = () => {
   };
 
   return (
-    <Row className={location.pathname === '/dashboard/user/create-request' ? "header-container bg-white w-100 justify-content-end" : 'header-container'} justify="space-between" align="middle">
-      {location.pathname === '/' || location.pathname === '/auth' || location.pathname === 'requestToken' || location.pathname === '/auth/forgot-password' ? <div className="header-left col-2">
-        <img src={logo} width={90} />
-      </div> : null}
-      {searchError &&
+    <Row
+      className={
+        location.pathname === "/dashboard/user/create-request"
+          ? "header-container bg-white w-100 justify-content-end"
+          : "header-container"
+      }
+      justify="space-between"
+      align="middle"
+    >
+      {location.pathname === "/" ||
+      location.pathname === "/auth" ||
+      location.pathname === "requestToken" ||
+      location.pathname === "/auth/forgot-password" ? (
+        <div className="header-left col-2">
+          <img src={logo} width={90} />
+        </div>
+      ) : null}
+      {searchError && (
         <div className="searchError d-flex position-absolute justify-content-center align-items-center">
           <Alert message={searchError} type="error" showIcon />
         </div>
-      }
-      {location.pathname === "/" || location.pathname === '/dashboard/user/create-request' ? (
-        <div className={location.pathname === '/dashboard/user/create-request' ? 'header-middle d-flex justify-content-center' : "header-middle landing-page-searchbar"}>
-          <Col className={location.pathname === '/dashboard/user/create-request' ? "search-bar col-auto" : "search-bar col-xl-5 col-md-7 col-sm-10 col-12"}>
+      )}
+      {location.pathname === "/" ||
+      location.pathname === "/dashboard/user/create-request" ? (
+        <div
+          className={
+            location.pathname === "/dashboard/user/create-request"
+              ? "header-middle d-flex justify-content-center"
+              : "header-middle landing-page-searchbar"
+          }
+        >
+          <Col
+            className={
+              location.pathname === "/dashboard/user/create-request"
+                ? "search-bar col-auto"
+                : "search-bar col-xl-5 col-md-7 col-sm-10 col-12"
+            }
+          >
             <span>
               <input
                 type="text"
@@ -230,7 +251,27 @@ const Header = () => {
               )}
             </span>
             <span className="position-relative">
-              <span className="date">Dates</span>
+              <span className="date">
+                {dateRange.length > 0
+                  ? `${
+                      dateRange[0] !== null
+                        ? moment(dateRange[0]).format("DD")
+                        : ""
+                    } ${
+                      dateRange[0] !== null
+                        ? moment(dateRange[0]).format("MMMM")
+                        : ""
+                    } ${dateRange[1] !== null ? "-" : ""} ${
+                      dateRange[1] !== null
+                        ? moment(dateRange[1]).format("DD")
+                        : ""
+                    } ${
+                      dateRange[1] !== null
+                        ? moment(dateRange[1]).format("MMMM")
+                        : ""
+                    }`
+                  : "Dates"}
+              </span>
               <RangePicker
                 onChange={handleCalendarChange}
                 onCalendarChange={handleCalendarChange}
@@ -245,7 +286,13 @@ const Header = () => {
                 style={{ zIndex: 100 }}
                 className="position-absolute w-100 mt-5 row justify-content-end ms-0"
               >
-                <div className={location.pathname === '/dashboard/user/create-request' ? "col-11" : "col-12 col-sm-8 col-md-7 col-lg-8 px-0"}>
+                <div
+                  className={
+                    location.pathname === "/dashboard/user/create-request"
+                      ? "col-11"
+                      : "col-12 col-sm-8 col-md-7 col-lg-8 px-0"
+                  }
+                >
                   <RoomPicker
                     onSingleRoomChange={handleSingleRoom}
                     onDoubleRoomChange={handleDoubleRoom}
@@ -275,7 +322,9 @@ const Header = () => {
           </Col>
         </div>
       ) : null}
-      {location.pathname === "/auth" && jobDetails || location.pathname === '/auth/forgot-password' && jobDetails.location !== '' ? (
+      {(location.pathname === "/auth" && jobDetails) ||
+      (location.pathname === "/auth/forgot-password" &&
+        jobDetails.location !== "") ? (
         <div className="col-8 header-right details">
           <div className="detail pl-0">
             <span className="title">{jobDetails.location.string}</span>
@@ -301,7 +350,11 @@ const Header = () => {
             </div>
           </div>
           <div className="detail">
-            <span className="title">{jobDetails.roomRequirements.single + jobDetails.roomRequirements.double} Rooms</span>
+            <span className="title">
+              {jobDetails.roomRequirements.single +
+                jobDetails.roomRequirements.double}{" "}
+              Rooms
+            </span>
             <span className="description">
               {jobDetails.roomRequirements.single} Single,{" "}
               {jobDetails.roomRequirements.double} Double,{" "}
@@ -313,11 +366,18 @@ const Header = () => {
           </div>
         </div>
       ) : null}
-      {location.pathname === '/' ? <a className="login-icon" onClick={() => navigate("/auth")}>
-        <FaUserAlt className="header-icons" />
-      </a> : null}
+      {location.pathname === "/" ? (
+        <a className="login-icon" onClick={() => navigate("/auth")}>
+          <FaUserAlt className="header-icons" />
+        </a>
+      ) : null}
 
-      {showTodayModal && <UrgentBookingModal showModal={showTodayModal} setShowModal={setShowTodayModal} />}
+      {showTodayModal && (
+        <UrgentBookingModal
+          showModal={showTodayModal}
+          setShowModal={setShowTodayModal}
+        />
+      )}
     </Row>
   );
 };
