@@ -74,7 +74,7 @@ function App() {
               element={<AdminRoute Component={UpdateRequests} />}
             />
             <Route
-              path="/dashboard/admin/rejected-requests"
+              path="/dashboard/admin/deferred-requests"
               element={<AdminRoute Component={ViewRejectedRequests} />}
             />
             <Route

@@ -251,7 +251,7 @@ const Header = () => {
               )}
             </span>
             <span className="position-relative">
-              <span className="date">
+              <span className="date cursor-pointer">
                 {dateRange.length > 0
                   ? `${
                       dateRange[0] !== null
