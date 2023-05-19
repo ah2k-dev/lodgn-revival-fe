@@ -85,15 +85,23 @@ const Header = () => {
           lat: result.geometry.location.lat(),
           lng: result.geometry.location.lng(),
         });
+        dispatch(
+          setCenterData({
+            lat: result.geometry.location.lat(),
+            lng: result.geometry.location.lng(),
+            string: place.description,
+          })
+        );
         service.nearbySearch(
           {
             location: result.geometry.location,
             radius: 2000,
-            type: "lodging",
+            type: "lodging|gas_station|convenience_store",
           },
           (results, status) => {
             if (status === "OK") {
               setHotels(results);
+              dispatch(setHotelsData(results));
             }
           }
         );
@@ -172,14 +180,14 @@ const Header = () => {
     //   supportAnimal
     // );
 
-    dispatch(
-      setCenterData({
-        lat: center.lat,
-        lng: center.lng,
-        string: search,
-      })
-    );
-    dispatch(setHotelsData(hotels));
+    // dispatch(
+    //   setCenterData({
+    //     lat: center.lat,
+    //     lng: center.lng,
+    //     string: search,
+    //   })
+    // );
+    // dispatch(setHotelsData(hotels));
     dispatch(
       setRoomRequirements({
         single: singleRoom,

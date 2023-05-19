@@ -42,8 +42,16 @@ const Auth = () => {
         dispatch(login(values.email, values.password));
       }
     } else {
+      console.log(values);
       const res = await dispatch(
-        signup(values.name, values.email, values.password)
+        signup(
+          values.firstname,
+          values.lastname,
+          values.email,
+          values.password,
+          values.phone,
+          values.company
+        )
       );
       // .then((res) => {
       // });
@@ -51,7 +59,7 @@ const Auth = () => {
       if (!res) {
         setActive("signup");
       } else {
-        navigate("/auth/requestToken");
+        navigate("/auth/verifyEmail/" + values.email);
         // setActive("login");
       }
     }
@@ -104,9 +112,9 @@ const Auth = () => {
               {active == "signup" && (
                 <div className="col-12 d-flex justify-content-between">
                   <div className="col-auto">
-                    <label htmlFor="first_name">First Name</label>
+                    <label htmlFor="firstname">First Name</label>
                     <Form.Item
-                      name="first_name"
+                      name="firstname"
                       rules={[
                         {
                           required: true,
@@ -118,9 +126,9 @@ const Auth = () => {
                     </Form.Item>
                   </div>
                   <div className="col-auto">
-                    <label htmlFor="last_name">Last Name</label>
+                    <label htmlFor="lastname">Last Name</label>
                     <Form.Item
-                      name="last_name"
+                      name="lastname"
                       rules={[
                         {
                           required: true,
@@ -168,7 +176,7 @@ const Auth = () => {
                   <div className="col-12">
                     <label htmlFor="phone_number">Phone Number</label>
                     <Form.Item
-                      name="phone_number"
+                      name="phone"
                       rules={[
                         {
                           required: true,

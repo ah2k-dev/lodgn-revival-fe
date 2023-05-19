@@ -2,36 +2,41 @@ import { message } from "antd";
 import { authConstants } from "../constants/authConstants";
 import custAxios from "../services/axiosConfig";
 
-export const signup = (name, email, password) => async (dispatch) => {
-  dispatch({
-    type: authConstants.SIGNUP_REQUEST,
-  });
-  try {
-    const res = await custAxios.post("/auth/register", {
-      name,
-      email,
-      password,
-    });
-    if (res) {
-      dispatch({
-        type: authConstants.SIGNUP_SUCCESS,
-        payload: res.data.data,
-      });
-      message.success({
-        content: "Signup Successful",
-        style: {
-          marginTop: "10vh",
-        },
-      });
-      return true;
-    }
-  } catch (error) {
+export const signup =
+  (firstname, lastname, email, password, phone, company) => async (dispatch) => {
     dispatch({
-      type: authConstants.SIGNUP_FAILURE,
-      payload: error.response.data.message || "Server Error",
+      type: authConstants.SIGNUP_REQUEST,
     });
-  }
-};
+    try {
+      const res = await custAxios.post("/auth/register", {
+        firstname,
+        lastname,
+        email,
+        password,
+        phone,
+        company,
+      });
+      if (res) {
+        dispatch({
+          type: authConstants.SIGNUP_SUCCESS,
+          payload: res.data.data,
+        });
+        dispatch(requestToken(email, "request"))
+        message.success({
+          content: "Signup Successful",
+          style: {
+            marginTop: "10vh",
+          },
+        });
+        return true;
+      }
+    } catch (error) {
+      dispatch({
+        type: authConstants.SIGNUP_FAILURE,
+        payload: error.response.data.message || "Server Error",
+      });
+    }
+  };
 
 export const login = (email, password) => async (dispatch) => {
   dispatch({
