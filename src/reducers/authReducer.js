@@ -16,11 +16,13 @@ export const authReducer = (
     case authConstants.REQUEST_TOKEN_REQUEST:
     case authConstants.VERIFY_EMAIL_REQUEST:
     case authConstants.RESET_PASSWORD_REQUEST:
+    case authConstants.GOOGLE_AUTH_REQUEST:
       return {
         ...state,
         loading: true,
       };
     case authConstants.LOGIN_SUCCESS:
+    case authConstants.GOOGLE_AUTH_SUCCESS:
       return {
         ...state,
         loading: false,
@@ -39,6 +41,7 @@ export const authReducer = (
     case authConstants.REQUEST_TOKEN_FAILURE:
     case authConstants.VERIFY_EMAIL_FAILURE:
     case authConstants.RESET_PASSWORD_FAILURE:
+    case authConstants.GOOGLE_AUTH_FAILURE:
       return {
         ...state,
         loading: false,

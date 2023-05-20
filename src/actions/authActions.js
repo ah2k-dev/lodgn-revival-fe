@@ -212,3 +212,33 @@ export const loginWithRequestPayload = (payload) => async (dispatch) => {
     });
   }
 };
+
+export const googleAuth = (data) => async (dispatch) => {
+  dispatch({
+    type: authConstants.GOOGLE_AUTH_REQUEST,
+  });
+  try {
+    const res = await custAxios.post("/auth/googleAuth", data);
+    if (res) {
+      localStorage.setItem("token", res.data.data.jwtToken);
+      localStorage.setItem("user", JSON.stringify(res.data.data.userData));
+      localStorage.setItem("googleAuth", true);
+      dispatch({
+        type: authConstants.GOOGLE_AUTH_SUCCESS,
+        payload: res.data.data,
+      });
+      message.success({
+        content: "Login Successful",
+        style: {
+          marginTop: "10vh",
+        },
+      });
+      return true;
+    }
+  } catch (error) {
+    dispatch({
+      type: authConstants.GOOGLE_AUTH_FAILURE,
+      payload: error.response.data.message || "Server Error",
+    });
+  }
+};

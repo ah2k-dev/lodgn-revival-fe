@@ -6,13 +6,18 @@ import {
   signup,
   login,
   loginWithRequestPayload,
+  googleAuth,
 } from "../actions/authActions";
 import { useLocation, useNavigate } from "react-router-dom";
 import { clearState } from "../actions/mapActions";
+import { GoogleLogin } from "@react-oauth/google";
+import { signInWithGoogle } from "../services/firebase";
+import firebase from "../services/firebase";
 
 const Auth = () => {
   const [active, setActive] = useState("login");
   const [emailVerify, setEmailVerify] = useState(false);
+  const [user, setUser] = useState(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
@@ -78,6 +83,13 @@ const Auth = () => {
   };
 
   useEffect(() => {
+    firebase.auth().onAuthStateChanged((user) => {
+      setUser(user);
+      console.log(user);
+    });
+  }, []);
+
+  useEffect(() => {
     if (error) {
       if (error.includes("Email not verified")) {
         setEmailVerify(true);
@@ -92,8 +104,22 @@ const Auth = () => {
     }
   }, [error, dispatch]);
 
+  useEffect(() => {
+    if (user) {
+      console.log(user);
+      dispatch(googleAuth({
+        email: user.email,
+        name: user.displayName,
+        profilePic: user.photoURL,
+        emailVerified: user.emailVerified,
+      }));
+      setUser()
+    }
+  }, [user]);
+
   return (
     <div className="auth-container">
+      {console.log(user)}
       <div className="auth-inner">
         <Row className="auth-form">
           <div className="col-8 col-sm-6 col-md-9 col-lg-8 col-xl-8 pb-5">
@@ -287,13 +313,13 @@ const Auth = () => {
             </Form>
             <Divider>OR</Divider>
             <div className="col-12">
-              <Button className="btnGoogle">
+              <Button className="btnGoogle" onClick={signInWithGoogle}>
                 <img src="/assets/icons/google.png" alt="google" />{" "}
                 <span>Continue with Google</span>
               </Button>
             </div>
             <div className="col-12">
-              <Button className="btnGoogle mt-4">
+              <Button className="btnGoogle mt-4" >
                 <img src="/assets/icons/apple.png" alt="apple" />{" "}
                 <span>Continue with Apple</span>
               </Button>

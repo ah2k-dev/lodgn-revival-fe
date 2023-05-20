@@ -1,6 +1,7 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { UseGetRole } from "../../hooks/auth";
+import { auth } from "../../services/firebase";
 
 const Sidebar = ({ activeClass }) => {
   // conditionlly render menu items based on user role
@@ -72,15 +73,30 @@ const Sidebar = ({ activeClass }) => {
 
   var navs;
 
-  role === "admin" || role === "moderator" ? (navs = adminNavs) : (navs = userNavs);
+  role === "admin" || role === "moderator"
+    ? (navs = adminNavs)
+    : (navs = userNavs);
 
-  const logout = () => {
+  const logout = async () => {
+    const googleAuth = localStorage.getItem("googleAuth");
+    if (googleAuth) {
+      await auth.signOut();
+      // localStorage.clear();
+      // location.reload();
+    } else {
+      // localStorage.clear();
+      // location.reload();
+    }
     localStorage.clear();
-    location.reload();
-  }
+    window.location.href = "/";
+  };
 
   return (
-    <nav className={`sideNav ${ activeClass && 'active' } bg-white shadow px-4 d-flex flex-column justify-content-between pb-4 position-fixed top-0 left-0`}>
+    <nav
+      className={`sideNav ${
+        activeClass && "active"
+      } bg-white shadow px-4 d-flex flex-column justify-content-between pb-4 position-fixed top-0 left-0`}
+    >
       <ul className="relative m-0 list-none py-4 px-0">
         <span>
           <h1 className="text-2xl fst-italic p-4 fw-bold">LODGN</h1>
