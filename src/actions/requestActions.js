@@ -124,7 +124,7 @@ export const changeStatus = (id, data) => async (dispatch) => {
       });
       dispatch(getRequests());
       if (data.selectedOffer && data.selectedOffer !== "") {
-        dispatch(bookOffer(id, data.selectedOffer));
+        dispatch(bookOffer(id, data.selectedOffer, data.selectedFile));
       }
       return true;
     }
@@ -163,16 +163,17 @@ export const getOngoingRequests = () => async (dispatch) => {
   }
 };
 
-export const bookOffer = (request, offering) => async (dispatch) => {
+export const bookOffer = (request, offering, file) => async (dispatch) => {
   dispatch({
     type: requestConstants.BOOK_OFFER_REQUEST,
   });
   try {
+    let form = new FormData();
+    form.append('requestId', request);
+    form.append('offering', offering);
+    form.append('receipt', file);
     attachToken();
-    const res = await custAxios.post("/booking/bookOffer", {
-      requestId: request,
-      offering,
-    });
+    const res = await custAxios.post("/booking/bookOffer", form);
     if (res) {
       dispatch({
         type: requestConstants.BOOK_OFFER_SUCCESS,

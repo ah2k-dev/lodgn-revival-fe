@@ -179,8 +179,8 @@ const Auth = () => {
                       name="phone"
                       rules={[
                         {
-                          required: true,
-                          message: "Please input your phone number!",
+                          message: "Please input a valid phone number!",
+                          pattern: /^[0-9]+$/,
                         },
                       ]}
                     >
