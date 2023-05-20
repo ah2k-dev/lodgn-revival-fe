@@ -7,7 +7,8 @@
     background-color: #42996B !important;
 } */
 
-.upload-btn {
+.upload-btn,
+.upload-receipt-btn {
   justify-content: flex-start;
   display: flex !important;
   align-items: center !important;
@@ -15,24 +16,35 @@
   background: #ffffff;
   font-size: 15px !important;
   font-family: 'Poppins', sans-serif;
-  width: 100% !important;
-  height: 65px !important;
-  border: 1px solid rgba(0, 0, 0, 0.0003) !important;
-  box-shadow: 0.86px 0.86px 8.86px rgba(0, 0, 0, 0.25) !important;
   border-radius: 10px !important;
   outline: none !important;
 }
 
+.update-btn {
+  border: 1px solid rgba(0, 0, 0, 0.0003) !important;
+  height: 65px !important;
+}
+
 .ant-btn.upload-btn {
+  box-shadow: 0.86px 0.86px 8.86px rgba(0, 0, 0, 0.25) !important;
     border: none !important;
     outline: none !important;
 }
 
-.upload-btn:hover {
-    box-shadow: 0px 0px 14px rgba(0, 0, 0, 0.25) !important;
-    border: none !important;
-    outline: none !important;
-    color: #42996b !important;
+.upload-btn:hover,
+.upload-receipt-btn:hover {
+  outline: none !important;
+  color: #42996b !important;
+}
+
+.upload-receipt-btn:hover {
+  border-color: #42996b !important;
+  color: #42996b !important;
+}
+
+.upload-btn:hover{
+  border: none !important;
+  box-shadow: 0px 0px 14px rgba(0, 0, 0, 0.25) !important;
 }
 
 .upload-btn:hover span {
@@ -44,6 +56,11 @@
 .heading-green {
   color: #5ba343 !important;
 }
+
+.grey-text {
+  color: #494949c2;
+  font-weight: 600;
+} 
 
 .green-span {
   color: #5ba343 !important;

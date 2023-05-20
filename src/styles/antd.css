@@ -30,3 +30,8 @@
   color: white !important;
   /* background-color: green !important; */
 }
+
+.slick-slide img {
+  object-fit: contain;
+  aspect-ratio: 2/1;
+}

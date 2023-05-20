@@ -142,6 +142,8 @@ const UpdateStay = () => {
     }
   };
 
+  console.log(request);
+
   return (
     <div className="min-vh-100 w-100 px-md-5 px-2 py-5">
       <div className="d-flex flex-column gap-5">
@@ -166,29 +168,8 @@ const UpdateStay = () => {
             </div>
             <span className="col-xl-3 col-md-6 col-sm-8 col-12 mt-xl-0 mt-5">
               <HotelPhotosCarousel
-                images={[
-                  {
-                    url: "https://cdn.vox-cdn.com/thumbor/yJuBQtYK2euiOWE3lj_dtloWkvs=/160x0:1239x607/1600x900/cdn.vox-cdn.com/uploads/chorus_image/image/46708944/manyminions.0.jpg",
-                  },
-                ]}
+                images={request.bookedOffering.images}
               />
-              {/* <span className="fs-5 font-poppins fst-italic green-span text-md font-poppins fw-normal d-flex flex-column align-items-center gap-2">
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        width="54"
-                                        height="59"
-                                        fill="none"
-                                        viewBox="0 0 54 59"
-                                    >
-                                        <path
-                                            stroke="#85C371"
-                                            strokeLinecap="round"
-                                            strokeWidth="5"
-                                            d="M22.019 6.563c-2.264 2.82-7.426 15.41-9.962 43.202M38.32 3c-3.774 5.048-11.593 22.714-12.68 53M3 36.849c5.132-6.532 21.917-19.24 48-17.815"
-                                        ></path>
-                                    </svg>
-                                    Holiday Inn
-                                </span> */}
             </span>
           </div>
           <div className="row justify-content-xl-between justify-content-center mt-5 gap-xl-0 gap-5">
@@ -243,7 +224,7 @@ const UpdateStay = () => {
               <span className="font-poppins fw-semibold overflow-hidden">
                 Edit roster
               </span>
-              <Button className="upload-btn" onClick={handleClick}>
+              <Button className="upload-btn w-auto" onClick={handleClick}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import JobDetailsGrid from "../../components/layout/JobDetailsGrid";
 import { useState } from "react";
 import { Button, message, Select } from "antd";
@@ -15,7 +15,6 @@ import moment from "moment";
 import { GetPermissions, UseGetRole } from "../../hooks/auth";
 
 const CurrentRequest = () => {
-  
   // const role = "moderator";
 
   const dispatch = useDispatch();
@@ -67,7 +66,6 @@ const CurrentRequest = () => {
 };
 
 const RequestComponent = ({ request, status, index }) => {
-
   const role = UseGetRole();
 
   const permissions = GetPermissions();
@@ -97,6 +95,7 @@ const RequestComponent = ({ request, status, index }) => {
           changeStatus(id, {
             status: newStatus,
             selectedOffer: selectedOffer,
+            selectedFile: receipt,
             // status: newStatus,
           })
         );
@@ -147,43 +146,56 @@ const RequestComponent = ({ request, status, index }) => {
 
   // console.log(status);
 
+  const [receipt, setReceipt] = useState(null);
+  const hiddenFileInput = useRef(null);
+
   const handleSelect = (value) => {
     setSelectedOffer(value);
     console.log(`selected ${value}`);
   };
 
+  const handleUploadButton = (event) => {
+    hiddenFileInput.current.click();
+  };
+
+  const handleFile = (event) => {
+    const fileUploaded = event.target.files[0];
+    const fileType = fileUploaded.type;
+
+    setReceipt(fileUploaded);
+    console.log(fileUploaded);
+  };
+
   return (
     <div className="rounded-container d-flex flex-column justify-content-between bg-white p-lg-5 p-4 gap-4 w-100 mb-5">
-      <div className="admin-page d-flex justify-content-between align-items-start">
-        <JobDetailsGrid
-          jobLocation={request.location.string}
-          //   jobAddress="Sarasota,FL. 33178"
-          start_date={moment(request?.dateRange[0]).format("DD")}
-          end_date={moment(request?.dateRange[1]).format("DD")}
-          start_date_month={moment(request?.dateRange[0]).format("MMMM")}
-          end_date_month={moment(request?.dateRange[1]).format("MMMM")}
-          total_rooms={
-            request?.roomRequirements?.single +
-            request?.roomRequirements?.double
-          }
-          single_rooms={request?.roomRequirements?.single}
-          double_rooms={request?.roomRequirements?.double}
-        />
-        <div className="btns d-flex gap-3 justify-content-between align-items-center mt-lg-0 mt-4">
+      <div className="admin-page d-flex flex-column justify-content-between align-items-start">
+        <div className="btns d-flex gap-3 justify-content-end w-100 align-items-center mt-lg-0 mt-4 mb-3">
           {newStatus === "paymentVerified" && (
-            <Select
-              showSearch
-              placeholder="Select an offering"
-              optionFilterProp="children"
-              onChange={handleSelect}
-              filterOption={(input, option) =>
-                (option?.label ?? "").includes(input)
-              }
-              options={request?.offerings.map((offer) => ({
-                value: offer._id,
-                label: offer.title,
-              }))}
-            />
+            <>
+              <Button className="upload-receipt-btn w-auto" onClick={handleUploadButton}>
+                Upload payment receipt
+              </Button>
+              <input
+                type="file"
+                id="file"
+                ref={hiddenFileInput}
+                onChange={handleFile}
+                style={{ display: "none" }}
+              />
+              <Select
+                showSearch
+                placeholder="Select an offering"
+                optionFilterProp="children"
+                onChange={handleSelect}
+                filterOption={(input, option) =>
+                  (option?.label ?? "").includes(input)
+                }
+                options={request?.offerings.map((offer) => ({
+                  value: offer._id,
+                  label: offer.title,
+                }))}
+              />
+            </>
           )}
           {(newStatus !== request.status || offerings.length > 0) && (
             <Button
@@ -200,7 +212,9 @@ const RequestComponent = ({ request, status, index }) => {
           )}
           {newStatus === "recieved" || newStatus === "negotiating" ? (
             <Button
-              disabled={role === "moderator" && !permissions.includes("rejectRequest")}
+              disabled={
+                role === "moderator" && !permissions.includes("rejectRequest")
+              }
               className="reject-request-btn"
               onClick={() => rejectRequestFunc(request._id)}
             >
@@ -208,6 +222,20 @@ const RequestComponent = ({ request, status, index }) => {
             </Button>
           ) : null}
         </div>
+        <JobDetailsGrid
+          jobLocation={request.location.string}
+          //   jobAddress="Sarasota,FL. 33178"
+          start_date={moment(request?.dateRange[0]).format("DD")}
+          end_date={moment(request?.dateRange[1]).format("DD")}
+          start_date_month={moment(request?.dateRange[0]).format("MMMM")}
+          end_date_month={moment(request?.dateRange[1]).format("MMMM")}
+          total_rooms={
+            request?.roomRequirements?.single +
+            request?.roomRequirements?.double
+          }
+          single_rooms={request?.roomRequirements?.single}
+          double_rooms={request?.roomRequirements?.double}
+        />
       </div>
       <div className="update-status row justify-content-center">
         <h3 className="update-status-text font-poppins text-uppercase fs-6">
@@ -240,7 +268,7 @@ const RequestComponent = ({ request, status, index }) => {
                 disabled={
                   request.status === "completed" ||
                   request.status === "paymentVerified" ||
-                  role === "moderator" && !permissions.includes("negotiate")
+                  (role === "moderator" && !permissions.includes("negotiate"))
                 }
                 onClick={handleRadioChange}
               />
@@ -257,7 +285,7 @@ const RequestComponent = ({ request, status, index }) => {
                 disabled={
                   request.status === "paymentVerified" ||
                   request.status === "recieved" ||
-                  role === "moderator" && !permissions.includes("complete")
+                  (role === "moderator" && !permissions.includes("complete"))
                 }
                 onClick={handleRadioChange}
               />
@@ -273,7 +301,8 @@ const RequestComponent = ({ request, status, index }) => {
                 defaultChecked={"paymentVerfied" === request.status}
                 disabled={
                   request.status != "completed" ||
-                  role === "moderator" && !permissions.includes("verifyPayment")
+                  (role === "moderator" &&
+                    !permissions.includes("verifyPayment"))
                 }
                 onClick={handleRadioChange}
               />

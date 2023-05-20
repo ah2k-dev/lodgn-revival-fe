@@ -391,7 +391,7 @@ const UpdateHotelDetails = ({ offerings, setOfferings, flag, request }) => {
               ]}
             >
               <Button
-                className="upload-btn d-flex justify-content-center py-5"
+                className="upload-btn w-100 d-flex justify-content-center py-5"
                 onClick={handleClick}
               >
                 <svg

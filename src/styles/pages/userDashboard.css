@@ -120,7 +120,13 @@
   fill: #44a16f;
 }
 
+.dashboard .card {
+  border: 1px solid #0000002E;
+  border-radius: 16px !important;
+}
+
 .dashboard .detail-card {
+  border-radius: 16px !important;
   background-color: #f5f4f4;
 }
 
@@ -131,20 +137,24 @@
 }
 
 .dashboard .detail-card .book-now-btn {
-  background: linear-gradient(180deg, #48af78 0%, #42996b 100%);
+  background: #48af78;
   border-radius: 4px;
-  font-weight: 600;
-  min-height: 20px;
+  font-weight: 500;
   margin-left: 5px;
   transition: 0.5s ease-in-out;
+  min-height: 40px;
+  padding: 0 30px;
+  border-radius: 12px;
 }
 
 .dashboard .detail-card .book-now-btn span {
   color: white;
+  font-size: 1.25rem;
 }
 
 .dashboard .detail-card .book-now-btn:hover {
   background: transparent;
+  border-color: #42996b;
   color: #42996b !important;
 }
 
@@ -165,7 +175,14 @@
 }
 
 .dashboard .detail-card .price-span {
-  font-size: 0.75rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.dashboard .detail-card .hotel-description {
+  font-size: 1.3rem;
+  font-weight: 500;
+  line-height: 1;
 }
 
 .dashboard .cards-container {
@@ -192,6 +209,8 @@
 
 .dashboard .detail-card .cards-footer {
   box-shadow: 0px -2px 8px 0px #00000040;
+  border-radius: 16px;
+
 }
 
 .dashboard .rare-find-badge {

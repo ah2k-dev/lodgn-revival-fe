@@ -99,12 +99,12 @@ const Sidebar = ({ activeClass }) => {
     >
       <ul className="relative m-0 list-none py-4 px-0">
         <span>
-          <h1 className="text-2xl fst-italic p-4 fw-bold">LODGN</h1>
+          <h1 className="fst-italic px-4 py-3 fw-bold">LODGN</h1>
         </span>
 
         {navs.map((nav, i) => {
           return (
-            <li className="position-relative sideNavLinks mb-4" key={i}>
+            <li className="position-relative sideNavLinks mb-3" key={i}>
               <Link
                 to={nav.route}
                 className={

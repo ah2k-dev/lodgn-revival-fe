@@ -29,22 +29,23 @@ const Card = (props) => {
   console.log(props);
 
   return (
-    <div className="detail-card rounded-3 d-flex flex-column align-items-center w-100">
+    <div className="detail-card d-flex flex-column align-items-center w-100">
       <div className="images-container w-100">
         <HotelPhotosCarousel images={images} />
       </div>
-      <div className="cards-footer d-flex flex-column align-items-center gap-2 rounded-3 p-4 w-100">
+      <div className="cards-footer d-flex flex-column align-items-center gap-2 px-3 pt-3 pb-2 w-100">
         <span
+          className="text-capitalize"
           style={{
-            fontSize: "1.2rem",
-            fontWeight: "bold",
+            fontSize: "1.5rem",
+            fontWeight: 700,
           }}
         >
           {title}
         </span>
-        <span className="text-sm">{description}</span>
+        <span className="text-sm hotel-description">{description}</span>
         {location.pathname !== "/dashboard/user/ongoing-stays" ? (
-          <span className="d-flex justify-content-center gap-2 align-items-center w-100">
+          <span className="room-rates-details d-flex justify-content-between gap-2 align-items-center w-100 mt-2">
             <span
               className={`d-flex ${
                 !request.hasOwnProperty("bookedOffering") && "flex-column"

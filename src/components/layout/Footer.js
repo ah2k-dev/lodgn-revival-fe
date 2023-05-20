@@ -64,7 +64,7 @@ const Footer = () => {
                 </span>
               </div>
             )}
-            {dateRange[1] !== null && <span className="title">-</span>}
+            {dateRange.length > 0 && dateRange[1] !== null ? <span className="title">-</span> : null}
             {dateRange.length > 0 && (
               <div>
                 <span className="title">
