@@ -20,7 +20,7 @@ const DashboardLayout = () => {
       </span>
       {location.pathname !== '/dashboard/user/payment' && <div className='px-0'><Sidebar activeClass={isActive} /></div>}
       {location.pathname !== '/dashboard/user/payment' && location.pathname !== '/dashboard/user/create-request' ? <div className="ms-auto dashboard dashboard-padding"><Outlet /></div> : null}
-      {location.pathname === '/dashboard/user/create-request' && <div className="ms-auto dashboard"><Outlet /></div>}
+      {location.pathname === '/dashboard/user/create-request' && <div className="ms-auto dashboard px-0 bg-white"><Outlet /></div>}
       {location.pathname === '/dashboard/user/payment' && <div className="w-100 bg-white"><Outlet /></div>}
     </div>
   )

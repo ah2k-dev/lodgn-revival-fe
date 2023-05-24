@@ -1,0 +1,5 @@
+@media screen and (max-width: 660px) {
+    .footer-container .details {
+        flex-direction: row;
+    }
+  }

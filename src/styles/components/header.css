@@ -21,7 +21,7 @@
   grid-template-columns: 33% 33% 33%;
   border-radius: 50px;
   box-shadow: 0px 4px 4px 0px #00000040;
-  border: 1px solid #D1D1D1;
+  border: 1px solid #d1d1d1;
   padding: 8px 5px;
 }
 
@@ -30,18 +30,21 @@
   justify-content: center;
   align-items: center;
   position: absolute;
-  background-color: #48AF78;
+  background-color: #48af78;
   width: 35px;
   height: 35px;
   border-radius: 50%;
   right: 5px;
-  margin-top: 5px;
+  /* margin-top: 5px; */
+  align-self: center;
 }
 
 .header-middle .search-bar .auto-complete-list {
   z-index: 100;
   list-style: none;
-  padding: 0;
+  top: 36px;
+  left: 0;
+  width: 100%;
   cursor: default;
   border-radius: 12px;
 }
@@ -59,6 +62,7 @@
 .header-middle .search-bar span {
   padding: 0 8px;
   cursor: pointer;
+  width: 100%;
 }
 
 .header-middle .search-bar .date {
@@ -71,7 +75,7 @@
 
 .header-middle .search-bar .ant-picker.ant-picker-range {
   position: absolute;
-  top: 4px;
+  /* top: 4px; */
   width: 80%;
   opacity: 0;
 }
@@ -80,12 +84,12 @@
   border-radius: 25px;
 }
 
-.rooms-picker>div {
+.rooms-picker > div {
   padding: 15px 0;
-  border-bottom: 1px solid #000000C2;
+  border-bottom: 1px solid #000000c2;
 }
 
-.rooms-picker>div:last-child {
+.rooms-picker > div:last-child {
   border-bottom: none;
   padding: 25px 0 5px;
 }
@@ -97,7 +101,7 @@
 }
 
 .rooms-picker .room-details span {
-  font-size: .75rem;
+  font-size: 0.75rem;
   padding: 0;
 }
 
@@ -115,7 +119,7 @@
 .header-middle span {
   border: none;
   color: black;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   font-weight: 500;
   font-size: 1rem;
   outline: none;
@@ -130,10 +134,9 @@
   max-width: 95vw;
   top: 50px;
   margin-top: 30px;
-  transition: ease-in-out .5s;
+  transition: ease-in-out 0.5s;
   z-index: 100;
 }
-
 
 .header-container .login-icon {
   z-index: 1000;
@@ -149,8 +152,6 @@
   color: black;
 }
 
-
-
 @media screen and (max-width: 992px) {
   .ant-picker-dropdown {
     display: flex;
@@ -161,7 +162,7 @@
 
 @media screen and (max-width: 770px) {
   .landing-page-searchbar {
-    margin-top: 15px;
+    margin-top: 20px;
     position: relative;
   }
 
@@ -191,12 +192,27 @@
 }
 
 @media screen and (max-width: 540px) {
+  .header-middle .search-bar {
+    padding: 8px 20px 8px 5px;
+  }
+
   .header-container {
-    padding: 20px;
+    padding: 16px 20px;
+  }
+
+  .header-middle .search-bar .search-icon {
+    width: 30px;
+    height: 30px;
+    right: 4px;
+    /* margin-top: 5px; */
+  }
+
+  .header-middle input,
+  .header-middle span {
+    font-size: 0.8rem;
   }
 
   .header-middle span {
-    font-size: .85rem;
     display: flex;
     align-items: center;
   }
