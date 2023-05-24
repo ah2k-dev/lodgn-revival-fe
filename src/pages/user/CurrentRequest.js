@@ -41,12 +41,12 @@ const CurrentRequest = () => {
         </div>
       ) : (
         <div className="d-flex flex-column justify-content-between w-100">
-          <div className="d-flex justify-content-between align-items-center mt-5 mb-5 gap-5">
+          <div className="d-flex flex-wrap-reverse justify-content-between align-items-md-center mt-5 mb-5 gap-4">
             <h2 className="font-poppins">
               You currently have {requests.length} requests
             </h2>
             <button
-              className="create-request-btn font-poppins fw-bold"
+              className="create-request-btn font-poppins fw-bold align-self-end"
               onClick={() => navigator("/dashboard/user/create-request")}
             >
               Create Request
