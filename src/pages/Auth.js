@@ -137,7 +137,7 @@ const Auth = () => {
             >
               {active == "signup" && (
                 <div className="col-12 d-flex justify-content-between">
-                  <div className="col-auto">
+                  <div className="col-6 pe-2">
                     <label htmlFor="firstname">First Name</label>
                     <Form.Item
                       name="firstname"
@@ -151,7 +151,7 @@ const Auth = () => {
                       <Input placeholder="First Name" />
                     </Form.Item>
                   </div>
-                  <div className="col-auto">
+                  <div className="col-6 ps-2">
                     <label htmlFor="lastname">Last Name</label>
                     <Form.Item
                       name="lastname"
@@ -231,7 +231,7 @@ const Auth = () => {
               )}
               <div className="email-senders">
                 <Form.Item>
-                  {emailVerify && (
+                  {(emailVerify && active !== "signup") && (
                     <a
                       className="verify-email"
                       onClick={() => navigate("/auth/requestToken")}

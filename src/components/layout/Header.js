@@ -227,7 +227,7 @@ const Header = () => {
         <div
           className={
             location.pathname === "/dashboard/user/create-request"
-              ? "header-middle col-7 d-flex justify-content-center"
+              ? "header-middle col-lg-7 col-md-9 col-12 mt-md-0 mt-5 d-flex justify-content-center"
               : "header-middle landing-page-searchbar"
           }
         >
@@ -297,7 +297,7 @@ const Header = () => {
                 <div
                   className={
                     location.pathname === "/dashboard/user/create-request"
-                      ? "col-11"
+                      ? "col-md-11 col-12"
                       : "col-12 col-sm-8 col-md-7 col-lg-8 px-0"
                   }
                 >
