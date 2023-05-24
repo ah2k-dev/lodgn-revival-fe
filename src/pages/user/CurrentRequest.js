@@ -34,7 +34,7 @@ const CurrentRequest = () => {
   }, [error, dispatch]);
 
   return (
-    <div className="w-100 d-flex flex-column justify-content-between gap-5 align-items-start px-md-5 py-md-5 px-4 py-4">
+    <div className="w-100 d-flex flex-column justify-content-between gap-5 align-items-start px-md-5 py-md-5 px-md-4 px-2 py-4">
       {loading ? (
         <div className="loader w-100 d-flex justify-content-center align-items-center">
           <LoadingOutlined style={{ fontSize: 65 }} spin />

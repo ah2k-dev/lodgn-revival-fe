@@ -279,9 +279,20 @@
 }
 
 @media screen and (max-width: 660px) {
+
+  .dashboard .footer-container .details .detail {
+    border-bottom: none;
+    border-right: 2px solid #0000004d;
+  }
+
+  .dashboard .footer-container .details .detail:last-child {
+    border-bottom: none;
+    border-right: none;
+  }
+
   .dashboard .details .detail {
-    /* border-right: none; */
-    /* border-bottom: 2px solid #0000004d; */
+    border-right: none;
+    border-bottom: 2px solid #0000004d;
     max-width: unset;
     display: flex !important;
     justify-content: center;
@@ -290,9 +301,9 @@
     padding-bottom: 12px;
   }
 
-  /* .dashboard .details .detail:last-child {
+  .dashboard .details .detail:last-child {
     border-bottom: none;
-  } */
+  }
 
   .title,
   .description {

@@ -38,8 +38,8 @@ const Footer = () => {
     <footer
       className={
         location.pathname === "/dashboard/user"
-          ? "footer-container w-100 bg-white ms-auto px-4"
-          : "footer-container w-100 bg-white px-4 ms-0"
+          ? "footer-container w-100 bg-white ms-auto"
+          : "footer-container w-100 bg-white ms-0"
       }
     >
       <Row justify="space-between" align="start">
