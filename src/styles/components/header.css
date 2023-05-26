@@ -75,7 +75,7 @@
 
 .header-middle .search-bar .ant-picker.ant-picker-range {
   position: absolute;
-  /* top: 4px; */
+  top: 0;
   width: 80%;
   opacity: 0;
 }

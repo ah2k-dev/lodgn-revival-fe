@@ -107,13 +107,15 @@ const Auth = () => {
   useEffect(() => {
     if (user) {
       console.log(user);
-      dispatch(googleAuth({
-        email: user.email,
-        name: user.displayName,
-        profilePic: user.photoURL,
-        emailVerified: user.emailVerified,
-      }));
-      setUser()
+      dispatch(
+        googleAuth({
+          email: user.email,
+          name: user.displayName,
+          profilePic: user.photoURL,
+          emailVerified: user.emailVerified,
+        })
+      );
+      setUser();
     }
   }, [user]);
 
@@ -239,7 +241,7 @@ const Auth = () => {
                       Request email token
                     </a>
                   )}
-                  {!emailVerify && (
+                  {(!emailVerify && active !== "signup") && (
                     <a
                       className="forgot-password"
                       onClick={() => {
@@ -319,7 +321,7 @@ const Auth = () => {
               </Button>
             </div>
             <div className="col-12">
-              <Button className="btnGoogle mt-4" >
+              <Button className="btnGoogle mt-4">
                 <img src="/assets/icons/apple.png" alt="apple" />{" "}
                 <span>Continue with Apple</span>
               </Button>
