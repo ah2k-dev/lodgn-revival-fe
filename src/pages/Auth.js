@@ -30,6 +30,23 @@ const Auth = () => {
     (state) => state.auth
   );
 
+  const validatePassword = (_, value) => {
+    const passwordRegex =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]).{8,}$/;
+
+    if (!value) {
+      return Promise.reject("Please enter a password");
+    }
+
+    if (!passwordRegex.test(value)) {
+      return Promise.reject(
+        "Password must contain at least 8 characters, 1 uppercase, 1 lowercase, 1 number, and 1 special character"
+      );
+    }
+
+    return Promise.resolve();
+  };
+
   const formRef = useRef(null);
   const onFinish = async (values) => {
     if (active === "login") {
@@ -188,12 +205,13 @@ const Auth = () => {
                 <Form.Item
                   className="w-100"
                   name="password"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please input your password!",
-                    },
-                  ]}
+                  rules={[{ validator: validatePassword }]}
+                  // rules={[
+                  //   {
+                  //     required: true,
+                  //     message: "Please input your password!",
+                  //   },
+                  // ]}
                   style={{ marginBottom: "0" }}
                 >
                   <Input.Password placeholder="Password" />
@@ -233,7 +251,7 @@ const Auth = () => {
               )}
               <div className="email-senders">
                 <Form.Item>
-                  {(emailVerify && active !== "signup") && (
+                  {emailVerify && active !== "signup" && (
                     <a
                       className="verify-email"
                       onClick={() => navigate("/auth/requestToken")}
@@ -241,7 +259,7 @@ const Auth = () => {
                       Request email token
                     </a>
                   )}
-                  {(!emailVerify && active !== "signup") && (
+                  {!emailVerify && active !== "signup" && (
                     <a
                       className="forgot-password"
                       onClick={() => {
