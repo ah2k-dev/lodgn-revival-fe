@@ -207,13 +207,20 @@ const Auth = () => {
                 <Form.Item
                   className="w-100"
                   name="password"
-                  rules={[{ validator: validatePassword }]}
-                  // rules={[
-                  //   {
-                  //     required: true,
-                  //     message: "Please input your password!",
-                  //   },
-                  // ]}
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please input your password!",
+                    },
+                    {
+                      pattern:
+                        active === "signup"
+                          ? /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]).{8,}$/
+                          : null,
+                      message:
+                        "Password must contain at least 8 characters, 1 uppercase, 1 lowercase, 1 number, and 1 special character",
+                    },
+                  ]}
                   style={{ marginBottom: "0" }}
                 >
                   <Input.Password placeholder="Password" />

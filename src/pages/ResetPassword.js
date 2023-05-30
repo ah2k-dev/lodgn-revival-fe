@@ -91,7 +91,13 @@ const ResetPassword = () => {
                   rules={[
                     {
                       required: true,
-                      message: "Please input your email!",
+                      message: "Please input your password!",
+                    },
+                    {
+                      pattern:
+                        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]).{8,}$/,
+                      message:
+                        "Password must contain at least 8 characters, 1 uppercase, 1 lowercase, 1 number, and 1 special character",
                     },
                   ]}
                 >
@@ -104,8 +110,20 @@ const ResetPassword = () => {
                   rules={[
                     {
                       required: true,
-                      message: "Please input your email!",
+                      message: "Please confirm your password!",
                     },
+                    ({ getFieldValue }) => ({
+                      validator(_, value) {
+                        if (!value || getFieldValue("password") === value) {
+                          return Promise.resolve();
+                        }
+                        return Promise.reject(
+                          new Error(
+                            "The two passwords that you entered do not match!"
+                          )
+                        );
+                      },
+                    }),
                   ]}
                 >
                   <Input.Password placeholder="Confirm Password" />
