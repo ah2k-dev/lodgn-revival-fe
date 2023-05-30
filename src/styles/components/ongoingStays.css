@@ -3,10 +3,6 @@
   color: white;
 }
 
-/* .ongoingStays .request-status span {
-    background-color: #42996B !important;
-} */
-
 .upload-btn,
 .upload-receipt-btn {
   justify-content: flex-start;
@@ -162,9 +158,4 @@
   }
 }
 
-/* @media screen and (max-width: 767px) {
-    .request-status,
-    .rejected-status {
-        width: 100%;
-    }
-} */
+

@@ -20,7 +20,7 @@ const ManageProfile = () => {
   };
 
   const handleFinish = (values) => {
-    console.log(values);
+    // console.log(values);
   };
 
   return (
@@ -98,7 +98,7 @@ const ManageProfile = () => {
               className="ant-row justify-content-between"
               onFinish={handleFinish}
               onFinishFailed={(errorInfo) => {
-                console.log("Failed:", errorInfo);
+                // console.log("Failed:", errorInfo);
               }}
               autoComplete="off"
               validateMessages={validateMessages}

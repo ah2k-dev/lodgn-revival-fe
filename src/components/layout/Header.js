@@ -1,14 +1,12 @@
-import { Alert, Button, Col, Layout, message, Row, Typography } from "antd";
+import { Alert, Col, Row } from "antd";
 import React, { useState } from "react";
 import { useAuth } from "../../hooks/auth";
-import { useDispatch, useSelector } from "react-redux";
-import { clearErrors, logout } from "../../actions/authActions";
+import { useDispatch } from "react-redux";
 import { FaUserAlt } from "react-icons/fa";
 import { useLocation, useNavigate } from "react-router-dom";
 import logo from "../../assets/images/LODGN.svg";
-import { DatePicker, Space } from "antd";
+import { DatePicker } from "antd";
 import RoomPicker from "./RoomPicker";
-import axios from "axios";
 import {
   setCenterData,
   setHotelsData,
@@ -28,19 +26,13 @@ const Header = () => {
   const [showRoomPicker, setShowRoomPicker] = useState(false);
   const [showTodayModal, setShowTodayModal] = useState(false);
 
-  const auth = useAuth();
-
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
 
-  // const { error } = useSelector((state) => state.auth);
-
   const location = useLocation();
 
   const jobDetails = location.state;
-
-  console.log(jobDetails);
 
   const [search, setSearch] = useState("");
   const [searchError, setSearchError] = useState("");
@@ -60,7 +52,6 @@ const Header = () => {
       service.getPlacePredictions(
         {
           input: event.target.value,
-          // componentRestrictions: { country: "us" },
         },
         (predictions, status) => {
           if (status === "OK") {
@@ -112,13 +103,6 @@ const Header = () => {
   };
 
   const disabledDate = (current) => {
-    // Can not select days before today and today
-    // return current < dayjs().endOf('day');
-
-    // Can not select days before today
-    // return current && current < moment().startOf('day');
-
-    // Can not select days before today or more than 365 days in the future
     const today = moment().startOf("day");
     return (
       current &&
@@ -136,16 +120,6 @@ const Header = () => {
         setShowTodayModal(true);
       }
     }
-
-    // if (dateString && dateString.length === 2) {
-    //   // console.log(dateString);
-    //   console.log(moment(new Date(dateString[0])).toISOString(),
-    //   moment(new Date(dateString[1])).toISOString());
-    //   setDateRange([
-    //     moment(new Date(dateString[0])).toISOString(),
-    //     moment(new Date(dateString[1])).toISOString(),
-    //   ]);
-    // }
   };
 
   const handleSingleRoom = (rooms) => {
@@ -172,24 +146,6 @@ const Header = () => {
         setSearchError("");
       }, 3000);
     }
-
-    // console.log(
-    //   center,
-    //   hotels,
-    //   dateRange,
-    //   singleRoom,
-    //   doubleRoom,
-    //   supportAnimal
-    // );
-
-    // dispatch(
-    //   setCenterData({
-    //     lat: center.lat,
-    //     lng: center.lng,
-    //     string: search,
-    //   })
-    // );
-    // dispatch(setHotelsData(hotels));
     dispatch(
       setRoomRequirements({
         single: singleRoom,
@@ -341,7 +297,6 @@ const Header = () => {
         <div className="col-8 header-right details">
           <div className="detail pl-0">
             <span className="title">{jobDetails?.location.string}</span>
-            {/* <span className="description">{jobDetails.location_detail}</span> */}
           </div>
           <div className="detail flex">
             <div>

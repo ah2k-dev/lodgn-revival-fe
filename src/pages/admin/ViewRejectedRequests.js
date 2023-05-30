@@ -1,5 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect } from "react";
 import JobDetailsGrid from "../../components/layout/JobDetailsGrid";
 import { useDispatch, useSelector } from "react-redux";
 import { message } from "antd";
@@ -70,7 +69,6 @@ const RequestComponent = ({ request }) => {
           </span>
           <JobDetailsGrid
             jobLocation={request.location.string}
-            // jobAddress="Sarasota,FL. 33178"
             start_date={moment(request.dateRange[0]).format("DD")}
             end_date={moment(request.dateRange[1]).format("DD")}
             start_date_month={moment(request.dateRange[0]).format("MMM")}

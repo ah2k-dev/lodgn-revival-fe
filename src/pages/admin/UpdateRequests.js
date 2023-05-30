@@ -1,8 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
-import Card from "../../components/layout/Card";
 import JobDetailsGrid from "../../components/layout/JobDetailsGrid";
-import PaidPerNight from "../../components/layout/PaidPerNight";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Form, InputNumber, message } from "antd";
 import {
@@ -16,7 +13,6 @@ import { baseURL } from "../../services/axiosConfig";
 import { GetPermissions, UseGetRole } from "../../hooks/auth";
 
 const UpdateRequests = () => {
-
   const dispatch = useDispatch();
 
   const { error, loading, requestedUpdates } = useSelector(
@@ -61,7 +57,6 @@ const UpdateRequests = () => {
                     request={requestedUpdate.request}
                     update={requestedUpdate}
                     key={i}
-                    // rolePermissions={permissions}
                   />
                 ))
               : null}
@@ -73,7 +68,6 @@ const UpdateRequests = () => {
 };
 
 const RequestComponent = ({ request, update }) => {
-
   const role = UseGetRole();
 
   const permissions = GetPermissions();
@@ -88,13 +82,9 @@ const RequestComponent = ({ request, update }) => {
 
   const dispatch = useDispatch();
 
-  console.log(update);
-
   return (
     <div className="d-flex flex-column gap-4 rounded-container bg-white p-5 position-relative">
       <div className="row gap-5 justify-content-center">
-        {/* Previous Booking Details */}
-
         <div className="col-12 d-flex flex-column gap-3">
           {update.status !== "pending" && (
             <span
@@ -112,7 +102,6 @@ const RequestComponent = ({ request, update }) => {
           </span>
           <JobDetailsGrid
             jobLocation={request.location.string}
-            // jobAddress="Sarasota,FL. 33178"
             start_date={moment(request.dateRange[0]).format("DD")}
             end_date={moment(request.dateRange[1]).format("DD")}
             start_date_month={moment(request.dateRange[0]).format("MMM")}
@@ -126,8 +115,6 @@ const RequestComponent = ({ request, update }) => {
           />
         </div>
 
-        {/* New Booking Details */}
-
         <div className="col-12 d-flex flex-column gap-3">
           <span className="font-lato fw-bold">
             New Requested Booking Details
@@ -135,7 +122,6 @@ const RequestComponent = ({ request, update }) => {
           <div className="d-flex flex-md-row flex-column justify-content-between align-items-md-start align-items-center gap-3">
             <JobDetailsGrid
               jobLocation={request.location.string}
-              // jobAddress="Sarasota,FL. 33178"
               start_date={moment(update?.dateRange[0]).format("DD")}
               end_date={moment(update?.dateRange[1]).format("DD")}
               start_date_month={moment(update?.dateRange[0]).format("MMM")}
@@ -225,10 +211,9 @@ const RequestComponent = ({ request, update }) => {
                 if (res) {
                   setShowCard(false);
                 }
-                // setShowCard(false);
               }}
               onFinishFailed={(errorInfo) => {
-                console.log("Failed:", errorInfo);
+                // console.log("Failed:", errorInfo);
               }}
               autoComplete="off"
             >

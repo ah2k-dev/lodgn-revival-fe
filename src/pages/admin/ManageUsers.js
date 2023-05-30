@@ -23,8 +23,6 @@ import { LoadingOutlined } from "@ant-design/icons";
 const ManageUsers = () => {
   const role = UseGetRole();
 
-  console.log(role);
-
   const { error, loading, users, moderators } = useSelector(
     (state) => state.user
   );
@@ -38,9 +36,6 @@ const ManageUsers = () => {
   const [form] = Form.useForm();
 
   const handleFinish = async (values) => {
-    // console.log(values);
-    // form.resetFields();
-    // setIsModalOpen(false);
     const res = await dispatch(createModerator(values));
     if (res) {
       form.resetFields();
@@ -60,7 +55,6 @@ const ManageUsers = () => {
     form.setFieldsValue(record);
     setShowPasswordField(false);
     setIsModalOpen(true);
-    console.log(record);
   };
 
   const showModal = () => {
@@ -91,7 +85,6 @@ const ManageUsers = () => {
 
   useEffect(() => {
     dispatch(fetchUsers());
-    // dispatch(fetchPersonalInfo());
   }, [dispatch]);
 
   let items;
@@ -157,7 +150,7 @@ const ManageUsers = () => {
               className="ant-row"
               onFinish={handleFinish}
               onFinishFailed={(errorInfo) => {
-                console.log("Failed:", errorInfo);
+                // console.log("Failed:", errorInfo);
               }}
               autoComplete="off"
               validateMessages={validateMessages}
@@ -254,21 +247,6 @@ const ManageUsers = () => {
                           Decline Requested Updates
                         </Checkbox>
                       </Col>
-                      {/* </Row> */}
-                      {/* </Checkbox.Group> */}
-                      {/* </Form.Item>
-            <Form.Item
-              name="usersPermission"
-              label="Users"
-              rules={[
-                {
-                  required: true,
-                  message: "Please select a permission!",
-                },
-              ]}
-            > */}
-                      {/* <Checkbox.Group>
-                <Row> */}
                       <Col span={12}>
                         <Checkbox value="blockUser" className="mb-1">
                           Block Users
@@ -295,8 +273,6 @@ const UsersTable = ({ tabIndex, data, handleEditModal }) => {
   const role = UseGetRole();
 
   const permissions = GetPermissions();
-
-  console.log(role, permissions);
 
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
@@ -461,7 +437,6 @@ const UsersTable = ({ tabIndex, data, handleEditModal }) => {
       }
     );
   } else {
-    console.log(data);
     columns.push(
       {
         title: "Permissions",
@@ -514,7 +489,13 @@ const UsersTable = ({ tabIndex, data, handleEditModal }) => {
     );
   }
 
-  return <Table columns={columns} dataSource={data} rowKey={(record) => record._id} />;
+  return (
+    <Table
+      columns={columns}
+      dataSource={data}
+      rowKey={(record) => record._id}
+    />
+  );
 };
 
 export default ManageUsers;

@@ -15,8 +15,6 @@
   width: max-content;
   display: flex;
   flex-direction: column;
-  /* min-width: 320px; */
-  /* max-width: 600px; */
   height: auto;
 }
 
@@ -38,12 +36,12 @@
 
 .authBtn {
   height: 40px !important;
-  border-color: #48AC78 !important;
+  border-color: #48ac78 !important;
   width: 150px;
 }
 
 .activeBtn {
-  background-color: #48AC78 !important;
+  background-color: #48ac78 !important;
   width: 200px !important;
 }
 
@@ -61,7 +59,6 @@
   margin-right: 5px;
 }
 
-
 .verify-email {
   color: red;
   text-decoration: underline;
@@ -73,17 +70,16 @@
 }
 
 .text-green {
-  color: #8CA094 !important;
+  color: #8ca094 !important;
 }
 
 .ant-divider-horizontal {
-  /* min-width: 83% !important; */
   margin-left: -20px !important;
   width: 110% !important;
   margin-top: -10px;
 }
 
-.ant-divider-horizontal.ant-divider-with-text::before, 
+.ant-divider-horizontal.ant-divider-with-text::before,
 .ant-divider-horizontal.ant-divider-with-text::after {
   top: 0 !important;
   border-color: black;
@@ -100,9 +96,9 @@
 }
 
 .auth-inner label {
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   font-weight: 500;
-  margin-bottom: 5px
+  margin-bottom: 5px;
 }
 
 .eye-icon {

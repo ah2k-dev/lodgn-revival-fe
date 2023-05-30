@@ -1,7 +1,6 @@
-import { Col, Row, message, Button } from "antd";
+import { Row, message, Button } from "antd";
 import React, { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-// import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
 import { clearErrors, createRequest } from "../../actions/requestActions";
 import { clearState } from "../../actions/mapActions";
@@ -31,8 +30,6 @@ const Footer = () => {
   );
 
   const totalRooms = roomRequirements.single + roomRequirements.double;
-
-  console.log(dateRange);
 
   return (
     <footer
@@ -64,7 +61,9 @@ const Footer = () => {
                 </span>
               </div>
             )}
-            {dateRange.length > 0 && dateRange[1] !== null ? <span className="title">-</span> : null}
+            {dateRange.length > 0 && dateRange[1] !== null ? (
+              <span className="title">-</span>
+            ) : null}
             {dateRange.length > 0 && (
               <div>
                 <span className="title">
@@ -84,8 +83,6 @@ const Footer = () => {
             <div className="detail">
               <span className="title">{totalRooms} Rooms</span>
               <span className="description">
-                {/* {jobDetails.no_of_single_rooms > 0 ? jobDetails.no_of_single_rooms + ' Singles' : null} {jobDetails.no_of_double_rooms > 0 ? ', ' + jobDetails.no_of_double_rooms + ' Doubles' : null} */}
-
                 {roomRequirements.single > 0
                   ? roomRequirements.single + " Singles"
                   : null}
@@ -116,7 +113,6 @@ const Footer = () => {
                         dateRange,
                         roomRequirements,
                       },
-                      // state: jobDetails
                     });
                     dispatch(clearState());
                   }
@@ -131,15 +127,6 @@ const Footer = () => {
                     if (res) {
                       navigate("/dashboard/user/current-requests");
                     }
-                    // navigate("/dashboard/user/current-requests", {
-                    //     state: {
-                    //         location: center,
-                    //         dateRange,
-                    //         roomRequirements,
-                    //     },
-                    //     // state: jobDetails
-                    // });
-                    // dispatch(clearState());
                   }
             }
           >

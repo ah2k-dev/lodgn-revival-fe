@@ -15,12 +15,8 @@ import moment from "moment";
 import { GetPermissions, UseGetRole } from "../../hooks/auth";
 
 const CurrentRequest = () => {
-  // const role = "moderator";
-
   const dispatch = useDispatch();
   const { error, loading, requests } = useSelector((state) => state.request);
-
-  // console.log(requests);
 
   useEffect(() => {
     dispatch(getRequests());
@@ -70,10 +66,6 @@ const RequestComponent = ({ request, status, index }) => {
 
   const permissions = GetPermissions();
 
-  console.log(role, permissions);
-
-  console.log(request.offerings);
-
   const [newStatus, setNewStatus] = useState(status);
   const [offerings, setOfferings] = useState([]);
   const [selectedOffer, setSelectedOffer] = useState("");
@@ -84,7 +76,6 @@ const RequestComponent = ({ request, status, index }) => {
   let count = [1, 2, 3];
 
   const handleRadioChange = (e) => {
-    // const value = e.target.value;
     setNewStatus(e.target.value); // saves the memory usage
   };
 
@@ -96,14 +87,12 @@ const RequestComponent = ({ request, status, index }) => {
             status: newStatus,
             selectedOffer: selectedOffer,
             selectedFile: receipt,
-            // status: newStatus,
           })
         );
       } else {
         dispatch(
           changeStatus(id, {
             status: newStatus,
-            // status: newStatus,
           })
         );
       }
@@ -123,7 +112,6 @@ const RequestComponent = ({ request, status, index }) => {
             offerings: offerings,
           })
         );
-        // console.log(offerings);
       }
     }
   };
@@ -132,26 +120,11 @@ const RequestComponent = ({ request, status, index }) => {
     dispatch(rejectReuest(id));
   };
 
-  // useEffect(() => {
-  //   if (error) {
-  //     message.error({
-  //       content: error,
-  //       style: {
-  //         marginTop: "10vh",
-  //       },
-  //     });
-  //     dispatch(clearErrors());
-  //   }
-  // }, [error, dispatch]);
-
-  // console.log(status);
-
   const [receipt, setReceipt] = useState(null);
   const hiddenFileInput = useRef(null);
 
   const handleSelect = (value) => {
     setSelectedOffer(value);
-    console.log(`selected ${value}`);
   };
 
   const handleUploadButton = (event) => {
@@ -160,10 +133,8 @@ const RequestComponent = ({ request, status, index }) => {
 
   const handleFile = (event) => {
     const fileUploaded = event.target.files[0];
-    const fileType = fileUploaded.type;
 
     setReceipt(fileUploaded);
-    console.log(fileUploaded);
   };
 
   return (
@@ -172,7 +143,10 @@ const RequestComponent = ({ request, status, index }) => {
         <div className="btns d-flex gap-3 justify-content-end w-100 align-items-center mt-lg-0 mt-4 mb-3">
           {newStatus === "paymentVerified" && (
             <>
-              <Button className="upload-receipt-btn w-auto" onClick={handleUploadButton}>
+              <Button
+                className="upload-receipt-btn w-auto"
+                onClick={handleUploadButton}
+              >
                 Upload payment receipt
               </Button>
               <input
@@ -224,7 +198,6 @@ const RequestComponent = ({ request, status, index }) => {
         </div>
         <JobDetailsGrid
           jobLocation={request.location.string}
-          //   jobAddress="Sarasota,FL. 33178"
           start_date={moment(request?.dateRange[0]).format("DD")}
           end_date={moment(request?.dateRange[1]).format("DD")}
           start_date_month={moment(request?.dateRange[0]).format("MMMM")}
@@ -313,12 +286,9 @@ const RequestComponent = ({ request, status, index }) => {
       </div>
       {newStatus === "completed" && (
         <div className="row mt-4 gap-0 justify-content-xl-between justify-content-center">
-          {/* {!request.hasOwnProperty("bookedOffering") && ( */}
           <h3 className="update-status-text font-poppins text-uppercase fs-6">
             UPDATE STATUS TO CLIENT:
           </h3>
-          {/* // )} */}
-          {/* {!request.hasOwnProperty("bookedOffering") && ( */}
           <div className="row mt-3 justify-content-between">
             {count.map((val, ind) => {
               return (
@@ -332,30 +302,8 @@ const RequestComponent = ({ request, status, index }) => {
               );
             })}
           </div>
-          {/* // )} */}
         </div>
       )}
-      {/* {request.hasOwnProperty("bookedOffering") && (
-        <div className="cards-container columns-1 mt-4 justify-content-center">
-          <div className="position-relative">
-            <span className="rare-find-badge" style={{ zIndex: 100 }}>
-              Booked
-            </span>
-            <Card
-              title={request.bookedOffering.title}
-              description={request.bookedOffering.description}
-              distance={1.5}
-              singlePrice={request.bookedOffering.rates.single}
-              doublePrice={request.bookedOffering.rates.double}
-              animalSupport={request.bookedOffering.rates.animalSupport}
-              images={request.bookedOffering.images}
-              id={request.bookedOffering._id}
-              request={request}
-              paymentLink={request.bookedOffering.paymentLink}
-            />
-          </div>
-        </div>
-      )} */}
     </div>
   );
 };

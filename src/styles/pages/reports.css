@@ -1,23 +1,16 @@
 .reports .ant-table,
 .manage-users .ant-table {
-    height: auto;
-    width: auto;
-    /* min-height: 300px; */
-    max-height: 500px;
-    min-width: 100%;
-    max-width: 100vw;
-    overflow: auto;
+  height: auto;
+  width: auto;
+  max-height: 500px;
+  min-width: 100%;
+  max-width: 100vw;
+  overflow: auto;
 }
 
 .reports .ant-table-thead,
 .manage-users .ant-table-thead {
-    position: sticky;
-    top: 0;
-    z-index: 10;
+  position: sticky;
+  top: 0;
+  z-index: 10;
 }
-
-/* @media screen and (max-width:660px) {
-    .reports .ant-table-content {
-        overflow-x: scroll;
-    }
-} */

@@ -11,8 +11,6 @@ const UrgentBookingModal = ({ showModal, setShowModal }) => {
     }, 600);
   };
 
-  // console.log(showModal);
-
   return (
     <div
       className={`modal ${

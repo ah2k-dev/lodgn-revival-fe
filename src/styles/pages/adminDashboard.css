@@ -89,20 +89,9 @@
     outline: none;
 }
 
-/* .upload-hotel-image .ant-btn {
-    border: none;
-    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.25);
-    border-radius: 10px;
-    display: flex !important;
-    width: 100%;
-    padding: 40px 0;
-    justify-content: center;
-    align-items: center;
-} */
 
-/* .upload-hotel-image .ant-upload {
-    width: 100%;
-} */
+
+
 
 .ant-carousel {
     max-height: 200px !important;

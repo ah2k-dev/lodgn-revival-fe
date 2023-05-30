@@ -57,16 +57,13 @@ export const getRequests = () => async (dispatch) => {
     type: requestConstants.GET_REQUESTS_REQUEST,
   });
   try {
-    console.log("getting requests");
     attachToken();
-    console.log("getting requests");
     const res = await custAxios.get("/requests/get");
     dispatch({
       type: requestConstants.GET_REQUESTS_SUCCESS,
       payload: res.data.data.requests,
     });
   } catch (error) {
-    console.log(error);
     dispatch({
       type: requestConstants.GET_REQUESTS_FAILURE,
       payload: error.response.data.message || "Server Error",
@@ -209,7 +206,6 @@ export const getPreviousStays = () => async (dispatch) => {
       payload: res.data.data.stays,
     });
   } catch (error) {
-    console.log(error);
     dispatch({
       type: requestConstants.GET_PREVIOUS_STAYS_FAILURE,
       payload: error.response.data.message || "Server Error",
@@ -222,7 +218,6 @@ export const updateRequest = (data) => async (dispatch) => {
     type: requestConstants.UPDATE_REQUEST_REQUEST,
   });
   try {
-    // console.log(data);
     const config = {
       headers: {
         "Content-Type": "multipart/form-data",

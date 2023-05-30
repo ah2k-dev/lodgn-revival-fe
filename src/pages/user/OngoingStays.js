@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Card from "../../components/layout/Card";
 import JobDetailsGrid from "../../components/layout/JobDetailsGrid";
 import { useDispatch, useSelector } from "react-redux";
@@ -63,8 +63,6 @@ const OngoingStays = () => {
 
 const RequestComponent = ({ request }) => {
 
-  console.log(request.updateRequested);
-
   const navigate = useNavigate();
 
   return (
@@ -86,7 +84,6 @@ const RequestComponent = ({ request }) => {
       </div>
       <div className="row gap-3 mt-5 justify-content-center">
         <div className="col-md-5 col-xl-4 col-lg-5 col-sm-8 col-12 position-relative">
-          {/* <span className="rare-find-badge">Rare Find</span> */}
           <Card
             title={request.bookedOffering.title}
             description={request.bookedOffering.description}

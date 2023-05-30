@@ -1,4 +1,4 @@
-import { Button, Col, Form, Input, Row, Typography, message } from "antd";
+import { Button, Form, Input, Row, Typography, message } from "antd";
 import React, { useEffect } from "react";
 import BackButton from "../components/BackButton";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -14,15 +14,12 @@ const RequstToken = () => {
     (state) => state.auth
   );
   const onFinish = async (values) => {
-    console.log(pathname);
     let type;
     if (pathname === "/auth/requestToken") {
       type = "request";
     } else {
       type = "reset";
     }
-    console.log(type);
-    console.log("location", location.state);
     const res = await dispatch(requestToken(values.email, type));
     if (res) {
       if (type === "request") {
@@ -66,7 +63,7 @@ const RequstToken = () => {
               className="ant-row"
               onFinish={onFinish}
               onFinishFailed={(errorInfo) => {
-                console.log("Failed:", errorInfo);
+                // console.log("Failed:", errorInfo);
               }}
               style={{ width: "100%" }}
               autoComplete="off"

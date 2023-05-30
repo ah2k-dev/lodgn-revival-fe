@@ -56,8 +56,6 @@ const PreviousStays = () => {
 
 const PreviousRequests = ({ stay }) => {
 
-  console.log(stay);
-
   return (
     <div className="d-flex flex-column gap-4 rounded-container bg-white p-5 position-relative">
       <div className="d-flex justify-content-md-between align-items-start flex-wrap items justify-content-center">

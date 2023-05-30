@@ -89,7 +89,6 @@ export const requestToken = (email, type) => async (dispatch) => {
       `/auth/${type == "request" ? "requestEmailToken" : "forgotPassword"}`,
       { email }
     );
-    console.log(res);
     if (res) {
       dispatch({
         type: authConstants.REQUEST_TOKEN_SUCCESS,
@@ -103,7 +102,6 @@ export const requestToken = (email, type) => async (dispatch) => {
       return true;
     }
   } catch (error) {
-    console.log(email, type, error);
     dispatch({
       type: authConstants.REQUEST_TOKEN_FAILURE,
       payload: error.response.data.message || "Server Error",
@@ -115,7 +113,6 @@ export const verifyEmail = (token, email) => async (dispatch) => {
   dispatch({
     type: authConstants.VERIFY_EMAIL_REQUEST,
   });
-  console.log(email, token);
   try {
     const res = await custAxios.post("/auth/verifyEmail", {
       emailVerificationToken: token,

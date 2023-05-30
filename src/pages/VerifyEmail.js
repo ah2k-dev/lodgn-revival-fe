@@ -16,7 +16,6 @@ const VerifyEmail = () => {
   const onFinish = async (values) => {
     const res = await dispatch(verifyEmail(values.token, email));
     if (res) {
-      console.log(res);
       navigate("/auth", { state: location?.state });
     }
   };
@@ -56,7 +55,7 @@ const VerifyEmail = () => {
               className="ant-row"
               onFinish={onFinish}
               onFinishFailed={(errorInfo) => {
-                console.log("Failed:", errorInfo);
+                // console.log("Failed:", errorInfo);
               }}
               style={{ width: "100%" }}
               autoComplete="off"

@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { clearErrors, resetPassword } from "../actions/authActions";
-import { Button, Col, Form, Input, Row, Typography, message } from "antd";
+import { Button, Form, Input, Row, Typography, message } from "antd";
 import BackButton from "../components/BackButton";
 
 const ResetPassword = () => {
@@ -27,7 +27,6 @@ const ResetPassword = () => {
       resetPassword(values.token, email, values.password)
     );
     if (res) {
-      console.log(res);
       navigate("/auth", { state: location?.state });
     }
   };
@@ -67,7 +66,7 @@ const ResetPassword = () => {
               className="ant-row"
               onFinish={onFinish}
               onFinishFailed={(errorInfo) => {
-                console.log("Failed:", errorInfo);
+                // console.log("Failed:", errorInfo);
               }}
               style={{ width: "100%" }}
               autoComplete="off"

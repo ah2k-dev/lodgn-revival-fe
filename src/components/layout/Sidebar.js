@@ -4,14 +4,11 @@ import { UseGetRole } from "../../hooks/auth";
 import { auth } from "../../services/firebase";
 
 const Sidebar = ({ activeClass }) => {
-  // conditionlly render menu items based on user role
-
   const location = useLocation();
 
   const navClass = "d-flex cursor-pointer align-items-center outline-none";
 
   const role = UseGetRole();
-  // const role = 'user';
 
   const userNavs = [
     {
@@ -81,11 +78,7 @@ const Sidebar = ({ activeClass }) => {
     const googleAuth = localStorage.getItem("googleAuth");
     if (googleAuth) {
       await auth.signOut();
-      // localStorage.clear();
-      // location.reload();
     } else {
-      // localStorage.clear();
-      // location.reload();
     }
     localStorage.clear();
     window.location.href = "/";

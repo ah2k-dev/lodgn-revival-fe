@@ -1,6 +1,4 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Layout } from "antd";
-import Dashboard from "./pages/Dashboard.js";
 import LandingPage from "./pages/LandingPage.js";
 import AuthRoute from "./protected-routes/AuthRoute.js";
 import InitialLayout from "./components/layout/InitialLayout.js";
@@ -9,11 +7,8 @@ import AuthLayout from "./components/layout/AuthLayout.js";
 import RequstToken from "./pages/RequstToken.js";
 import DashboardLayout from "./components/layout/DashboardLayout.js";
 import AdminDashboard from "./pages/admin/AdminDashboard.js";
-import UserDashboard from "./pages/user/UserDashboard.js";
 import VerifyEmail from "./pages/VerifyEmail.js";
 import ResetPassword from "./pages/ResetPassword.js";
-// import UserDashboard from "./pages/user/UserDashboard.js"
-import Payment from "./pages/user/Payment.js";
 import OngoingStays from "./pages/user/OngoingStays.js";
 import UpdateStay from "./pages/user/UpdateStay.js";
 import PreviousStays from "./pages/user/PreviousStays.js";
@@ -33,8 +28,8 @@ import Livechat from "./components/LiveChat.js";
 import { useSelector } from "react-redux";
 import ManageUsers from "./pages/admin/ManageUsers.js";
 import ManageProfile from "./pages/user/ManageProfile.js";
-// import * as dotenv from "dotenv";
-// dotenv.config();
+
+
 function App() {
   const { isAuthenticated, user } = useSelector((state) => state.auth);
   return (

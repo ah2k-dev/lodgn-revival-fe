@@ -44,7 +44,6 @@ const Marker2 = () => (
   </div>
 );
 const Map = ({ hotels, center }) => {
-  console.log(center, "center");
   return (
     <GoogleMapReact
       bootstrapURLKeys={{ key: "AIzaSyC7-xAxxhgl4VQLTURgqKdFlXrsiff4GUM" }}
@@ -59,12 +58,6 @@ const Map = ({ hotels, center }) => {
         keyboardShortcuts: false,
       }}
     >
-      {/* <Marker2
-        lat={center?.lat}
-        lng={center?.lng}
-        text="You are here"
-        color="blue"
-      /> */}
       {hotels?.map((hotel, index) => (
         <Marker2
           key={hotel.place_id}

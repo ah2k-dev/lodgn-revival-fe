@@ -9,8 +9,6 @@ import {
   googleAuth,
 } from "../actions/authActions";
 import { useLocation, useNavigate } from "react-router-dom";
-import { clearState } from "../actions/mapActions";
-import { GoogleLogin } from "@react-oauth/google";
 import { signInWithGoogle } from "../services/firebase";
 import firebase from "../services/firebase";
 
@@ -22,30 +20,9 @@ const Auth = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // console.log(location.state);
-
-  // const { location , dateRange , roomRequirements } = locate.state;
-
   const { loading, error, isAuthenticated } = useSelector(
     (state) => state.auth
   );
-
-  const validatePassword = (_, value) => {
-    const passwordRegex =
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]).{8,}$/;
-
-    if (!value) {
-      return Promise.reject("Please enter a password");
-    }
-
-    if (!passwordRegex.test(value)) {
-      return Promise.reject(
-        "Password must contain at least 8 characters, 1 uppercase, 1 lowercase, 1 number, and 1 special character"
-      );
-    }
-
-    return Promise.resolve();
-  };
 
   const formRef = useRef(null);
   const onFinish = async (values) => {
@@ -64,7 +41,6 @@ const Auth = () => {
         dispatch(login(values.email, values.password));
       }
     } else {
-      console.log(values);
       const res = await dispatch(
         signup(
           values.firstname,
@@ -75,16 +51,12 @@ const Auth = () => {
           values.company
         )
       );
-      // .then((res) => {
-      // });
-      console.log(res);
       if (!res) {
         setActive("signup");
       } else {
         navigate("/auth/verifyEmail/" + values.email, {
           state: location.state,
         });
-        // setActive("login");
       }
     }
   };

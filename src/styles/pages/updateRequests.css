@@ -1,63 +1,63 @@
 .btns .approveBtn,
 .updateRatesContainer .saveBtn,
 .add-hotel-form .saveBtn {
-    background: linear-gradient(180deg, #48AF78 0%, #42996B 100%) !important;
-    border-radius: 4px;
-    font-weight: 600;
-    min-height: 40px;
-    transition: .5s ease-in-out;
+  background: linear-gradient(180deg, #48af78 0%, #42996b 100%) !important;
+  border-radius: 4px;
+  font-weight: 600;
+  min-height: 40px;
+  transition: 0.5s ease-in-out;
 }
 
 .btns .declineBtn {
-    border-radius: 4px;
-    font-weight: 600;
-    min-height: 40px;
-    transition: .5s ease-in-out;
+  border-radius: 4px;
+  font-weight: 600;
+  min-height: 40px;
+  transition: 0.5s ease-in-out;
 }
 
 .btns .approveBtn span,
 .updateRatesContainer .saveBtn span,
 .add-hotel-form .saveBtn span {
-    color: white;
+  color: white;
 }
 
 .btns .approveBtn:hover,
 .updateRatesContainer .saveBtn:hover,
 .add-hotel-form .saveBtn:hover {
-    background: transparent !important;
-    border: 1px solid #42996B !important;
+  background: transparent !important;
+  border: 1px solid #42996b !important;
 }
 
 .btns .approveBtn:hover span,
 .updateRatesContainer .saveBtn:hover span,
 .add-hotel-form .saveBtn:hover span {
-   color: #42996B !important;
+  color: #42996b !important;
 }
 
 .updateRatesContainer label,
 .add-hotel-form label {
-    color: #959595;
+  color: #959595;
 }
 
 .updateRatesContainer input,
 .add-hotel-form input {
-    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.25);
-    border-radius: 10px;
-    border: none;
-    font-size: 1rem;
-    outline: none;
-    padding: 5px 8px !important;
-    min-height: 40px;
+  box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+  border: none;
+  font-size: 1rem;
+  outline: none;
+  padding: 5px 8px !important;
+  min-height: 40px;
 }
 
 .updateRatesContainer input:focus,
 .add-hotel-form input:focus {
-    outline: none;
-    border: none;
+  outline: none;
+  border: none;
 }
 
 .updateRatesContainer .ant-input-number,
 .add-hotel-form .ant-input-number {
-    width: 100%;
-    border: none;
+  width: 100%;
+  border: none;
 }

@@ -22,11 +22,7 @@ const Card = (props) => {
   const dispatch = useDispatch();
   const handleBook = (url) => {
     window.open(url, "_blank");
-
-    // dispatch(bookOffer(request._id, id))
   };
-
-  console.log(props);
 
   return (
     <div className="detail-card d-flex flex-column align-items-center w-100">
@@ -63,14 +59,9 @@ const Card = (props) => {
                 </span>
               ) : null}
             </span>
-            {/* handleBook is temp solution to book request as payment flow is pending*/}
-            {/* {!request.hasOwnProperty('bookedOffering') && ( */}
-            {/* <Link to={paymentLink} onClick={() => handleBook()}> */}
             <a href={paymentLink} target="_blank">
               <Button className="book-now-btn text-white">Book now</Button>
             </a>
-            {/* </Link> */}
-            {/* )} */}
           </span>
         ) : (
           <span className="d-flex justify-content-center align-items-center w-100">

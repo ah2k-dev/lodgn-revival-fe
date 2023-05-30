@@ -5,10 +5,9 @@ import { LoadingOutlined } from "@ant-design/icons";
 import {
   clearErrors,
   fetchReports,
-  getPreviousStays,
 } from "../../actions/requestActions";
 import { Button, message } from "antd";
-import { CSVLink, CSVDownload } from "react-csv";
+import { CSVLink } from "react-csv";
 
 const AdminReports = () => {
   const dispatch = useDispatch();
@@ -33,8 +32,6 @@ const AdminReports = () => {
       dispatch(clearErrors());
     }
   }, [error]);
-
-  console.log(reports);
 
   return (
     <div className="min-vh-100 w-100 px-lg-5 px-md-3 px-4 py-5">
