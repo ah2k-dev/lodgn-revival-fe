@@ -9,6 +9,7 @@ const RequstToken = () => {
   const { pathname } = useLocation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
   const { loading, error, isAuthenticated } = useSelector(
     (state) => state.auth
   );
@@ -21,12 +22,17 @@ const RequstToken = () => {
       type = "reset";
     }
     console.log(type);
+    console.log("location", location.state);
     const res = await dispatch(requestToken(values.email, type));
     if (res) {
       if (type === "request") {
-        navigate("/auth/verifyEmail/" + values.email);
+        navigate("/auth/verifyEmail/" + values.email, {
+          state: location?.state,
+        });
       } else {
-        navigate("/auth/resetPassword/" + values.email);
+        navigate("/auth/resetPassword/" + values.email, {
+          state: location?.state,
+        });
       }
     }
   };
@@ -44,7 +50,7 @@ const RequstToken = () => {
   }, [error, dispatch]);
 
   return (
-    <div className="auth-container">
+    <div className="auth-container position-relative">
       <div className="auth-backBtn position-absolute start-0">
         <BackButton />
       </div>
@@ -53,8 +59,8 @@ const RequstToken = () => {
           <div className="col-8 col-sm-6 col-md-9 col-lg-8 col-xl-8">
             <Typography.Title level={3}>Find your Account</Typography.Title>
             <Typography.Paragraph>
-              Enter your email address and we'll send you a link to get back into
-              your account.
+              Enter your email address and we'll send you a link to get back
+              into your account.
             </Typography.Paragraph>
             <Form
               className="ant-row"
@@ -90,7 +96,6 @@ const RequstToken = () => {
                   </Button>
                 </Form.Item>
               </div>
-
             </Form>
           </div>
         </Row>

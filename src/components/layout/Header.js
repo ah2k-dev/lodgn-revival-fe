@@ -40,6 +40,8 @@ const Header = () => {
 
   const jobDetails = location.state;
 
+  console.log(jobDetails);
+
   const [search, setSearch] = useState("");
   const [searchError, setSearchError] = useState("");
   const [places, setPlaces] = useState([]);
@@ -212,7 +214,9 @@ const Header = () => {
       {location.pathname === "/" ||
       location.pathname === "/auth" ||
       location.pathname === "requestToken" ||
-      location.pathname === "/auth/forgot-password" ? (
+      location.pathname === "/auth/forgot-password" ||
+      location.pathname.includes("verifyEmail") ||
+      location.pathname.includes("resetPassword") ? (
         <div className="header-left col-2">
           <img src={logo} width={90} />
         </div>
@@ -331,43 +335,44 @@ const Header = () => {
         </div>
       ) : null}
       {(location.pathname === "/auth" && jobDetails) ||
-      (location.pathname === "/auth/forgot-password" &&
-        jobDetails.location !== "") ? (
+      (location.pathname === "/auth/forgot-password" && jobDetails) ||
+      (location.pathname.includes("verifyEmail") && jobDetails) ||
+      (location.pathname.includes("resetPassword") && jobDetails) ? (
         <div className="col-8 header-right details">
           <div className="detail pl-0">
-            <span className="title">{jobDetails.location.string}</span>
+            <span className="title">{jobDetails?.location.string}</span>
             {/* <span className="description">{jobDetails.location_detail}</span> */}
           </div>
           <div className="detail flex">
             <div>
               <span className="title">
-                {moment(jobDetails.dateRange[0]).format("DD")}
+                {moment(jobDetails?.dateRange[0]).format("DD")}
               </span>
               <span className="description">
-                {moment(jobDetails.dateRange[0]).format("MMMM")}
+                {moment(jobDetails?.dateRange[0]).format("MMMM")}
               </span>
             </div>
             <span className="title">-</span>
             <div>
               <span className="title">
-                {moment(jobDetails.dateRange[1]).format("DD")}
+                {moment(jobDetails?.dateRange[1]).format("DD")}
               </span>
               <span className="description">
-                {moment(jobDetails.dateRange[1]).format("MMMM")}
+                {moment(jobDetails?.dateRange[1]).format("MMMM")}
               </span>
             </div>
           </div>
           <div className="detail">
             <span className="title">
-              {jobDetails.roomRequirements.single +
-                jobDetails.roomRequirements.double}{" "}
+              {jobDetails?.roomRequirements.single +
+                jobDetails?.roomRequirements.double}{" "}
               Rooms
             </span>
             <span className="description">
-              {jobDetails.roomRequirements.single} Single,{" "}
-              {jobDetails.roomRequirements.double} Double,{" "}
-              {jobDetails.roomRequirements.animalSupport > 0
-                ? jobDetails.roomRequirements.animalSupport
+              {jobDetails?.roomRequirements.single} Single,{" "}
+              {jobDetails?.roomRequirements.double} Double,{" "}
+              {jobDetails?.roomRequirements.animalSupport > 0
+                ? jobDetails?.roomRequirements.animalSupport
                 : "No"}{" "}
               Support Animal
             </span>

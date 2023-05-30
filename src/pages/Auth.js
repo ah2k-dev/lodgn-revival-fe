@@ -81,7 +81,9 @@ const Auth = () => {
       if (!res) {
         setActive("signup");
       } else {
-        navigate("/auth/verifyEmail/" + values.email);
+        navigate("/auth/verifyEmail/" + values.email, {
+          state: location.state,
+        });
         // setActive("login");
       }
     }
@@ -137,7 +139,7 @@ const Auth = () => {
   }, [user]);
 
   return (
-    <div className="auth-container">
+    <div className="auth-container position-relative">
       {console.log(user)}
       <div className="auth-inner">
         <Row className="auth-form">
@@ -264,17 +266,7 @@ const Auth = () => {
                       className="forgot-password"
                       onClick={() => {
                         navigate("/auth/forgot-password", {
-                          state: {
-                            location: location.state
-                              ? location.state.location
-                              : "",
-                            dateRange: location.state
-                              ? location.state.dateRange
-                              : "",
-                            roomRequirements: location.state
-                              ? location.state.roomRequirements
-                              : "",
-                          },
+                          state: location?.state,
                         });
                       }}
                     >
