@@ -52,13 +52,8 @@ const RequestedUpdates = () => {
                   update={requestedUpdate}
                   key={i}
                 />
-                // <></>
               ))
-            ) : (
-              <div className="d-flex flex-column justify-content-center align-items-center">
-                <h2 className="font-poppins">No Update stays Requests</h2>
-              </div>
-            )}
+            ) : null}
           </>
         )}
       </div>

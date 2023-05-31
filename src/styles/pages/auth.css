@@ -18,6 +18,12 @@
   height: auto;
 }
 
+h5.ant-typography {
+  font-family: 'Cairo', sans-serif;
+  font-weight: bold !important;
+  font-size: 1.6rem !important;
+}
+
 .auth-form {
   margin-top: 30px;
   justify-content: center;
@@ -34,29 +40,57 @@
   justify-content: space-between;
 }
 
-.authBtn {
+.ant-divider-inner-text {
+  color: #2E3D44;
+  opacity: 80%;
+  font-family: 'Cairo', sans-serif;
+  font-weight: bold;
+}
+
+button.btnGoogle,
+button.authBtn {
   height: 40px !important;
-  border-color: #48ac78 !important;
+  border: 1px solid #70707050;
+  font-size: 1rem;
+  border-radius: 50px !important;
+  -webkit-border-radius: 50px !important;
+  -moz-border-radius: 50px !important;
+  -ms-border-radius: 50px !important;
+  -o-border-radius: 50px !important;
+}
+
+button.authBtn {
   width: 150px;
+  font-weight: 800;
+  font-family: 'Cairo', sans-serif;
+}
+
+button.authBtn:hover,
+button.btnGoogle:hover {
+  color: #88c289 !important;
+  border: 1px #88c289 solid !important;
 }
 
 .activeBtn {
-  background-color: #48ac78 !important;
-  width: 200px !important;
+  background-color: #2a3e45 !important;
+  border: 1px #2a3e45 solid !important;
+  color: #88c289 !important;
+  width: 220px !important;
 }
 
-.btnGoogle {
+button.btnGoogle {
   width: 100%;
   height: 40px !important;
   display: flex;
   justify-content: center;
   align-items: center;
+  font-weight: bold;
 }
 
 .btnGoogle > img {
   height: 20px;
   width: 20px;
-  margin-right: 5px;
+  margin-right: 6px;
 }
 
 .verify-email {
@@ -70,20 +104,19 @@
 }
 
 .text-green {
-  color: #8ca094 !important;
+  color: #2e3d44 !important;
 }
 
 .ant-divider-horizontal {
-  margin-left: -20px !important;
-  width: 110% !important;
+  width: 100% !important;
   margin-top: -10px;
 }
 
 .ant-divider-horizontal.ant-divider-with-text::before,
 .ant-divider-horizontal.ant-divider-with-text::after {
   top: 0 !important;
-  border-color: black;
-  border-top: 1px solid black !important;
+  border-color: #DDDDDD;
+  border-top: 2px solid #DDDDDD !important;
 }
 
 .ant-form-item {
@@ -96,9 +129,12 @@
 }
 
 .auth-inner label {
-  font-family: "Poppins", sans-serif;
-  font-weight: 500;
+  font-family: 'Helvetica Neue', sans-serif;
+  font-weight: normal;
   margin-bottom: 5px;
+  font-size: 1rem !important;
+  color: #222222;
+  opacity: 0.8;
 }
 
 .eye-icon {

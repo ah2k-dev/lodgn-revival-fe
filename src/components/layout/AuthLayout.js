@@ -22,7 +22,12 @@ const AuthLayout = () => {
       <div className="auth-layout-left col-xl-5 col-md-6 col-12">
         <Outlet />
       </div>
-      <div className="auth-layout-right d-sm-block d-none col-xl-7 col-md-6"></div>
+      <div className="auth-layout-right d-md-flex d-none col-xl-7 col-md-6">
+        <h1>
+          Better rates,
+          <br /> Better saving.
+        </h1>
+      </div>
     </Row>
   );
 };

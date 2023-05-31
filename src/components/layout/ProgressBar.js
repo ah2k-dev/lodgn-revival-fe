@@ -8,14 +8,14 @@ const ProgressBar = ({requestStatus}) => {
 
     // status conditions 
     if (requestStatus === 'recieved') {
-        progressBarColor = '#FDF307';
-        progressTextColor = '#959595';
+        progressBarColor = '#FAD506';
+        progressTextColor = '#707070';
         progressPercent = 25
     } else if (requestStatus === 'negotiating') {
         progressBarColor = '#07A4FD';
         progressPercent = 50
     } else if (requestStatus === 'completed') {
-        progressBarColor = '#44A16F';
+        progressBarColor = '#37885F';
         progressPercent = 75
     } else if (requestStatus === 'paymentVerified') {
         progressBarColor = '#44A16F';

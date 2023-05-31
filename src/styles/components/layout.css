@@ -1,13 +1,25 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@900&display=swap");
+
 .auth-layout-container {
   min-height: calc(100vh - 72px);
 }
 
 .auth-layout-right {
-  background-image: url(../../assets/images/workers.jpg);
+  background-image: url(../../assets/images/worker.png);
   background-repeat: no-repeat;
   background-size: cover;
   background-position-x: center;
   background-position-y: bottom;
+  justify-content: center;
+  align-items: center;
+}
+
+.auth-layout-right h1 {
+  font-size: 6rem;
+  font-family: "Cairo", sans-serif;
+  font-weight: bold;
+  text-align: center;
+  color: white;
 }
 
 .dashboard-layout {
@@ -16,6 +28,10 @@
 
 .dashboard-padding {
   padding: 0 65px 0 45px;
+}
+
+.bg-dark-green {
+  background-color: #243f46;
 }
 
 .sideNav {
@@ -33,6 +49,12 @@
   background-color: white;
   padding: 5px;
   border-radius: 6px;
+}
+
+@media screen and (max-width: 1200px) {
+  .auth-layout-right h1 {
+    font-size: 4.5rem;
+  }
 }
 
 @media screen and (max-width: 992px) {
@@ -57,6 +79,9 @@
   }
   .dashboard .status {
     height: 34px !important;
+  }
+  .auth-layout-right h1 {
+    font-size: 3.4rem;
   }
 }
 

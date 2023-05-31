@@ -11,7 +11,7 @@
   gap: 5px;
   background: #ffffff;
   font-size: 15px !important;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   border-radius: 10px !important;
   outline: none !important;
 }
@@ -22,9 +22,10 @@
 }
 
 .ant-btn.upload-btn {
+  height: 55px;
   box-shadow: 0.86px 0.86px 8.86px rgba(0, 0, 0, 0.25) !important;
-    border: none !important;
-    outline: none !important;
+  border: none !important;
+  outline: none !important;
 }
 
 .upload-btn:hover,
@@ -38,28 +39,28 @@
   color: #42996b !important;
 }
 
-.upload-btn:hover{
+.upload-btn:hover {
   border: none !important;
   box-shadow: 0px 0px 14px rgba(0, 0, 0, 0.25) !important;
 }
 
 .upload-btn:hover span {
-    border: none !important;
-    outline: none !important;
-    color: #42996b !important;
+  border: none !important;
+  outline: none !important;
+  color: #5da874 !important;
 }
 
 .heading-green {
-  color: #5ba343 !important;
+  color: #5da874 !important;
 }
 
 .grey-text {
   color: #494949c2;
   font-weight: 600;
-} 
+}
 
 .green-span {
-  color: #5ba343 !important;
+  color: #5da874 !important;
 }
 
 .update-btn {
@@ -83,6 +84,11 @@
 .ongoingStays .btns button {
   height: 40px !important;
   padding: 0 25px;
+  border-radius: 50px !important;
+  -webkit-border-radius: 50px !important;
+  -moz-border-radius: 50px !important;
+  -ms-border-radius: 50px !important;
+  -o-border-radius: 50px !important;
 }
 
 .update-note-span {
@@ -90,11 +96,7 @@
 }
 
 .confirm-changes-btn {
-  background: linear-gradient(180deg, #48af78 0%, #42996b 100%) !important;
-  border-radius: 4px;
-  font-weight: 600;
   min-height: 40px;
-  transition: 0.5s ease-in-out;
 }
 
 .confirm-changes-btn span {
@@ -157,5 +159,3 @@
     font-size: 0.9rem !important;
   }
 }
-
-

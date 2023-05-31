@@ -11,36 +11,49 @@
 }
 
 .dashboard h2 {
-  color: #72aa83;
+  color: #5da874;
+  font-family: "Cairo", sans-serif;
   font-size: 1.5rem;
-  font-weight: 600;
+  font-weight: bold;
 }
 
 .dashboard .create-request-btn {
-    margin-top: -20px !important;
+  margin-top: -20px !important;
 }
 
 .dashboard .create-request-btn,
 .manage-users .add-mod-btn,
 .manage-profile .update-btn,
-.reports .download-reports-btn {
-  background: linear-gradient(180deg, #48af78 0%, #42996b 100%) !important;
-  border-radius: 4px !important;
+.reports .download-reports-btn,
+.confirm-changes-btn,
+.rebook-btn {
+  background: #88c289 !important;
   font-weight: 600 !important;
   height: 40px !important;
   border: none !important;
   color: white !important;
   padding: 0 25px !important;
+  border: 1px solid #88c289 !important;
+  border-radius: 50px !important;
+  -webkit-border-radius: 50px !important;
+  -moz-border-radius: 50px !important;
+  -ms-border-radius: 50px !important;
+  -o-border-radius: 50px !important;
   transition: ease-in-out 0.5s !important;
+  -webkit-transition: ease-in-out 0.5s !important;
+  -moz-transition: ease-in-out 0.5s !important;
+  -ms-transition: ease-in-out 0.5s !important;
+  -o-transition: ease-in-out 0.5s !important;
 }
 
 .dashboard .create-request-btn:hover,
 .manage-users .add-mod-btn:hover,
 .manage-profile .update-btn:hover,
-.reports .download-reports-btn:hover {
+.reports .download-reports-btn:hover,
+.confirm-changes-btn:hover,
+.rebook-btn:hover {
   background: transparent !important;
-  border: 1px solid #42996b !important;
-  color: #42996b !important;
+  color: #88c289 !important;
 }
 
 .dashboard .status {
@@ -60,9 +73,9 @@
 }
 
 .dashboard .status span {
-  font-family: "Lato", sans-serif;
-  font-weight: 500;
-  color: #959595;
+  font-family: "Cairo", sans-serif;
+  font-weight: bold;
+  color: #707070;
 }
 
 .dashboard .status .active {
@@ -78,12 +91,21 @@
 }
 
 .dashboard .status .progress .progress-bar {
+  border: 1px solid #707070 !important;
   border-radius: 50px;
   font-size: 0.95rem;
+  font-family: "Cairo", sans-serif;
+  font-weight: bold;
 }
 
 .dashboard .rounded-container {
-  border-radius: 25px;
+  box-shadow: 0px 3px 6px #00000029;
+  border: 0.6px solid #707070;
+  border-radius: 56px;
+  -webkit-border-radius: 56px;
+  -moz-border-radius: 56px;
+  -ms-border-radius: 56px;
+  -o-border-radius: 56px;
 }
 
 .dashboard .completed-status {
@@ -120,30 +142,41 @@
 }
 
 .dashboard .card {
-  border: 1px solid #0000002E;
-  border-radius: 16px !important;
+  border-radius: 26px !important;
+  -webkit-border-radius: 26px !important;
+  -moz-border-radius: 26px !important;
+  -ms-border-radius: 26px !important;
+  -o-border-radius: 26px !important;
 }
 
 .dashboard .detail-card {
-  border-radius: 16px !important;
-  background-color: #f5f4f4;
+  border: 1px solid #707070;
+  background-color: white;
+  border-radius: 26px !important;
+  -webkit-border-radius: 26px !important;
+  -moz-border-radius: 26px !important;
+  -ms-border-radius: 26px !important;
+  -o-border-radius: 26px !important;
 }
 
 .dashboard .detail-card .images-container {
   border-radius: 0.3rem 0.3rem 0 0;
   overflow: hidden;
-  max-height: 200px;
+  max-height: 175px;
 }
 
 .dashboard .detail-card .book-now-btn {
-  background: #48af78;
-  border-radius: 4px;
-  font-weight: 500;
+  background: #37885f;
+  font-family: "Helvetica Neue", sans-serif;
+  font-weight: normal;
   margin-left: 5px;
-  transition: 0.5s ease-in-out;
   min-height: 40px;
   padding: 0 30px;
-  border-radius: 12px;
+  border-radius: 50px !important;
+  -webkit-border-radius: 50px !important;
+  -moz-border-radius: 50px !important;
+  -ms-border-radius: 50px !important;
+  -o-border-radius: 50px !important;
 }
 
 .dashboard .detail-card .book-now-btn span {
@@ -153,12 +186,12 @@
 
 .dashboard .detail-card .book-now-btn:hover {
   background: transparent;
-  border-color: #42996b;
-  color: #42996b !important;
+  border-color: #37885f;
+  color: #37885f !important;
 }
 
 .dashboard .detail-card .book-now-btn:hover span {
-  color: #42996b !important;
+  color: #37885f !important;
 }
 
 .dashboard .detail-card .svg-span {
@@ -170,17 +203,25 @@
 }
 
 .dashboard .detail-card span {
-  color: #959595;
+  color: #707070;
+}
+
+.dashboard .detail-card .hotel-name {
+  font-family: 'Cairo', sans-serif;
+  font-weight: bold;
+  font-size: 1.3rem;
 }
 
 .dashboard .detail-card .price-span {
-  font-size: 1.25rem;
-  font-weight: 600;
+  font-family: 'Helvetica Neue', sans-serif;
+  font-weight: normal;
+  font-size: 1.15rem;
 }
 
 .dashboard .detail-card .hotel-description {
-  font-size: 1.3rem;
-  font-weight: 500;
+  font-size: 1.2rem;
+  font-family: 'Cairo', sans-serif;
+  font-weight: bold;
   line-height: 1;
 }
 
@@ -207,9 +248,13 @@
 }
 
 .dashboard .detail-card .cards-footer {
-  box-shadow: 0px -2px 8px 0px #00000040;
-  border-radius: 16px;
-
+  background-color: #f5f5f5;
+  border: 1px solid #707070;
+  border-radius: 23px;
+  -webkit-border-radius: 23px;
+  -moz-border-radius: 23px;
+  -ms-border-radius: 23px;
+  -o-border-radius: 23px;
 }
 
 .dashboard .rare-find-badge {
@@ -278,7 +323,6 @@
 }
 
 @media screen and (max-width: 660px) {
-
   .dashboard .footer-container .details .detail {
     border-bottom: none;
     border-right: 2px solid #0000004d;

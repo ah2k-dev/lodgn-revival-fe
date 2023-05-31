@@ -1,42 +1,57 @@
 .sideNav {
-    min-height: 100vh;
-    min-width: 20vw;
-    width: 20vw;
-    font-family: 'Poppins', sans-serif;
-    z-index: 10;
+  min-height: 100vh;
+  min-width: 20vw;
+  width: 20vw;
+  z-index: 10;
+  background-color: #2e3d44;
 }
 
 .sideNav .sideNavLinks {
-    min-height: 36px;
-    border-bottom: 1px solid #0000004A;
-    list-style: none;
-    font-weight: 600;
-    font-size: 1.15rem;
+  min-height: 36px;
+  border-bottom: 1px solid #dddddd;
+  list-style: none;
+  font-weight: 600;
+  font-size: 1.15rem;
 }
 
 .sideNav .sideNavLinks a {
-    color: #494949;
-    transition: all .5s;
+  font-family: "Cairo", sans-serif;
+  font-weight: bold;
+  font-size: 1.15rem;
+  color: #ffffff;
+  transition: all 0.5s;
 }
 
 .sideNav .sideNavLinks a:hover {
-    color: #72AA83;
+  color: #72aa83;
 }
 
 .sideNav .sideNavLinks a.active {
-    color: #72AA83;
+  color: #72aa83;
 }
 
 .logoutBtn {
-    background: linear-gradient(180deg, #48AF78 0%, #42996B 100%);
-    border-radius: 4px;
-    font-weight: 600;
-    min-height: 40px;
-    transition: .5s ease-in-out;
+  background: #88C289;
+  min-height: 40px;
+  transition: 0.5s ease-in-out;
+  font-family: "Cairo", sans-serif;
+  color: white;
+  font-weight: bold;
+  border: 1px solid #88C289 !important;
+  border-radius: 50px;
+  -webkit-border-radius: 50px;
+  -moz-border-radius: 50px;
+  -ms-border-radius: 50px;
+  -o-border-radius: 50px;
 }
 
 .logoutBtn:hover {
-    background: transparent;
-    color: #42996B !important;
-    border: 1px solid #42996B !important;
+  background: transparent;
+  color: #88C289 !important;
+}
+
+.help-desk-details {
+    font-family: "Cairo", sans-serif;
+    color: white;
+    font-weight: bold;
 }

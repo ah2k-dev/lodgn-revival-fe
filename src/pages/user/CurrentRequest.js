@@ -40,7 +40,7 @@ const CurrentRequest = () => {
       ) : (
         <div className="d-flex flex-column justify-content-between w-100">
           <div className="d-flex flex-wrap-reverse justify-content-between align-items-md-center mt-5 mb-5 gap-4">
-            <h2 className="font-poppins">
+            <h2>
               You currently have {requests.length} requests
             </h2>
             <button

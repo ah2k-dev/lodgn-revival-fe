@@ -76,7 +76,7 @@ const Auth = () => {
   useEffect(() => {
     firebase.auth().onAuthStateChanged((user) => {
       setUser(user);
-      console.log(user);
+      // console.log(user);
     });
   }, []);
 
@@ -97,7 +97,7 @@ const Auth = () => {
 
   useEffect(() => {
     if (user) {
-      console.log(user);
+      // console.log(user);
       dispatch(
         googleAuth({
           email: user.email,
@@ -112,7 +112,6 @@ const Auth = () => {
 
   return (
     <div className="auth-container position-relative">
-      {console.log(user)}
       <div className="auth-inner">
         <Row className="auth-form">
           <div className="col-8 col-sm-6 col-md-9 col-lg-8 col-xl-8 pb-5">
@@ -124,7 +123,7 @@ const Auth = () => {
               className="ant-row"
               onFinish={onFinish}
               onFinishFailed={(errorInfo) => {
-                console.log("Failed:", errorInfo);
+                // console.log("Failed:", errorInfo);
               }}
               autoComplete="off"
             >

@@ -70,32 +70,6 @@ const UpdateStay = () => {
     );
   };
 
-  const handleUpload = (info) => {
-    setRosterFile(info.file);
-    console.log(rosterFile);
-  };
-
-  //   const props = {
-  //     beforeUpload: (file) => {
-  //       const fileType = file.type;
-  //       if (fileType === "application/pdf") {
-  //         return file.type || Upload.LIST_IGNORE;
-  //       } else if (fileType === "application/xls") {
-  //         return file.type || Upload.LIST_IGNORE;
-  //       } else if (fileType === "application/docx") {
-  //         return file.type || Upload.LIST_IGNORE;
-  //       } else if (fileType === "application/pdf") {
-  //         return file.type || Upload.LIST_IGNORE;
-  //       } else if (fileType === "image/jpg") {
-  //         return file.type || Upload.LIST_IGNORE;
-  //       } else {
-  //         message.error(`${file.name} is not a valid file formate`);
-  //         return Upload.LIST_IGNORE;
-  //       }
-  //     },
-  //     onChange: handleUpload,
-  //   };
-
   const hiddenFileInput = useRef(null);
 
   // Programatically click the hidden file input element
@@ -117,7 +91,7 @@ const UpdateStay = () => {
       fileType === "image/jpg"
     ) {
       setRosterFile(fileUploaded);
-      console.log(rosterFile);
+      // console.log(rosterFile);
     } else {
       message.error(`${fileUploaded.name} is not a valid file formate`);
     }
@@ -142,14 +116,14 @@ const UpdateStay = () => {
     }
   };
 
-  console.log(request);
+  // console.log(request);
 
   return (
     <div className="min-vh-100 w-100 px-md-5 px-2 py-5">
       <div className="d-flex flex-column gap-5">
-        <h2 className="font-poppins mt-4 heading-green">Edit your stay</h2>
+        <h2 className="font-cairo fw-bold mt-4 heading-green">Edit your stay</h2>
         <div className="d-flex flex-column gap-4 rounded-container bg-white p-md-5 p-3">
-          <div className="d-flex flex-wrap justify-content-between align-items-center rounded-container bg-white position-relative">
+          <div className="d-flex flex-wrap justify-content-between align-items-center position-relative">
             <div className="col-xl-9 col-12 d-flex justify-content-md-between align-items-center flex-wrap items justify-content-center">
               <JobDetailsGrid
                 jobLocation={request.location.string}
@@ -185,7 +159,6 @@ const UpdateStay = () => {
                 doubleRooms={doubleRoom}
                 animals={animalSupport}
               />
-              {/* <RoomPicker singleRooms={singleRoom} doubleRooms={doubleRoom} animals={animalSupport} /> */}
             </div>
             <div className="col-xl-3 col-md-5 col-12 d-flex flex-column justify-content-start position-relative">
               <span className="font-poppins fw-semibold">Edit dates</span>
@@ -249,18 +222,6 @@ const UpdateStay = () => {
                 onChange={handleChange}
                 style={{ display: "none" }}
               />
-              {/* <input
-                type="file"
-                onChange={() => {
-                  setRosterFile(document.getElementById("file").files[0]);
-                }}
-              /> */}
-              {/* <Upload action="" {...props} className="upload-roster-btn w-100">
-                                <Button className='py-4 d-flex align-items-center border-0 shadow font-poppins' icon={<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" width={18} className='me-2'>
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M18.375 12.739l-7.693 7.693a4.5 4.5 0 01-6.364-6.364l10.94-10.94A3 3 0 1119.5 7.372L8.552 18.32m.009-.01l-.01.01m5.699-9.941l-7.81 7.81a1.5 1.5 0 002.112 2.13" />
-                                </svg>
-                                }>Upload updated roster</Button>
-                            </Upload> */}
               <span style={{ color: "#959595" }} className="ms-2">
                 xls , pdf , word , jpg
               </span>
@@ -268,7 +229,7 @@ const UpdateStay = () => {
           </div>
           <div className="d-flex justify-content-end">
             <Button
-              className="confirm-changes-btn font-poppins"
+              className="confirm-changes-btn"
               onClick={handleConfirmChanges}
             >
               Confirm changes

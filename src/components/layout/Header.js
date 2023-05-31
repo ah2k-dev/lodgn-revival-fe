@@ -4,7 +4,8 @@ import { useAuth } from "../../hooks/auth";
 import { useDispatch } from "react-redux";
 import { FaUserAlt } from "react-icons/fa";
 import { useLocation, useNavigate } from "react-router-dom";
-import logo from "../../assets/images/LODGN.svg";
+import coloredLogo from "../../assets/images/colored logo.png";
+import whiteLogo from "../../assets/images/white logo.png";
 import { DatePicker } from "antd";
 import RoomPicker from "./RoomPicker";
 import {
@@ -161,8 +162,10 @@ const Header = () => {
     <Row
       className={
         location.pathname === "/dashboard/user/create-request"
-          ? "header-container bg-white w-100 justify-content-end"
-          : "header-container"
+          ? "header-container w-100 justify-content-end position-relative"
+          : location.pathname.includes("auth")
+          ? "header-container dark-green-header position-relative"
+          : "header-container position-relative"
       }
       justify="space-between"
       align="middle"
@@ -174,7 +177,10 @@ const Header = () => {
       location.pathname.includes("verifyEmail") ||
       location.pathname.includes("resetPassword") ? (
         <div className="header-left col-2">
-          <img src={logo} width={90} />
+          <img
+            src={location.pathname !== "/auth" ? coloredLogo : whiteLogo}
+            width={100}
+          />
         </div>
       ) : null}
       {searchError && (
@@ -187,8 +193,8 @@ const Header = () => {
         <div
           className={
             location.pathname === "/dashboard/user/create-request"
-              ? "header-middle col-lg-7 col-md-9 col-12 mt-md-0 mt-5 d-flex justify-content-center"
-              : "header-middle landing-page-searchbar"
+              ? "header-middle col-lg-7 col-md-9 col-12 mt-md-0 mt-5 d-flex justify-content-center align-items-center top-0 h-100"
+              : "header-middle landing-page-searchbar top-0 align-items-center h-100"
           }
         >
           <Col
@@ -203,7 +209,7 @@ const Header = () => {
                 type="text"
                 value={search}
                 onChange={handleSearch}
-                placeholder="Search for a location"
+                placeholder="Search job location"
               />
               {places.length > 0 && (
                 <ul className="auto-complete-list position-absolute mt-3 bg-white py-2 px-3">
@@ -247,7 +253,21 @@ const Header = () => {
               />
             </span>
             <span onClick={() => setShowRoomPicker(!showRoomPicker)}>
-              Add rooms
+              {singleRoom > 0 || doubleRoom > 0 || supportAnimal > 0
+                ? `${
+                    singleRoom > 0 && (doubleRoom > 0 || supportAnimal > 0)
+                      ? "S-" + singleRoom + ","
+                      : "S-" + singleRoom
+                  } 
+                    ${
+                      doubleRoom > 0 && supportAnimal > 0
+                        ? "D-" + doubleRoom + ","
+                        : doubleRoom > 0 && supportAnimal === 0
+                        ? "D-" + doubleRoom
+                        : ""
+                    } 
+                    ${supportAnimal > 0 ? "A-" + supportAnimal : ""}`
+                : "Add rooms"}
             </span>
             {showRoomPicker && (
               <div
@@ -277,7 +297,7 @@ const Header = () => {
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
-                strokeWidth={1}
+                strokeWidth={3}
                 stroke="white"
               >
                 <path

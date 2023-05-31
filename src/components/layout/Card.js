@@ -31,11 +31,7 @@ const Card = (props) => {
       </div>
       <div className="cards-footer d-flex flex-column align-items-center gap-2 px-3 pt-3 pb-2 w-100">
         <span
-          className="text-capitalize"
-          style={{
-            fontSize: "1.5rem",
-            fontWeight: 700,
-          }}
+          className="text-capitalize hotel-name"
         >
           {title}
         </span>
