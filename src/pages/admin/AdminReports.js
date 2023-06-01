@@ -45,7 +45,7 @@ const AdminReports = () => {
             {reports.length > 0 ? (
               <div className="row justify-content-end gap-4">
                 <Button className="download-reports-btn w-auto d-flex gap-2 align-items-center me-3">
-                  <CSVLink data={reports}>
+                  <CSVLink data={reports} className="d-flex gap-1 align-items-center">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"

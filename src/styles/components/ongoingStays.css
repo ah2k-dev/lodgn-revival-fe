@@ -82,6 +82,8 @@
 }
 
 .ongoingStays .btns button {
+  font-family: "Cairo", sans-serif !important;
+  font-weight: bold !important;
   height: 40px !important;
   padding: 0 25px;
   border-radius: 50px !important;

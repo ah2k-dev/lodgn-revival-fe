@@ -89,7 +89,7 @@ const Sidebar = ({ activeClass }) => {
     <nav
       className={`sideNav ${
         activeClass && "active"
-      } shadow px-4 d-flex flex-column justify-content-between pb-4 position-fixed top-0 left-0`}
+      } shadow d-flex flex-column justify-content-between pb-4 position-fixed top-0 left-0`}
     >
       <ul className="relative m-0 list-none py-4 px-0">
       <div className="col-6 mb-4">

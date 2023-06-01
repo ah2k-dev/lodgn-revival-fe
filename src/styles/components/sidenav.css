@@ -2,6 +2,7 @@
   min-height: 100vh;
   min-width: 20vw;
   width: 20vw;
+  padding: 0  1.5rem;
   z-index: 10;
   background-color: #2e3d44;
 }
@@ -54,4 +55,40 @@
     font-family: "Cairo", sans-serif;
     color: white;
     font-weight: bold;
+}
+
+.hamburger-icon {
+  position: fixed;
+}
+
+@media screen and (max-width: 992px) {
+  .hamburger-icon {
+    display: block;
+  }
+  .sideNav {
+    padding: 0  1.8rem;
+    transform: translateX(-500px);
+    -webkit-transform: translateX(-500px);
+    -moz-transform: translateX(-500px);
+    -ms-transform: translateX(-500px);
+    -o-transform: translateX(-500px);
+}
+  .sideNav.active {
+    transform: translateX(0);
+  }
+  .sideNav {
+    width: 36vw;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .sideNav {
+    width: 50vw;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .sideNav {
+    width: 100%;
+  }
 }

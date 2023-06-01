@@ -49,7 +49,7 @@ h5.ant-typography {
 
 button.btnGoogle,
 button.authBtn {
-  height: 40px !important;
+  height: 50px !important;
   border: 1px solid #70707050;
   font-size: 1rem;
   border-radius: 50px !important;
@@ -80,7 +80,6 @@ button.btnGoogle:hover {
 
 button.btnGoogle {
   width: 100%;
-  height: 40px !important;
   display: flex;
   justify-content: center;
   align-items: center;
