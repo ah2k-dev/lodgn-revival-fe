@@ -16,7 +16,7 @@ import {
 import { useRef, useState } from "react";
 import Highlighter from "react-highlight-words";
 import { useDispatch, useSelector } from "react-redux";
-import { createModerator, fetchUsers } from "../../actions/userActions";
+import { blockUnblockUser, createModerator, fetchUsers } from "../../actions/userActions";
 import { GetPermissions, UseGetRole } from "../../hooks/auth";
 import { LoadingOutlined } from "@ant-design/icons";
 
@@ -43,13 +43,13 @@ const ManageUsers = () => {
     }
   };
 
-  const validateMessages = {
-    required: "${label} is required!",
-    types: {
-      email: "${label} is not a valid email!",
-      number: "${label} is not a valid number!",
-    },
-  };
+  // const validateMessages = {
+  //   required: "${label} is required!",
+  //   types: {
+  //     email: "${label} is not a valid email!",
+  //     number: "${label} is not a valid number!",
+  //   },
+  // };
 
   const openEditModal = (record) => {
     form.setFieldsValue(record);
@@ -153,22 +153,38 @@ const ManageUsers = () => {
                 // console.log("Failed:", errorInfo);
               }}
               autoComplete="off"
-              validateMessages={validateMessages}
+              // validateMessages={validateMessages}
             >
-              <div className="col-12">
-                <label htmlFor="name" className="mb-1">
-                  Name
+              <div className="col-md-6 col-12 pe-md-2">
+                <label htmlFor="firstName" className="mb-1">
+                  First Name
                 </label>
                 <Form.Item
-                  name="name"
+                  name="firstName"
                   rules={[
                     {
                       required: true,
-                      message: "Please input moderator's name!",
+                      message: "Please input moderator's first name!",
                     },
                   ]}
                 >
-                  <Input placeholder="input moderator's name" />
+                  <Input placeholder="input moderator's first name" />
+                </Form.Item>
+              </div>
+              <div className="col-md-6 col-12 ps-md-2">
+                <label htmlFor="lastName" className="mb-1">
+                  Last Name
+                </label>
+                <Form.Item
+                  name="lastName"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please input moderator's last name!",
+                    },
+                  ]}
+                >
+                  <Input placeholder="input moderator's last name" />
                 </Form.Item>
               </div>
               <div className="col-12">
@@ -181,6 +197,7 @@ const ManageUsers = () => {
                     {
                       type: "email",
                       required: true,
+                      message: "Please input moderator's email address!",
                     },
                   ]}
                 >
@@ -196,6 +213,7 @@ const ManageUsers = () => {
                     rules={[
                       {
                         required: true,
+                        message: "Please input moderator's password!",
                       },
                     ]}
                     style={{ marginBottom: "0" }}
@@ -277,6 +295,8 @@ const UsersTable = ({ tabIndex, data, handleEditModal }) => {
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
   const searchInput = useRef(null);
+
+  const dispatch = useDispatch();
 
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
     confirm();
@@ -395,6 +415,12 @@ const UsersTable = ({ tabIndex, data, handleEditModal }) => {
       ),
   });
 
+  const handleBlockUnblock = (id,status)=> {
+    let newStatus = !status ? true : false;
+    // console.log(id, newStatus);
+    dispatch(blockUnblockUser(id, newStatus));
+  }
+
   const columns = [
     {
       title: "Name",
@@ -422,11 +448,12 @@ const UsersTable = ({ tabIndex, data, handleEditModal }) => {
       {
         title: "Quick Actions",
         render: (record) => (
-          <div className="d-flex justify-content-center">
+          <div className="d-flex">
             <Button
               disabled={
                 role === "moderator" && !permissions.includes("blockUser")
               }
+              onClick={()=>handleBlockUnblock(record._id, record.isBlocked)}
               danger
               className="block-btn"
             >
@@ -488,6 +515,8 @@ const UsersTable = ({ tabIndex, data, handleEditModal }) => {
       }
     );
   }
+
+
 
   return (
     <Table

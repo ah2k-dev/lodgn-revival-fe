@@ -7,13 +7,13 @@ const ManageProfile = () => {
 
   const [updatePassword, setUpdatePassword] = useState(false);
 
-  const validateMessages = {
-    required: "${label} is required!",
-    types: {
-      email: "${label} is not a valid email!",
-      number: "${label} is not a valid number!",
-    },
-  };
+  // const validateMessages = {
+  //   required: "${label} is required!",
+  //   types: {
+  //     email: "${label} is not a valid email!",
+  //     number: "${label} is not a valid number!",
+  //   },
+  // };
 
   const handleUpdate = () => {
     formRef.current.submit();
@@ -30,7 +30,8 @@ const ManageProfile = () => {
         <div className="w-100 d-flex flex-column gap-lg-3 gap-2 rounded-container bg-white p-xl-5 p-lg-4 py-4 px-2 shadow position-relative">
           <Form
             initialValues={{
-              name: "User 01",
+              firstName: "User",
+              lastName: "01",
               email: "user01@test.com",
             }}
             ref={formRef}
@@ -41,22 +42,38 @@ const ManageProfile = () => {
               console.log("Failed:", errorInfo);
             }}
             autoComplete="off"
-            validateMessages={validateMessages}
+            // validateMessages={validateMessages}
           >
             <div className="col-sm-6 col-12 px-3">
-              <label htmlFor="name" className="mb-1">
-                Username
+              <label htmlFor="firstName" className="mb-1">
+                First Name
               </label>
               <Form.Item
-                name="name"
+                name="firstName"
                 rules={[
                   {
                     required: true,
-                    message: "Please input moderator's name!",
+                    message: "First name is required!",
                   },
                 ]}
               >
-                <Input placeholder="input moderator's name" />
+                <Input placeholder="input your first name" />
+              </Form.Item>
+            </div>
+            <div className="col-sm-6 col-12 px-3">
+              <label htmlFor="lastName" className="mb-1">
+                Last Name
+              </label>
+              <Form.Item
+                name="lastName"
+                rules={[
+                  {
+                    required: true,
+                    message: "Last name is required!",
+                  },
+                ]}
+              >
+                <Input placeholder="input your last name" />
               </Form.Item>
             </div>
             <div className="col-sm-6 col-12 px-3">
@@ -72,7 +89,39 @@ const ManageProfile = () => {
                   },
                 ]}
               >
-                <Input placeholder="input moderator's email address" />
+                <Input placeholder="input your email address" />
+              </Form.Item>
+            </div>
+            <div className="col-sm-6 col-12 px-3">
+              <label htmlFor="phone" className="mb-1">
+                Phone Number
+              </label>
+              <Form.Item
+                name="phone"
+                rules={[
+                  {
+                    message: "Please input a valid phone number!",
+                    pattern: /^[0-9]+$/,
+                  },
+                ]}
+              >
+                <Input placeholder="input your phone number" />
+              </Form.Item>
+            </div>
+            <div className="col-sm-6 col-12 px-3">
+              <label htmlFor="company" className="mb-1">
+                company
+              </label>
+              <Form.Item
+                name="company"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please input your company name!",
+                  },
+                ]}
+              >
+                <Input placeholder="input your company name" />
               </Form.Item>
             </div>
             <div className="col-12 px-3">
@@ -101,7 +150,7 @@ const ManageProfile = () => {
                 // console.log("Failed:", errorInfo);
               }}
               autoComplete="off"
-              validateMessages={validateMessages}
+              // validateMessages={validateMessages}
             >
               <div className="col-sm-6 col-12 px-3">
                 <label htmlFor="password" className="mb-1">

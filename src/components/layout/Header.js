@@ -171,14 +171,12 @@ const Header = () => {
       align="middle"
     >
       {location.pathname === "/" ||
-      location.pathname === "/auth" ||
-      location.pathname === "requestToken" ||
-      location.pathname === "/auth/forgot-password" ||
+      location.pathname.includes("auth") ||
       location.pathname.includes("verifyEmail") ||
       location.pathname.includes("resetPassword") ? (
         <div className="header-left col-2">
           <img
-            src={location.pathname !== "/auth" ? coloredLogo : whiteLogo}
+            src={!location.pathname.includes("auth") ? coloredLogo : whiteLogo}
             width={100}
           />
         </div>

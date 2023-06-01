@@ -25,7 +25,8 @@ const AuthLayout = () => {
       <div className="auth-layout-right d-md-flex d-none col-xl-7 col-md-6">
         <h1>
           Better rates,
-          <br />Better savings.
+          <br />
+          Better savings.
         </h1>
       </div>
     </Row>

@@ -2,6 +2,8 @@ import { Button, Form, Input, InputNumber, message, Upload } from "antd";
 import axios from "axios";
 import React, { useRef, useState } from "react";
 import HotelPhotosCarousel from "./HotelPhotosCarousel";
+import { useDispatch } from "react-redux";
+import { updateOffer } from "../../actions/requestActions";
 
 const UpdateHotelDetails = ({ offerings, setOfferings, flag, request }) => {
   const formRef = useRef();
@@ -10,8 +12,8 @@ const UpdateHotelDetails = ({ offerings, setOfferings, flag, request }) => {
   const [uploadedImagesUrls, setUploadedImagesUrls] = useState([]);
   const [loading, setLoading] = useState(false);
   const [updateDb, setUpdateDb] = useState(false);
-
   const [showCarousel, setShowCarousel] = useState(true);
+  const dispatch = useDispatch();
 
   const hiddenFileInput = useRef(null);
   const handleClick = (event) => {
@@ -145,8 +147,14 @@ const UpdateHotelDetails = ({ offerings, setOfferings, flag, request }) => {
         setLoading(false);
       }
     } else {
+      // console.log("api call here");
+      let offer_id = request?.offerings?.find(
+        (offering) => offering.flag == flag
+      )._id;
       let payload = {
-        images: values.files,
+        images: values.files
+          ? values.files
+          : request?.offerings[flag - 1].images,
         title: values.hotel_title,
         description: values.description,
         rates: {
@@ -160,13 +168,20 @@ const UpdateHotelDetails = ({ offerings, setOfferings, flag, request }) => {
             : "https://" + values.payment_link,
         flag: flag,
       };
+      // console.log(offer_id, payload);
+      dispatch(updateOffer(offer_id, payload));
       setLoading(false);
     }
   };
 
   const handleSaveDb = () => {
     setUpdateDb(true);
-    formRef.current.submit();
+
+    if (files.length > 0) {
+      handleSave();
+    } else {
+      formRef.current.submit();
+    }
   };
 
   return (

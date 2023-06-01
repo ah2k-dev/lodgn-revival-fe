@@ -117,19 +117,20 @@ export const updateModerator = (moderator) => async (dispatch) => {
   }
 };
 
-export const blockUnblockUser = (userId) => async (dispatch) => {
+export const blockUnblockUser = (userId, status) => async (dispatch) => {
   dispatch({ type: userConstants.BLOCKUNBLOCK_USER_REQUEST });
   try {
     attachToken();
-    const res = await custAxios.put(`/user/${userId}`);
+    const res = await custAxios.put(`/user/blockUnblock`, {id: userId, status: status});
     if (res) {
       dispatch({
         type: userConstants.BLOCKUNBLOCK_USER_SUCCESS,
       });
+      
       message.success({
-        content: "User blocked/unblocked successfully",
+        content: status ? "User blocked successfully" :"User unblocked successfully",
         style: {
-          marginTop: "20vh",
+          marginTop: "5vh",
         },
       });
       dispatch(fetchUsers());

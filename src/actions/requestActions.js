@@ -404,7 +404,7 @@ export const updateOffer = (id, data) => async (dispatch) => {
   });
   try {
     attachToken();
-    const res = await custAxios.post(`/requests/updateOffer/${id}`, data);
+    const res = await custAxios.put(`/requests/updateOffer/${id}`, data);
     if (res) {
       message.success({
         content: "Offer Updated Successfully",
