@@ -98,7 +98,8 @@ const Header = () => {
     }
   };
 
-  const handleSelect = (index) => {
+  const handleSelect = (index, place) => {
+    console.log(place);
     setSelectedIndex(index);
     setSearch(places[index].description);
     setPlaces([]);
@@ -108,6 +109,17 @@ const Header = () => {
     );
     service.getDetails({ placeId: placeId }, (result, status) => {
       if (status === "OK") {
+        const addressComponents = result.address_components;
+        let state = "";
+        let zipCode = "";
+        for (let i = 0; i < addressComponents.length; i++) {
+          const types = addressComponents[i].types;
+          if (types.includes("administrative_area_level_1")) {
+            state = addressComponents[i].long_name;
+          } else if (types.includes("postal_code")) {
+            zipCode = addressComponents[i].short_name;
+          }
+        }
         setCenter({
           lat: result.geometry.location.lat(),
           lng: result.geometry.location.lng(),
@@ -117,6 +129,8 @@ const Header = () => {
             lat: result.geometry.location.lat(),
             lng: result.geometry.location.lng(),
             string: places[index].description,
+            state: state,
+            zipCode: zipCode,
           })
         );
         service.nearbySearch(
@@ -248,7 +262,7 @@ const Header = () => {
                   {places.map((place, index) => (
                     <li
                       key={place.place_id}
-                      onClick={() => handleSelect(index)}
+                      onClick={() => handleSelect(index, place)}
                       className={index === selectedIndex ? "selected" : ""}
                     >
                       {place.description}
@@ -358,6 +372,7 @@ const Header = () => {
             <span className="title location-title">
               {jobDetails?.location.string}
             </span>
+            <span className="description">{`${center?.state}, ${center?.zipCode ? center?.zipCode : "N/A"}`}</span>
           </div>
           <div className="detail flex">
             <div>

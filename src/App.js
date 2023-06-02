@@ -27,7 +27,7 @@ import ViewRejectedRequests from "./pages/admin/ViewRejectedRequests.js";
 import Livechat from "./components/LiveChat.js";
 import { useSelector } from "react-redux";
 import ManageUsers from "./pages/admin/ManageUsers.js";
-import ManageProfile from "./pages/user/ManageProfile.js";
+import ManageProfile from "./pages/ManageProfile.js";
 
 function App() {
   const { isAuthenticated, user } = useSelector((state) => state.auth);

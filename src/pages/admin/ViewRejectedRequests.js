@@ -47,11 +47,7 @@ const ViewRejectedRequests = () => {
               rejected.map((request, i) => (
                 <RequestComponent request={request} key={i} />
               ))
-            ) : (
-              <div className="d-flex flex-column justify-content-center align-items-center">
-                <h2 className="font-poppins">No Deferred Requests</h2>
-              </div>
-            )}
+            ) : null}
           </>
         )}
       </div>

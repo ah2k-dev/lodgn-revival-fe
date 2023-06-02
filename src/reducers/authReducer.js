@@ -1,4 +1,5 @@
 import { authConstants } from "../constants/authConstants";
+import { userConstants } from "../constants/userConstaants";
 import { getToken } from "../hooks/auth";
 const token = getToken();
 const userData = JSON.parse(localStorage.getItem("user"));
@@ -17,10 +18,23 @@ export const authReducer = (
     case authConstants.VERIFY_EMAIL_REQUEST:
     case authConstants.RESET_PASSWORD_REQUEST:
     case authConstants.GOOGLE_AUTH_REQUEST:
+    case userConstants.FETCH_PERSONAL_INFO_REQUEST:
       return {
         ...state,
         loading: true,
       };
+
+    case userConstants.FETCH_PERSONAL_INFO_SUCCESS:
+      localStorage.setItem("user", JSON.stringify(action.payload.data.user));
+      return {
+        ...state,
+        loading: false,
+        user: {
+          jwtToken: state.user.jwtToken,
+          userData: action.payload.data.user,
+        },
+      };
+
     case authConstants.LOGIN_SUCCESS:
     case authConstants.GOOGLE_AUTH_SUCCESS:
       return {
@@ -42,6 +56,7 @@ export const authReducer = (
     case authConstants.VERIFY_EMAIL_FAILURE:
     case authConstants.RESET_PASSWORD_FAILURE:
     case authConstants.GOOGLE_AUTH_FAILURE:
+    case userConstants.FETCH_PERSONAL_INFO_FAILURE:
       return {
         ...state,
         loading: false,

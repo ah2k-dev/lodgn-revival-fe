@@ -16,7 +16,6 @@ export const userReducer = (
     case userConstants.CREATE_MODERATOR_REQUEST:
     case userConstants.FETCH_PERSONAL_INFO_REQUEST:
     case userConstants.UPDATE_PERSONAL_INFO_REQUEST:
-    case userConstants.UPDATE_PERSONAL_INFO_REQUEST:
       return {
         ...state,
         loading: true,
@@ -34,7 +33,6 @@ export const userReducer = (
     case userConstants.CREATE_MODERATOR_SUCCESS:
     case userConstants.UPDATE_PERSONAL_INFO_SUCCESS:
     case userConstants.UPDATE_MODERATOR_SUCCESS:
-    case userConstants.UPDATE_PERSONAL_INFO_SUCCESS:
       return {
         ...state,
         loading: false,

@@ -20,6 +20,7 @@ import {
   blockUnblockUser,
   createModerator,
   fetchUsers,
+  updateModerator,
 } from "../../actions/userActions";
 import { GetPermissions, UseGetRole } from "../../hooks/auth";
 import { LoadingOutlined } from "@ant-design/icons";
@@ -37,25 +38,40 @@ const ManageUsers = () => {
 
   const [showPasswordField, setShowPasswordField] = useState(true);
 
+  const [moderatorId, setModeratorId] = useState("");
+
   const [form] = Form.useForm();
 
   const handleFinish = async (values) => {
-    const res = await dispatch(createModerator(values));
+    console.log(values);
+    let res;
+    if (showPasswordField) {
+      res = await dispatch(
+        createModerator({
+          ...values,
+          firstName: values.firstname,
+          lastName: values.lastname,
+        })
+      );
+    } else {
+      res = await dispatch(
+        updateModerator({
+          ...values,
+          firstName: values.firstname,
+          lastName: values.lastname,
+          id: moderatorId,
+        })
+      );
+    }
     if (res) {
       form.resetFields();
+      setModeratorId("");
       setIsModalOpen(false);
     }
   };
 
-  // const validateMessages = {
-  //   required: "${label} is required!",
-  //   types: {
-  //     email: "${label} is not a valid email!",
-  //     number: "${label} is not a valid number!",
-  //   },
-  // };
-
   const openEditModal = (record) => {
+    setModeratorId(record._id);
     form.setFieldsValue(record);
     setShowPasswordField(false);
     setIsModalOpen(true);
@@ -160,11 +176,11 @@ const ManageUsers = () => {
               // validateMessages={validateMessages}
             >
               <div className="col-md-6 col-12 pe-md-2">
-                <label htmlFor="firstName" className="mb-1">
+                <label htmlFor="firstname" className="mb-1">
                   First Name
                 </label>
                 <Form.Item
-                  name="firstName"
+                  name="firstname"
                   rules={[
                     {
                       required: true,
@@ -176,11 +192,11 @@ const ManageUsers = () => {
                 </Form.Item>
               </div>
               <div className="col-md-6 col-12 ps-md-2">
-                <label htmlFor="lastName" className="mb-1">
+                <label htmlFor="lastname" className="mb-1">
                   Last Name
                 </label>
                 <Form.Item
-                  name="lastName"
+                  name="lastname"
                   rules={[
                     {
                       required: true,

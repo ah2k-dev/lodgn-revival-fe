@@ -44,6 +44,7 @@ const Footer = () => {
           {center?.string && (
             <div className="detail pl-0">
               <span className="title location-title">{center?.string}</span>
+              <span className="description">{`${center?.state}, ${center?.zipCode ? center?.zipCode : "N/A"}`}</span>
             </div>
           )}
           <div className="detail flex">
