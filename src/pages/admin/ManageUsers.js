@@ -16,7 +16,11 @@ import {
 import { useRef, useState } from "react";
 import Highlighter from "react-highlight-words";
 import { useDispatch, useSelector } from "react-redux";
-import { blockUnblockUser, createModerator, fetchUsers } from "../../actions/userActions";
+import {
+  blockUnblockUser,
+  createModerator,
+  fetchUsers,
+} from "../../actions/userActions";
 import { GetPermissions, UseGetRole } from "../../hooks/auth";
 import { LoadingOutlined } from "@ant-design/icons";
 
@@ -415,20 +419,24 @@ const UsersTable = ({ tabIndex, data, handleEditModal }) => {
       ),
   });
 
-  const handleBlockUnblock = (id,status)=> {
+  const handleBlockUnblock = (id, status) => {
     let newStatus = !status ? true : false;
     // console.log(id, newStatus);
     dispatch(blockUnblockUser(id, newStatus));
-  }
+  };
 
   const columns = [
     {
-      title: "Name",
-      dataIndex: "name",
-      key: "name",
-      ...getColumnSearchProps("name"),
-      sorter: (a, b) => a.name.length - b.name.length,
+      title: "Full Name",
+      // dataIndex: "username",
+      // key: "username",
+      ...getColumnSearchProps("username"),
+      sorter: (a, b) => a.username.length - b.username.length,
       sortDirections: ["descend", "ascend"],
+      render: (record) =>
+        `${record?.firstname !== undefined ? record?.firstname : ""} ${
+          record?.lastname !== undefined ? record?.lastname : ""
+        }`,
     },
     {
       title: "Email Address",
@@ -453,7 +461,7 @@ const UsersTable = ({ tabIndex, data, handleEditModal }) => {
               disabled={
                 role === "moderator" && !permissions.includes("blockUser")
               }
-              onClick={()=>handleBlockUnblock(record._id, record.isBlocked)}
+              onClick={() => handleBlockUnblock(record._id, record.isBlocked)}
               danger
               className="block-btn"
             >
@@ -515,8 +523,6 @@ const UsersTable = ({ tabIndex, data, handleEditModal }) => {
       }
     );
   }
-
-
 
   return (
     <Table

@@ -11,12 +11,12 @@
 
 @media screen and (max-width: 1024px) {
     .map-container {
-        height: calc(100vh - 135px - 85px)
+        height: calc(100vh - 200px)
     }
 }
 
 @media screen and (max-width: 660px) {
     .map-container {
-        height: calc(100vh - 130px - 130px)
+        height: calc(100vh - 239px)
     }
 }

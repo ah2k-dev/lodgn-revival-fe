@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@900&display=swap");
 
 .auth-layout-container {
-  min-height: calc(100vh - 102px);
+  min-height: calc(100vh - 90px);
 }
 
 .auth-layout-right {

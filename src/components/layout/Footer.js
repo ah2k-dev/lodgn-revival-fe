@@ -40,10 +40,10 @@ const Footer = () => {
       }
     >
       <Row justify="space-between" align="start">
-        <div className="details col-md-7 col-sm-8 col-12 d-flex justify-content-start">
+        <div className="details col-md-7 col-12 d-flex justify-content-start">
           {center?.string && (
             <div className="detail pl-0">
-              <span className="title">{center?.string}</span>
+              <span className="title location-title">{center?.string}</span>
             </div>
           )}
           <div className="detail flex">

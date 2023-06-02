@@ -2,7 +2,7 @@
   min-height: 100vh;
   min-width: 20vw;
   width: 20vw;
-  padding: 0  1.5rem;
+  padding: 0 1.5rem;
   z-index: 10;
   background-color: #2e3d44;
 }
@@ -31,30 +31,38 @@
   color: #72aa83;
 }
 
-.logoutBtn {
-  background: #88C289;
+.logoutBtn,
+.saveBtn {
+  background: #88c289 !important;
   min-height: 40px;
-  transition: 0.5s ease-in-out;
-  font-family: "Cairo", sans-serif;
   color: white;
   font-weight: bold;
-  border: 1px solid #88C289 !important;
+  border: 1px solid #88c289 !important;
   border-radius: 50px;
-  -webkit-border-radius: 50px;
+  -webkit-border-radius: 50px !important;
   -moz-border-radius: 50px;
   -ms-border-radius: 50px;
   -o-border-radius: 50px;
 }
 
-.logoutBtn:hover {
+.logoutBtn:hover,
+.saveBtn:hover {
   background: transparent;
-  color: #88C289 !important;
+}
+
+.saveBtn span {
+  font-family: "Cairo", sans-serif;
+  font-weight: 800;
+}
+
+.saveBtn:hover span {
+  color: #88c289 !important;
 }
 
 .help-desk-details {
-    font-family: "Cairo", sans-serif;
-    color: white;
-    font-weight: bold;
+  font-family: "Cairo", sans-serif;
+  color: white;
+  font-weight: bold;
 }
 
 .hamburger-icon {
@@ -66,13 +74,13 @@
     display: block;
   }
   .sideNav {
-    padding: 0  1.8rem;
+    padding: 0 1.8rem;
     transform: translateX(-500px);
     -webkit-transform: translateX(-500px);
     -moz-transform: translateX(-500px);
     -ms-transform: translateX(-500px);
     -o-transform: translateX(-500px);
-}
+  }
   .sideNav.active {
     transform: translateX(0);
   }

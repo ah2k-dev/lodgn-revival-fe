@@ -5,14 +5,14 @@ const JobDetailsGrid = ({ jobLocation, jobAddress, start_date, start_date_month,
     <>
       <div className="details">
         <div className='detail pl-0 w-100'>
-          <span className='title'>
+          <span className='title location-title'>
             {jobLocation}
           </span>
           <span className='description'>
             {jobAddress}
           </span>
         </div>
-        <div className='detail flex'>
+        <div className='detail flex justify-content-center'>
           <div>
             <span className='title'>
               {start_date}

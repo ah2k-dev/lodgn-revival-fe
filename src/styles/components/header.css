@@ -7,6 +7,7 @@
 
 .header-container.dark-green-header {
   background-color: #2a3e45;
+  padding: 18px 20px;
 }
 
 .landing-page-searchbar {
@@ -57,7 +58,8 @@
   cursor: pointer;
 }
 
-.header-middle .search-bar .auto-complete-list li:hover {
+.header-middle .search-bar .auto-complete-list li:hover,
+.header-middle .search-bar .auto-complete-list .selected {
   background-color: rgba(197, 197, 197, 0.486);
 }
 
@@ -103,7 +105,7 @@
 
 .rooms-picker .room-details h4 {
   color: #222222;
-  font-family: 'Cairo', sans-serif;
+  font-family: "Cairo", sans-serif;
   font-weight: 800;
   font-size: 1rem;
   line-height: 1;
@@ -115,7 +117,7 @@
   padding: 0;
   color: #707070;
   font-weight: normal;
-  font-family: 'Helvetica Neue', sans-serif;
+  font-family: "Helvetica Neue", sans-serif;
 }
 
 .rooms-picker .room-counter span {
@@ -165,6 +167,14 @@
   justify-content: flex-end;
 }
 
+.header-right.details .detail .title {
+  font-size: 1.5rem;
+}
+
+.header-right.details .detail .description {
+  font-size: 0.75rem;
+}
+
 .header-icons {
   font-size: 40px;
   color: black;
@@ -178,7 +188,7 @@
   }
 }
 
-@media screen and (max-width: 770px) {
+@media screen and (max-width: 767px) {
   .landing-page-searchbar {
     margin-top: 20px;
     position: relative;
@@ -194,6 +204,12 @@
   .header-container .searchError {
     margin-top: 90px;
   }
+  .header-container.dark-green-header .details .detail .title {
+    font-size: 1rem;
+  }
+  .header-container.dark-green-header .details .detail .description {
+    font-size: 0.65rem;
+  }
 }
 
 @media screen and (max-width: 660px) {
@@ -207,9 +223,20 @@
     flex-wrap: wrap !important;
     justify-content: center;
   }
+
+  .header-container.dark-green-header .details {
+    flex-direction: unset;
+  }
+
+  .header-container.dark-green-header .details .detail .title {
+    font-size: 0.9rem;
+  }
+  .header-container.dark-green-header .details .detail .description {
+    font-size: 0.5rem;
+  }
 }
 
-@media screen and (max-width: 540px) {
+@media screen and (max-width: 576px) {
   .header-middle .search-bar {
     padding: 8px 20px 8px 5px;
   }

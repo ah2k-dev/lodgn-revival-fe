@@ -1,6 +1,5 @@
 import { Alert, Col, Row } from "antd";
 import React, { useRef, useState } from "react";
-import { useAuth } from "../../hooks/auth";
 import { useDispatch } from "react-redux";
 import { FaUserAlt } from "react-icons/fa";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -55,6 +54,8 @@ const Header = () => {
   const [doubleRoom, setDoubleRoom] = useState(0);
   const [supportAnimal, setSupportAnimal] = useState(0);
 
+  const [selectedIndex, setSelectedIndex] = useState(-1);
+
   const handleSearch = (event) => {
     setSearch(event.target.value);
     if (event.target.value) {
@@ -76,13 +77,36 @@ const Header = () => {
     }
   };
 
-  const handleSelect = (place) => {
-    setSearch(place.description);
+  const handleSelection = (event) => {
+    // console.log(event.key);
+    if (event.key === "ArrowUp") {
+      event.preventDefault();
+      setSelectedIndex((prevIndex) =>
+        prevIndex > 0 ? prevIndex - 1 : places.length - 1
+      );
+    } else if (event.key === "ArrowDown") {
+      event.preventDefault();
+      setSelectedIndex((prevIndex) =>
+        prevIndex < places.length - 1 ? prevIndex + 1 : 0
+      );
+    } else if (event.key === "Enter") {
+      event.preventDefault();
+      if (selectedIndex !== -1) {
+        handleSelect(selectedIndex);
+        setSelectedIndex(-1);
+      }
+    }
+  };
+
+  const handleSelect = (index) => {
+    setSelectedIndex(index);
+    setSearch(places[index].description);
     setPlaces([]);
+    const placeId = places[index].place_id;
     const service = new window.google.maps.places.PlacesService(
       document.createElement("div")
     );
-    service.getDetails({ placeId: place.place_id }, (result, status) => {
+    service.getDetails({ placeId: placeId }, (result, status) => {
       if (status === "OK") {
         setCenter({
           lat: result.geometry.location.lat(),
@@ -92,7 +116,7 @@ const Header = () => {
           setCenterData({
             lat: result.geometry.location.lat(),
             lng: result.geometry.location.lng(),
-            string: place.description,
+            string: places[index].description,
           })
         );
         service.nearbySearch(
@@ -216,14 +240,16 @@ const Header = () => {
                 type="text"
                 value={search}
                 onChange={handleSearch}
+                onKeyDown={handleSelection}
                 placeholder="Search job location"
               />
               {places.length > 0 && (
                 <ul className="auto-complete-list position-absolute mt-3 bg-white py-2 px-3">
-                  {places.map((place) => (
+                  {places.map((place, index) => (
                     <li
                       key={place.place_id}
-                      onClick={() => handleSelect(place)}
+                      onClick={() => handleSelect(index)}
+                      className={index === selectedIndex ? "selected" : ""}
                     >
                       {place.description}
                     </li>
@@ -327,9 +353,11 @@ const Header = () => {
       (location.pathname === "/auth/forgot-password" && jobDetails) ||
       (location.pathname.includes("verifyEmail") && jobDetails) ||
       (location.pathname.includes("resetPassword") && jobDetails) ? (
-        <div className="col-8 header-right details">
+        <div className="col-md-8 col-12 header-right details">
           <div className="detail pl-0">
-            <span className="title">{jobDetails?.location.string}</span>
+            <span className="title location-title">
+              {jobDetails?.location.string}
+            </span>
           </div>
           <div className="detail flex">
             <div>

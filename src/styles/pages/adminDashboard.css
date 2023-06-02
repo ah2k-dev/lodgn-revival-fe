@@ -1,159 +1,150 @@
 .update-status-text {
-    color: #959595;
+  color: #959595;
 }
 
-.update-status input[type='radio'] {
-    -ms-transform: scale(1.8);
-    -webkit-transform: scale(1.8);
-    transform: scale(1.8);
+.update-status input[type="radio"] {
+  -ms-transform: scale(1.8);
+  -webkit-transform: scale(1.8);
+  transform: scale(1.8);
 }
 
 .admin-page .btns {
-    justify-content: space-between;
+  justify-content: space-between;
 }
 
-.update-status input[type='radio']:checked {
-    accent-color: black;
+.update-status input[type="radio"]:checked {
+  accent-color: black;
 }
 
 .update-status {
-    margin-top: 3rem;
+  margin-top: 3rem;
 }
 
 .ant-input-number {
-    border-radius: 10px !important;
+  border-radius: 10px !important;
 }
 
 .update-status .status-yellow {
-    color: #d5cc00;
+  color: #d5cc00;
 }
 
 .update-status .status-blue {
-    color: #07A4FD;
+  color: #07a4fd;
 }
 
 .update-status .status-green {
-    color: #5DA874;
+  color: #5da874;
 }
 
-.update-status input[type='radio'],
+.update-status input[type="radio"],
 .update-status label {
-    cursor: pointer;
+  cursor: pointer;
 }
 
-.admin-page .update-status-btn,
-.admin-page .reject-request-btn {
-    color: white;
-    border-radius: 4px;
-    min-height: 40px;
-    min-width: 100px;
-    border: none;
-    font-weight: 600;
-    transition: .5s ease-in-out;
+.update-status-btn,
+.reject-request-btn {
+  color: white !important;
+  box-shadow: none !important;
+  min-height: 40px;
+  min-width: 100px;
+  border: none;
+  border-radius: 50px !important;
+  -webkit-border-radius: 50px !important;
+  -moz-border-radius: 50px !important;
+  -ms-border-radius: 50px !important;
+  -o-border-radius: 50px !important;
 }
 
-.admin-page .update-status-btn {
-    background: linear-gradient(180deg, #48AF78 0%, #42996B 100%);
+.update-status-btn {
+  background: #88c289 !important;
 }
 
-.admin-page .reject-request-btn {
-    background-color: #de0707;
+.update-status-btn:hover {
+  background-color: transparent !important;
 }
 
-.admin-page .reject-request-btn:hover {
-    border: 1px solid #de0707 !important;
+.update-status-btn:hover span {
+  color: #88c289 !important;
 }
 
-.admin-page .reject-request-btn:hover span {
-    color: #de0707 !important;
+.reject-request-btn {
+  background-color: #de0707 !important;
 }
 
-.admin-page .update-status-btn:hover {
-    border: 1px solid #42996B !important;
+.reject-request-btn span,
+.update-status-btn span {
+  font-family: "Cairo", sans-serif;
+  font-weight: 800;
+}
+
+.reject-request-btn span {
+  color: white !important;
+}
+
+.reject-request-btn:hover {
+  background-color: transparent !important;
+  border: 1px solid #de0707 !important;
+}
+
+.reject-request-btn:hover span {
+  color: #de0707 !important;
+}
+
+.update-status-btn:hover {
+  border: 1px solid #42996b !important;
 }
 
 .update-hotel-details label {
-    color: #959595;
+  color: #959595;
 }
 
 .update-hotel-details input {
-    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.25);
-    border-radius: 10px;
-    border: none;
-    font-size: 1rem;
-    padding: 5px 8px;
+  box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+  border: none;
+  font-size: 1rem;
+  padding: 5px 8px;
 }
 
 .update-hotel-details input:focus {
-    box-shadow: 1px 1px 15px rgba(0, 0, 0, 0.25);
-    outline: none;
+  box-shadow: 1px 1px 15px rgba(0, 0, 0, 0.25);
+  outline: none;
 }
-
-
-
-
 
 .ant-carousel {
-    max-height: 200px !important;
-    overflow: hidden !important;
-}
-
-.update-hotel-details .saveBtn button {
-    background: linear-gradient(180deg, #48AF78 0%, #42996B 100%);
-    border-radius: 4px;
-    border: none;
-    font-weight: 600;
-    min-height: 40px;
-    transition: .5s ease-in-out;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.update-hotel-details .saveBtn button span {
-    background-color: transparent;
-    color: white;
-}
-
-.update-hotel-details .saveBtn button:hover {
-   border: solid 1px #42996B !important;
-   color: #42996B !important;
-   background: transparent !important;
-   background-color: transparent !important;
-}
-
-.update-hotel-details .saveBtn button:hover span {
-    color: #42996B !important;
+  max-height: 200px !important;
+  overflow: hidden !important;
 }
 
 span.completed-status {
-    background: linear-gradient(180deg, #5BA343 0%, rgba(91, 163, 67, 0.77) 100%);
-    border-radius: 10px;
-    color: white;
-    font-family: 'Poppins', sans-serif;
-    font-weight: 500;
-    padding: 10px 25px;
+  background: linear-gradient(180deg, #5ba343 0%, rgba(91, 163, 67, 0.77) 100%);
+  border-radius: 10px;
+  color: white;
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  padding: 10px 25px;
 }
 
+
 @media screen and (max-width: 1200px) {
-    .admin-page {
-        align-items: flex-end !important;
-        flex-direction: column;
-    }
-    .update-status {
-        margin-top: 1rem;
-    }
-    .update-status label {
-        font-size: 1rem;
-    }
-    .update-hotel-details .saveBtn {
-        margin-bottom: 20px;
-    }
+  .admin-page {
+    align-items: flex-end !important;
+    flex-direction: column;
+  }
+  .update-status {
+    margin-top: 1rem;
+  }
+  .update-status label {
+    font-size: 1rem;
+  }
+  .update-hotel-details .saveBtn {
+    margin-bottom: 20px;
+  }
 }
 
 @media screen and (max-width: 660px) {
-    .admin-page .btns {
-        width: 100%;
-        justify-content: center;
-    }
+  .admin-page .btns {
+    width: 100%;
+    justify-content: center;
+  }
 }

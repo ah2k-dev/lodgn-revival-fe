@@ -7,14 +7,6 @@ const ManageProfile = () => {
 
   const [updatePassword, setUpdatePassword] = useState(false);
 
-  // const validateMessages = {
-  //   required: "${label} is required!",
-  //   types: {
-  //     email: "${label} is not a valid email!",
-  //     number: "${label} is not a valid number!",
-  //   },
-  // };
-
   const handleUpdate = () => {
     formRef.current.submit();
   };
@@ -42,7 +34,6 @@ const ManageProfile = () => {
               console.log("Failed:", errorInfo);
             }}
             autoComplete="off"
-            // validateMessages={validateMessages}
           >
             <div className="col-sm-6 col-12 px-3">
               <label htmlFor="firstName" className="mb-1">
@@ -162,6 +153,12 @@ const ManageProfile = () => {
                     {
                       required: true,
                       message: "Please enter your new password!",
+                    },
+                    {
+                      pattern:
+                        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]).{8,}$/,
+                      message:
+                        "Password must contain at least 8 characters, 1 uppercase, 1 lowercase, 1 number, and 1 special character",
                     },
                   ]}
                 >
