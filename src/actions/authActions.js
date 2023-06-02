@@ -2,36 +2,41 @@ import { message } from "antd";
 import { authConstants } from "../constants/authConstants";
 import custAxios from "../services/axiosConfig";
 
-export const signup = (name, email, password) => async (dispatch) => {
-  dispatch({
-    type: authConstants.SIGNUP_REQUEST,
-  });
-  try {
-    const res = await custAxios.post("/auth/register", {
-      name,
-      email,
-      password,
-    });
-    if (res) {
-      dispatch({
-        type: authConstants.SIGNUP_SUCCESS,
-        payload: res.data.data,
-      });
-      message.success({
-        content: "Signup Successful",
-        style: {
-          marginTop: "10vh",
-        },
-      });
-      return true;
-    }
-  } catch (error) {
+export const signup =
+  (firstname, lastname, email, password, phone, company) => async (dispatch) => {
     dispatch({
-      type: authConstants.SIGNUP_FAILURE,
-      payload: error.response.data.message || "Server Error",
+      type: authConstants.SIGNUP_REQUEST,
     });
-  }
-};
+    try {
+      const res = await custAxios.post("/auth/register", {
+        firstname,
+        lastname,
+        email,
+        password,
+        phone,
+        company,
+      });
+      if (res) {
+        dispatch({
+          type: authConstants.SIGNUP_SUCCESS,
+          payload: res.data.data,
+        });
+        dispatch(requestToken(email, "request"))
+        message.success({
+          content: "Signup Successful",
+          style: {
+            marginTop: "10vh",
+          },
+        });
+        return true;
+      }
+    } catch (error) {
+      dispatch({
+        type: authConstants.SIGNUP_FAILURE,
+        payload: error.response.data.message || "Server Error",
+      });
+    }
+  };
 
 export const login = (email, password) => async (dispatch) => {
   dispatch({
@@ -84,7 +89,6 @@ export const requestToken = (email, type) => async (dispatch) => {
       `/auth/${type == "request" ? "requestEmailToken" : "forgotPassword"}`,
       { email }
     );
-    console.log(res);
     if (res) {
       dispatch({
         type: authConstants.REQUEST_TOKEN_SUCCESS,
@@ -98,7 +102,6 @@ export const requestToken = (email, type) => async (dispatch) => {
       return true;
     }
   } catch (error) {
-    console.log(email, type, error);
     dispatch({
       type: authConstants.REQUEST_TOKEN_FAILURE,
       payload: error.response.data.message || "Server Error",
@@ -110,7 +113,6 @@ export const verifyEmail = (token, email) => async (dispatch) => {
   dispatch({
     type: authConstants.VERIFY_EMAIL_REQUEST,
   });
-  console.log(email, token);
   try {
     const res = await custAxios.post("/auth/verifyEmail", {
       emailVerificationToken: token,
@@ -203,6 +205,36 @@ export const loginWithRequestPayload = (payload) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: authConstants.LOGIN_FAILURE,
+      payload: error.response.data.message || "Server Error",
+    });
+  }
+};
+
+export const googleAuth = (data) => async (dispatch) => {
+  dispatch({
+    type: authConstants.GOOGLE_AUTH_REQUEST,
+  });
+  try {
+    const res = await custAxios.post("/auth/googleAuth", data);
+    if (res) {
+      localStorage.setItem("token", res.data.data.jwtToken);
+      localStorage.setItem("user", JSON.stringify(res.data.data.userData));
+      localStorage.setItem("googleAuth", true);
+      dispatch({
+        type: authConstants.GOOGLE_AUTH_SUCCESS,
+        payload: res.data.data,
+      });
+      message.success({
+        content: "Login Successful",
+        style: {
+          marginTop: "10vh",
+        },
+      });
+      return true;
+    }
+  } catch (error) {
+    dispatch({
+      type: authConstants.GOOGLE_AUTH_FAILURE,
       payload: error.response.data.message || "Server Error",
     });
   }

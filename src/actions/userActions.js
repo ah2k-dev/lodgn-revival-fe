@@ -44,7 +44,7 @@ export const createModerator = (moderator) => async (dispatch) => {
   dispatch({ type: userConstants.CREATE_MODERATOR_REQUEST });
   try {
     attachToken();
-    const res = await custAxios.post("/user/moderator", moderator);
+    const res = await custAxios.post("/user/createModerator", moderator);
     if (res) {
       dispatch({
         type: userConstants.CREATE_MODERATOR_SUCCESS,
@@ -55,6 +55,7 @@ export const createModerator = (moderator) => async (dispatch) => {
           marginTop: "20vh",
         },
       });
+      dispatch(fetchUsers());
       return true;
     }
   } catch (error) {
@@ -105,6 +106,7 @@ export const updateModerator = (moderator) => async (dispatch) => {
           marginTop: "20vh",
         },
       });
+      dispatch(fetchUsers());
       return true;
     }
   } catch (error) {
@@ -115,21 +117,23 @@ export const updateModerator = (moderator) => async (dispatch) => {
   }
 };
 
-export const blockUnblockUser = (userId) => async (dispatch) => {
+export const blockUnblockUser = (userId, status) => async (dispatch) => {
   dispatch({ type: userConstants.BLOCKUNBLOCK_USER_REQUEST });
   try {
     attachToken();
-    const res = await custAxios.put(`/user/${userId}`);
+    const res = await custAxios.put(`/user/blockUnblock`, {id: userId, status: status});
     if (res) {
       dispatch({
         type: userConstants.BLOCKUNBLOCK_USER_SUCCESS,
       });
+      
       message.success({
-        content: "User blocked/unblocked successfully",
+        content: status ? "User blocked successfully" :"User unblocked successfully",
         style: {
-          marginTop: "20vh",
+          marginTop: "5vh",
         },
       });
+      dispatch(fetchUsers());
       return true;
     }
   } catch (error) {

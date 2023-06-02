@@ -1,4 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;500;600;700;800;900;1000&display=swap');
+@import url('https://fonts.cdnfonts.com/css/helvetica-neue-9');
 
 body {
   margin: 0;
@@ -22,16 +24,28 @@ code {
   font-family: "Lato", sans-serif;
 }
 
+.font-cairo {
+  font-family: 'Cairo', sans-serif;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.outline-none {
+  outline: none;
+}
+
 .modal {
-  background-color: rgba(0, 0, 0, 0.0);
+  background-color: rgba(0, 0, 0, 0);
 }
 
 .modal.in {
-  animation: fadeIn .5s ease-in-out .3s 1 forwards;
+  animation: fadeIn 0.5s ease-in-out 0.3s 1 forwards;
 }
 
 .modal.out {
-  animation: fadeOut .5s ease-in-out 1 forwards;
+  animation: fadeOut 0.5s ease-in-out 1 forwards;
 }
 
 .fade-scale {
@@ -40,16 +54,16 @@ code {
 }
 
 .fade-scale.in {
-  animation: fadeScale .5s ease-in-out .3s 1 forwards;
+  animation: fadeScale 0.5s ease-in-out 0.3s 1 forwards;
 }
 
 .fade-scale.out {
-  animation: fadeScaleOut .5s ease-in-out 1 forwards;
+  animation: fadeScaleOut 0.5s ease-in-out 1 forwards;
 }
 
 @keyframes fadeIn {
   0% {
-    background-color: rgba(0, 0, 0, 0.0);
+    background-color: rgba(0, 0, 0, 0);
     opacity: 0;
   }
   100% {
@@ -64,7 +78,7 @@ code {
     opacity: 1;
   }
   100% {
-    background-color: rgba(0, 0, 0, 0.0);
+    background-color: rgba(0, 0, 0, 0);
     opacity: 0;
   }
 }
@@ -131,7 +145,7 @@ code {
 
 /* Chat Icon */
 .woot-widget-bubble.woot-elements--right {
-  background: linear-gradient(180deg, #48AF78 0%, #42996B 100%) !important;
+  background: #5DA874 !important;
 }
 
 @import "./styles/general.css";

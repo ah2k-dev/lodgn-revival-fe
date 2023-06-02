@@ -1,4 +1,4 @@
-import { Button, Col, Form, Input, Row, Typography, message } from "antd";
+import { Button, Form, Input, Row, Typography, message } from "antd";
 import React, { useEffect } from "react";
 import BackButton from "../components/BackButton";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -9,24 +9,27 @@ const RequstToken = () => {
   const { pathname } = useLocation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
   const { loading, error, isAuthenticated } = useSelector(
     (state) => state.auth
   );
   const onFinish = async (values) => {
-    console.log(pathname);
     let type;
     if (pathname === "/auth/requestToken") {
       type = "request";
     } else {
       type = "reset";
     }
-    console.log(type);
     const res = await dispatch(requestToken(values.email, type));
     if (res) {
       if (type === "request") {
-        navigate("/auth/verifyEmail/" + values.email);
+        navigate("/auth/verifyEmail/" + values.email, {
+          state: location?.state,
+        });
       } else {
-        navigate("/auth/resetPassword/" + values.email);
+        navigate("/auth/resetPassword/" + values.email, {
+          state: location?.state,
+        });
       }
     }
   };
@@ -44,7 +47,7 @@ const RequstToken = () => {
   }, [error, dispatch]);
 
   return (
-    <div className="auth-container">
+    <div className="auth-container position-relative">
       <div className="auth-backBtn position-absolute start-0">
         <BackButton />
       </div>
@@ -53,14 +56,14 @@ const RequstToken = () => {
           <div className="col-8 col-sm-6 col-md-9 col-lg-8 col-xl-8">
             <Typography.Title level={3}>Find your Account</Typography.Title>
             <Typography.Paragraph>
-              Enter your email address and we'll send you a link to get back into
-              your account.
+              Enter your email address and we'll send you a link to get back
+              into your account.
             </Typography.Paragraph>
             <Form
               className="ant-row"
               onFinish={onFinish}
               onFinishFailed={(errorInfo) => {
-                console.log("Failed:", errorInfo);
+                // console.log("Failed:", errorInfo);
               }}
               style={{ width: "100%" }}
               autoComplete="off"
@@ -90,7 +93,6 @@ const RequstToken = () => {
                   </Button>
                 </Form.Item>
               </div>
-
             </Form>
           </div>
         </Row>

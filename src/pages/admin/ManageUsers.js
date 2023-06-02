@@ -15,10 +15,18 @@ import {
 } from "antd";
 import { useRef, useState } from "react";
 import Highlighter from "react-highlight-words";
-import { useDispatch } from "react-redux";
-import { fetchUsers } from "../../actions/userActions";
+import { useDispatch, useSelector } from "react-redux";
+import { blockUnblockUser, createModerator, fetchUsers } from "../../actions/userActions";
+import { GetPermissions, UseGetRole } from "../../hooks/auth";
+import { LoadingOutlined } from "@ant-design/icons";
 
 const ManageUsers = () => {
+  const role = UseGetRole();
+
+  const { error, loading, users, moderators } = useSelector(
+    (state) => state.user
+  );
+
   const [tabIndex, setTabIndex] = useState("1");
 
   const formRef = useRef(null);
@@ -27,25 +35,26 @@ const ManageUsers = () => {
 
   const [form] = Form.useForm();
 
-  const handleFinish = (values) => {
-    console.log(values);
-    form.resetFields();
-    setIsModalOpen(false);
+  const handleFinish = async (values) => {
+    const res = await dispatch(createModerator(values));
+    if (res) {
+      form.resetFields();
+      setIsModalOpen(false);
+    }
   };
 
-  const validateMessages = {
-    required: "${label} is required!",
-    types: {
-      email: "${label} is not a valid email!",
-      number: "${label} is not a valid number!",
-    },
-  };
+  // const validateMessages = {
+  //   required: "${label} is required!",
+  //   types: {
+  //     email: "${label} is not a valid email!",
+  //     number: "${label} is not a valid number!",
+  //   },
+  // };
 
   const openEditModal = (record) => {
     form.setFieldsValue(record);
     setShowPasswordField(false);
     setIsModalOpen(true);
-    console.log(record);
   };
 
   const showModal = () => {
@@ -53,48 +62,6 @@ const ManageUsers = () => {
     form.resetFields();
     setIsModalOpen(true);
   };
-
-  const usersData = [
-    {
-      key: "1",
-      name: "John Brown",
-      email: "john@example.com",
-      email_verified: "yes",
-    },
-    {
-      key: "2",
-      name: "Joe Black",
-      email: "joe@example.com",
-      email_verified: "no",
-    },
-    {
-      key: "3",
-      name: "Jim Green",
-      email: "jim@example.com",
-      email_verified: "yes",
-    },
-    {
-      key: "4",
-      name: "Jim Red",
-      email: "jim_2@example.com",
-      email_verified: "yes",
-    },
-  ];
-
-  const ModeratorsData = [
-    {
-      key: "1",
-      name: "James Green",
-      email: "james@example.com",
-      permissions: ["verifyPayment", "negotiate", "rejectRequest"],
-    },
-    {
-      key: "2",
-      name: "Jack White",
-      email: "jack@example.com",
-      permissions: ["block", "unblock"],
-    },
-  ];
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -118,190 +85,218 @@ const ManageUsers = () => {
 
   useEffect(() => {
     dispatch(fetchUsers());
-    // dispatch(fetchPersonalInfo());
   }, [dispatch]);
 
-  const items = [
-    {
-      key: "1",
-      label: `Users`,
-      children: <UsersTable tabIndex={tabIndex} data={usersData} />,
-    },
-    {
-      key: "2",
-      label: `Moderators`,
-      children: (
-        <UsersTable
-          tabIndex={tabIndex}
-          data={ModeratorsData}
-          handleEditModal={openEditModal}
-        />
-      ),
-    },
-  ];
+  let items;
+
+  if (role === "moderator") {
+    items = [
+      {
+        key: "1",
+        label: `Users`,
+        children: <UsersTable tabIndex={tabIndex} data={users} />,
+      },
+    ];
+  } else {
+    items = [
+      {
+        key: "1",
+        label: `Users`,
+        children: <UsersTable tabIndex={tabIndex} data={users} />,
+      },
+      {
+        key: "2",
+        label: `Moderators`,
+        children: (
+          <UsersTable
+            tabIndex={tabIndex}
+            data={moderators}
+            handleEditModal={openEditModal}
+          />
+        ),
+      },
+    ];
+  }
 
   return (
     <div className="manage-users py-5 d-flex flex-column gap-2 align-items-end">
-      {tabIndex === "2" && (
-        <Button className="add-mod-btn" onClick={() => showModal()}>
-          Add Moderator
-        </Button>
-      )}
-      <Tabs
-        className="w-100"
-        defaultActiveKey="1"
-        items={items}
-        onChange={onChange}
-      />
-      <Modal
-        title="Add Moderator"
-        open={isModalOpen}
-        onOk={handleOk}
-        onCancel={handleCancel}
-        okText="Save"
-      >
-        <Form
-          ref={formRef}
-          form={form}
-          className="ant-row"
-          onFinish={handleFinish}
-          onFinishFailed={(errorInfo) => {
-            console.log("Failed:", errorInfo);
-          }}
-          autoComplete="off"
-          validateMessages={validateMessages}
-        >
-          <div className="col-12">
-            <label htmlFor="name" className="mb-1">
-              name
-            </label>
-            <Form.Item
-              name="name"
-              rules={[
-                {
-                  required: true,
-                  message: "Please input moderator's name!",
-                },
-              ]}
-            >
-              <Input placeholder="input moderator's name" />
-            </Form.Item>
-          </div>
-          <div className="col-12">
-            <label htmlFor="email" className="mb-1">
-              Email
-            </label>
-            <Form.Item
-              name="email"
-              rules={[
-                {
-                  type: "email",
-                  required: true,
-                },
-              ]}
-            >
-              <Input placeholder="input moderator's email address" />
-            </Form.Item>
-          </div>
-          {showPasswordField !== false && (
-            <div className="col-12">
-              <label htmlFor="password">Password</label>
-              <Form.Item
-                className="w-100"
-                name="password"
-                rules={[
-                  {
-                    required: true,
-                  },
-                ]}
-                style={{ marginBottom: "0" }}
-              >
-                <Input.Password placeholder="Password" />
-              </Form.Item>
-            </div>
+      {loading ? (
+        <div className="loader w-100 d-flex justify-content-center align-items-center">
+          <LoadingOutlined style={{ fontSize: 65 }} spin />
+        </div>
+      ) : (
+        <>
+          {tabIndex === "2" && (
+            <Button className="add-mod-btn" onClick={() => showModal()}>
+              Add Moderator
+            </Button>
           )}
-          <div className="col-12">
-            <label htmlFor="permissions">Permissions:</label>
-            <Form.Item
-              name="permissions"
-              rules={[
-                {
-                  required: true,
-                  message: "Please select a permission!",
-                },
-              ]}
+          <Tabs
+            className="w-100"
+            defaultActiveKey="1"
+            items={items}
+            onChange={onChange}
+          />
+          <Modal
+            title="Add Moderator"
+            open={isModalOpen}
+            onOk={handleOk}
+            onCancel={handleCancel}
+            okText="Save"
+          >
+            <Form
+              ref={formRef}
+              form={form}
+              className="ant-row"
+              onFinish={handleFinish}
+              onFinishFailed={(errorInfo) => {
+                // console.log("Failed:", errorInfo);
+              }}
+              autoComplete="off"
+              // validateMessages={validateMessages}
             >
-              <Checkbox.Group>
-                <Row>
-                  <Col span={12}>
-                    <Checkbox value="rejectRequest" className="mb-1">
-                      Reject Requests
-                    </Checkbox>
-                  </Col>
-                  <Col span={12}>
-                    <Checkbox value="negotiate" className="mb-1">
-                      Negotiate
-                    </Checkbox>
-                  </Col>
-                  <Col span={12}>
-                    <Checkbox value="complete" className="mb-1">
-                      Complete
-                    </Checkbox>
-                  </Col>
-                  <Col span={12}>
-                    <Checkbox value="verifyPayment" className="mb-1">
-                      Verify Payment
-                    </Checkbox>
-                  </Col>
-                  <Col span={12}>
-                    <Checkbox value="approveUpdates" className="mb-1">
-                      Approve Requested Updates
-                    </Checkbox>
-                  </Col>
-                  <Col span={12}>
-                    <Checkbox value="declineUpdates" className="mb-1">
-                      Decline Requested Updates
-                    </Checkbox>
-                  </Col>
-                  {/* </Row> */}
-                  {/* </Checkbox.Group> */}
-                  {/* </Form.Item>
-            <Form.Item
-              name="usersPermission"
-              label="Users"
-              rules={[
-                {
-                  required: true,
-                  message: "Please select a permission!",
-                },
-              ]}
-            > */}
-                  {/* <Checkbox.Group>
-                <Row> */}
-                  <Col span={12}>
-                    <Checkbox value="block" className="mb-1">
-                      Block Users
-                    </Checkbox>
-                  </Col>
-                  <Col span={12}>
-                    <Checkbox value="unblock" className="mb-1">
-                      Unblock Users
-                    </Checkbox>
-                  </Col>
-                </Row>
-              </Checkbox.Group>
-            </Form.Item>
-          </div>
-        </Form>
-      </Modal>
+              <div className="col-md-6 col-12 pe-md-2">
+                <label htmlFor="firstName" className="mb-1">
+                  First Name
+                </label>
+                <Form.Item
+                  name="firstName"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please input moderator's first name!",
+                    },
+                  ]}
+                >
+                  <Input placeholder="input moderator's first name" />
+                </Form.Item>
+              </div>
+              <div className="col-md-6 col-12 ps-md-2">
+                <label htmlFor="lastName" className="mb-1">
+                  Last Name
+                </label>
+                <Form.Item
+                  name="lastName"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please input moderator's last name!",
+                    },
+                  ]}
+                >
+                  <Input placeholder="input moderator's last name" />
+                </Form.Item>
+              </div>
+              <div className="col-12">
+                <label htmlFor="email" className="mb-1">
+                  Email
+                </label>
+                <Form.Item
+                  name="email"
+                  rules={[
+                    {
+                      type: "email",
+                      required: true,
+                      message: "Please input moderator's email address!",
+                    },
+                  ]}
+                >
+                  <Input placeholder="input moderator's email address" />
+                </Form.Item>
+              </div>
+              {showPasswordField !== false && (
+                <div className="col-12">
+                  <label htmlFor="password">Password</label>
+                  <Form.Item
+                    className="w-100"
+                    name="password"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please input moderator's password!",
+                      },
+                    ]}
+                    style={{ marginBottom: "0" }}
+                  >
+                    <Input.Password placeholder="Password" />
+                  </Form.Item>
+                </div>
+              )}
+              <div className="col-12">
+                <label htmlFor="permissions">Permissions:</label>
+                <Form.Item
+                  name="permissions"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please select a permission!",
+                    },
+                  ]}
+                >
+                  <Checkbox.Group>
+                    <Row>
+                      <Col span={12}>
+                        <Checkbox value="rejectRequest" className="mb-1">
+                          Reject Requests
+                        </Checkbox>
+                      </Col>
+                      <Col span={12}>
+                        <Checkbox value="negotiate" className="mb-1">
+                          Negotiate
+                        </Checkbox>
+                      </Col>
+                      <Col span={12}>
+                        <Checkbox value="complete" className="mb-1">
+                          Complete
+                        </Checkbox>
+                      </Col>
+                      <Col span={12}>
+                        <Checkbox value="verifyPayment" className="mb-1">
+                          Verify Payment
+                        </Checkbox>
+                      </Col>
+                      <Col span={12}>
+                        <Checkbox value="approveUpdates" className="mb-1">
+                          Approve Requested Updates
+                        </Checkbox>
+                      </Col>
+                      <Col span={12}>
+                        <Checkbox value="declineUpdates" className="mb-1">
+                          Decline Requested Updates
+                        </Checkbox>
+                      </Col>
+                      <Col span={12}>
+                        <Checkbox value="blockUser" className="mb-1">
+                          Block Users
+                        </Checkbox>
+                      </Col>
+                      <Col span={12}>
+                        <Checkbox value="unblockUser" className="mb-1">
+                          Unblock Users
+                        </Checkbox>
+                      </Col>
+                    </Row>
+                  </Checkbox.Group>
+                </Form.Item>
+              </div>
+            </Form>
+          </Modal>
+        </>
+      )}
     </div>
   );
 };
 
 const UsersTable = ({ tabIndex, data, handleEditModal }) => {
+  const role = UseGetRole();
+
+  const permissions = GetPermissions();
+
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
   const searchInput = useRef(null);
+
+  const dispatch = useDispatch();
 
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
     confirm();
@@ -420,6 +415,12 @@ const UsersTable = ({ tabIndex, data, handleEditModal }) => {
       ),
   });
 
+  const handleBlockUnblock = (id,status)=> {
+    let newStatus = !status ? true : false;
+    // console.log(id, newStatus);
+    dispatch(blockUnblockUser(id, newStatus));
+  }
+
   const columns = [
     {
       title: "Name",
@@ -440,22 +441,29 @@ const UsersTable = ({ tabIndex, data, handleEditModal }) => {
     columns.push(
       {
         title: "Email Verified",
-        dataIndex: "email_verified",
-        key: "email_verified",
+        dataIndex: "emailVerified",
+        key: "emailVerified",
+        render: (item) => (item === true ? "Yes" : "No"),
       },
       {
         title: "Quick Actions",
-        render: (_, record) => (
-          <div className="d-flex justify-content-end">
-            <Button danger className="block-btn">
-              Block
+        render: (record) => (
+          <div className="d-flex">
+            <Button
+              disabled={
+                role === "moderator" && !permissions.includes("blockUser")
+              }
+              onClick={()=>handleBlockUnblock(record._id, record.isBlocked)}
+              danger
+              className="block-btn"
+            >
+              {!record.isBlocked ? "Block" : "Unblock"}
             </Button>
           </div>
         ),
       }
     );
   } else {
-    console.log(data);
     columns.push(
       {
         title: "Permissions",
@@ -477,9 +485,9 @@ const UsersTable = ({ tabIndex, data, handleEditModal }) => {
                   return "Approve Requested Updates";
                 case "declineUpdates":
                   return "Decline Requested Updates";
-                case "block":
+                case "blockUser":
                   return "Block Users";
-                case "unblock":
+                case "unblockUser":
                   return "Unblock Users";
                 default:
                   return permission;
@@ -491,7 +499,7 @@ const UsersTable = ({ tabIndex, data, handleEditModal }) => {
       {
         title: "Quick Actions",
         render: (_, record) => (
-          <div className="d-flex justify-content-end gap-3">
+          <div className="d-flex justify-content-center gap-3">
             <Button
               danger
               className="edit-btn"
@@ -500,7 +508,7 @@ const UsersTable = ({ tabIndex, data, handleEditModal }) => {
               Edit
             </Button>
             <Button danger className="block-btn">
-              Remove
+              {!record.isBlocked ? "Block" : "Unblock"}
             </Button>
           </div>
         ),
@@ -508,7 +516,15 @@ const UsersTable = ({ tabIndex, data, handleEditModal }) => {
     );
   }
 
-  return <Table columns={columns} dataSource={data} />;
+
+
+  return (
+    <Table
+      columns={columns}
+      dataSource={data}
+      rowKey={(record) => record._id}
+    />
+  );
 };
 
 export default ManageUsers;

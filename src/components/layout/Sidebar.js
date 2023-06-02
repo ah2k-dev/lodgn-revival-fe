@@ -1,16 +1,15 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { UseGetRole } from "../../hooks/auth";
+import { auth } from "../../services/firebase";
+import whiteLogo from "../../assets/images/white logo.png";
 
 const Sidebar = ({ activeClass }) => {
-  // conditionlly render menu items based on user role
-
   const location = useLocation();
 
   const navClass = "d-flex cursor-pointer align-items-center outline-none";
 
   const role = UseGetRole();
-  // const role = 'user';
 
   const userNavs = [
     {
@@ -27,7 +26,7 @@ const Sidebar = ({ activeClass }) => {
     },
     {
       route: "/dashboard/user/rejected-requests",
-      navName: "Rejected Requests",
+      navName: "Deferred Requests",
     },
     {
       route: "/dashboard/user/previous-stays",
@@ -57,8 +56,8 @@ const Sidebar = ({ activeClass }) => {
       navName: "Requested Updates",
     },
     {
-      route: "/dashboard/admin/rejected-requests",
-      navName: "Rejected Requests",
+      route: "/dashboard/admin/deferred-requests",
+      navName: "Deferred Requests",
     },
     {
       route: "/dashboard/admin/manage-users",
@@ -72,23 +71,37 @@ const Sidebar = ({ activeClass }) => {
 
   var navs;
 
-  role === "admin" ? (navs = adminNavs) : (navs = userNavs);
+  role === "admin" || role === "moderator"
+    ? (navs = adminNavs)
+    : (navs = userNavs);
 
-  const logout = () => {
+  const logout = async () => {
+    const googleAuth = localStorage.getItem("googleAuth");
+    if (googleAuth) {
+      await auth.signOut();
+    } else {
+    }
     localStorage.clear();
-    location.reload();
-  }
+    window.location.href = "/";
+  };
 
   return (
-    <nav className={`sideNav ${ activeClass && 'active' } bg-white shadow px-4 d-flex flex-column justify-content-between pb-4 position-fixed top-0 left-0`}>
+    <nav
+      className={`sideNav ${
+        activeClass && "active"
+      } shadow d-flex flex-column justify-content-between pb-4 position-fixed top-0 left-0`}
+    >
       <ul className="relative m-0 list-none py-4 px-0">
-        <span>
-          <h1 className="text-2xl fst-italic p-4 fw-bold">LODGN</h1>
-        </span>
+      <div className="col-6 mb-4">
+          <img
+            src={whiteLogo}
+            className="w-100"
+          />
+        </div>
 
         {navs.map((nav, i) => {
           return (
-            <li className="position-relative sideNavLinks mb-4" key={i}>
+            <li className="position-relative sideNavLinks mb-3" key={i}>
               <Link
                 to={nav.route}
                 className={
@@ -113,7 +126,7 @@ const Sidebar = ({ activeClass }) => {
             Log - Out
           </Link>
           {role === "user" && (
-            <span className="d-flex flex-column align-items-center">
+            <span className="help-desk-details d-flex flex-column align-items-center">
               <span>Help-Desk:</span>
               <span>786-874 9988</span>
             </span>

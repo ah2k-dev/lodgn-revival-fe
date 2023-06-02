@@ -16,8 +16,7 @@ const VerifyEmail = () => {
   const onFinish = async (values) => {
     const res = await dispatch(verifyEmail(values.token, email));
     if (res) {
-      console.log(res);
-      navigate("/auth");
+      navigate("/auth", { state: location?.state });
     }
   };
   useEffect(() => {
@@ -33,7 +32,7 @@ const VerifyEmail = () => {
   }, [error, dispatch]);
 
   return (
-    <div className="auth-container">
+    <div className="auth-container position-relative">
       <div className="auth-backBtn position-absolute start-0">
         <BackButton />
       </div>
@@ -56,7 +55,7 @@ const VerifyEmail = () => {
               className="ant-row"
               onFinish={onFinish}
               onFinishFailed={(errorInfo) => {
-                console.log("Failed:", errorInfo);
+                // console.log("Failed:", errorInfo);
               }}
               style={{ width: "100%" }}
               autoComplete="off"

@@ -57,16 +57,13 @@ export const getRequests = () => async (dispatch) => {
     type: requestConstants.GET_REQUESTS_REQUEST,
   });
   try {
-    console.log("getting requests");
     attachToken();
-    console.log("getting requests");
     const res = await custAxios.get("/requests/get");
     dispatch({
       type: requestConstants.GET_REQUESTS_SUCCESS,
       payload: res.data.data.requests,
     });
   } catch (error) {
-    console.log(error);
     dispatch({
       type: requestConstants.GET_REQUESTS_FAILURE,
       payload: error.response.data.message || "Server Error",
@@ -123,8 +120,8 @@ export const changeStatus = (id, data) => async (dispatch) => {
         },
       });
       dispatch(getRequests());
-      if(data.selectedOffer && data.selectedOffer !== ""){
-        dispatch(bookOffer(id, data.selectedOffer));
+      if (data.selectedOffer && data.selectedOffer !== "") {
+        dispatch(bookOffer(id, data.selectedOffer, data.selectedFile));
       }
       return true;
     }
@@ -163,16 +160,17 @@ export const getOngoingRequests = () => async (dispatch) => {
   }
 };
 
-export const bookOffer = (request, offering) => async (dispatch) => {
+export const bookOffer = (request, offering, file) => async (dispatch) => {
   dispatch({
     type: requestConstants.BOOK_OFFER_REQUEST,
   });
   try {
+    let form = new FormData();
+    form.append('requestId', request);
+    form.append('offering', offering);
+    form.append('receipt', file);
     attachToken();
-    const res = await custAxios.post("/booking/bookOffer", {
-      requestId: request,
-      offering,
-    });
+    const res = await custAxios.post("/booking/bookOffer", form);
     if (res) {
       dispatch({
         type: requestConstants.BOOK_OFFER_SUCCESS,
@@ -208,7 +206,6 @@ export const getPreviousStays = () => async (dispatch) => {
       payload: res.data.data.stays,
     });
   } catch (error) {
-    console.log(error);
     dispatch({
       type: requestConstants.GET_PREVIOUS_STAYS_FAILURE,
       payload: error.response.data.message || "Server Error",
@@ -221,12 +218,11 @@ export const updateRequest = (data) => async (dispatch) => {
     type: requestConstants.UPDATE_REQUEST_REQUEST,
   });
   try {
-    // console.log(data);
     const config = {
       headers: {
         "Content-Type": "multipart/form-data",
       },
-    }
+    };
     attachToken();
     const res = await custAxios.post(`/booking/requestUpdate`, data, config);
     if (res) {
@@ -402,6 +398,34 @@ export const fetchReports = () => async (dispatch) => {
   }
 };
 
+export const updateOffer = (id, data) => async (dispatch) => {
+  dispatch({
+    type: requestConstants.UPDATE_OFFER_REQUEST,
+  });
+  try {
+    attachToken();
+    const res = await custAxios.put(`/requests/updateOffer/${id}`, data);
+    if (res) {
+      message.success({
+        content: "Offer Updated Successfully",
+        style: {
+          marginTop: "10vh",
+        },
+      });
+      dispatch({
+        type: requestConstants.UPDATE_OFFER_SUCCESS,
+        payload: res.data.data,
+      });
+      dispatch(getRequests());
+      return true;
+    }
+  } catch (error) {
+    dispatch({
+      type: requestConstants.UPDATE_OFFER_FAILURE,
+      payload: error.response.data.message || "Server Error",
+    });
+  }
+};
 
 export const clearErrors = () => async (dispatch) => {
   dispatch({

@@ -6,128 +6,16 @@
 }
 
 .map-container {
-    height: calc(100vh - 85px - 100px);
-}
-
-.footer-container {
-    padding: 15px 0 25px;
-    /* margin: 0 30px; */
-}
-
-.footer-container button {
-    background: linear-gradient(180deg, #48AF78 0%, #42996B 100%);
-    color: white;
-    font-family: 'Poppins', sans-serif;
-    font-weight: 500;
-    width: 100%;
-    border: none;
-    border-radius: 4px;
-    padding: 25px 0;
-    font-size: 1.25rem;
-    display: flex;
-    align-items: center;
-}
-
-.footer-container button:hover {
-    background: transparent;
-    border: 1px solid #42996B !important;
-    color: #42996B !important;
-}
-
-.details {
-    display: flex !important;
-}
-
-.details .detail {
-    display: flex;
-    flex-direction: column;
-    border-right: 2px solid #0000004D;
-    padding: 0 20px;
-}
-
-.details .detail.pl-0 {
-    padding-left: 0;
-}
-
-.details .detail div {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.details .detail.flex {
-    flex-direction: row !important;
-    gap: 10px;
-}
-
-.details .detail:last-child {
-    border: none;
-}
-
-.details .detail .title {
-    font-size: 1.65rem;
-    font-family: 'lato', sans-serif;
-    line-height: 1;
-    font-weight: 700;
-    color: #48AF78;
-}
-
-.details .detail .description {
-    font-size: .85rem;
-    font-family: 'lato', sans-serif;
-    font-weight: 400;
-    color: #959595;
-}
-
-.footer-btn button:disabled {
-    cursor: not-allowed;
+    height: calc(100vh - 200px);
 }
 
 @media screen and (max-width: 1024px) {
-    .details .detail {
-        width: fit-content;
-    }
-    .details .detail .title {
-        font-size: 1.25rem;
-    }
-    .footer-container button {
-        font-size: 1.15rem;
-    }
     .map-container {
         height: calc(100vh - 135px - 85px)
     }
 }
 
-@media screen and (max-width: 770px) {
-    .details .detail .title {
-        font-size: 1.25rem;
-    }
-    .footer-container button {
-        font-size: 1rem;
-    }
-}
-
 @media screen and (max-width: 660px) {
-    .details {
-        width: 100%;
-        justify-content: center;
-    }
-    .footer-btn {
-        display: flex;
-        width: 100%;
-        align-items: center;
-        justify-content: flex-end;
-    }
-    .footer-btn button {
-        margin-top: 15px;
-        width: unset;
-    }
-    /* .footer-container {
-        margin: 0 15px;
-    } */
-    .details .detail {
-        padding: 0 10px;
-    }
     .map-container {
         height: calc(100vh - 130px - 130px)
     }

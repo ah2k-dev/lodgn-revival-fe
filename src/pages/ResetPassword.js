@@ -1,12 +1,13 @@
 import React, { useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { clearErrors, resetPassword } from "../actions/authActions";
-import { Button, Col, Form, Input, Row, Typography, message } from "antd";
+import { Button, Form, Input, Row, Typography, message } from "antd";
 import BackButton from "../components/BackButton";
 
 const ResetPassword = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { email } = useParams();
   const dispatch = useDispatch();
   const { loading, error, isAuthenticated } = useSelector(
@@ -22,10 +23,11 @@ const ResetPassword = () => {
       });
       return;
     }
-    const res = await dispatch(resetPassword(values.token, email, values.password));
+    const res = await dispatch(
+      resetPassword(values.token, email, values.password)
+    );
     if (res) {
-      console.log(res);
-      navigate("/auth");
+      navigate("/auth", { state: location?.state });
     }
   };
   useEffect(() => {
@@ -41,7 +43,7 @@ const ResetPassword = () => {
   }, [error, dispatch]);
 
   return (
-    <div className="auth-container">
+    <div className="auth-container position-relative">
       <div className="auth-backBtn position-absolute start-0">
         <BackButton />
       </div>
@@ -64,7 +66,7 @@ const ResetPassword = () => {
               className="ant-row"
               onFinish={onFinish}
               onFinishFailed={(errorInfo) => {
-                console.log("Failed:", errorInfo);
+                // console.log("Failed:", errorInfo);
               }}
               style={{ width: "100%" }}
               autoComplete="off"
@@ -88,11 +90,17 @@ const ResetPassword = () => {
                   rules={[
                     {
                       required: true,
-                      message: "Please input your email!",
+                      message: "Please input your password!",
+                    },
+                    {
+                      pattern:
+                        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]).{8,}$/,
+                      message:
+                        "Password must contain at least 8 characters, 1 uppercase, 1 lowercase, 1 number, and 1 special character",
                     },
                   ]}
                 >
-                  <Input type="password" placeholder="Password" />
+                  <Input.Password placeholder="Password" />
                 </Form.Item>
               </div>
               <div className="col-12">
@@ -101,11 +109,23 @@ const ResetPassword = () => {
                   rules={[
                     {
                       required: true,
-                      message: "Please input your email!",
+                      message: "Please confirm your password!",
                     },
+                    ({ getFieldValue }) => ({
+                      validator(_, value) {
+                        if (!value || getFieldValue("password") === value) {
+                          return Promise.resolve();
+                        }
+                        return Promise.reject(
+                          new Error(
+                            "The two passwords that you entered do not match!"
+                          )
+                        );
+                      },
+                    }),
                   ]}
                 >
-                  <Input type="password" placeholder="Confirm Password" />
+                  <Input.Password placeholder="Confirm Password" />
                 </Form.Item>
               </div>
               <div className="col-12">

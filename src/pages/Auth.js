@@ -6,20 +6,19 @@ import {
   signup,
   login,
   loginWithRequestPayload,
+  googleAuth,
 } from "../actions/authActions";
 import { useLocation, useNavigate } from "react-router-dom";
-import { clearState } from "../actions/mapActions";
+import { signInWithGoogle } from "../services/firebase";
+import firebase from "../services/firebase";
 
 const Auth = () => {
   const [active, setActive] = useState("login");
   const [emailVerify, setEmailVerify] = useState(false);
+  const [user, setUser] = useState(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-
-  // console.log(location.state);
-
-  // const { location , dateRange , roomRequirements } = locate.state;
 
   const { loading, error, isAuthenticated } = useSelector(
     (state) => state.auth
@@ -43,16 +42,21 @@ const Auth = () => {
       }
     } else {
       const res = await dispatch(
-        signup(values.name, values.email, values.password)
-      )
-      // .then((res) => {
-        // });
-        console.log(res);
-        if (!res) {
-          setActive("signup");
-        } else {
-          navigate("/auth/requestToken");
-          // setActive("login");
+        signup(
+          values.firstname,
+          values.lastname,
+          values.email,
+          values.password,
+          values.phone,
+          values.company
+        )
+      );
+      if (!res) {
+        setActive("signup");
+      } else {
+        navigate("/auth/verifyEmail/" + values.email, {
+          state: location.state,
+        });
       }
     }
   };
@@ -70,6 +74,13 @@ const Auth = () => {
   };
 
   useEffect(() => {
+    firebase.auth().onAuthStateChanged((user) => {
+      setUser(user);
+      // console.log(user);
+    });
+  }, []);
+
+  useEffect(() => {
     if (error) {
       if (error.includes("Email not verified")) {
         setEmailVerify(true);
@@ -84,11 +95,26 @@ const Auth = () => {
     }
   }, [error, dispatch]);
 
+  useEffect(() => {
+    if (user) {
+      // console.log(user);
+      dispatch(
+        googleAuth({
+          email: user.email,
+          name: user.displayName,
+          profilePic: user.photoURL,
+          emailVerified: user.emailVerified,
+        })
+      );
+      setUser();
+    }
+  }, [user]);
+
   return (
-    <div className="auth-container">
+    <div className="auth-container position-relative">
       <div className="auth-inner">
         <Row className="auth-form">
-          <div className="col-8 col-sm-6 col-md-9 col-lg-8 col-xl-8">
+          <div className="col-8 col-sm-6 col-md-9 col-lg-8 col-xl-8 pb-5">
             <Typography.Title level={5} className="text-green">
               Log in or sign up to book
             </Typography.Title>
@@ -97,24 +123,40 @@ const Auth = () => {
               className="ant-row"
               onFinish={onFinish}
               onFinishFailed={(errorInfo) => {
-                console.log("Failed:", errorInfo);
+                // console.log("Failed:", errorInfo);
               }}
               autoComplete="off"
             >
               {active == "signup" && (
-                <div className="col-12">
-                  <label htmlFor="name">User-name</label>
-                  <Form.Item
-                    name="name"
-                    rules={[
-                      {
-                        required: true,
-                        message: "Please input your name!",
-                      },
-                    ]}
-                  >
-                    <Input placeholder="Name" />
-                  </Form.Item>
+                <div className="col-12 d-flex justify-content-between">
+                  <div className="col-6 pe-2">
+                    <label htmlFor="firstname">First Name</label>
+                    <Form.Item
+                      name="firstname"
+                      rules={[
+                        {
+                          required: true,
+                          message: "Please input your first name!",
+                        },
+                      ]}
+                    >
+                      <Input placeholder="First Name" />
+                    </Form.Item>
+                  </div>
+                  <div className="col-6 ps-2">
+                    <label htmlFor="lastname">Last Name</label>
+                    <Form.Item
+                      name="lastname"
+                      rules={[
+                        {
+                          required: true,
+                          message: "Please input your last name!",
+                        },
+                      ]}
+                    >
+                      <Input placeholder="Last Name" />
+                    </Form.Item>
+                  </div>
                 </div>
               )}
               <div className="col-12">
@@ -141,15 +183,55 @@ const Auth = () => {
                       required: true,
                       message: "Please input your password!",
                     },
+                    {
+                      pattern:
+                        active === "signup"
+                          ? /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]).{8,}$/
+                          : null,
+                      message:
+                        "Password must contain at least 8 characters, 1 uppercase, 1 lowercase, 1 number, and 1 special character",
+                    },
                   ]}
                   style={{ marginBottom: "0" }}
                 >
                   <Input.Password placeholder="Password" />
                 </Form.Item>
               </div>
+              {active === "signup" && (
+                <>
+                  <div className="col-12">
+                    <label htmlFor="phone_number">Phone Number</label>
+                    <Form.Item
+                      name="phone"
+                      rules={[
+                        {
+                          message: "Please input a valid phone number!",
+                          pattern: /^[0-9]+$/,
+                        },
+                      ]}
+                    >
+                      <Input placeholder="Phone number" />
+                    </Form.Item>
+                  </div>
+                  <div className="col-12">
+                    <label htmlFor="company">Company</label>
+                    <Form.Item
+                      name="company"
+                      rules={[
+                        {
+                          required: true,
+                          message: "Please input your company name!",
+                        },
+                      ]}
+                    >
+                      <Input placeholder="Company" />
+                    </Form.Item>
+                  </div>
+                </>
+              )}
               <div className="email-senders">
                 <Form.Item>
-                  {emailVerify && (
+                  {emailVerify && active !== "signup" && (
                     <a
                       className="verify-email"
                       onClick={() => navigate("/auth/requestToken")}
@@ -157,22 +239,12 @@ const Auth = () => {
                       Request email token
                     </a>
                   )}
-                  {!emailVerify && (
+                  {!emailVerify && active !== "signup" && (
                     <a
                       className="forgot-password"
                       onClick={() => {
                         navigate("/auth/forgot-password", {
-                          state: {
-                            location: location.state
-                              ? location.state.location
-                              : "",
-                            dateRange: location.state
-                              ? location.state.dateRange
-                              : "",
-                            roomRequirements: location.state
-                              ? location.state.roomRequirements
-                              : "",
-                          },
+                          state: location?.state,
                         });
                       }}
                     >
@@ -231,7 +303,7 @@ const Auth = () => {
             </Form>
             <Divider>OR</Divider>
             <div className="col-12">
-              <Button className="btnGoogle">
+              <Button className="btnGoogle" onClick={signInWithGoogle}>
                 <img src="/assets/icons/google.png" alt="google" />{" "}
                 <span>Continue with Google</span>
               </Button>

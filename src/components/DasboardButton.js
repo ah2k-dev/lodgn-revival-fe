@@ -1,6 +1,5 @@
 import { Button } from "antd";
 import React from "react";
-// import { RiArrowGoBackLine } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { AiOutlineHome } from "react-icons/ai";
@@ -10,7 +9,7 @@ const DashboardButton = () => {
   const navigate = useNavigate();
   const handleClick = () => {
     if (user.userData) {
-      if (user.userData.role === "admin") {
+      if (user.userData.role === "admin" || user.userData.role === "moderator") {
         navigate("/dashboard/admin");
       } else {
         navigate("/dashboard/user");
@@ -18,14 +17,13 @@ const DashboardButton = () => {
     }
   };
   return (
-    // isAuthentiated && (
+    
       <Button className="backBtn" style={{
         top: "10vh !important",
       }} onClick={handleClick}>
-        {/* <RiArrowGoBackLine /> */}
         <AiOutlineHome />
       </Button>
-    // )
+    
   );
 };
 

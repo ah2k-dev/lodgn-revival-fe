@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import JobDetailsGrid from "../../components/layout/JobDetailsGrid";
 import { useState } from "react";
 import { Button, message, Select } from "antd";
@@ -12,12 +12,11 @@ import {
   rejectReuest,
 } from "../../actions/requestActions";
 import moment from "moment";
+import { GetPermissions, UseGetRole } from "../../hooks/auth";
 
 const CurrentRequest = () => {
   const dispatch = useDispatch();
   const { error, loading, requests } = useSelector((state) => state.request);
-
-  // console.log(requests);
 
   useEffect(() => {
     dispatch(getRequests());
@@ -63,7 +62,9 @@ const CurrentRequest = () => {
 };
 
 const RequestComponent = ({ request, status, index }) => {
-  console.log(request.offerings);
+  const role = UseGetRole();
+
+  const permissions = GetPermissions();
 
   const [newStatus, setNewStatus] = useState(status);
   const [offerings, setOfferings] = useState([]);
@@ -75,25 +76,23 @@ const RequestComponent = ({ request, status, index }) => {
   let count = [1, 2, 3];
 
   const handleRadioChange = (e) => {
-    // const value = e.target.value;
     setNewStatus(e.target.value); // saves the memory usage
   };
 
   const handleUpdate = (id) => {
     if (newStatus !== "completed") {
-      if(newStatus === "paymentVerified"){
+      if (newStatus === "paymentVerified") {
         dispatch(
           changeStatus(id, {
             status: newStatus,
             selectedOffer: selectedOffer,
-            // status: newStatus,
+            selectedFile: receipt,
           })
         );
       } else {
         dispatch(
           changeStatus(id, {
             status: newStatus,
-            // status: newStatus,
           })
         );
       }
@@ -113,7 +112,6 @@ const RequestComponent = ({ request, status, index }) => {
             offerings: offerings,
           })
         );
-        // console.log(offerings);
       }
     }
   };
@@ -122,31 +120,84 @@ const RequestComponent = ({ request, status, index }) => {
     dispatch(rejectReuest(id));
   };
 
-  // useEffect(() => {
-  //   if (error) {
-  //     message.error({
-  //       content: error,
-  //       style: {
-  //         marginTop: "10vh",
-  //       },
-  //     });
-  //     dispatch(clearErrors());
-  //   }
-  // }, [error, dispatch]);
-
-  // console.log(status);
+  const [receipt, setReceipt] = useState(null);
+  const hiddenFileInput = useRef(null);
 
   const handleSelect = (value) => {
-    setSelectedOffer(value)
-    console.log(`selected ${value}`);
+    setSelectedOffer(value);
+  };
+
+  const handleUploadButton = (event) => {
+    hiddenFileInput.current.click();
+  };
+
+  const handleFile = (event) => {
+    const fileUploaded = event.target.files[0];
+
+    setReceipt(fileUploaded);
   };
 
   return (
     <div className="rounded-container d-flex flex-column justify-content-between bg-white p-lg-5 p-4 gap-4 w-100 mb-5">
-      <div className="admin-page d-flex justify-content-between align-items-start">
+      <div className="admin-page d-flex flex-column justify-content-between align-items-start">
+        <div className="btns d-flex gap-3 justify-content-end w-100 align-items-center mt-lg-0 mt-4 mb-3">
+          {newStatus === "paymentVerified" && (
+            <>
+              <Button
+                className="upload-receipt-btn w-auto"
+                onClick={handleUploadButton}
+              >
+                Upload payment receipt
+              </Button>
+              <input
+                type="file"
+                id="file"
+                ref={hiddenFileInput}
+                onChange={handleFile}
+                style={{ display: "none" }}
+              />
+              <Select
+                showSearch
+                placeholder="Select an offering"
+                optionFilterProp="children"
+                onChange={handleSelect}
+                filterOption={(input, option) =>
+                  (option?.label ?? "").includes(input)
+                }
+                options={request?.offerings.map((offer) => ({
+                  value: offer._id,
+                  label: offer.title,
+                }))}
+              />
+            </>
+          )}
+          {(newStatus !== request.status || offerings.length > 0) && (
+            <Button
+              className="update-status-btn"
+              loading={loading}
+              onClick={() => handleUpdate(request._id)}
+              disabled={
+                (newStatus === "completed" && offerings.length == 0) ||
+                (newStatus === "paymentVerified" && selectedOffer === "")
+              }
+            >
+              Update
+            </Button>
+          )}
+          {newStatus === "recieved" || newStatus === "negotiating" ? (
+            <Button
+              disabled={
+                role === "moderator" && !permissions.includes("rejectRequest")
+              }
+              className="reject-request-btn"
+              onClick={() => rejectRequestFunc(request._id)}
+            >
+              Reject Request
+            </Button>
+          ) : null}
+        </div>
         <JobDetailsGrid
           jobLocation={request.location.string}
-          //   jobAddress="Sarasota,FL. 33178"
           start_date={moment(request?.dateRange[0]).format("DD")}
           end_date={moment(request?.dateRange[1]).format("DD")}
           start_date_month={moment(request?.dateRange[0]).format("MMMM")}
@@ -158,41 +209,6 @@ const RequestComponent = ({ request, status, index }) => {
           single_rooms={request?.roomRequirements?.single}
           double_rooms={request?.roomRequirements?.double}
         />
-        <div className="btns d-flex gap-3 justify-content-between align-items-center mt-lg-0 mt-4">
-          {newStatus === "paymentVerified" && (
-            <Select
-              showSearch
-              placeholder="Select an offering"
-              optionFilterProp="children"
-              onChange={handleSelect}
-              filterOption={(input, option) =>
-                (option?.label ?? "").includes(input)
-              }
-              options={request?.offerings.map((offer) => ({
-                value: offer._id,
-                label: offer.title,
-              }))}
-            />
-          )}
-          {newStatus !== request.status && (
-            <Button
-              className="update-status-btn"
-              loading={loading}
-              onClick={() => handleUpdate(request._id)}
-              disabled={(newStatus === "completed" && offerings.length == 0) || (newStatus === "paymentVerified" && selectedOffer === "")}
-            >
-              Update
-            </Button>
-          )}
-          {newStatus === "recieved" || newStatus === "negotiating" ? (
-            <Button
-              className="reject-request-btn"
-              onClick={() => rejectRequestFunc(request._id)}
-            >
-              Reject Request
-            </Button>
-          ) : null}
-        </div>
       </div>
       <div className="update-status row justify-content-center">
         <h3 className="update-status-text font-poppins text-uppercase fs-6">
@@ -224,7 +240,8 @@ const RequestComponent = ({ request, status, index }) => {
                 defaultChecked={"negotiating" === request.status}
                 disabled={
                   request.status === "completed" ||
-                  request.status === "paymentVerified"
+                  request.status === "paymentVerified" ||
+                  (role === "moderator" && !permissions.includes("negotiate"))
                 }
                 onClick={handleRadioChange}
               />
@@ -240,7 +257,8 @@ const RequestComponent = ({ request, status, index }) => {
                 defaultChecked={"completed" === request.status}
                 disabled={
                   request.status === "paymentVerified" ||
-                  request.status === "recieved"
+                  request.status === "recieved" ||
+                  (role === "moderator" && !permissions.includes("complete"))
                 }
                 onClick={handleRadioChange}
               />
@@ -254,7 +272,11 @@ const RequestComponent = ({ request, status, index }) => {
                 type="radio"
                 value="paymentVerified"
                 defaultChecked={"paymentVerfied" === request.status}
-                disabled={request.status != "completed"}
+                disabled={
+                  request.status != "completed" ||
+                  (role === "moderator" &&
+                    !permissions.includes("verifyPayment"))
+                }
                 onClick={handleRadioChange}
               />
               PAYMENT VERIFIED
@@ -264,12 +286,9 @@ const RequestComponent = ({ request, status, index }) => {
       </div>
       {newStatus === "completed" && (
         <div className="row mt-4 gap-0 justify-content-xl-between justify-content-center">
-          {/* {!request.hasOwnProperty("bookedOffering") && ( */}
           <h3 className="update-status-text font-poppins text-uppercase fs-6">
             UPDATE STATUS TO CLIENT:
           </h3>
-          {/* // )} */}
-          {/* {!request.hasOwnProperty("bookedOffering") && ( */}
           <div className="row mt-3 justify-content-between">
             {count.map((val, ind) => {
               return (
@@ -283,30 +302,8 @@ const RequestComponent = ({ request, status, index }) => {
               );
             })}
           </div>
-          {/* // )} */}
         </div>
       )}
-      {/* {request.hasOwnProperty("bookedOffering") && (
-        <div className="cards-container columns-1 mt-4 justify-content-center">
-          <div className="position-relative">
-            <span className="rare-find-badge" style={{ zIndex: 100 }}>
-              Booked
-            </span>
-            <Card
-              title={request.bookedOffering.title}
-              description={request.bookedOffering.description}
-              distance={1.5}
-              singlePrice={request.bookedOffering.rates.single}
-              doublePrice={request.bookedOffering.rates.double}
-              animalSupport={request.bookedOffering.rates.animalSupport}
-              images={request.bookedOffering.images}
-              id={request.bookedOffering._id}
-              request={request}
-              paymentLink={request.bookedOffering.paymentLink}
-            />
-          </div>
-        </div>
-      )} */}
     </div>
   );
 };

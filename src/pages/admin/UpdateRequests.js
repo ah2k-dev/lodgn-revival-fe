@@ -1,8 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
-import Card from "../../components/layout/Card";
 import JobDetailsGrid from "../../components/layout/JobDetailsGrid";
-import PaidPerNight from "../../components/layout/PaidPerNight";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Form, InputNumber, message } from "antd";
 import {
@@ -13,6 +10,7 @@ import {
 import { LoadingOutlined } from "@ant-design/icons";
 import moment from "moment";
 import { baseURL } from "../../services/axiosConfig";
+import { GetPermissions, UseGetRole } from "../../hooks/auth";
 
 const UpdateRequests = () => {
   const dispatch = useDispatch();
@@ -70,6 +68,10 @@ const UpdateRequests = () => {
 };
 
 const RequestComponent = ({ request, update }) => {
+  const role = UseGetRole();
+
+  const permissions = GetPermissions();
+
   const [showCard, setShowCard] = useState(false);
 
   const formRef = useRef();
@@ -80,13 +82,9 @@ const RequestComponent = ({ request, update }) => {
 
   const dispatch = useDispatch();
 
-  console.log(update);
-
   return (
     <div className="d-flex flex-column gap-4 rounded-container bg-white p-5 position-relative">
       <div className="row gap-5 justify-content-center">
-        {/* Previous Booking Details */}
-
         <div className="col-12 d-flex flex-column gap-3">
           {update.status !== "pending" && (
             <span
@@ -104,7 +102,6 @@ const RequestComponent = ({ request, update }) => {
           </span>
           <JobDetailsGrid
             jobLocation={request.location.string}
-            // jobAddress="Sarasota,FL. 33178"
             start_date={moment(request.dateRange[0]).format("DD")}
             end_date={moment(request.dateRange[1]).format("DD")}
             start_date_month={moment(request.dateRange[0]).format("MMM")}
@@ -118,8 +115,6 @@ const RequestComponent = ({ request, update }) => {
           />
         </div>
 
-        {/* New Booking Details */}
-
         <div className="col-12 d-flex flex-column gap-3">
           <span className="font-lato fw-bold">
             New Requested Booking Details
@@ -127,7 +122,6 @@ const RequestComponent = ({ request, update }) => {
           <div className="d-flex flex-md-row flex-column justify-content-between align-items-md-start align-items-center gap-3">
             <JobDetailsGrid
               jobLocation={request.location.string}
-              // jobAddress="Sarasota,FL. 33178"
               start_date={moment(update?.dateRange[0]).format("DD")}
               end_date={moment(update?.dateRange[1]).format("DD")}
               start_date_month={moment(update?.dateRange[0]).format("MMM")}
@@ -171,6 +165,9 @@ const RequestComponent = ({ request, update }) => {
           <div className="col-12 btns d-flex justify-content-md-end justify-content-center gap-3">
             <Button
               className="declineBtn"
+              disabled={
+                role === "moderator" && !permissions.includes("declineUpdates")
+              }
               onClick={() => {
                 dispatch(
                   approveRejectUpdate({
@@ -182,7 +179,13 @@ const RequestComponent = ({ request, update }) => {
             >
               Decline
             </Button>
-            <Button className="approveBtn" onClick={() => setShowCard(true)}>
+            <Button
+              disabled={
+                role === "moderator" && !permissions.includes("approveUpdates")
+              }
+              className="approveBtn"
+              onClick={() => setShowCard(true)}
+            >
               Approve
             </Button>
           </div>
@@ -208,10 +211,9 @@ const RequestComponent = ({ request, update }) => {
                 if (res) {
                   setShowCard(false);
                 }
-                // setShowCard(false);
               }}
               onFinishFailed={(errorInfo) => {
-                console.log("Failed:", errorInfo);
+                // console.log("Failed:", errorInfo);
               }}
               autoComplete="off"
             >

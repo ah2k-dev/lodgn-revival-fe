@@ -1,0 +1,138 @@
+.footer-container {
+  padding: 15px 20px 25px;
+  background-color: #243f46;
+}
+
+.footer-container button {
+  background-color: #76c483;
+  color: white;
+  font-family: 'Cairo', sans-serif;
+  font-weight: 800;
+  width: 100%;
+  border: none;
+  padding: 30px 50px !important;
+  font-size: 1.25rem;
+  display: flex;
+  align-items: center;
+  border-radius: 50px !important;
+  -webkit-border-radius: 50px !important;
+  -moz-border-radius: 50px !important;
+  -ms-border-radius: 50px !important;
+  -o-border-radius: 50px !important;
+  border: 1px solid #76c483 !important;
+}
+
+.footer-container button:hover {
+  background: transparent;
+  color: #76c483 !important;
+}
+
+.footer-btn button:disabled {
+  cursor: not-allowed;
+  border: none !important;
+}
+
+.footer-btn button:disabled:hover {
+  border: none !important;
+  color: rgba(0, 0, 0, 0.25) !important;
+}
+
+.details {
+  display: flex !important;
+}
+
+.details .detail {
+  display: flex;
+  flex-direction: column;
+  border-right: 2px solid #DDDDDD;
+  padding: 0 20px;
+}
+
+.details .detail.pl-0 {
+  padding-left: 0;
+}
+
+.details .detail div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.details .detail.flex {
+  flex-direction: row !important;
+  gap: 10px;
+}
+
+.details .detail:last-child {
+  border: none;
+}
+
+.details .detail .title {
+  font-size: 1.65rem;
+  font-family: 'Cairo', sans-serif;
+  line-height: 1;
+  font-weight: bold;
+  color: #5DA874;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  max-width: 250px;
+}
+
+.details .detail .description {
+  font-size: 0.85rem;
+  font-family: 'Helvetica Neue', sans-serif;
+  font-weight: normal;
+  color: #ffffff;
+}
+
+@media screen and (max-width: 1024px) {
+  .details .detail {
+    width: fit-content;
+  }
+  .details .detail .title {
+    font-size: 1.25rem;
+  }
+  .footer-container button {
+    font-size: 1.15rem;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .details .detail .title {
+    font-size: 1.25rem;
+  }
+  .footer-container button {
+    font-size: 1rem;
+  }
+  .footer-btn {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: flex-end;
+  }
+  .footer-btn button {
+    margin-top: 15px;
+    width: unset;
+  }
+}
+
+@media screen and (max-width: 660px) {
+  .footer-container {
+    padding: 16px 20px;
+  }
+  .footer-container .details {
+    flex-direction: row;
+  }
+  .details {
+    width: 100%;
+    justify-content: center;
+  }
+  .details .detail {
+    padding: 0 10px;
+  }
+  .footer-btn {
+    justify-content: center;
+  }
+}

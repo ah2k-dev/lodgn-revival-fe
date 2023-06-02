@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Card from "../../components/layout/Card";
 import JobDetailsGrid from "../../components/layout/JobDetailsGrid";
 import { useDispatch, useSelector } from "react-redux";
@@ -35,7 +35,7 @@ const OngoingStays = () => {
   return (
     <div className="min-vh-100 w-100 px-lg-5 px-md-3 px-4 py-5">
       <div className="d-flex flex-column gap-4 mt-md-0 mt-5">
-        <h2 className="font-poppins mt-3 heading-green">
+        <h2 className="font-cairo fw-bold mt-3 heading-green">
           You currently have {onGoing.length} ongoing stay
         </h2>
 
@@ -62,9 +62,6 @@ const OngoingStays = () => {
 };
 
 const RequestComponent = ({ request }) => {
-
-  console.log(request.updateRequested);
-
   const navigate = useNavigate();
 
   return (
@@ -82,11 +79,14 @@ const RequestComponent = ({ request }) => {
           single_rooms={request.roomRequirements.single}
           double_rooms={request.roomRequirements.double}
         />
-        { request?.updateRequested && <span className="update-Requested-badge green-badge text-white px-3 py-2 rounded-3 fw-bold font-poppins">Update Requested</span> }
+        {request?.updateRequested && (
+          <span className="update-Requested-badge green-badge text-white px-3 py-2 rounded-3 fw-bold font-poppins">
+            Update Requested
+          </span>
+        )}
       </div>
       <div className="row gap-3 mt-5 justify-content-center">
         <div className="col-md-5 col-xl-4 col-lg-5 col-sm-8 col-12 position-relative">
-          {/* <span className="rare-find-badge">Rare Find</span> */}
           <Card
             title={request.bookedOffering.title}
             description={request.bookedOffering.description}
@@ -101,15 +101,18 @@ const RequestComponent = ({ request }) => {
           />
         </div>
         <div className="col-md-12 col-xl-7 col-lg-6 ms-3 d-flex flex-column align-items-lg-start align-items-center md-lg-0 mt-4">
-          <h3 className="font-lato fw-bold text-md-start text-center">
-            {moment(request.dateRange[0]).fromNow().replace(/^in /, "").replace(/ ago$/, "")} left on
-            this Booking.
+          <h3 className="font-cairo fw-bold text-md-start text-center">
+            {moment(request.dateRange[0])
+              .fromNow()
+              .replace(/^in /, "")
+              .replace(/ ago$/, "")}{" "}
+            left on this Booking.
           </h3>
           <div>
             <span className="green-span fs-6 font-poppins">Quick actions:</span>
             <div className="mt-4 btns d-flex flex-wrap gap-3">
               <Button
-                className="update-btn font-poppins text-white"
+                className="update-btn font-cairo text-white"
                 disabled={request?.updateRequested}
                 onClick={() =>
                   navigate("/dashboard/user/update-stay", { state: request })
@@ -121,7 +124,7 @@ const RequestComponent = ({ request }) => {
                 onClick={() =>
                   navigate("/dashboard/user/create-request", { state: request })
                 }
-                className="rebook-btn font-poppins text-white"
+                className="rebook-btn text-white"
               >
                 Rebook stay
               </Button>

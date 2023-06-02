@@ -3,50 +3,64 @@
   color: white;
 }
 
-/* .ongoingStays .request-status span {
-    background-color: #42996B !important;
-} */
-
-.upload-btn {
+.upload-btn,
+.upload-receipt-btn {
   justify-content: flex-start;
   display: flex !important;
   align-items: center !important;
   gap: 5px;
   background: #ffffff;
   font-size: 15px !important;
-  font-family: 'Poppins', sans-serif;
-  width: 100% !important;
-  height: 65px !important;
-  border: 1px solid rgba(0, 0, 0, 0.0003) !important;
-  box-shadow: 0.86px 0.86px 8.86px rgba(0, 0, 0, 0.25) !important;
+  font-family: "Poppins", sans-serif;
   border-radius: 10px !important;
   outline: none !important;
 }
 
+.update-btn {
+  border: 1px solid rgba(0, 0, 0, 0.0003) !important;
+  height: 65px !important;
+}
+
 .ant-btn.upload-btn {
-    border: none !important;
-    outline: none !important;
+  height: 55px;
+  box-shadow: 0.86px 0.86px 8.86px rgba(0, 0, 0, 0.25) !important;
+  border: none !important;
+  outline: none !important;
+}
+
+.upload-btn:hover,
+.upload-receipt-btn:hover {
+  outline: none !important;
+  color: #42996b !important;
+}
+
+.upload-receipt-btn:hover {
+  border-color: #42996b !important;
+  color: #42996b !important;
 }
 
 .upload-btn:hover {
-    box-shadow: 0px 0px 14px rgba(0, 0, 0, 0.25) !important;
-    border: none !important;
-    outline: none !important;
-    color: #42996b !important;
+  border: none !important;
+  box-shadow: 0px 0px 14px rgba(0, 0, 0, 0.25) !important;
 }
 
 .upload-btn:hover span {
-    border: none !important;
-    outline: none !important;
-    color: #42996b !important;
+  border: none !important;
+  outline: none !important;
+  color: #5da874 !important;
 }
 
 .heading-green {
-  color: #5ba343 !important;
+  color: #5da874 !important;
+}
+
+.grey-text {
+  color: #494949c2;
+  font-weight: 600;
 }
 
 .green-span {
-  color: #5ba343 !important;
+  color: #5da874 !important;
 }
 
 .update-btn {
@@ -68,8 +82,15 @@
 }
 
 .ongoingStays .btns button {
+  font-family: "Cairo", sans-serif !important;
+  font-weight: bold !important;
   height: 40px !important;
   padding: 0 25px;
+  border-radius: 50px !important;
+  -webkit-border-radius: 50px !important;
+  -moz-border-radius: 50px !important;
+  -ms-border-radius: 50px !important;
+  -o-border-radius: 50px !important;
 }
 
 .update-note-span {
@@ -77,11 +98,7 @@
 }
 
 .confirm-changes-btn {
-  background: linear-gradient(180deg, #48af78 0%, #42996b 100%) !important;
-  border-radius: 4px;
-  font-weight: 600;
   min-height: 40px;
-  transition: 0.5s ease-in-out;
 }
 
 .confirm-changes-btn span {
@@ -144,10 +161,3 @@
     font-size: 0.9rem !important;
   }
 }
-
-/* @media screen and (max-width: 767px) {
-    .request-status,
-    .rejected-status {
-        width: 100%;
-    }
-} */

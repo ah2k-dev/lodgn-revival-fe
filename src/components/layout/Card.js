@@ -22,41 +22,22 @@ const Card = (props) => {
   const dispatch = useDispatch();
   const handleBook = (url) => {
     window.open(url, "_blank");
-
-    // dispatch(bookOffer(request._id, id))
   };
 
-  console.log(props);
-
-  const imageUrls = [
-    {
-      url: "https://upload.wikimedia.org/wikipedia/en/7/7d/Minions_characters.png",
-    },
-    {
-      url: "https://cdn.vox-cdn.com/thumbor/yJuBQtYK2euiOWE3lj_dtloWkvs=/160x0:1239x607/1600x900/cdn.vox-cdn.com/uploads/chorus_image/image/46708944/manyminions.0.jpg",
-    },
-    {
-      url: "https://i.guim.co.uk/img/static/sys-images/Guardian/Pix/pictures/2015/11/11/1447263891657/Minions-009.jpg?width=620&quality=85&auto=format&fit=max&s=8a643616a29f6832d52a06ceafab39d6",
-    },
-  ];
-
   return (
-    <div className="detail-card rounded-3 d-flex flex-column align-items-center w-100">
+    <div className="detail-card d-flex flex-column align-items-center w-100">
       <div className="images-container w-100">
-        <HotelPhotosCarousel images={imageUrls} />
+        <HotelPhotosCarousel images={images} />
       </div>
-      <div className="cards-footer d-flex flex-column align-items-center gap-2 rounded-3 p-4 w-100">
+      <div className="cards-footer d-flex flex-column align-items-center gap-2 px-3 pt-3 pb-2 w-100">
         <span
-          style={{
-            fontSize: "1.2rem",
-            fontWeight: "bold",
-          }}
+          className="text-capitalize hotel-name"
         >
           {title}
         </span>
-        <span className="text-sm">{description}</span>
+        <span className="text-sm hotel-description">{description}</span>
         {location.pathname !== "/dashboard/user/ongoing-stays" ? (
-          <span className="d-flex justify-content-center gap-2 align-items-center w-100">
+          <span className="room-rates-details d-flex justify-content-between gap-2 align-items-center w-100 mt-2">
             <span
               className={`d-flex ${
                 !request.hasOwnProperty("bookedOffering") && "flex-column"
@@ -74,14 +55,9 @@ const Card = (props) => {
                 </span>
               ) : null}
             </span>
-            {/* handleBook is temp solution to book request as payment flow is pending*/}
-            {/* {!request.hasOwnProperty('bookedOffering') && ( */}
-            {/* <Link to={paymentLink} onClick={() => handleBook()}> */}
             <a href={paymentLink} target="_blank">
               <Button className="book-now-btn text-white">Book now</Button>
             </a>
-            {/* </Link> */}
-            {/* )} */}
           </span>
         ) : (
           <span className="d-flex justify-content-center align-items-center w-100">

@@ -9,7 +9,7 @@ const AdminRoute = ({Component}) => {
         console.log("not authenticated");
         return <Navigate to="/" />;
     } else {
-        if (role === "admin") {
+        if (role === "admin" || role === "moderator") {
             return <Component />;
         } else {
             return <Navigate to="/not-found" />;
