@@ -9,7 +9,7 @@ const UrgentBookingModal = ({ showModal, setShowModal }) => {
   return (
     <>
       <Modal
-        title="Basic Modal"
+        title="Urgent Booking"
         open={showModal}
         onOk={handleOk}
         cancelText={[]}
