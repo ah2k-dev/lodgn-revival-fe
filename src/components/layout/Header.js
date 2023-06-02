@@ -1,5 +1,5 @@
 import { Alert, Col, Row } from "antd";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { useAuth } from "../../hooks/auth";
 import { useDispatch } from "react-redux";
 import { FaUserAlt } from "react-icons/fa";
@@ -24,8 +24,17 @@ const { RangePicker } = DatePicker;
 dayjs.extend(customParseFormat);
 
 const Header = () => {
-  const [showRoomPicker, setShowRoomPicker] = useState(false);
   const [showTodayModal, setShowTodayModal] = useState(false);
+
+  const [showRoomPicker, setShowRoomPicker] = useState(false);
+  const roomPickerRef = useRef();
+
+  const handleRoomPickerToggle = () => {
+    setShowRoomPicker(!showRoomPicker);
+    if (roomPickerRef.current) {
+      roomPickerRef.current.focus();
+    }
+  };
 
   const navigate = useNavigate();
 
@@ -250,12 +259,15 @@ const Header = () => {
                 disabledDate={disabledDate}
               />
             </span>
-            <span onClick={() => setShowRoomPicker(!showRoomPicker)}>
+            <span onClick={() => handleRoomPickerToggle()}>
               {singleRoom > 0 || doubleRoom > 0 || supportAnimal > 0
                 ? `${
-                    singleRoom > 0 && (doubleRoom > 0 || supportAnimal > 0)
+                    (singleRoom > 0 && doubleRoom > 0) ||
+                    (singleRoom > 0 && supportAnimal > 0)
                       ? "S-" + singleRoom + ","
-                      : "S-" + singleRoom
+                      : singleRoom > 0
+                      ? "S-" + singleRoom
+                      : ""
                   } 
                     ${
                       doubleRoom > 0 && supportAnimal > 0
@@ -267,18 +279,21 @@ const Header = () => {
                     ${supportAnimal > 0 ? "A-" + supportAnimal : ""}`
                 : "Add rooms"}
             </span>
-            {showRoomPicker && (
+            <div
+              style={{ zIndex: 100 }}
+              className="position-absolute w-100 mt-5 row justify-content-end ms-0"
+            >
               <div
-                style={{ zIndex: 100 }}
-                className="position-absolute w-100 mt-5 row justify-content-end ms-0"
+                tabIndex="1"
+                onBlur={() => setShowRoomPicker(false)}
+                ref={roomPickerRef}
+                className={
+                  location.pathname === "/dashboard/user/create-request"
+                    ? "col-md-11 col-12 outline-none"
+                    : "col-12 col-sm-8 col-md-7 col-lg-8 px-0 outline-none"
+                }
               >
-                <div
-                  className={
-                    location.pathname === "/dashboard/user/create-request"
-                      ? "col-md-11 col-12"
-                      : "col-12 col-sm-8 col-md-7 col-lg-8 px-0"
-                  }
-                >
+                {showRoomPicker && (
                   <RoomPicker
                     onSingleRoomChange={handleSingleRoom}
                     onDoubleRoomChange={handleDoubleRoom}
@@ -287,9 +302,9 @@ const Header = () => {
                     doubleRooms={doubleRoom}
                     animals={supportAnimal}
                   />
-                </div>
+                )}
               </div>
-            )}
+            </div>
             <span className="search-icon" onClick={() => handleSearchResult()}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
