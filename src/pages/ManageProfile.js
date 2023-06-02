@@ -1,26 +1,26 @@
 import { Button, Checkbox, Form, Input } from "antd";
 import React, { useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchPersonalInfo, updatePersonalInfo } from "../actions/userActions";
 
 const ManageProfile = () => {
+  const dispatch = useDispatch();
+  const { loading, error, user } = useSelector((state) => state.auth);
+
   const formRef = useRef(null);
   const [form] = Form.useForm();
 
   const [updatePassword, setUpdatePassword] = useState(false);
 
-  // const validateMessages = {
-  //   required: "${label} is required!",
-  //   types: {
-  //     email: "${label} is not a valid email!",
-  //     number: "${label} is not a valid number!",
-  //   },
-  // };
-
   const handleUpdate = () => {
     formRef.current.submit();
   };
 
-  const handleFinish = (values) => {
-    // console.log(values);
+  const handleFinish = async (values) => {
+    const res = await dispatch(updatePersonalInfo(values));
+    if (res) {
+      await dispatch(fetchPersonalInfo());
+    }
   };
 
   return (
@@ -30,9 +30,11 @@ const ManageProfile = () => {
         <div className="w-100 d-flex flex-column gap-lg-3 gap-2 rounded-container bg-white p-xl-5 p-lg-4 py-4 px-2 shadow position-relative">
           <Form
             initialValues={{
-              firstName: "User",
-              lastName: "01",
-              email: "user01@test.com",
+              firstName: user.userData?.firstname,
+              lastName: user.userData?.lastname,
+              email: user.userData?.email,
+              phone: user.userData?.phone,
+              company: user.userData?.company,
             }}
             ref={formRef}
             form={form}
@@ -42,7 +44,6 @@ const ManageProfile = () => {
               console.log("Failed:", errorInfo);
             }}
             autoComplete="off"
-            // validateMessages={validateMessages}
           >
             <div className="col-sm-6 col-12 px-3">
               <label htmlFor="firstName" className="mb-1">
@@ -162,6 +163,12 @@ const ManageProfile = () => {
                     {
                       required: true,
                       message: "Please enter your new password!",
+                    },
+                    {
+                      pattern:
+                        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]).{8,}$/,
+                      message:
+                        "Password must contain at least 8 characters, 1 uppercase, 1 lowercase, 1 number, and 1 special character",
                     },
                   ]}
                 >

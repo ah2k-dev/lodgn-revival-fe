@@ -1,6 +1,5 @@
 import { Alert, Col, Row } from "antd";
-import React, { useState } from "react";
-import { useAuth } from "../../hooks/auth";
+import React, { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { FaUserAlt } from "react-icons/fa";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -24,8 +23,17 @@ const { RangePicker } = DatePicker;
 dayjs.extend(customParseFormat);
 
 const Header = () => {
-  const [showRoomPicker, setShowRoomPicker] = useState(false);
   const [showTodayModal, setShowTodayModal] = useState(false);
+
+  const [showRoomPicker, setShowRoomPicker] = useState(false);
+  const roomPickerRef = useRef();
+
+  const handleRoomPickerToggle = () => {
+    setShowRoomPicker(!showRoomPicker);
+    if (roomPickerRef.current) {
+      roomPickerRef.current.focus();
+    }
+  };
 
   const navigate = useNavigate();
 
@@ -45,6 +53,8 @@ const Header = () => {
   const [singleRoom, setSingleRoom] = useState(0);
   const [doubleRoom, setDoubleRoom] = useState(0);
   const [supportAnimal, setSupportAnimal] = useState(0);
+
+  const [selectedIndex, setSelectedIndex] = useState(-1);
 
   const handleSearch = (event) => {
     setSearch(event.target.value);
@@ -67,14 +77,49 @@ const Header = () => {
     }
   };
 
-  const handleSelect = (place) => {
-    setSearch(place.description);
+  const handleSelection = (event) => {
+    // console.log(event.key);
+    if (event.key === "ArrowUp") {
+      event.preventDefault();
+      setSelectedIndex((prevIndex) =>
+        prevIndex > 0 ? prevIndex - 1 : places.length - 1
+      );
+    } else if (event.key === "ArrowDown") {
+      event.preventDefault();
+      setSelectedIndex((prevIndex) =>
+        prevIndex < places.length - 1 ? prevIndex + 1 : 0
+      );
+    } else if (event.key === "Enter") {
+      event.preventDefault();
+      if (selectedIndex !== -1) {
+        handleSelect(selectedIndex);
+        setSelectedIndex(-1);
+      }
+    }
+  };
+
+  const handleSelect = (index, place) => {
+    console.log(place);
+    setSelectedIndex(index);
+    setSearch(places[index].description);
     setPlaces([]);
+    const placeId = places[index].place_id;
     const service = new window.google.maps.places.PlacesService(
       document.createElement("div")
     );
-    service.getDetails({ placeId: place.place_id }, (result, status) => {
+    service.getDetails({ placeId: placeId }, (result, status) => {
       if (status === "OK") {
+        const addressComponents = result.address_components;
+        let state = "";
+        let zipCode = "";
+        for (let i = 0; i < addressComponents.length; i++) {
+          const types = addressComponents[i].types;
+          if (types.includes("administrative_area_level_1")) {
+            state = addressComponents[i].long_name;
+          } else if (types.includes("postal_code")) {
+            zipCode = addressComponents[i].short_name;
+          }
+        }
         setCenter({
           lat: result.geometry.location.lat(),
           lng: result.geometry.location.lng(),
@@ -83,7 +128,9 @@ const Header = () => {
           setCenterData({
             lat: result.geometry.location.lat(),
             lng: result.geometry.location.lng(),
-            string: place.description,
+            string: places[index].description,
+            state: state,
+            zipCode: zipCode,
           })
         );
         service.nearbySearch(
@@ -207,14 +254,16 @@ const Header = () => {
                 type="text"
                 value={search}
                 onChange={handleSearch}
+                onKeyDown={handleSelection}
                 placeholder="Search job location"
               />
               {places.length > 0 && (
-                <ul className="auto-complete-list position-absolute mt-3 bg-white py-2 px-3">
-                  {places.map((place) => (
+                <ul className="auto-complete-list position-absolute mt-3 bg-white py-2 px-0">
+                  {places.map((place, index) => (
                     <li
                       key={place.place_id}
-                      onClick={() => handleSelect(place)}
+                      onClick={() => handleSelect(index, place)}
+                      className={index === selectedIndex ? "selected" : ""}
                     >
                       {place.description}
                     </li>
@@ -250,12 +299,15 @@ const Header = () => {
                 disabledDate={disabledDate}
               />
             </span>
-            <span onClick={() => setShowRoomPicker(!showRoomPicker)}>
+            <span onClick={() => handleRoomPickerToggle()}>
               {singleRoom > 0 || doubleRoom > 0 || supportAnimal > 0
                 ? `${
-                    singleRoom > 0 && (doubleRoom > 0 || supportAnimal > 0)
+                    (singleRoom > 0 && doubleRoom > 0) ||
+                    (singleRoom > 0 && supportAnimal > 0)
                       ? "S-" + singleRoom + ","
-                      : "S-" + singleRoom
+                      : singleRoom > 0
+                      ? "S-" + singleRoom
+                      : ""
                   } 
                     ${
                       doubleRoom > 0 && supportAnimal > 0
@@ -267,18 +319,21 @@ const Header = () => {
                     ${supportAnimal > 0 ? "A-" + supportAnimal : ""}`
                 : "Add rooms"}
             </span>
-            {showRoomPicker && (
+            <div
+              style={{ zIndex: 100 }}
+              className="position-absolute w-100 mt-5 row justify-content-end ms-0"
+            >
               <div
-                style={{ zIndex: 100 }}
-                className="position-absolute w-100 mt-5 row justify-content-end ms-0"
+                tabIndex="1"
+                onBlur={() => setShowRoomPicker(false)}
+                ref={roomPickerRef}
+                className={
+                  location.pathname === "/dashboard/user/create-request"
+                    ? "col-md-11 col-12 outline-none"
+                    : "col-12 col-sm-8 col-md-7 col-lg-8 px-0 outline-none"
+                }
               >
-                <div
-                  className={
-                    location.pathname === "/dashboard/user/create-request"
-                      ? "col-md-11 col-12"
-                      : "col-12 col-sm-8 col-md-7 col-lg-8 px-0"
-                  }
-                >
+                {showRoomPicker && (
                   <RoomPicker
                     onSingleRoomChange={handleSingleRoom}
                     onDoubleRoomChange={handleDoubleRoom}
@@ -287,9 +342,9 @@ const Header = () => {
                     doubleRooms={doubleRoom}
                     animals={supportAnimal}
                   />
-                </div>
+                )}
               </div>
-            )}
+            </div>
             <span className="search-icon" onClick={() => handleSearchResult()}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -312,9 +367,12 @@ const Header = () => {
       (location.pathname === "/auth/forgot-password" && jobDetails) ||
       (location.pathname.includes("verifyEmail") && jobDetails) ||
       (location.pathname.includes("resetPassword") && jobDetails) ? (
-        <div className="col-8 header-right details">
+        <div className="col-md-8 col-12 header-right details">
           <div className="detail pl-0">
-            <span className="title">{jobDetails?.location.string}</span>
+            <span className="title location-title">
+              {jobDetails?.location.string}
+            </span>
+            <span className="description">{`${center?.state}, ${center?.zipCode ? center?.zipCode : "N/A"}`}</span>
           </div>
           <div className="detail flex">
             <div>

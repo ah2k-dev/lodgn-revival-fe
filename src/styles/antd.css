@@ -21,7 +21,8 @@
   color: white !important;
 }
 
-.slick-slide img {
+.slick-slide img,
+.singal-image {
   object-fit: contain;
   aspect-ratio: 2/1;
 }

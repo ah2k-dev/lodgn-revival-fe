@@ -140,62 +140,6 @@ const RequestComponent = ({ request, status, index }) => {
   return (
     <div className="rounded-container d-flex flex-column justify-content-between bg-white p-lg-5 p-4 gap-4 w-100 mb-5">
       <div className="admin-page d-flex flex-column justify-content-between align-items-start">
-        <div className="btns d-flex gap-3 justify-content-end w-100 align-items-center mt-lg-0 mt-4 mb-3">
-          {newStatus === "paymentVerified" && (
-            <>
-              <Button
-                className="upload-receipt-btn w-auto"
-                onClick={handleUploadButton}
-              >
-                Upload payment receipt
-              </Button>
-              <input
-                type="file"
-                id="file"
-                ref={hiddenFileInput}
-                onChange={handleFile}
-                style={{ display: "none" }}
-              />
-              <Select
-                showSearch
-                placeholder="Select an offering"
-                optionFilterProp="children"
-                onChange={handleSelect}
-                filterOption={(input, option) =>
-                  (option?.label ?? "").includes(input)
-                }
-                options={request?.offerings.map((offer) => ({
-                  value: offer._id,
-                  label: offer.title,
-                }))}
-              />
-            </>
-          )}
-          {(newStatus !== request.status || offerings.length > 0) && (
-            <Button
-              className="update-status-btn"
-              loading={loading}
-              onClick={() => handleUpdate(request._id)}
-              disabled={
-                (newStatus === "completed" && offerings.length == 0) ||
-                (newStatus === "paymentVerified" && selectedOffer === "")
-              }
-            >
-              Update
-            </Button>
-          )}
-          {newStatus === "recieved" || newStatus === "negotiating" ? (
-            <Button
-              disabled={
-                role === "moderator" && !permissions.includes("rejectRequest")
-              }
-              className="reject-request-btn"
-              onClick={() => rejectRequestFunc(request._id)}
-            >
-              Reject Request
-            </Button>
-          ) : null}
-        </div>
         <JobDetailsGrid
           jobLocation={request.location.string}
           start_date={moment(request?.dateRange[0]).format("DD")}
@@ -304,6 +248,63 @@ const RequestComponent = ({ request, status, index }) => {
           </div>
         </div>
       )}
+
+      <div className="btns d-flex gap-3 justify-content-end w-100 align-items-center mt-lg-0 mt-5 mb-3">
+        {newStatus === "paymentVerified" && (
+          <>
+            <Button
+              className="upload-receipt-btn w-auto"
+              onClick={handleUploadButton}
+            >
+              Upload payment receipt
+            </Button>
+            <input
+              type="file"
+              id="file"
+              ref={hiddenFileInput}
+              onChange={handleFile}
+              style={{ display: "none" }}
+            />
+            <Select
+              showSearch
+              placeholder="Select an offering"
+              optionFilterProp="children"
+              onChange={handleSelect}
+              filterOption={(input, option) =>
+                (option?.label ?? "").includes(input)
+              }
+              options={request?.offerings.map((offer) => ({
+                value: offer._id,
+                label: offer.title,
+              }))}
+            />
+          </>
+        )}
+        {(newStatus !== request.status || offerings.length > 0) && (
+          <Button
+            className="update-status-btn"
+            loading={loading}
+            onClick={() => handleUpdate(request._id)}
+            disabled={
+              (newStatus === "completed" && offerings.length == 0) ||
+              (newStatus === "paymentVerified" && selectedOffer === "")
+            }
+          >
+            Update
+          </Button>
+        )}
+        {newStatus === "recieved" || newStatus === "negotiating" ? (
+          <Button
+            disabled={
+              role === "moderator" && !permissions.includes("rejectRequest")
+            }
+            className="reject-request-btn"
+            onClick={() => rejectRequestFunc(request._id)}
+          >
+            Reject Request
+          </Button>
+        ) : null}
+      </div>
     </div>
   );
 };

@@ -25,7 +25,7 @@ const Sidebar = ({ activeClass }) => {
       navName: "Requested Updates",
     },
     {
-      route: "/dashboard/user/rejected-requests",
+      route: "/dashboard/user/deferred-requests",
       navName: "Deferred Requests",
     },
     {
@@ -62,6 +62,10 @@ const Sidebar = ({ activeClass }) => {
     {
       route: "/dashboard/admin/manage-users",
       navName: "Manage Users",
+    },
+    {
+      route: "/dashboard/admin/manage-profile",
+      navName: "Manage Profile",
     },
     {
       route: "/dashboard/admin/reports",

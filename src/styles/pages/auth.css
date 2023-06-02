@@ -16,10 +16,11 @@
   display: flex;
   flex-direction: column;
   height: auto;
+  width: 100%;
 }
 
 h5.ant-typography {
-  font-family: 'Cairo', sans-serif;
+  font-family: "Cairo", sans-serif;
   font-weight: bold !important;
   font-size: 1.6rem !important;
 }
@@ -41,14 +42,15 @@ h5.ant-typography {
 }
 
 .ant-divider-inner-text {
-  color: #2E3D44;
+  color: #2e3d44;
   opacity: 80%;
-  font-family: 'Cairo', sans-serif;
+  font-family: "Cairo", sans-serif;
   font-weight: bold;
 }
 
 button.btnGoogle,
-button.authBtn {
+button.authBtn,
+button.verify-btn {
   height: 50px !important;
   border: 1px solid #70707050;
   font-size: 1rem;
@@ -61,8 +63,12 @@ button.authBtn {
 
 button.authBtn {
   width: 150px;
+}
+
+button.authBtn,
+button.verify-btn {
   font-weight: 800;
-  font-family: 'Cairo', sans-serif;
+  font-family: "Cairo", sans-serif;
 }
 
 button.authBtn:hover,
@@ -114,8 +120,8 @@ button.btnGoogle {
 .ant-divider-horizontal.ant-divider-with-text::before,
 .ant-divider-horizontal.ant-divider-with-text::after {
   top: 0 !important;
-  border-color: #DDDDDD;
-  border-top: 2px solid #DDDDDD !important;
+  border-color: #dddddd;
+  border-top: 2px solid #dddddd !important;
 }
 
 .ant-form-item {
@@ -128,7 +134,7 @@ button.btnGoogle {
 }
 
 .auth-inner label {
-  font-family: 'Helvetica Neue', sans-serif;
+  font-family: "Helvetica Neue", sans-serif;
   font-weight: normal;
   margin-bottom: 5px;
   font-size: 1rem !important;
@@ -140,4 +146,10 @@ button.btnGoogle {
   margin-top: 14px;
   margin-right: 8px;
   cursor: pointer;
+}
+
+@media screen and (max-width: 576px) {
+  h5.ant-typography {
+    font-size: 1.4rem !important;
+}
 }

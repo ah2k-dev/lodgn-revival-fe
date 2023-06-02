@@ -86,7 +86,7 @@ const RequstToken = () => {
                   <Button
                     type="primary"
                     htmlType="submit"
-                    className="activeBtn"
+                    className="activeBtn verify-btn"
                     loading={loading}
                   >
                     Send Link

@@ -1,6 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
-@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;500;600;700;800;900;1000&display=swap');
-@import url('https://fonts.cdnfonts.com/css/helvetica-neue-9');
+@import url("https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;500;600;700;800;900;1000&display=swap");
+@import url("https://fonts.cdnfonts.com/css/helvetica-neue-9");
 
 body {
   margin: 0;
@@ -25,80 +25,15 @@ code {
 }
 
 .font-cairo {
-  font-family: 'Cairo', sans-serif;
+  font-family: "Cairo", sans-serif;
 }
 
 .cursor-pointer {
   cursor: pointer;
 }
 
-.modal {
-  background-color: rgba(0, 0, 0, 0);
-}
-
-.modal.in {
-  animation: fadeIn 0.5s ease-in-out 0.3s 1 forwards;
-}
-
-.modal.out {
-  animation: fadeOut 0.5s ease-in-out 1 forwards;
-}
-
-.fade-scale {
-  opacity: 0;
-  transform: scale(0);
-}
-
-.fade-scale.in {
-  animation: fadeScale 0.5s ease-in-out 0.3s 1 forwards;
-}
-
-.fade-scale.out {
-  animation: fadeScaleOut 0.5s ease-in-out 1 forwards;
-}
-
-@keyframes fadeIn {
-  0% {
-    background-color: rgba(0, 0, 0, 0);
-    opacity: 0;
-  }
-  100% {
-    background-color: rgba(0, 0, 0, 0.45);
-    opacity: 1;
-  }
-}
-
-@keyframes fadeOut {
-  0% {
-    background-color: rgba(0, 0, 0, 0.45);
-    opacity: 1;
-  }
-  100% {
-    background-color: rgba(0, 0, 0, 0);
-    opacity: 0;
-  }
-}
-
-@keyframes fadeScale {
-  0% {
-    opacity: 0;
-    transform: scale(0);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-@keyframes fadeScaleOut {
-  0% {
-    opacity: 1;
-    transform: scale(1);
-  }
-  100% {
-    opacity: 0;
-    transform: scale(0);
-  }
+.outline-none {
+  outline: none;
 }
 
 .green-badge {
@@ -116,32 +51,46 @@ code {
 }
 
 .backBtn {
+  color: #88c289;
+  border: 1px solid #88c289 !important;
   height: 45px !important;
-  background: linear-gradient(180deg, #48af78 0%, #42996b 100%) !important;
-  border-radius: 4px;
-  font-weight: 600;
+  background: transparent;
+  font-weight: 800;
+  font-family: "Cairo", sans-serif;
   min-height: 40px;
-  transition: 0.5s ease-in-out;
+  border-radius: 50px !important;
+  -webkit-border-radius: 50px !important;
+  -moz-border-radius: 50px !important;
+  -ms-border-radius: 50px !important;
+  -o-border-radius: 50px !important;
 }
 
 .backBtn svg {
-  color: white;
-  transform: translateX(-3px) !important;
+  color: #88c289;
+  transform: translateX(-2px) !important;
   transition: 0.4s all;
+  -webkit-transform: translateX(-2px) !important;
+  -moz-transform: translateX(-2px) !important;
+  -ms-transform: translateX(-2px) !important;
+  -o-transform: translateX(-2px) !important;
 }
 
 .backBtn:hover svg {
-  transform: translateX(-7px) !important;
+  transform: translateX(-9px) !important;
+  -webkit-transform: translateX(-9px) !important;
+  -moz-transform: translateX(-9px) !important;
+  -ms-transform: translateX(-9px) !important;
+  -o-transform: translateX(-9px) !important;
 }
 
 .backBtn span {
-  color: white;
+  color: #88c289;
   font-size: 1.5rem !important;
 }
 
 /* Chat Icon */
 .woot-widget-bubble.woot-elements--right {
-  background: #5DA874 !important;
+  background: #5da874 !important;
 }
 
 @import "./styles/general.css";

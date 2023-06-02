@@ -110,6 +110,21 @@ const Auth = () => {
     }
   }, [user]);
 
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        formRef.current.submit();
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
+
   return (
     <div className="auth-container position-relative">
       <div className="auth-inner">

@@ -6,6 +6,8 @@ export const mapReducer = ( // modified as request reducer
       lat: 40.730610,
       lng: -73.935242,
       search: "",
+      state: "",
+      zipCode: "",
     },
     hotels: [],
     roomRequirements: {

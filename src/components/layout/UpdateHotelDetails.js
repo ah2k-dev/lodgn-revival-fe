@@ -222,7 +222,7 @@ const UpdateHotelDetails = ({ offerings, setOfferings, flag, request }) => {
           <>
             <HotelPhotosCarousel images={request?.offerings[flag - 1].images} />
             <button
-              className="btn logoutBtn text-white"
+              className="btn logoutBtn text-white mt-2"
               onClick={() => setShowCarousel(false)}
             >
               Update hotel images
@@ -244,7 +244,8 @@ const UpdateHotelDetails = ({ offerings, setOfferings, flag, request }) => {
                 className="upload-btn w-100 d-flex justify-content-center py-5"
                 onClick={handleClick}
               >
-                <svg
+                <i className="far fa-image fs-1"></i>
+                {/* <svg
                   width="48"
                   height="31"
                   viewBox="0 0 48 31"
@@ -284,7 +285,7 @@ const UpdateHotelDetails = ({ offerings, setOfferings, flag, request }) => {
                     d="M41.9439 27.876C41.9439 28.0395 42.0765 28.1721 42.24 28.1721C42.4035 28.1721 42.5361 28.0395 42.5361 27.876L41.9439 27.876ZM42.4494 22.8307C42.3337 22.7151 42.1463 22.7151 42.0306 22.8307L40.1464 24.7149C40.0308 24.8306 40.0308 25.018 40.1464 25.1337C40.2621 25.2493 40.4495 25.2493 40.5652 25.1337L42.24 23.4588L43.9149 25.1337C44.0305 25.2493 44.2179 25.2493 44.3336 25.1337C44.4492 25.018 44.4492 24.8306 44.3336 24.7149L42.4494 22.8307ZM42.5361 27.876L42.5361 23.0401L41.9439 23.0401L41.9439 27.876L42.5361 27.876Z"
                     fill="#494949"
                   />
-                </svg>
+                </svg> */}
                 <input
                   type="file"
                   id="file"

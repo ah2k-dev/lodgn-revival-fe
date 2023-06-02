@@ -171,9 +171,16 @@ const ReportsTable = ({ tableData }) => {
   if (tableData.some((item) => item.user)) {
     columns.push({
       title: "User",
-      dataIndex: "user",
-      key: "user",
+      render: (record) =>
+        `${record?.firstname !== undefined ? record?.firstname : ""} ${
+          record?.lastname !== undefined ? record?.lastname : ""
+        }`,
     });
+    // columns.push({
+    //   title: "User",
+    //   dataIndex: "user",
+    //   key: "user",
+    // });
   }
 
   return (

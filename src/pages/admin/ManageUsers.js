@@ -16,7 +16,12 @@ import {
 import { useRef, useState } from "react";
 import Highlighter from "react-highlight-words";
 import { useDispatch, useSelector } from "react-redux";
-import { blockUnblockUser, createModerator, fetchUsers } from "../../actions/userActions";
+import {
+  blockUnblockUser,
+  createModerator,
+  fetchUsers,
+  updateModerator,
+} from "../../actions/userActions";
 import { GetPermissions, UseGetRole } from "../../hooks/auth";
 import { LoadingOutlined } from "@ant-design/icons";
 
@@ -33,25 +38,40 @@ const ManageUsers = () => {
 
   const [showPasswordField, setShowPasswordField] = useState(true);
 
+  const [moderatorId, setModeratorId] = useState("");
+
   const [form] = Form.useForm();
 
   const handleFinish = async (values) => {
-    const res = await dispatch(createModerator(values));
+    console.log(values);
+    let res;
+    if (showPasswordField) {
+      res = await dispatch(
+        createModerator({
+          ...values,
+          firstName: values.firstname,
+          lastName: values.lastname,
+        })
+      );
+    } else {
+      res = await dispatch(
+        updateModerator({
+          ...values,
+          firstName: values.firstname,
+          lastName: values.lastname,
+          id: moderatorId,
+        })
+      );
+    }
     if (res) {
       form.resetFields();
+      setModeratorId("");
       setIsModalOpen(false);
     }
   };
 
-  // const validateMessages = {
-  //   required: "${label} is required!",
-  //   types: {
-  //     email: "${label} is not a valid email!",
-  //     number: "${label} is not a valid number!",
-  //   },
-  // };
-
   const openEditModal = (record) => {
+    setModeratorId(record._id);
     form.setFieldsValue(record);
     setShowPasswordField(false);
     setIsModalOpen(true);
@@ -156,11 +176,11 @@ const ManageUsers = () => {
               // validateMessages={validateMessages}
             >
               <div className="col-md-6 col-12 pe-md-2">
-                <label htmlFor="firstName" className="mb-1">
+                <label htmlFor="firstname" className="mb-1">
                   First Name
                 </label>
                 <Form.Item
-                  name="firstName"
+                  name="firstname"
                   rules={[
                     {
                       required: true,
@@ -172,11 +192,11 @@ const ManageUsers = () => {
                 </Form.Item>
               </div>
               <div className="col-md-6 col-12 ps-md-2">
-                <label htmlFor="lastName" className="mb-1">
+                <label htmlFor="lastname" className="mb-1">
                   Last Name
                 </label>
                 <Form.Item
-                  name="lastName"
+                  name="lastname"
                   rules={[
                     {
                       required: true,
@@ -415,20 +435,24 @@ const UsersTable = ({ tabIndex, data, handleEditModal }) => {
       ),
   });
 
-  const handleBlockUnblock = (id,status)=> {
+  const handleBlockUnblock = (id, status) => {
     let newStatus = !status ? true : false;
     // console.log(id, newStatus);
     dispatch(blockUnblockUser(id, newStatus));
-  }
+  };
 
   const columns = [
     {
-      title: "Name",
-      dataIndex: "name",
-      key: "name",
-      ...getColumnSearchProps("name"),
-      sorter: (a, b) => a.name.length - b.name.length,
+      title: "Full Name",
+      // dataIndex: "username",
+      // key: "username",
+      ...getColumnSearchProps("username"),
+      sorter: (a, b) => a.username.length - b.username.length,
       sortDirections: ["descend", "ascend"],
+      render: (record) =>
+        `${record?.firstname !== undefined ? record?.firstname : ""} ${
+          record?.lastname !== undefined ? record?.lastname : ""
+        }`,
     },
     {
       title: "Email Address",
@@ -453,7 +477,7 @@ const UsersTable = ({ tabIndex, data, handleEditModal }) => {
               disabled={
                 role === "moderator" && !permissions.includes("blockUser")
               }
-              onClick={()=>handleBlockUnblock(record._id, record.isBlocked)}
+              onClick={() => handleBlockUnblock(record._id, record.isBlocked)}
               danger
               className="block-btn"
             >
@@ -515,8 +539,6 @@ const UsersTable = ({ tabIndex, data, handleEditModal }) => {
       }
     );
   }
-
-
 
   return (
     <Table

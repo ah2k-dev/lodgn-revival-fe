@@ -6,7 +6,7 @@
 .footer-container button {
   background-color: #76c483;
   color: white;
-  font-family: 'Cairo', sans-serif;
+  font-family: "Cairo", sans-serif;
   font-weight: 800;
   width: 100%;
   border: none;
@@ -44,7 +44,7 @@
 .details .detail {
   display: flex;
   flex-direction: column;
-  border-right: 2px solid #DDDDDD;
+  border-right: 2px solid #dddddd;
   padding: 0 20px;
 }
 
@@ -69,20 +69,23 @@
 
 .details .detail .title {
   font-size: 1.65rem;
-  font-family: 'Cairo', sans-serif;
+  font-family: "Cairo", sans-serif;
   line-height: 1;
   font-weight: bold;
-  color: #5DA874;
+  color: #5da874;
+  max-width: 200px;
+}
+
+.details .detail .location-title {
   display: -webkit-box;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  max-width: 250px;
 }
 
 .details .detail .description {
   font-size: 0.85rem;
-  font-family: 'Helvetica Neue', sans-serif;
+  font-family: "Helvetica Neue", sans-serif;
   font-weight: normal;
   color: #ffffff;
 }
@@ -102,6 +105,9 @@
 @media screen and (max-width: 768px) {
   .details .detail .title {
     font-size: 1.25rem;
+  }
+  .footer-container button {
+    padding: 25px 50px !important;
   }
   .footer-container button {
     font-size: 1rem;
@@ -124,6 +130,15 @@
   }
   .footer-container .details {
     flex-direction: row;
+  }
+  .details .detail .location-title {
+    max-width: 100px;
+  }
+  .details .detail .title {
+    font-size: 0.95rem;
+  }
+  .details .detail .description {
+    font-size: 0.6rem;
   }
   .details {
     width: 100%;

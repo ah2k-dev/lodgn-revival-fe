@@ -17,31 +17,30 @@
 }
 
 .update-btn {
-  border: 1px solid rgba(0, 0, 0, 0.0003) !important;
   height: 65px !important;
+  box-shadow: none !important;
 }
 
 .ant-btn.upload-btn {
   height: 55px;
-  box-shadow: 0.86px 0.86px 8.86px rgba(0, 0, 0, 0.25) !important;
-  border: none !important;
-  outline: none !important;
 }
 
 .upload-btn:hover,
-.upload-receipt-btn:hover {
+.upload-receipt-btn:hover, 
+.upload-receipt-btn:focus {
   outline: none !important;
-  color: #42996b !important;
+  border-color: #88c289 !important;
+  color: #88c289 !important;
+}
+
+.upload-btn:hover svg,
+.upload-receipt-btn:hover svg {
+  color: #88c289 !important;
 }
 
 .upload-receipt-btn:hover {
-  border-color: #42996b !important;
-  color: #42996b !important;
-}
-
-.upload-btn:hover {
-  border: none !important;
-  box-shadow: 0px 0px 14px rgba(0, 0, 0, 0.25) !important;
+  border-color: #88c289 !important;
+  color: #88c289 !important;
 }
 
 .upload-btn:hover span {
@@ -110,7 +109,7 @@
 }
 
 .confirm-changes-btn:hover span {
-  color: #42996b !important;
+  color: #88c289 !important;
 }
 
 .upload-roster-btn .ant-upload.ant-upload-select {

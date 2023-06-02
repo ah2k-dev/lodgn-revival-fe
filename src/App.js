@@ -27,8 +27,7 @@ import ViewRejectedRequests from "./pages/admin/ViewRejectedRequests.js";
 import Livechat from "./components/LiveChat.js";
 import { useSelector } from "react-redux";
 import ManageUsers from "./pages/admin/ManageUsers.js";
-import ManageProfile from "./pages/user/ManageProfile.js";
-
+import ManageProfile from "./pages/ManageProfile.js";
 
 function App() {
   const { isAuthenticated, user } = useSelector((state) => state.auth);
@@ -77,6 +76,10 @@ function App() {
               element={<AdminRoute Component={ManageUsers} />}
             />
             <Route
+              path="/dashboard/admin/manage-profile"
+              element={<AdminRoute Component={ManageProfile} />}
+            />
+            <Route
               path="/dashboard/admin/reports"
               element={<AdminRoute Component={AdminReports} />}
             />
@@ -109,7 +112,7 @@ function App() {
               element={<UserRoute Component={RequestedUpdates} />}
             />
             <Route
-              path="/dashboard/user/rejected-requests"
+              path="/dashboard/user/deferred-requests"
               element={<UserRoute Component={RejectedRequests} />}
             />
             <Route
