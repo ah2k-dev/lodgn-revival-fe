@@ -244,7 +244,7 @@ const Header = () => {
                 placeholder="Search job location"
               />
               {places.length > 0 && (
-                <ul className="auto-complete-list position-absolute mt-3 bg-white py-2 px-3">
+                <ul className="auto-complete-list position-absolute mt-3 bg-white py-2 px-0">
                   {places.map((place, index) => (
                     <li
                       key={place.place_id}
