@@ -95,6 +95,43 @@ export const updatePersonalInfo = (personalInfo) => async (dispatch) => {
       type: userConstants.UPDATE_PERSONAL_INFO_FAILURE,
       payload: error.response.data.message,
     });
+    message.error({
+      content: error.response.data.message,
+      style: {
+        marginTop: "10vh",
+      },
+    });
+  }
+};
+
+export const updatePasswordRequest = (updatedPassword) => async (dispatch) => {
+  dispatch({ type: userConstants.UPDATE_PASSWORD_REQUEST });
+  try {
+    attachToken();
+    const res = await custAxios.put("/auth/updatePassword", updatedPassword);
+    if (res) {
+      dispatch({
+        type: userConstants.UPDATE_PASSWORD_SUCCESS,
+      });
+      message.success({
+        content: "Password updated successfully",
+        style: {
+          marginTop: "10vh",
+        },
+      });
+      return true;
+    }
+  } catch (error) {
+    dispatch({
+      type: userConstants.UPDATE_PASSWORD_FAILURE,
+      payload: error.response.data.message,
+    });
+    message.error({
+      content: error.response.data.message,
+      style: {
+        marginTop: "10vh",
+      },
+    });
   }
 };
 

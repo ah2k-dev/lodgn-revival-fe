@@ -173,7 +173,6 @@ const ManageUsers = () => {
                 // console.log("Failed:", errorInfo);
               }}
               autoComplete="off"
-              // validateMessages={validateMessages}
             >
               <div className="col-md-6 col-12 pe-md-2">
                 <label htmlFor="firstname" className="mb-1">
@@ -234,6 +233,12 @@ const ManageUsers = () => {
                       {
                         required: true,
                         message: "Please input moderator's password!",
+                      },
+                      {
+                        pattern:
+                          /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]).{8,}$/,
+                        message:
+                          "Password must contain at least 8 characters, 1 uppercase, 1 lowercase, 1 number, and 1 special character",
                       },
                     ]}
                     style={{ marginBottom: "0" }}
