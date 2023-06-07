@@ -45,7 +45,7 @@
   position: absolute;
   z-index: 100;
   top: 6px;
-  left: 6px;
+  right: 6px;
   display: none;
   background-color: white;
   padding: 5px;

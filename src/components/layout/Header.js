@@ -211,17 +211,15 @@ const Header = () => {
         location.pathname === "/dashboard/user/create-request"
           ? "header-container w-100 justify-content-end position-relative"
           : location.pathname.includes("auth")
-          ? "header-container dark-green-header position-relative"
-          : "header-container position-relative"
+          ? "header-container dark-green-header justify-content-between align-items-center position-relative"
+          : "header-container position-relative justify-content-md-between justify-content-center align-items-center"
       }
-      justify="space-between"
-      align="middle"
     >
       {location.pathname === "/" ||
       location.pathname.includes("auth") ||
       location.pathname.includes("verifyEmail") ||
       location.pathname.includes("resetPassword") ? (
-        <div className="header-left col-2">
+        <div className="header-left col-4">
           <img
             src={!location.pathname.includes("auth") ? coloredLogo : whiteLogo}
             width={100}
