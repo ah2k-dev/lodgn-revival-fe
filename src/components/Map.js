@@ -22,7 +22,7 @@ const Marker = ({ text, color }) => (
 );
 const Marker2 = () => (
   <div style={{ color: "red", fontSize: "20px" }}>
-    <img src={mapMarker} alt="map-marker" width={65} />
+    <img src={mapMarker} alt="map-marker" width={20} />
   </div>
 );
 const Map = ({ hotels, center }) => {

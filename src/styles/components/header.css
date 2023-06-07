@@ -212,6 +212,11 @@
 }
 
 @media screen and (max-width: 660px) {
+  .header-icons {
+    font-size: 26px;
+    margin-top: 8px;
+  }
+
   .header-right.details {
     margin-top: 20px;
   }
