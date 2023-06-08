@@ -5,6 +5,7 @@ import { FaUserAlt } from "react-icons/fa";
 import { useLocation, useNavigate } from "react-router-dom";
 import coloredLogo from "../../assets/images/colored logo.png";
 import whiteLogo from "../../assets/images/white logo.png";
+import searchIcon from "../../assets/images/search-icon.svg";
 import { DatePicker } from "antd";
 import RoomPicker from "./RoomPicker";
 import {
@@ -99,7 +100,7 @@ const Header = () => {
   };
 
   const handleSelect = (index, place) => {
-    console.log(place);
+    // console.log(place);
     setSelectedIndex(index);
     setSearch(places[index].description);
     setPlaces([]);
@@ -211,7 +212,7 @@ const Header = () => {
         location.pathname === "/dashboard/user/create-request"
           ? "header-container w-100 justify-content-end position-relative"
           : location.pathname.includes("auth")
-          ? "header-container dark-green-header justify-content-between align-items-center position-relative"
+          ? "header-container dark-green-header justify-content-md-between justify-content-center align-items-center position-relative"
           : "header-container position-relative justify-content-md-between justify-content-center align-items-center"
       }
     >
@@ -344,19 +345,7 @@ const Header = () => {
               </div>
             </div>
             <span className="search-icon" onClick={() => handleSearchResult()}>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={3}
-                stroke="white"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
-                />
-              </svg>
+              <img src={searchIcon} alt="search-icon"/>
             </span>
           </Col>
         </div>
@@ -370,7 +359,7 @@ const Header = () => {
             <span className="title location-title">
               {jobDetails?.location.string}
             </span>
-            <span className="description">{`${center?.state}, ${center?.zipCode ? center?.zipCode : "N/A"}`}</span>
+            <span className="description">{`${jobDetails?.location?.state}, ${jobDetails?.location?.zipCode ? jobDetails?.location?.zipCode : "N/A"}`}</span>
           </div>
           <div className="detail flex">
             <div>
