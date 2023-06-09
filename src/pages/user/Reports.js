@@ -43,7 +43,7 @@ const Reports = () => {
             {reports.length > 0 ? (
               <ReportsTable tableData={reports} />
             ) : (
-              <h2 className="font-poppins mt-4 heading-green">
+              <h2 className="heading-green">
                 Reports not found
               </h2>
             )}

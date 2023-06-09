@@ -36,7 +36,7 @@ const ViewOngoingStays = () => {
   return (
     <div className="w-100 px-lg-5 px-md-3 px-4 py-5">
       <div className="d-flex flex-column gap-5">
-        <h2 className="font-poppins mt-4 heading-green">
+        <h2 className="heading-green">
           These are the current client stays
         </h2>
         {loading ? (
@@ -51,7 +51,7 @@ const ViewOngoingStays = () => {
               ))
             ) : (
               <div className="d-flex flex-column justify-content-center align-items-center">
-                <h2 className="font-poppins">No ongoing stays</h2>
+                <h2>No ongoing stays</h2>
               </div>
             )}
           </>

@@ -67,7 +67,7 @@ const AdminReports = () => {
                 <ReportsTable tableData={reports} />
               </div>
             ) : (
-              <h2 className="font-poppins mt-4 heading-green">
+              <h2 className="heading-green">
                 Reports not found
               </h2>
             )}

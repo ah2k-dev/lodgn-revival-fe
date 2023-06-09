@@ -42,7 +42,7 @@ const DashboardLayout = () => {
         )}
       </span>
       <div className="px-0">
-        <Sidebar activeClass={isActive} />
+        <Sidebar activeClass={isActive} setActiveClass={setActive} />
       </div>
       {location.pathname !== "/dashboard/user/create-request" ? (
         <div className="ms-auto dashboard dashboard-padding">

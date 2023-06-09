@@ -34,8 +34,8 @@ const OngoingStays = () => {
   }, [dispatch]);
   return (
     <div className="min-vh-100 w-100 px-lg-5 px-md-3 px-4 py-5">
-      <div className="d-flex flex-column gap-4 mt-md-0 mt-5">
-        <h2 className="font-cairo fw-bold mt-3 heading-green">
+      <div className="d-flex flex-column gap-4 mt-md-0 mt-3">
+        <h2 className="heading-green">
           You currently have {onGoing.length} ongoing stay
         </h2>
 
@@ -49,11 +49,7 @@ const OngoingStays = () => {
               onGoing.map((request, i) => (
                 <RequestComponent request={request} key={i} />
               ))
-            ) : (
-              <div className="d-flex flex-column justify-content-center align-items-center">
-                <h2 className="font-poppins">No ongoing stays</h2>
-              </div>
-            )}
+            ) : null}
           </>
         )}
       </div>

@@ -4,7 +4,7 @@ import { UseGetRole } from "../../hooks/auth";
 import { auth } from "../../services/firebase";
 import whiteLogo from "../../assets/images/white logo.png";
 
-const Sidebar = ({ activeClass }) => {
+const Sidebar = ({ activeClass, setActiveClass }) => {
   const location = useLocation();
 
   const navClass = "d-flex cursor-pointer align-items-center outline-none";
@@ -96,11 +96,8 @@ const Sidebar = ({ activeClass }) => {
       } shadow d-flex flex-column justify-content-between pb-4 position-fixed top-0 left-0`}
     >
       <ul className="relative m-0 list-none py-4 px-0">
-      <div className="col-6 mb-4">
-          <img
-            src={whiteLogo}
-            className="w-100"
-          />
+        <div className="col-6 mb-4">
+          <img src={whiteLogo} className="w-100" />
         </div>
 
         {navs.map((nav, i) => {
@@ -113,6 +110,7 @@ const Sidebar = ({ activeClass }) => {
                     ? "active " + navClass
                     : navClass
                 }
+                onClick={() => setActiveClass(!activeClass)}
               >
                 <span>{nav.navName}</span>
               </Link>

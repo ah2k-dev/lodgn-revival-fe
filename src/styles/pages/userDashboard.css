@@ -17,10 +17,6 @@
   font-weight: bold;
 }
 
-.dashboard .create-request-btn {
-  margin-top: -20px !important;
-}
-
 .dashboard .create-request-btn,
 .manage-users .add-mod-btn,
 .manage-profile .update-btn,
