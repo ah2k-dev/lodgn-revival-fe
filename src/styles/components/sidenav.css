@@ -75,11 +75,11 @@
   }
   .sideNav {
     padding: 0 1.8rem;
-    transform: translateX(-500px);
-    -webkit-transform: translateX(-500px);
-    -moz-transform: translateX(-500px);
-    -ms-transform: translateX(-500px);
-    -o-transform: translateX(-500px);
+    transform: translateX(-600px);
+    -webkit-transform: translateX(-600px);
+    -moz-transform: translateX(-600px);
+    -ms-transform: translateX(-600px);
+    -o-transform: translateX(-600px);
   }
   .sideNav.active {
     transform: translateX(0);

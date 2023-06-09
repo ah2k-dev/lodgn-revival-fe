@@ -37,7 +37,7 @@ const PreviousStays = () => {
   return (
     <div className="min-vh-100 w-100 px-md-5 px-2 py-5">
       <div className="d-flex flex-column gap-5">
-        <h2 className="font-poppins mt-4 heading-green">
+        <h2 className="heading-green">
           You currently have {previousStays.length} previous stay
         </h2>
         {loading ? (

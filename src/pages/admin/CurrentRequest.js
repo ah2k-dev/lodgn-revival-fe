@@ -37,7 +37,7 @@ const CurrentRequest = () => {
   return (
     <div className="d-flex flex-column justify-content-between gap-5 align-items-start px-md-5 px-3">
       <div className="d-flex flex-column justify-content-between w-100">
-        <h2 className="font-poppins mt-5 mb-4">
+        <h2 className="mt-5 mb-4">
           You currently have {requests.length} requests
         </h2>
         {loading ? (

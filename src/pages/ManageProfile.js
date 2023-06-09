@@ -49,7 +49,7 @@ const ManageProfile = () => {
   return (
     <div className="manage-profile min-vh-100 w-100 px-lg-5 px-md-3 px-4 py-5">
       <div className="d-flex flex-column gap-4 mt-md-0 mt-5">
-        <h2 className="font-poppins mt-4 heading-green">Manage your Profile</h2>
+        <h2 className="heading-green">Manage your Profile</h2>
         <div className="w-100 d-flex flex-column gap-lg-3 gap-2 rounded-container bg-white p-xl-5 p-lg-4 py-4 px-2 shadow position-relative">
           <Form
             initialValues={{

@@ -121,7 +121,7 @@ const UpdateStay = () => {
   return (
     <div className="min-vh-100 w-100 px-md-5 px-2 py-5">
       <div className="d-flex flex-column gap-5">
-        <h2 className="font-cairo fw-bold mt-4 heading-green">Edit your stay</h2>
+        <h2 className="heading-green">Edit your stay</h2>
         <div className="d-flex flex-column gap-4 rounded-container bg-white p-md-5 p-3">
           <div className="d-flex flex-wrap justify-content-between align-items-center position-relative">
             <div className="col-xl-9 col-12 d-flex justify-content-md-between align-items-center flex-wrap items justify-content-center">

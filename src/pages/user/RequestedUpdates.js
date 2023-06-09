@@ -36,7 +36,7 @@ const RequestedUpdates = () => {
   return (
     <div className="min-vh-100 w-100 px-lg-5 px-md-3 px-4 py-5">
       <div className="d-flex flex-column gap-5">
-        <h2 className="font-poppins mt-4 heading-green">
+        <h2 className="heading-green">
           You currently have {requestedUpdates.length} requested updates
         </h2>
         {loading ? (

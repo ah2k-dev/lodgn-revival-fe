@@ -32,14 +32,14 @@ const CurrentRequest = () => {
   }, [error, dispatch]);
 
   return (
-    <div className="w-100 d-flex flex-column justify-content-between gap-5 align-items-start px-md-5 py-md-5 px-md-4 px-2 py-4">
+    <div className="w-100 d-flex flex-column justify-content-between gap-5 align-items-start px-md-5 py-5 px-md-4 px-2">
       {loading ? (
         <div className="loader w-100 d-flex justify-content-center align-items-center">
           <LoadingOutlined style={{ fontSize: 65 }} spin />
         </div>
       ) : (
         <div className="d-flex flex-column justify-content-between w-100">
-          <div className="d-flex flex-wrap-reverse justify-content-between align-items-md-center mt-5 mb-5 gap-4">
+          <div className="d-flex flex-wrap-reverse justify-content-between align-items-md-center mb-5 gap-3 mt-md-0 mt-4">
             <h2>
               You currently have {requests.length} requests
             </h2>

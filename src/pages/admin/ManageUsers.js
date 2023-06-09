@@ -43,7 +43,7 @@ const ManageUsers = () => {
   const [form] = Form.useForm();
 
   const handleFinish = async (values) => {
-    console.log(values);
+    // console.log(values);
     let res;
     if (showPasswordField) {
       res = await dispatch(
@@ -451,13 +451,13 @@ const UsersTable = ({ tabIndex, data, handleEditModal }) => {
       title: "Full Name",
       // dataIndex: "username",
       // key: "username",
-      ...getColumnSearchProps("username"),
-      sorter: (a, b) => a.username.length - b.username.length,
+      ...getColumnSearchProps("firstname"),
+      sorter: (a, b) => a.firstname.length - b.firstname.length,
       sortDirections: ["descend", "ascend"],
       render: (record) =>
-        `${record?.firstname !== undefined ? record?.firstname : ""} ${
-          record?.lastname !== undefined ? record?.lastname : ""
-        }`,
+      `${record?.firstname !== undefined ? record?.firstname : ""} ${
+        record?.lastname !== undefined ? record?.lastname : ""
+      }`,
     },
     {
       title: "Email Address",
