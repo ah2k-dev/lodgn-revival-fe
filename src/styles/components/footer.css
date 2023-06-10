@@ -83,11 +83,9 @@
   overflow: hidden;
 }
 
-.details .detail .description {
+.footer-container .details .detail .description {
   font-size: 0.85rem;
-  font-family: "Helvetica Neue", sans-serif;
-  font-weight: normal;
-  color: #ffffff;
+  color: #ffffff !important;
 }
 
 @media screen and (max-width: 1024px) {

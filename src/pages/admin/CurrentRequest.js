@@ -287,7 +287,8 @@ const RequestComponent = ({ request, status, index }) => {
             onClick={() => handleUpdate(request._id)}
             disabled={
               (newStatus === "completed" && offerings.length == 0) ||
-              (newStatus === "paymentVerified" && selectedOffer === "")
+              (newStatus === "paymentVerified" && selectedOffer === "") ||
+              (newStatus === "paymentVerified" && !receipt)
             }
           >
             Update

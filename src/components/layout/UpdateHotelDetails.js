@@ -230,7 +230,7 @@ const UpdateHotelDetails = ({ offerings, setOfferings, flag, request }) => {
           </>
         ) : (
           <>
-            <label className="font-lato fw-semibold">Upload hotel image.</label>
+            <label className="font-cairo fw-semibold">Upload hotel image.</label>
             <Form.Item
               name="files"
               rules={[
@@ -300,7 +300,7 @@ const UpdateHotelDetails = ({ offerings, setOfferings, flag, request }) => {
         )}
       </div>
       <div className="d-flex flex-column gap-2 w-100">
-        <label className="font-lato fw-semibold">Add hotel title.</label>
+        <label className="font-cairo fw-semibold">Add hotel title.</label>
         <Form.Item
           name="hotel_title"
           rules={[
@@ -314,7 +314,7 @@ const UpdateHotelDetails = ({ offerings, setOfferings, flag, request }) => {
         </Form.Item>
       </div>
       <div className="d-flex flex-column gap-2 w-100">
-        <label className="font-lato fw-semibold">Add hotel description.</label>
+        <label className="font-cairo fw-semibold">Add hotel description.</label>
         <Form.Item
           name="description"
           rules={[
@@ -330,7 +330,7 @@ const UpdateHotelDetails = ({ offerings, setOfferings, flag, request }) => {
       {request.roomRequirements.single &&
       request.roomRequirements.single > 0 ? (
         <div className="d-flex flex-column gap-2 w-100">
-          <label className="font-lato fw-semibold">
+          <label className="font-cairo fw-semibold">
             Add single room rates.
           </label>
           <Form.Item
@@ -349,7 +349,7 @@ const UpdateHotelDetails = ({ offerings, setOfferings, flag, request }) => {
       {request.roomRequirements.double &&
       request.roomRequirements.double > 0 ? (
         <div className="d-flex flex-column gap-2 w-100">
-          <label className="font-lato fw-semibold">
+          <label className="font-cairo fw-semibold">
             Add double room rates.
           </label>
           <Form.Item
@@ -368,7 +368,7 @@ const UpdateHotelDetails = ({ offerings, setOfferings, flag, request }) => {
       {request.roomRequirements.animalSupport &&
       request.roomRequirements.animalSupport > 0 ? (
         <div className="d-flex flex-column gap-2 w-100">
-          <label className="font-lato fw-semibold">Add animal support.</label>
+          <label className="font-cairo fw-semibold">Add animal support.</label>
           <Form.Item
             name="animal_rate"
             rules={[
@@ -383,7 +383,7 @@ const UpdateHotelDetails = ({ offerings, setOfferings, flag, request }) => {
         </div>
       ) : null}
       <div className="d-flex flex-column gap-2 w-100">
-        <label className="font-lato fw-semibold">Add Payment Link.</label>
+        <label className="font-cairo fw-semibold">Add Payment Link.</label>
         <Form.Item
           name="payment_link"
           rules={[

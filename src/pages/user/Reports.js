@@ -29,7 +29,7 @@ const Reports = () => {
     }
   }, [error]);
 
-  console.log(reports);
+  // console.log(reports);
 
   return (
     <div className="min-vh-100 w-100 px-lg-5 px-md-3 px-4 py-5">

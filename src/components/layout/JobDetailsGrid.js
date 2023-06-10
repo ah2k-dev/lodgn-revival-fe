@@ -4,7 +4,7 @@ const JobDetailsGrid = ({ jobLocation, jobAddress, start_date, start_date_month,
   return (
     <>
       <div className="details">
-        <div className='detail pl-0 w-100'>
+        <div className='detail pl-0'>
           <span className='title location-title'>
             {jobLocation}
           </span>
