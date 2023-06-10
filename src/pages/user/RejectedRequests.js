@@ -43,7 +43,7 @@ const RejectedRequests = () => {
       <div className="d-flex flex-column gap-5">
         <div>
           <h2 className="heading-green">
-            You currently have {rejected.length} rejected requests
+            You currently have {rejected.length} deffered requests
           </h2>
           {rejected.length > 0 && (
             <span className="fs-6 font-poppins grey-text">
@@ -57,11 +57,11 @@ const RejectedRequests = () => {
           </div>
         ) : (
           <>
-            {rejected.length > 0 ? (
-              rejected.map((request, i) => (
-                <RequestComponent request={request} key={i} />
-              ))
-            ) : null}
+            {rejected.length > 0
+              ? rejected.map((request, i) => (
+                  <RequestComponent request={request} key={i} />
+                ))
+              : null}
           </>
         )}
       </div>
@@ -74,7 +74,7 @@ const RequestComponent = ({ request }) => {
     <div className="ongoingStays w-100 d-flex flex-column gap-lg-5 gap-2 rounded-container bg-white p-xl-5 p-lg-4 p-4 shadow position-relative">
       <div className="d-flex flex-md-row flex-column-reverse justify-content-between align-items-start flex-md-nowrap flex-wrap gap-md-0 gap-3">
         <div className="col-12 d-flex flex-column gap-3">
-          <span className="font-lato fw-bold fs-6">
+          <span className="font-cairo fw-bold fs-6">
             Rejected Request Booking Details
           </span>
           <JobDetailsGrid

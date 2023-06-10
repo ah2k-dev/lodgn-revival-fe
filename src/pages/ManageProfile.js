@@ -38,7 +38,7 @@ const ManageProfile = () => {
   };
 
   const handleUpdatePasswordFinish = async (values) => {
-    console.log(values);
+    // console.log(values);
     const res = await dispatch(updatePasswordRequest(values));
     if (res) {
       form2.resetFields();
@@ -113,7 +113,7 @@ const ManageProfile = () => {
                   },
                 ]}
               >
-                <Input placeholder="input your email address" />
+                <Input placeholder="input your email address" disabled />
               </Form.Item>
             </div>
             <div className="col-sm-6 col-12 px-3">
@@ -148,11 +148,6 @@ const ManageProfile = () => {
                 <Input placeholder="input your company name" />
               </Form.Item>
             </div>
-            {/* <div className="col-12 px-3">
-              <Checkbox onChange={() => setUpdatePassword(!updatePassword)}>
-                Update Password
-              </Checkbox>
-            </div> */}
             <div className="update-btns col-12 d-flex justify-content-end gap-2 px-3">
               <Button
                 className="update-password-btn mt-3"
@@ -186,7 +181,7 @@ const ManageProfile = () => {
               className="ant-row"
               onFinish={handleUpdatePasswordFinish}
               onFinishFailed={(errorInfo) => {
-                // console.log("Failed:", errorInfo);
+                console.log("Failed:", errorInfo);
               }}
               autoComplete="off"
             >
@@ -258,81 +253,6 @@ const ManageProfile = () => {
               </div>
             </Form>
           </Modal>
-
-          {/* {updatePassword && (
-            <Form
-              initialValues={{
-                password: "",
-                confirm_password: "",
-              }}
-              ref={formRef}
-              form={form}
-              className="ant-row justify-content-between"
-              onFinish={handleFinish}
-              onFinishFailed={(errorInfo) => {
-                // console.log("Failed:", errorInfo);
-              }}
-              autoComplete="off"
-              // validateMessages={validateMessages}
-            >
-              <div className="col-sm-6 col-12 px-3">
-                <label htmlFor="password" className="mb-1">
-                  Password
-                </label>
-                <Form.Item
-                  name="password"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please enter your new password!",
-                    },
-                    {
-                      pattern:
-                        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]).{8,}$/,
-                      message:
-                        "Password must contain at least 8 characters, 1 uppercase, 1 lowercase, 1 number, and 1 special character",
-                    },
-                  ]}
-                >
-                  <Input.Password placeholder="Enter your new password" />
-                </Form.Item>
-              </div>
-              <div className="col-sm-6 col-12 px-3">
-                <label htmlFor="confirm_password" className="mb-1">
-                  Confirm Password
-                </label>
-                <Form.Item
-                  name="confirm_password"
-                  dependencies={["password"]}
-                  rules={[
-                    {
-                      required: true,
-                      message: "Confirm password is required!",
-                    },
-                    ({ getFieldValue }) => ({
-                      validator(_, value) {
-                        if (!value || getFieldValue("password") === value) {
-                          return Promise.resolve();
-                        }
-                        return Promise.reject(
-                          new Error(
-                            "The two passwords that you entered do not match!"
-                          )
-                        );
-                      },
-                    }),
-                  ]}
-                >
-                  <Input.Password placeholder="Confirm new password!" />
-                </Form.Item>
-              </div>
-              <div className="col-12 d-flex justify-content-end px-3">
-                <Button className="update-btn mt-3" onClick={handleUpdate}>
-                  Update Password
-                </Button>
-              </div>
-            </Form>
-          )} */}
         </div>
       </div>
     </div>

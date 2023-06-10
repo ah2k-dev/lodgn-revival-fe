@@ -36,9 +36,7 @@ const ViewOngoingStays = () => {
   return (
     <div className="w-100 px-lg-5 px-md-3 px-4 py-5">
       <div className="d-flex flex-column gap-5">
-        <h2 className="heading-green">
-          These are the current client stays
-        </h2>
+        <h2 className="heading-green">These are the current client stays</h2>
         {loading ? (
           <div className="loader w-100 d-flex justify-content-center align-items-center">
             <LoadingOutlined style={{ fontSize: 65 }} spin />
@@ -84,8 +82,9 @@ const RequestComponent = ({ request }) => {
       </div>
       <div className="d-flex justify-content-between align-items-center flex-wrap gap-3">
         <PaidPerNight
-          singles={request.bookedOffering.rates.single}
-          doubles={request.bookedOffering.rates.double}
+          singles={request?.bookedOffering?.rates?.single}
+          doubles={request?.bookedOffering?.rates?.double}
+          animals={request?.bookedOffering?.rates?.animalSupport}
         />
         <span className="completed-status">COMPLETED</span>
       </div>

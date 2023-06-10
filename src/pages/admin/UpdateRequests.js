@@ -83,85 +83,72 @@ const RequestComponent = ({ request, update }) => {
   const dispatch = useDispatch();
 
   return (
-    <div className="d-flex flex-column gap-4 rounded-container bg-white p-5 position-relative">
+    <div className="d-flex flex-column gap-4 rounded-container bg-white p-xl-5 p-lg-4 p-4 position-relative">
       <div className="row gap-5 justify-content-center">
-        <div className="col-12 d-flex flex-column gap-3">
-          {update.status !== "pending" && (
-            <span
-              className={`update-Requested-badge text-white px-3 py-2 rounded-3 fw-bold font-poppins ${
-                update.status === "approved"
-                  ? "approved-status"
-                  : "rejected-status"
-              } align-self-end`}
-            >
-              {update.status}
-            </span>
-          )}
-          <span className="font-lato fw-bold fs-6">
-            Previous Booking Details
-          </span>
-          <JobDetailsGrid
-            jobLocation={request.location.string}
-            start_date={moment(request.dateRange[0]).format("DD")}
-            end_date={moment(request.dateRange[1]).format("DD")}
-            start_date_month={moment(request.dateRange[0]).format("MMM")}
-            end_date_month={moment(request.dateRange[1]).format("MMM")}
-            total_rooms={
-              request.roomRequirements.single + request.roomRequirements.double
-            }
-            single_rooms={request.roomRequirements.single}
-            double_rooms={request.roomRequirements.double}
-            animalSupport={request.roomRequirements.animalSupport}
-          />
-        </div>
-
-        <div className="col-12 d-flex flex-column gap-3">
-          <span className="font-lato fw-bold">
-            New Requested Booking Details
-          </span>
-          <div className="d-flex flex-md-row flex-column justify-content-between align-items-md-start align-items-center gap-3">
-            <JobDetailsGrid
-              jobLocation={request.location.string}
-              start_date={moment(update?.dateRange[0]).format("DD")}
-              end_date={moment(update?.dateRange[1]).format("DD")}
-              start_date_month={moment(update?.dateRange[0]).format("MMM")}
-              end_date_month={moment(update?.dateRange[1]).format("MMM")}
-              total_rooms={
-                update?.roomRequirements.single +
-                update?.roomRequirements.double
-              }
-              single_rooms={update?.roomRequirements.single}
-              double_rooms={update?.roomRequirements.double}
-              animalSupport={update?.roomRequirements.animalSupport}
-            />
-            {update?.roaster && (
-              <span className="d-flex flex-column align-items-center gap-1">
-                <span className="font-lato fw-bold">Download attachments:</span>
-                <a href={`${baseURL}${update.roaster}`} target="_blank">
-                  <span style={{ cursor: "pointer" }}>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth={1.5}
-                      stroke="currentColor"
-                      className=""
-                      width={24}
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"
-                      />
-                    </svg>
-                  </span>
-                </a>
-              </span>
+        <div className="d-flex flex-md-row flex-column-reverse justify-content-between align-items-center flex-md-nowrap flex-wrap gap-md-0 gap-3">
+          <div className="row gap-5 justify-content-center">
+            {update?.status !== "approved" && (
+              <div className="col-12 d-flex flex-column gap-3">
+                <span className="font-cairo fw-bold fs-6">
+                  Previous Booking Details
+                </span>
+                <JobDetailsGrid
+                  jobLocation={request.location.string}
+                  start_date={moment(request.dateRange[0]).format("DD")}
+                  end_date={moment(request.dateRange[1]).format("DD")}
+                  start_date_month={moment(request.dateRange[0]).format("MMM")}
+                  end_date_month={moment(request.dateRange[1]).format("MMM")}
+                  total_rooms={
+                    request.roomRequirements.single +
+                    request.roomRequirements.double
+                  }
+                  single_rooms={request.roomRequirements.single}
+                  double_rooms={request.roomRequirements.double}
+                  animalSupport={request.roomRequirements.animalSupport}
+                />
+              </div>
             )}
+
+            {/* New Booking Details */}
+
+            <div className="col-12 d-flex flex-column gap-3">
+              <span className="font-cairo fw-bold">
+                New Requested Booking Details
+              </span>
+              <JobDetailsGrid
+                jobLocation={request?.location.string}
+                start_date={moment(update?.dateRange[0]).format("DD")}
+                end_date={moment(update?.dateRange[1]).format("DD")}
+                start_date_month={moment(update?.dateRange[0]).format("MMM")}
+                end_date_month={moment(update?.dateRange[1]).format("MMM")}
+                total_rooms={
+                  update?.roomRequirements.single +
+                  update?.roomRequirements.double
+                }
+                single_rooms={update?.roomRequirements.single}
+                double_rooms={update?.roomRequirements.double}
+                animalSupport={update?.roomRequirements.animalSupport}
+              />
+            </div>
+          </div>
+          <div className="request-status d-flex justify-content-end align-self-md-start align-self-end">
+            <span className="py-2 px-4 fw-bold rounded-3">
+              <span
+                className={`update-Requested-badge px-3 py-2 rounded-3 fw-bold font-poppins ${
+                  update?.status === "rejected"
+                    ? "rejected-status"
+                    : "approved-status"
+                } ${
+                  update?.status === "pending" ? "text-warning" : "text-white"
+                } align-self-end`}
+              >
+                {update?.status}
+              </span>
+            </span>
           </div>
         </div>
 
-        {update.status === "pending" && (
+        {update?.status === "pending" && (
           <div className="col-12 btns d-flex justify-content-md-end justify-content-center gap-3">
             <Button
               className="declineBtn"
@@ -213,58 +200,64 @@ const RequestComponent = ({ request, update }) => {
                 }
               }}
               onFinishFailed={(errorInfo) => {
-                // console.log("Failed:", errorInfo);
+                console.log("Failed:", errorInfo);
               }}
               autoComplete="off"
             >
-              <div className="d-flex flex-column gap-2 w-100">
-                <label className="font-lato fw-semibold">
-                  Add single room rates.
-                </label>
-                <Form.Item
-                  name="single_rooms_rate"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please add single room rates!",
-                    },
-                  ]}
-                >
-                  <InputNumber min={0} />
-                </Form.Item>
-              </div>
-              <div className="d-flex flex-column gap-2 w-100">
-                <label className="font-lato fw-semibold">
-                  Add double room rates.
-                </label>
-                <Form.Item
-                  name="double_rooms_rate"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please add single room rates!",
-                    },
-                  ]}
-                >
-                  <InputNumber min={0} />
-                </Form.Item>
-              </div>
-              <div className="d-flex flex-column gap-2 w-100">
-                <label className="font-lato fw-semibold">
-                  Add animal support.
-                </label>
-                <Form.Item
-                  name="animal_rate"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please add single room rates!",
-                    },
-                  ]}
-                >
-                  <InputNumber min={0} />
-                </Form.Item>
-              </div>
+              {update?.roomRequirements?.single ? (
+                <div className="d-flex flex-column gap-2 w-100">
+                  <label className="font-cairo fw-semibold">
+                    Add single room rates.
+                  </label>
+                  <Form.Item
+                    name="single_rooms_rate"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please add single room rates!",
+                      },
+                    ]}
+                  >
+                    <InputNumber min={0} />
+                  </Form.Item>
+                </div>
+              ) : null}
+              {update?.roomRequirements?.double ? (
+                <div className="d-flex flex-column gap-2 w-100">
+                  <label className="font-cairo fw-semibold">
+                    Add double room rates.
+                  </label>
+                  <Form.Item
+                    name="double_rooms_rate"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please add single room rates!",
+                      },
+                    ]}
+                  >
+                    <InputNumber min={0} />
+                  </Form.Item>
+                </div>
+              ) : null}
+              {update?.roomRequirements?.animalSupport ? (
+                <div className="d-flex flex-column gap-2 w-100">
+                  <label className="font-cairo fw-semibold">
+                    Add animal support.
+                  </label>
+                  <Form.Item
+                    name="animal_rate"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please add single room rates!",
+                      },
+                    ]}
+                  >
+                    <InputNumber min={0} />
+                  </Form.Item>
+                </div>
+              ) : null}
               <div className="row mt-2 w-100">
                 <Button className="saveBtn" onClick={handleSave}>
                   Save

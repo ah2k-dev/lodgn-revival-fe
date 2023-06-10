@@ -170,7 +170,7 @@ const ManageUsers = () => {
               className="ant-row"
               onFinish={handleFinish}
               onFinishFailed={(errorInfo) => {
-                // console.log("Failed:", errorInfo);
+                console.log("Failed:", errorInfo);
               }}
               autoComplete="off"
             >

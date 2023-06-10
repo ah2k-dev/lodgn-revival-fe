@@ -16,11 +16,28 @@
   -o-transition: 0.5s ease-in-out;
 }
 
+.btns .approveBtn,
 .btns .declineBtn {
-  border-radius: 4px;
+  min-width: 100px;
+}
+
+.btns .declineBtn {
   font-weight: 600;
   min-height: 40px;
   transition: 0.5s ease-in-out;
+  border-radius: 25px !important;
+  -webkit-border-radius: 25px !important;
+  -moz-border-radius: 25px !important;
+  -ms-border-radius: 25px !important;
+  -o-border-radius: 25px !important;
+}
+
+.btns .declineBtn:is(:hover, :focus, :active) {
+  border-color: #de0707 !important;
+}
+
+.btns .declineBtn:is(:hover, :focus, :active) span {
+  color: #de0707 !important;
 }
 
 .btns .approveBtn span,

@@ -138,7 +138,7 @@ const Auth = () => {
               className="ant-row"
               onFinish={onFinish}
               onFinishFailed={(errorInfo) => {
-                // console.log("Failed:", errorInfo);
+                console.log("Failed:", errorInfo);
               }}
               autoComplete="off"
             >

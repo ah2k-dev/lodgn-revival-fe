@@ -63,7 +63,7 @@ const RequstToken = () => {
               className="ant-row"
               onFinish={onFinish}
               onFinishFailed={(errorInfo) => {
-                // console.log("Failed:", errorInfo);
+                console.log("Failed:", errorInfo);
               }}
               style={{ width: "100%" }}
               autoComplete="off"

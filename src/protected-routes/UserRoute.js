@@ -6,7 +6,7 @@ const UserRoute = ({ Component }) => {
   const isAuthenticated = useAuth();
   const role = UseGetRole();
   if (!isAuthenticated) {
-    console.log("not authenticated");
+    // console.log("not authenticated");
     return <Navigate to="/" />;
   } else {
     if (role === "user") {
