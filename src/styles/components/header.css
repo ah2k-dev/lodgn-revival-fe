@@ -172,6 +172,7 @@
 
 .header-right.details .detail .description {
   font-size: 0.75rem;
+  color: white !important;
 }
 
 .header-icons {
