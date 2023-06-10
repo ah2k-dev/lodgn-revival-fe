@@ -110,13 +110,13 @@
 }
 
 .dashboard .details .detail:first-child {
-  max-width: 25%;
+  max-width: 18%;
   width: auto;
 }
 
 .dashboard .details {
   max-width: 100%;
-  width: auto;
+  width: 100%;
 }
 
 .dashboard .details .detail {
@@ -137,7 +137,7 @@
 }
 
 .dashboard .details .location-title {
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 2;
 }
 
 .loader {
@@ -341,6 +341,11 @@
   .dashboard .footer-container .details .detail {
     border-bottom: none;
     border-right: 2px solid #0000004d;
+  }
+
+  .dashboard .details .detail:first-child {
+    max-width: unset;
+    width: 100%;
   }
 
   .dashboard .footer-container .details .detail:last-child {

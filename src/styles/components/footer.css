@@ -78,9 +78,11 @@
 
 .details .detail .location-title {
   display: -webkit-box;
+  line-clamp: 1;
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
-  overflow-x: hidden;
+  overflow: hidden;
+  height: auto;
 }
 
 .footer-container .details .detail .description {
