@@ -116,7 +116,7 @@
 
 .dashboard .details {
   max-width: 100%;
-  width: 100%;
+  width: auto;
 }
 
 .dashboard .details .detail {
@@ -295,9 +295,8 @@
     gap: 50px;
     justify-content: space-between;
   }
-
   .dashboard .details {
-    max-width: 100%;
+    width: 100%;
   }
 }
 
