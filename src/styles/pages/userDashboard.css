@@ -110,7 +110,7 @@
 }
 
 .dashboard .details .detail:first-child {
-  max-width: 18%;
+  max-width: 25%;
   width: auto;
 }
 
@@ -137,7 +137,7 @@
 }
 
 .dashboard .details .location-title {
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 3;
 }
 
 .loader {
@@ -338,6 +338,10 @@
 }
 
 @media screen and (max-width: 660px) {
+  .dashboard .rounded-container .details .detail .location-title {
+    max-width: 90%;
+}
+
   .dashboard .footer-container .details .detail {
     border-bottom: none;
     border-right: 2px solid #0000004d;
