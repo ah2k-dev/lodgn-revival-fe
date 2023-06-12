@@ -40,6 +40,7 @@ code {
   background-color: #48af78;
   font-size: 0.75rem;
   text-align: center;
+  min-width: 165px;
 }
 
 .rejected-status {

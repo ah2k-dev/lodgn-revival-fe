@@ -61,8 +61,8 @@ const ViewOngoingStays = () => {
 
 const RequestComponent = ({ request }) => {
   return (
-    <div className="d-flex flex-column gap-4 rounded-container bg-white p-5 position-relative">
-      <div className="d-flex justify-content-md-between flex-wrap align-items-start justify-content-center">
+    <div className="d-flex flex-column gap-4 rounded-container bg-white p-md-5 p-4 position-relative">
+      <div className="d-flex justify-content-md-between flex-wrap gap-4 align-items-start justify-content-center">
         <JobDetailsGrid
           jobLocation={request.location.string}
           start_date={moment(request.dateRange[0]).format("DD")}
@@ -80,7 +80,7 @@ const RequestComponent = ({ request }) => {
           <HotelPhotosCarousel images={request?.bookedOffering?.images} />
         </div>
       </div>
-      <div className="d-flex justify-content-between align-items-center flex-wrap gap-3">
+      <div className="d-flex justify-content-sm-between justify-content-center align-items-center flex-wrap gap-3">
         <PaidPerNight
           singles={request?.bookedOffering?.rates?.single}
           doubles={request?.bookedOffering?.rates?.double}
