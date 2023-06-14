@@ -89,11 +89,6 @@ code {
   font-size: 1.5rem !important;
 }
 
-/* Chat Icon */
-.woot-widget-bubble.woot-elements--right {
-  background: #5da874 !important;
-}
-
 @import "./styles/general.css";
 @import "./styles/antd.css";
 @import "./styles/components/layout.css";
