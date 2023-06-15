@@ -31,6 +31,21 @@ const Footer = () => {
 
   const totalRooms = roomRequirements.single + roomRequirements.double;
 
+  const handleBookingRequest = () => {
+    localStorage.setItem("location", JSON.stringify(center));
+    localStorage.setItem("dateRange", JSON.stringify(dateRange));
+    localStorage.setItem("roomRequirements", JSON.stringify(roomRequirements));
+
+    navigate("/auth", {
+      state: {
+        location: center,
+        dateRange,
+        roomRequirements,
+      },
+    });
+    dispatch(clearState());
+  };
+
   return (
     <footer
       className={
@@ -44,7 +59,9 @@ const Footer = () => {
           {center?.string && (
             <div className="detail pl-0">
               <span className="title location-title">{center?.string}</span>
-              <span className="description">{`${center?.state}, ${center?.zipCode ? center?.zipCode : "N/A"}`}</span>
+              <span className="description">{`${center?.state}, ${
+                center?.zipCode ? center?.zipCode : "N/A"
+              }`}</span>
             </div>
           )}
           <div className="detail flex">
@@ -107,16 +124,7 @@ const Footer = () => {
             className="px-3 confirm-btn"
             onClick={
               location.pathname === "/"
-                ? () => {
-                    navigate("/auth", {
-                      state: {
-                        location: center,
-                        dateRange,
-                        roomRequirements,
-                      },
-                    });
-                    dispatch(clearState());
-                  }
+                ? () => handleBookingRequest()
                 : () => {
                     const res = dispatch(
                       createRequest({
