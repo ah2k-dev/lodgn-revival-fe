@@ -28,7 +28,7 @@ export const createRequest = (data) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: requestConstants.CREATE_REQUEST_FAILURE,
-      payload: error.response.data.message || "Server Error",
+      payload: error?.response?.data?.message || "Server Error",
     });
   }
 };
@@ -47,7 +47,7 @@ export const getOneRequest = (id) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: requestConstants.GET_ONE_REQUEST_FAILURE,
-      payload: error.response.data.message || "Server Error",
+      payload: error?.response?.data?.message || "Server Error",
     });
   }
 };
@@ -66,7 +66,7 @@ export const getRequests = () => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: requestConstants.GET_REQUESTS_FAILURE,
-      payload: error.response.data.message || "Server Error",
+      payload: error?.response?.data?.message || "Server Error",
     });
   }
 };
@@ -96,7 +96,7 @@ export const deleteRequest = (id) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: requestConstants.DELETE_REQUEST_FAILURE,
-      payload: error.response.data.message || "Server Error",
+      payload: error?.response?.data?.message || "Server Error",
     });
   }
 };
@@ -129,7 +129,7 @@ export const changeStatus = (id, data) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: requestConstants.CHANGE_STATUS_FAILURE,
-      payload: error.response.data.message || "Server Error",
+      payload: error?.response?.data?.message || "Server Error",
     });
     message.error({
       content: error.response.data.message || "Server Error",
@@ -155,7 +155,7 @@ export const getOngoingRequests = () => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: requestConstants.GET_ONGOING_REQUESTS_FAILURE,
-      payload: error.response.data.message || "Server Error",
+      payload: error?.response?.data?.message || "Server Error",
     });
   }
 };
@@ -189,7 +189,7 @@ export const bookOffer = (request, offering, file) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: requestConstants.BOOK_OFFER_FAILURE,
-      payload: error.response.data.message || "Server Error",
+      payload: error?.response?.data?.message || "Server Error",
     });
   }
 };
@@ -208,7 +208,7 @@ export const getPreviousStays = () => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: requestConstants.GET_PREVIOUS_STAYS_FAILURE,
-      payload: error.response.data.message || "Server Error",
+      payload: error?.response?.data?.message || "Server Error",
     });
   }
 };
@@ -243,7 +243,7 @@ export const updateRequest = (data) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: requestConstants.UPDATE_REQUEST_FAILURE,
-      payload: error.response.data.message || "Server Error",
+      payload: error?.response?.data?.message || "Server Error",
     });
   }
 };
@@ -273,7 +273,7 @@ export const approveRejectUpdate = (data) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: requestConstants.APPROVE_REJECT_UPDATE_FAILURE,
-      payload: error.response.data.message || "Server Error",
+      payload: error?.response?.data?.message || "Server Error",
     });
   }
 };
@@ -303,7 +303,7 @@ export const getRequestUpdates = () => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: requestConstants.GET_REQUEST_UPDATES_FAILURE,
-      payload: error.response.data.message || "Server Error",
+      payload: error?.response?.data?.message || "Server Error",
     });
   }
 };
@@ -333,7 +333,7 @@ export const getRejectedReuests = () => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: requestConstants.GET_REJECTED_REQUESTS_FAILURE,
-      payload: error.response.data.message || "Server Error",
+      payload: error?.response?.data?.message || "Server Error",
     });
   }
 };
@@ -363,7 +363,7 @@ export const rejectReuest = (id) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: requestConstants.REJECT_REQUEST_FAILURE,
-      payload: error.response.data.message || "Server Error",
+      payload: error?.response?.data?.message || "Server Error",
     });
   }
 };
@@ -393,7 +393,7 @@ export const fetchReports = () => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: requestConstants.GET_REPORTS_FAILURE,
-      payload: error.response.data.message || "Server Error",
+      payload: error?.response?.data?.message || "Server Error",
     });
   }
 };
@@ -422,7 +422,7 @@ export const updateOffer = (id, data) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: requestConstants.UPDATE_OFFER_FAILURE,
-      payload: error.response.data.message || "Server Error",
+      payload: error?.response?.data?.message || "Server Error",
     });
   }
 };

@@ -3,7 +3,8 @@ import { authConstants } from "../constants/authConstants";
 import custAxios from "../services/axiosConfig";
 
 export const signup =
-  (firstname, lastname, email, password, phone, company) => async (dispatch) => {
+  (firstname, lastname, email, password, phone, company) =>
+  async (dispatch) => {
     dispatch({
       type: authConstants.SIGNUP_REQUEST,
     });
@@ -21,7 +22,7 @@ export const signup =
           type: authConstants.SIGNUP_SUCCESS,
           payload: res.data.data,
         });
-        dispatch(requestToken(email, "request"))
+        dispatch(requestToken(email, "request"));
         message.success({
           content: "Signup Successful",
           style: {
@@ -33,7 +34,7 @@ export const signup =
     } catch (error) {
       dispatch({
         type: authConstants.SIGNUP_FAILURE,
-        payload: error.response.data.message || "Server Error",
+        payload: error?.response?.data?.message || "Server Error",
       });
     }
   };
@@ -65,7 +66,7 @@ export const login = (email, password) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: authConstants.LOGIN_FAILURE,
-      payload: error.response.data.message || "Server Error",
+      payload: error?.response?.data?.message || "Server Error",
     });
   }
 };
@@ -75,16 +76,6 @@ export const requestToken = (email, type) => async (dispatch) => {
     type: authConstants.REQUEST_TOKEN_REQUEST,
   });
   try {
-    // let res;
-    // if (type == "request") {
-    //   res = await custAxios.post("/auth/requestEmailToken", {
-    //     email,
-    //   });
-    // } else {
-    //   res = await custAxios.post("/auth/forgotPassword", {
-    //     email,
-    //   });
-    // }
     const res = await custAxios.post(
       `/auth/${type == "request" ? "requestEmailToken" : "forgotPassword"}`,
       { email }
@@ -104,7 +95,7 @@ export const requestToken = (email, type) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: authConstants.REQUEST_TOKEN_FAILURE,
-      payload: error.response.data.message || "Server Error",
+      payload: error?.response?.data?.message || "Server Error",
     });
   }
 };
@@ -133,7 +124,7 @@ export const verifyEmail = (token, email) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: authConstants.VERIFY_EMAIL_FAILURE,
-      payload: error.response.data.message || "Server Error",
+      payload: error?.response?.data?.message || "Server Error",
     });
   }
 };
@@ -163,7 +154,7 @@ export const resetPassword = (token, email, password) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: authConstants.RESET_PASSWORD_FAILURE,
-      payload: error.response.data.message || "Server Error",
+      payload: error?.response?.data?.message || "Server Error",
     });
   }
 };
@@ -194,6 +185,11 @@ export const loginWithRequestPayload = (payload) => async (dispatch) => {
         type: authConstants.LOGIN_SUCCESS,
         payload: res.data.data,
       });
+      localStorage.removeItem("email");
+      localStorage.removeItem("password");
+      localStorage.removeItem("location");
+      localStorage.removeItem("dateRange");
+      localStorage.removeItem("roomRequirements");
       message.success({
         content: "Login Successful",
         style: {
@@ -205,7 +201,7 @@ export const loginWithRequestPayload = (payload) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: authConstants.LOGIN_FAILURE,
-      payload: error.response.data.message || "Server Error",
+      payload: error?.response?.data?.message || "Server Error",
     });
   }
 };
@@ -235,7 +231,7 @@ export const googleAuth = (data) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: authConstants.GOOGLE_AUTH_FAILURE,
-      payload: error.response.data.message || "Server Error",
+      payload: error?.response?.data?.message || "Server Error",
     });
   }
 };

@@ -98,14 +98,17 @@ button.btnGoogle {
   margin-right: 6px;
 }
 
-.verify-email {
+.verify-email,
+.resend-token-text {
   color: red;
-  text-decoration: underline;
+  text-decoration: none;
 }
 
-.verify-email:hover {
+.verify-email:hover,
+.resend-token-text:hover {
   cursor: pointer;
-  color: black;
+  text-decoration: underline;
+  color: red;
 }
 
 .text-green {

@@ -1,7 +1,13 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { clearErrors, verifyEmail } from "../actions/authActions";
+import {
+  clearErrors,
+  login,
+  loginWithRequestPayload,
+  requestToken,
+  verifyEmail,
+} from "../actions/authActions";
 import { Button, Col, Form, Input, Row, Typography, message } from "antd";
 import BackButton from "../components/BackButton";
 
@@ -10,13 +16,57 @@ const VerifyEmail = () => {
   const location = useLocation();
   const { email } = useParams();
   const dispatch = useDispatch();
-  const { loading, error, isAuthenticated } = useSelector(
+
+  const [resendToken, setResendToken] = useState(false);
+
+  const { loading, error, isAuthenticated, user } = useSelector(
     (state) => state.auth
   );
   const onFinish = async (values) => {
     const res = await dispatch(verifyEmail(values.token, email));
+    const password = localStorage.getItem("password");
+    const request_location = JSON.parse(localStorage.getItem("location"));
+    const dateRange = JSON.parse(localStorage.getItem("dateRange"));
+    const roomRequirements = JSON.parse(
+      localStorage.getItem("roomRequirements")
+    );
     if (res) {
-      navigate("/auth", { state: location?.state });
+      if (request_location) {
+        const payload = {
+          email: email,
+          password: password,
+          location: request_location,
+          dateRange: dateRange,
+          roomRequirements: roomRequirements,
+        };
+        const payload_res = await dispatch(loginWithRequestPayload(payload));
+        if (payload_res) {
+          if (isAuthenticated) {
+            if (
+              user?.userData?.role === "admin" ||
+              user?.userData?.role === "moderator"
+            ) {
+              navigate("/dashboard/admin");
+            } else {
+              navigate("/dashboard/user");
+            }
+          }
+        }
+      } else {
+        const login_res = await dispatch(login(email, password));
+        if (login_res) {
+          if (isAuthenticated) {
+            if (
+              user?.userData?.role === "admin" ||
+              user?.userData?.role === "moderator"
+            ) {
+              navigate("/dashboard/admin");
+            } else {
+              navigate("/dashboard/user");
+            }
+          }
+        }
+      }
     }
   };
   useEffect(() => {
@@ -29,6 +79,10 @@ const VerifyEmail = () => {
       });
       dispatch(clearErrors());
     }
+
+    setTimeout(() => {
+      setResendToken(true);
+    }, 1000 * 60);
   }, [error, dispatch]);
 
   return (
@@ -84,6 +138,14 @@ const VerifyEmail = () => {
                     Verify
                   </Button>
                 </Form.Item>
+                {resendToken && (
+                  <a
+                    className="resend-token-text"
+                    onClick={() => dispatch(requestToken(email, "request"))}
+                  >
+                    Resend verification token
+                  </a>
+                )}
               </div>
             </Form>
           </div>
