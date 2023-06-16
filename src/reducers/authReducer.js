@@ -36,6 +36,7 @@ export const authReducer = (
       };
 
     case authConstants.LOGIN_SUCCESS:
+    case authConstants.VERIFY_EMAIL_SUCCESS:
     case authConstants.GOOGLE_AUTH_SUCCESS:
       return {
         ...state,
@@ -75,7 +76,6 @@ export const authReducer = (
         error: null,
       };
     case authConstants.REQUEST_TOKEN_SUCCESS:
-    case authConstants.VERIFY_EMAIL_SUCCESS:
     case authConstants.RESET_PASSWORD_SUCCESS:
       return {
         ...state,

@@ -47,14 +47,16 @@
 
 .logoutBtn:hover,
 .saveBtn:hover {
-  background: transparent;
+  background: transparent !important;
 }
 
+.logoutBtn span,
 .saveBtn span {
   font-family: "Cairo", sans-serif;
   font-weight: 800;
 }
 
+.logoutBtn:hover,
 .saveBtn:hover span {
   color: #88c289 !important;
 }

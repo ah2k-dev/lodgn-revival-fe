@@ -24,8 +24,6 @@ const Auth = () => {
     (state) => state.auth
   );
 
-  // console.log(loading);
-
   const formRef = useRef(null);
   const onFinish = async (values) => {
     if (active === "login") {
@@ -53,8 +51,6 @@ const Auth = () => {
           values.company
         )
       );
-      localStorage.setItem("email", values.email);
-      localStorage.setItem("password", values.password);
       if (!res) {
         setActive("signup");
       } else {

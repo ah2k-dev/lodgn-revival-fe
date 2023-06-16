@@ -117,7 +117,7 @@ const Footer = () => {
             </div>
           )}
         </div>
-        <div className="col-auto footer-btn d-flex justify-content-end">
+        <div className="col-auto footer-btn">
           <Button
             disabled={center.search === "" || totalRooms === 0}
             loading={loading}
