@@ -8,7 +8,7 @@ import {
   requestToken,
   verifyEmail,
 } from "../actions/authActions";
-import { Button, Col, Form, Input, Row, Typography, message } from "antd";
+import { Button, Form, Input, Row, Typography, message } from "antd";
 import BackButton from "../components/BackButton";
 
 const VerifyEmail = () => {
@@ -24,49 +24,11 @@ const VerifyEmail = () => {
   );
   const onFinish = async (values) => {
     const res = await dispatch(verifyEmail(values.token, email));
-    const password = localStorage.getItem("password");
-    const request_location = JSON.parse(localStorage.getItem("location"));
-    const dateRange = JSON.parse(localStorage.getItem("dateRange"));
-    const roomRequirements = JSON.parse(
-      localStorage.getItem("roomRequirements")
-    );
     if (res) {
-      if (request_location) {
-        const payload = {
-          email: email,
-          password: password,
-          location: request_location,
-          dateRange: dateRange,
-          roomRequirements: roomRequirements,
-        };
-        const payload_res = await dispatch(loginWithRequestPayload(payload));
-        if (payload_res) {
-          if (isAuthenticated) {
-            if (
-              user?.userData?.role === "admin" ||
-              user?.userData?.role === "moderator"
-            ) {
-              navigate("/dashboard/admin");
-            } else {
-              navigate("/dashboard/user");
-            }
-          }
-        }
-      } else {
-        const login_res = await dispatch(login(email, password));
-        if (login_res) {
-          if (isAuthenticated) {
-            if (
-              user?.userData?.role === "admin" ||
-              user?.userData?.role === "moderator"
-            ) {
-              navigate("/dashboard/admin");
-            } else {
-              navigate("/dashboard/user");
-            }
-          }
-        }
-      }
+      console.log("working");
+      // localStorage.setItem("token", res.data.data.token);
+      // localStorage.setItem("user", res.data.data.user);
+      // navigate("/auth", { state: location?.state });
     }
   };
   useEffect(() => {
@@ -82,7 +44,7 @@ const VerifyEmail = () => {
 
     setTimeout(() => {
       setResendToken(true);
-    }, 1000 * 60);
+    }, 1000 * 10);
   }, [error, dispatch]);
 
   return (

@@ -110,8 +110,11 @@ export const verifyEmail = (token, email) => async (dispatch) => {
       email,
     });
     if (res) {
+      localStorage.setItem("token", res.data.data.jwtToken);
+      localStorage.setItem("user", JSON.stringify(res.data.data.userData));
       dispatch({
         type: authConstants.VERIFY_EMAIL_SUCCESS,
+        payload: res.data.data,
       });
       message.success({
         content: `Email verified`,

@@ -1,5 +1,5 @@
 import { Button, Form, Input, Row, Typography, message } from "antd";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import BackButton from "../components/BackButton";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -10,10 +10,14 @@ const RequstToken = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
+  const [email, setEmail] = useState("");
+  const [resendToken, setResendToken] = useState(false);
   const { loading, error, isAuthenticated } = useSelector(
     (state) => state.auth
   );
+
   const onFinish = async (values) => {
+    setEmail(values.email);
     let type;
     if (pathname === "/auth/requestToken") {
       type = "request";
@@ -44,6 +48,10 @@ const RequstToken = () => {
       });
       dispatch(clearErrors());
     }
+
+    setTimeout(() => {
+      setResendToken(true);
+    }, 1000 * 60);
   }, [error, dispatch]);
 
   return (
@@ -92,6 +100,23 @@ const RequstToken = () => {
                     Send Link
                   </Button>
                 </Form.Item>
+                {resendToken && (
+                  <a
+                    className="resend-token-text"
+                    onClick={() =>
+                      dispatch(
+                        requestToken(
+                          email,
+                          location.pathname === "/auth/requestToken"
+                            ? "request"
+                            : "reset"
+                        )
+                      )
+                    }
+                  >
+                    Resend verification token
+                  </a>
+                )}
               </div>
             </Form>
           </div>
