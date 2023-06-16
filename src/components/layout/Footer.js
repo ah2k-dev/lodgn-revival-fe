@@ -54,7 +54,7 @@ const Footer = () => {
           : "footer-container w-100 ms-0"
       }
     >
-      <Row justify="space-between" align="start">
+      <Row justify="space-between" align="start" className="gap-4">
         <div className="details col-md-7 col-12 d-flex justify-content-start">
           {center?.string && (
             <div className="detail pl-0">
@@ -117,7 +117,7 @@ const Footer = () => {
             </div>
           )}
         </div>
-        <div className="col-auto footer-btn">
+        <div className="col-auto footer-btn d-flex justify-content-end">
           <Button
             disabled={center.search === "" || totalRooms === 0}
             loading={loading}

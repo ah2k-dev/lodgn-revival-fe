@@ -189,11 +189,19 @@ const Header = () => {
       setTimeout(() => {
         setSearchError("");
       }, 3000);
+      return false;
+    } else if (!dateRange[0] || !dateRange[1]) {
+      setSearchError("Please select a valid date range for your stay");
+      setTimeout(() => {
+        setSearchError("");
+      }, 3000);
+      return false;
     } else if (singleRoom === 0 && doubleRoom === 0) {
       setSearchError("Please add rooms");
       setTimeout(() => {
         setSearchError("");
       }, 3000);
+      return false;
     }
     dispatch(
       setRoomRequirements({
@@ -212,14 +220,14 @@ const Header = () => {
         location.pathname === "/dashboard/user/create-request"
           ? "header-container w-100 justify-content-end position-relative"
           : location.pathname.includes("auth")
-          ? "header-container dark-green-header justify-content-md-between justify-content-center align-items-center position-relative"
-          : "header-container position-relative justify-content-md-between justify-content-center align-items-center"
+            ? "header-container dark-green-header justify-content-md-between justify-content-center align-items-center position-relative"
+            : "header-container position-relative justify-content-md-between justify-content-center align-items-center"
       }
     >
       {location.pathname === "/" ||
-      location.pathname.includes("auth") ||
-      location.pathname.includes("verifyEmail") ||
-      location.pathname.includes("resetPassword") ? (
+        location.pathname.includes("auth") ||
+        location.pathname.includes("verifyEmail") ||
+        location.pathname.includes("resetPassword") ? (
         <div className="header-left col-4">
           <img
             src={!location.pathname.includes("auth") ? coloredLogo : whiteLogo}
@@ -233,7 +241,7 @@ const Header = () => {
         </div>
       )}
       {location.pathname === "/" ||
-      location.pathname === "/dashboard/user/create-request" ? (
+        location.pathname === "/dashboard/user/create-request" ? (
         <div
           className={
             location.pathname === "/dashboard/user/create-request"
@@ -273,23 +281,19 @@ const Header = () => {
             <span className="position-relative">
               <span className="date cursor-pointer">
                 {dateRange.length > 0
-                  ? `${
-                      dateRange[0] !== null
-                        ? moment(dateRange[0]).format("DD")
-                        : ""
-                    } ${
-                      dateRange[0] !== null
-                        ? moment(dateRange[0]).format("MMMM")
-                        : ""
-                    } ${dateRange[1] !== null ? "-" : ""} ${
-                      dateRange[1] !== null
-                        ? moment(dateRange[1]).format("DD")
-                        : ""
-                    } ${
-                      dateRange[1] !== null
-                        ? moment(dateRange[1]).format("MMMM")
-                        : ""
-                    }`
+                  ? `${dateRange[0] !== null
+                    ? moment(dateRange[0]).format("DD")
+                    : ""
+                  } ${dateRange[0] !== null
+                    ? moment(dateRange[0]).format("MMMM")
+                    : ""
+                  } ${dateRange[1] !== null ? "-" : ""} ${dateRange[1] !== null
+                    ? moment(dateRange[1]).format("DD")
+                    : ""
+                  } ${dateRange[1] !== null
+                    ? moment(dateRange[1]).format("MMMM")
+                    : ""
+                  }`
                   : "Dates"}
               </span>
               <RangePicker
@@ -300,21 +304,19 @@ const Header = () => {
             </span>
             <span onClick={() => handleRoomPickerToggle()}>
               {singleRoom > 0 || doubleRoom > 0 || supportAnimal > 0
-                ? `${
-                    (singleRoom > 0 && doubleRoom > 0) ||
-                    (singleRoom > 0 && supportAnimal > 0)
-                      ? "S-" + singleRoom + ","
-                      : singleRoom > 0
-                      ? "S-" + singleRoom
-                      : ""
-                  } 
-                    ${
-                      doubleRoom > 0 && supportAnimal > 0
-                        ? "D-" + doubleRoom + ","
-                        : doubleRoom > 0 && supportAnimal === 0
-                        ? "D-" + doubleRoom
-                        : ""
-                    } 
+                ? `${(singleRoom > 0 && doubleRoom > 0) ||
+                  (singleRoom > 0 && supportAnimal > 0)
+                  ? "S-" + singleRoom + ","
+                  : singleRoom > 0
+                    ? "S-" + singleRoom
+                    : ""
+                } 
+                    ${doubleRoom > 0 && supportAnimal > 0
+                  ? "D-" + doubleRoom + ","
+                  : doubleRoom > 0 && supportAnimal === 0
+                    ? "D-" + doubleRoom
+                    : ""
+                } 
                     ${supportAnimal > 0 ? "A-" + supportAnimal : ""}`
                 : "Add rooms"}
             </span>
@@ -345,15 +347,15 @@ const Header = () => {
               </div>
             </div>
             <span className="search-icon" onClick={() => handleSearchResult()}>
-              <img src={searchIcon} alt="search-icon"/>
+              <img src={searchIcon} alt="search-icon" />
             </span>
           </Col>
         </div>
       ) : null}
       {(location.pathname === "/auth" && jobDetails) ||
-      (location.pathname === "/auth/forgot-password" && jobDetails) ||
-      (location.pathname.includes("verifyEmail") && jobDetails) ||
-      (location.pathname.includes("resetPassword") && jobDetails) ? (
+        (location.pathname === "/auth/forgot-password" && jobDetails) ||
+        (location.pathname.includes("verifyEmail") && jobDetails) ||
+        (location.pathname.includes("resetPassword") && jobDetails) ? (
         <div className="col-md-8 col-12 header-right details">
           <div className="detail pl-0">
             <span className="title location-title">
