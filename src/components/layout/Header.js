@@ -1,4 +1,4 @@
-import { Alert, Col, Row, message } from "antd";
+import { Col, Row, message } from "antd";
 import React, { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { FaUserAlt } from "react-icons/fa";
@@ -78,7 +78,6 @@ const Header = () => {
   };
 
   const handleSelection = (event) => {
-    // console.log(event.key);
     if (event.key === "ArrowUp") {
       event.preventDefault();
       setSelectedIndex((prevIndex) =>
@@ -99,7 +98,6 @@ const Header = () => {
   };
 
   const handleSelect = (index, place) => {
-    // console.log(place);
     setSelectedIndex(index);
     setSearch(places[index].description);
     setPlaces([]);
