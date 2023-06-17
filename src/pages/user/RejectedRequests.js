@@ -78,18 +78,17 @@ const RequestComponent = ({ request }) => {
             Rejected Request Booking Details
           </span>
           <JobDetailsGrid
-            jobLocation={request.location.string}
-            // jobAddress="Sarasota,FL. 33178"
-            start_date={moment(request.dateRange[0]).format("DD")}
-            end_date={moment(request.dateRange[1]).format("DD")}
-            start_date_month={moment(request.dateRange[0]).format("MMM")}
-            end_date_month={moment(request.dateRange[1]).format("MMM")}
+            jobLocation={request?.location?.string}
+            start_date={moment(request?.dateRange[0])?.format("DD")}
+            end_date={moment(request?.dateRange[1])?.format("DD")}
+            start_date_month={moment(request?.dateRange[0])?.format("MMM")}
+            end_date_month={moment(request?.dateRange[1])?.format("MMM")}
             total_rooms={
-              request.roomRequirements.single + request.roomRequirements.double
+              request?.roomRequirements?.single + request?.roomRequirements?.double
             }
-            single_rooms={request.roomRequirements.single}
-            double_rooms={request.roomRequirements.double}
-            animalSupport={request.roomRequirements.animalSupport}
+            single_rooms={request?.roomRequirements?.single}
+            double_rooms={request?.roomRequirements?.double}
+            animalSupport={request?.roomRequirements?.animalSupport}
           />
         </div>
       </div>

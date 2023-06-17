@@ -72,14 +72,9 @@ const UpdateStay = () => {
 
   const hiddenFileInput = useRef(null);
 
-  // Programatically click the hidden file input element
-  // when the Button component is clicked
   const handleClick = (event) => {
     hiddenFileInput.current.click();
   };
-
-  // Call a function (passed as a prop from the parent component)
-  // to handle the user-selected file
   const handleChange = (event) => {
     const fileUploaded = event.target.files[0];
     const fileType = fileUploaded.type;
@@ -88,16 +83,40 @@ const UpdateStay = () => {
       fileType === "application/pdf" ||
       fileType === "application/xls" ||
       fileType === "application/docx" ||
-      fileType === "image/jpg"
+      fileType === "text/csv" ||
+      fileType === "image/jpg" ||
+      fileType === "image/jpeg" ||
+      fileType === "image/png"
     ) {
+      message.success(`${fileUploaded.name} is selected`);
       setRosterFile(fileUploaded);
       // console.log(rosterFile);
     } else {
-      message.error(`${fileUploaded.name} is not a valid file formate`);
+      message.error(
+        `${fileUploaded.type || fileUploaded.name} is not a valid file formate`
+      );
     }
   };
 
   const handleConfirmChanges = async () => {
+    if (!dateRange[0] || !dateRange[1]) {
+      message.error({
+        content: `Please select a valid date range for your stay`,
+        style: {
+          marginTop: "10vh",
+        },
+      });
+      return false;
+    } else if (singleRoom === 0 && doubleRoom === 0) {
+      message.error({
+        content: `Please specify rooms`,
+        style: {
+          marginTop: "10vh",
+        },
+      });
+      return false;
+    }
+
     const roomRequirements = {
       single: singleRoom,
       double: doubleRoom,
@@ -141,9 +160,7 @@ const UpdateStay = () => {
               />
             </div>
             <span className="col-xl-3 col-md-6 col-sm-8 col-12 mt-xl-0 mt-5">
-              <HotelPhotosCarousel
-                images={request.bookedOffering.images}
-              />
+              <HotelPhotosCarousel images={request.bookedOffering.images} />
             </span>
           </div>
           <div className="row justify-content-xl-between justify-content-center mt-5 gap-xl-0 gap-5">
@@ -163,10 +180,11 @@ const UpdateStay = () => {
             <div className="col-xl-3 col-md-5 col-12 d-flex flex-column justify-content-start position-relative">
               <span className="font-poppins fw-semibold">Edit dates</span>
               <span className="updateDate shadow p-3 mt-2 fw-bold">
-                {moment(dateRange[0]).format("MMMM")}{" "}
-                {moment(dateRange[0]).format("DD")} -{" "}
-                {moment(dateRange[1]).format("MMMM")}{" "}
-                {moment(dateRange[1]).format("DD")}
+                {dateRange[0] ? moment(dateRange[0]).format("MMMM") : ""}{" "}
+                {dateRange[0] ? moment(dateRange[0]).format("DD") : ""}{" "}
+                {dateRange[1] ? " - " : ""}{" "}
+                {dateRange[1] ? moment(dateRange[1]).format("MMMM") : ""}{" "}
+                {dateRange[1] ? moment(dateRange[1]).format("DD") : ""}
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="black"
@@ -190,7 +208,10 @@ const UpdateStay = () => {
                 />
               </span>
               {showTodayModal && (
-                <UrgentBookingModal showModal={showTodayModal} setShowModal={setShowTodayModal} />
+                <UrgentBookingModal
+                  showModal={showTodayModal}
+                  setShowModal={setShowTodayModal}
+                />
               )}
             </div>
             <div className="col-xl-3 col-md-5 col-12 d-flex items flex-column gap-2 justify-content-start position-relative">
@@ -223,7 +244,7 @@ const UpdateStay = () => {
                 style={{ display: "none" }}
               />
               <span style={{ color: "#959595" }} className="ms-2">
-                xls , pdf , word , jpg
+                csv, xls , pdf , word (docx) , jpg , jpeg , png
               </span>
             </div>
           </div>

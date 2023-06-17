@@ -70,7 +70,7 @@ const UpdateHotelDetails = ({ offerings, setOfferings, flag, request }) => {
         const formData = new FormData();
 
         const upload_preset = "lodgn_app";
-        const cloud_name = "dusn1ns53";
+        const cloud_name = "donwyp5jo";
 
         formData.append("file", image);
         formData.append("upload_preset", upload_preset);

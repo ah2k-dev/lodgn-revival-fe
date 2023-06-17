@@ -72,11 +72,11 @@ const RequestComponent = ({ request }) => {
           start_date_month={moment(request?.dateRange[0]).format("MMMM")}
           end_date_month={moment(request?.dateRange[1]).format("MMMM")}
           total_rooms={
-            request.roomRequirements.single + request.roomRequirements.double
+            request?.roomRequirements?.single + request?.roomRequirements?.double
           }
-          single_rooms={request.roomRequirements.single}
-          double_rooms={request.roomRequirements.double}
-          animalSupport={request.roomRequirements.animalSupport}
+          single_rooms={request?.roomRequirements?.single}
+          double_rooms={request?.roomRequirements?.double}
+          animalSupport={request?.roomRequirements?.animalSupport}
         />
         <div className="mt-4">
           <ProgressBar requestStatus={request?.status} />

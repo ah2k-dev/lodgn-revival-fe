@@ -69,6 +69,7 @@ const PreviousRequests = ({ stay }) => {
           total_rooms={stay?.request?.roomRequirements?.single + stay?.request?.roomRequirements?.double}
           single_rooms={stay?.request?.roomRequirements?.single}
           double_rooms={stay?.request?.roomRequirements?.double}
+          animalSupport={stay?.request?.roomRequirements?.animalSupport}
         />
         <span className="col-xl-3 col-md-6 col-sm-8 col-12 mt-xl-0 mt-5">
         <HotelPhotosCarousel images={stay?.request?.bookedOffering?.images} />

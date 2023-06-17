@@ -72,9 +72,9 @@ const RequestComponent = ({ request }) => {
           total_rooms={
             request.roomRequirements.single + request.roomRequirements.double
           }
-          single_rooms={request.roomRequirements.single}
-          double_rooms={request.roomRequirements.double}
-          animalSupport={request.roomRequirements.animalSupport}
+          single_rooms={request?.roomRequirements?.single}
+          double_rooms={request?.roomRequirements?.double}
+          animalSupport={request?.roomRequirements?.animalSupport}
         />
         <div className="col-xl-3 col-sm-6 mt-xl-0 mt-4 col-12">
           <HotelPhotosCarousel images={request?.bookedOffering?.images} />

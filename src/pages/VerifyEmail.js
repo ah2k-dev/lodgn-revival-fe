@@ -44,7 +44,7 @@ const VerifyEmail = () => {
 
     setTimeout(() => {
       setResendToken(true);
-    }, 1000 * 10);
+    }, 1000 * 60);
   }, [error, dispatch]);
 
   return (

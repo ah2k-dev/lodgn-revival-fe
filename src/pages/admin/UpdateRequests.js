@@ -102,9 +102,9 @@ const RequestComponent = ({ request, update }) => {
                     request.roomRequirements.single +
                     request.roomRequirements.double
                   }
-                  single_rooms={request.roomRequirements.single}
-                  double_rooms={request.roomRequirements.double}
-                  animalSupport={request.roomRequirements.animalSupport}
+                  single_rooms={request?.roomRequirements?.single}
+                  double_rooms={request?.roomRequirements?.double}
+                  animalSupport={request?.roomRequirements?.animalSupport}
                 />
               </div>
             )}
