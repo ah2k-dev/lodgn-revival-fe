@@ -64,16 +64,17 @@ const RequestComponent = ({ request }) => {
     <div className="ongoingStays w-100 d-flex flex-column gap-lg-5 gap-2 rounded-container bg-white p-xl-5 p-lg-4 p-4 shadow position-relative">
       <div className="d-flex flex-md-row flex-column-reverse justify-content-md-between justify-content-sm-end align-items-md-center align-items-end flex-md-nowrap flex-wrap gap-md-0 gap-4 justify-content-center">
         <JobDetailsGrid
-          jobLocation={request.location.string}
-          start_date={moment(request.dateRange[0]).format("DD")}
-          end_date={moment(request.dateRange[1]).format("DD")}
-          start_date_month={moment(request.dateRange[0]).format("MMMM")}
-          end_date_month={moment(request.dateRange[1]).format("MMMM")}
+          jobLocation={request?.location?.string}
+          start_date={moment(request?.dateRange[0])?.format("DD")}
+          end_date={moment(request?.dateRange[1])?.format("DD")}
+          start_date_month={moment(request?.dateRange[0])?.format("MMMM")}
+          end_date_month={moment(request?.dateRange[1])?.format("MMMM")}
           total_rooms={
-            request.roomRequirements.single + request.roomRequirements.double
+            request?.roomRequirements?.single + request?.roomRequirements?.double
           }
-          single_rooms={request.roomRequirements.single}
-          double_rooms={request.roomRequirements.double}
+          single_rooms={request?.roomRequirements?.single}
+          double_rooms={request?.roomRequirements?.double}
+          animalSupport={request?.roomRequirements?.animalSupport}
         />
         {request?.updateRequested && (
           <span className="update-Requested-badge green-badge text-white px-3 py-2 rounded-3 fw-bold font-poppins">

@@ -64,39 +64,39 @@ const Footer = () => {
               }`}</span>
             </div>
           )}
-          <div className="detail flex">
-            {dateRange.length > 0 && (
-              <div>
-                <span className="title">
-                  {dateRange[0] !== null
-                    ? moment(dateRange[0]).format("DD")
-                    : ""}
-                </span>
-                <span className="description">
-                  {dateRange[0] !== null
-                    ? moment(dateRange[0]).format("MMMM")
-                    : ""}
-                </span>
-              </div>
-            )}
-            {dateRange.length > 0 && dateRange[1] !== null ? (
-              <span className="title">-</span>
-            ) : null}
-            {dateRange.length > 0 && (
-              <div>
-                <span className="title">
-                  {dateRange[1] !== null
-                    ? moment(dateRange[1]).format("DD")
-                    : ""}
-                </span>
-                <span className="description">
-                  {dateRange[1] !== null
-                    ? moment(dateRange[1]).format("MMM")
-                    : ""}
-                </span>
-              </div>
-            )}
-          </div>
+          {dateRange.length > 0 && (
+            <div className="detail flex">
+              {dateRange[0] !== null && (
+                <div>
+                  <span className="title">
+                    {dateRange[0] !== null
+                      ? moment(dateRange[0]).format("DD")
+                      : ""}
+                  </span>
+                  <span className="description">
+                    {dateRange[0] !== null
+                      ? moment(dateRange[0]).format("MMMM")
+                      : ""}
+                  </span>
+                </div>
+              )}
+              {dateRange[1] !== null ? <span className="title">-</span> : null}
+              {dateRange[1] !== null && (
+                <div>
+                  <span className="title">
+                    {dateRange[1] !== null
+                      ? moment(dateRange[1]).format("DD")
+                      : ""}
+                  </span>
+                  <span className="description">
+                    {dateRange[1] !== null
+                      ? moment(dateRange[1]).format("MMM")
+                      : ""}
+                  </span>
+                </div>
+              )}
+            </div>
+          )}
           {totalRooms > 0 && (
             <div className="detail">
               <span className="title">{totalRooms} Rooms</span>

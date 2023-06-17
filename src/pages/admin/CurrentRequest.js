@@ -133,7 +133,7 @@ const RequestComponent = ({ request, status, index }) => {
 
   const handleFile = (event) => {
     const fileUploaded = event.target.files[0];
-
+    // console.log(fileUploaded);
     setReceipt(fileUploaded);
   };
 
@@ -152,6 +152,7 @@ const RequestComponent = ({ request, status, index }) => {
           }
           single_rooms={request?.roomRequirements?.single}
           double_rooms={request?.roomRequirements?.double}
+          animalSupport={request?.roomRequirements?.animalSupport}
         />
       </div>
       <div className="update-status row justify-content-center">
