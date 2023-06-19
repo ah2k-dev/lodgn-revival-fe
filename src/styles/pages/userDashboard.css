@@ -158,6 +158,7 @@
 }
 
 .dashboard .detail-card {
+  max-width: 300px;
   border: 0.5px solid #707070;
   background-color: white;
   overflow-x: hidden;
@@ -234,8 +235,7 @@
 }
 
 .dashboard .cards-container {
-  display: grid;
-  flex-wrap: wrap;
+  gap: 40px;
 }
 
 .dashboard .cards-container.columns-3 {
@@ -282,6 +282,18 @@
   font-size: 2rem;
 }
 
+@media screen and (max-width: 1600px) {
+  .dashboard .detail-card {
+    max-width: 280px;
+  }
+}
+
+@media screen and (max-width: 1500px) {
+  .dashboard .cards-container {
+    flex-wrap: wrap;
+  }
+}
+
 @media screen and (max-width: 1400px) {
   .dashboard .detail-card .price-span,
   .dashboard .detail-card .book-now-btn span {
@@ -297,6 +309,12 @@
   }
   .dashboard .details {
     width: 100%;
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .dashboard .detail-card {
+    max-width: 400px;
   }
 }
 
@@ -339,7 +357,7 @@
 @media screen and (max-width: 660px) {
   .dashboard .rounded-container .details .detail .location-title {
     max-width: 90%;
-}
+  }
 
   .dashboard .footer-container .details .detail {
     border-bottom: none;

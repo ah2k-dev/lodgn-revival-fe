@@ -40,9 +40,7 @@ const CurrentRequest = () => {
       ) : (
         <div className="d-flex flex-column justify-content-between w-100">
           <div className="d-flex flex-wrap-reverse justify-content-between align-items-md-center mb-5 gap-3 mt-md-0 mt-4">
-            <h2>
-              You currently have {requests.length} requests
-            </h2>
+            <h2>You currently have {requests.length} requests</h2>
             <button
               className="create-request-btn font-poppins fw-bold align-self-end"
               onClick={() => navigator("/dashboard/user/create-request")}
@@ -72,7 +70,8 @@ const RequestComponent = ({ request }) => {
           start_date_month={moment(request?.dateRange[0]).format("MMMM")}
           end_date_month={moment(request?.dateRange[1]).format("MMMM")}
           total_rooms={
-            request?.roomRequirements?.single + request?.roomRequirements?.double
+            request?.roomRequirements?.single +
+            request?.roomRequirements?.double
           }
           single_rooms={request?.roomRequirements?.single}
           double_rooms={request?.roomRequirements?.double}
@@ -84,13 +83,14 @@ const RequestComponent = ({ request }) => {
       </div>
       {request.offerings.length > 0 && (
         <div
-          className={`cards-container ${
-            request.offerings.length >= 3
-              ? "columns-3"
-              : request.offerings.length === 2
-              ? "columns-2"
-              : "columns-1"
-          } mt-4 justify-content-center`}
+          // className={`cards-container ${
+          //   request.offerings.length >= 3
+          //     ? "columns-3"
+          //     : request.offerings.length === 2
+          //     ? "columns-2"
+          //     : "columns-1"
+          // } mt-4 justify-content-center`}
+          className="cards-container d-flex mt-4 justify-content-center"
         >
           {request.offerings.map((offering, i) => (
             <div className="card" key={i}>
