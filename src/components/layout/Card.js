@@ -19,10 +19,6 @@ const Card = (props) => {
     id,
     request,
   } = props;
-  const dispatch = useDispatch();
-  const handleBook = (url) => {
-    window.open(url, "_blank");
-  };
 
   return (
     <div className="detail-card d-flex flex-column align-items-center w-100">
@@ -39,9 +35,7 @@ const Card = (props) => {
         {location.pathname !== "/dashboard/user/ongoing-stays" ? (
           <span className="room-rates-details d-flex justify-content-between gap-2 align-items-center w-100 mt-2">
             <span
-              className={`d-flex ${
-                !request.hasOwnProperty("bookedOffering") && "flex-column"
-              } justify-content-center gap-2 text-xs`}
+              className={`d-flex flex-column justify-content-center gap-2 text-xs`}
             >
               {singlePrice ? (
                 <span className="price-span">Singles: ${singlePrice}</span>

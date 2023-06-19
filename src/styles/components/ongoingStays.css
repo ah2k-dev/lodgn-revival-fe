@@ -192,7 +192,7 @@
 
 @media screen and (max-width: 1024px) {
   .ongoingStays .btns button {
-    padding: 0 14px;
+    padding: 0 14px !important;
   }
   .ongoingStays .btns button span {
     font-size: 0.9rem !important;

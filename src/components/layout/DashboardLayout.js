@@ -8,7 +8,7 @@ const DashboardLayout = () => {
 
   return (
     <div className="d-flex dashboard-layout">
-      <span className="hamburger-icon" onClick={() => setActive(!isActive)}>
+      <span className="hamburger-icon mt-1 me-1" onClick={() => setActive(!isActive)}>
         {!isActive ? (
           <svg
             xmlns="http://www.w3.org/2000/svg"
