@@ -1,4 +1,4 @@
-import { Button, Form, Input, InputNumber, message, Upload } from "antd";
+import { Button, Form, Input, InputNumber, message } from "antd";
 import axios from "axios";
 import React, { useRef, useState } from "react";
 import HotelPhotosCarousel from "./HotelPhotosCarousel";
@@ -9,7 +9,6 @@ const UpdateHotelDetails = ({ offerings, setOfferings, flag, request }) => {
   const formRef = useRef();
 
   const [files, setFiles] = useState([]);
-  const [uploadedImagesUrls, setUploadedImagesUrls] = useState([]);
   const [loading, setLoading] = useState(false);
   const [updateDb, setUpdateDb] = useState(false);
   const [showCarousel, setShowCarousel] = useState(true);
@@ -92,7 +91,6 @@ const UpdateHotelDetails = ({ offerings, setOfferings, flag, request }) => {
       })
     )
       .then((result) => {
-        setUploadedImagesUrls(result);
         formRef.current.setFieldsValue({
           files: result,
         });
@@ -105,7 +103,7 @@ const UpdateHotelDetails = ({ offerings, setOfferings, flag, request }) => {
 
   const handleFinish = (values) => {
     if (!updateDb) {
-      let prvOffering = offerings.filter((offering) => offering.flag == flag);
+      let prvOffering = offerings.filter((offering) => offering.flag === flag);
       if (prvOffering.length > 0) {
         let index = offerings.indexOf(prvOffering[0]);
         offerings[index] = {
@@ -118,7 +116,7 @@ const UpdateHotelDetails = ({ offerings, setOfferings, flag, request }) => {
             animalSupport: values.animal_rate > 0 && values.animal_rate,
           },
           paymentLink:
-            values.payment_link.indexOf("https://") == 0
+            values.payment_link.indexOf("https://") === 0
               ? values.payment_link
               : "https://" + values.payment_link,
           flag: flag,
@@ -138,7 +136,7 @@ const UpdateHotelDetails = ({ offerings, setOfferings, flag, request }) => {
               animalSupport: values.animal_rate > 0 && values.animal_rate,
             },
             paymentLink:
-              values.payment_link.indexOf("https://") == 0
+              values.payment_link.indexOf("https://") === 0
                 ? values.payment_link
                 : "https://" + values.payment_link,
             flag: flag,
@@ -147,9 +145,8 @@ const UpdateHotelDetails = ({ offerings, setOfferings, flag, request }) => {
         setLoading(false);
       }
     } else {
-      // console.log("api call here");
       let offer_id = request?.offerings?.find(
-        (offering) => offering.flag == flag
+        (offering) => offering.flag === flag
       )._id;
       let payload = {
         images: values.files
@@ -163,12 +160,11 @@ const UpdateHotelDetails = ({ offerings, setOfferings, flag, request }) => {
           animalSupport: values.animal_rate > 0 && values.animal_rate,
         },
         paymentLink:
-          values.payment_link.indexOf("https://") == 0
+          values.payment_link.indexOf("https://") === 0
             ? values.payment_link
             : "https://" + values.payment_link,
         flag: flag,
       };
-      // console.log(offer_id, payload);
       dispatch(updateOffer(offer_id, payload));
       setLoading(false);
     }
@@ -245,47 +241,6 @@ const UpdateHotelDetails = ({ offerings, setOfferings, flag, request }) => {
                 onClick={handleClick}
               >
                 <i className="far fa-image fs-1"></i>
-                {/* <svg
-                  width="48"
-                  height="31"
-                  viewBox="0 0 48 31"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <mask id="path-1-inside-1_6_2634" fill="white">
-                    <rect width="42.3387" height="28.5219" rx="0.986916" />
-                  </mask>
-                  <rect
-                    width="42.3387"
-                    height="28.5219"
-                    rx="0.986916"
-                    stroke="#494949"
-                    strokeWidth="2"
-                    mask="url(#path-1-inside-1_6_2634)"
-                  />
-                  <path
-                    d="M9.94462 15.0946L0.19831 20.9757L0 21.0773V28.8001L42.24 28.6984V19.6038L33.4152 10.5601L18.2445 20.9757L9.94462 15.0946Z"
-                    fill="#494949"
-                  />
-                  <circle
-                    cx="9.57292"
-                    cy="7.00705"
-                    r="4.04635"
-                    fill="#494949"
-                  />
-                  <circle
-                    cx="42.24"
-                    cy="24.96"
-                    r="5.28"
-                    fill="white"
-                    stroke="#494949"
-                    strokeWidth="0.96"
-                  />
-                  <path
-                    d="M41.9439 27.876C41.9439 28.0395 42.0765 28.1721 42.24 28.1721C42.4035 28.1721 42.5361 28.0395 42.5361 27.876L41.9439 27.876ZM42.4494 22.8307C42.3337 22.7151 42.1463 22.7151 42.0306 22.8307L40.1464 24.7149C40.0308 24.8306 40.0308 25.018 40.1464 25.1337C40.2621 25.2493 40.4495 25.2493 40.5652 25.1337L42.24 23.4588L43.9149 25.1337C44.0305 25.2493 44.2179 25.2493 44.3336 25.1337C44.4492 25.018 44.4492 24.8306 44.3336 24.7149L42.4494 22.8307ZM42.5361 27.876L42.5361 23.0401L41.9439 23.0401L41.9439 27.876L42.5361 27.876Z"
-                    fill="#494949"
-                  />
-                </svg> */}
                 <input
                   type="file"
                   id="file"
@@ -401,7 +356,7 @@ const UpdateHotelDetails = ({ offerings, setOfferings, flag, request }) => {
         </Form.Item>
       </div>
       <div className="row mt-2 w-100">
-        {request?.offerings?.find((offering) => offering.flag == flag) ? (
+        {request?.offerings?.find((offering) => offering.flag === flag) ? (
           <Button
             loading={loading}
             className="saveBtn"
@@ -411,7 +366,7 @@ const UpdateHotelDetails = ({ offerings, setOfferings, flag, request }) => {
           </Button>
         ) : (
           <Button loading={loading} className="saveBtn" onClick={handleSave}>
-            {offerings.find((offering) => offering.flag == flag)
+            {offerings.find((offering) => offering.flag === flag)
               ? "Update"
               : "Save"}
           </Button>

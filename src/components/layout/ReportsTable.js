@@ -1,5 +1,5 @@
 import { SearchOutlined } from "@ant-design/icons";
-import { Button, Input, Space, Table, Tag } from "antd";
+import { Button, Input, Space, Table } from "antd";
 import React, { useRef, useState } from "react";
 import Highlighter from "react-highlight-words";
 import moment from "moment";
@@ -176,11 +176,6 @@ const ReportsTable = ({ tableData }) => {
           record?.lastname !== undefined ? record?.lastname : ""
         }`,
     });
-    // columns.push({
-    //   title: "User",
-    //   dataIndex: "user",
-    //   key: "user",
-    // });
   }
 
   return (

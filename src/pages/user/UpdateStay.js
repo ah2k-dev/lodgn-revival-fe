@@ -1,4 +1,4 @@
-import { Button, DatePicker, message, Upload } from "antd";
+import { Button, DatePicker, message } from "antd";
 import React, { useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import JobDetailsGrid from "../../components/layout/JobDetailsGrid";
@@ -90,7 +90,6 @@ const UpdateStay = () => {
     ) {
       message.success(`${fileUploaded.name} is selected`);
       setRosterFile(fileUploaded);
-      // console.log(rosterFile);
     } else {
       message.error(
         `${fileUploaded.type || fileUploaded.name} is not a valid file formate`
@@ -134,8 +133,6 @@ const UpdateStay = () => {
       navigate("/dashboard/user/requested-updates");
     }
   };
-
-  // console.log(request);
 
   return (
     <div className="min-vh-100 w-100 px-md-5 px-2 py-5">

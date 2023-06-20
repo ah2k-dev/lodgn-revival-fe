@@ -1,4 +1,4 @@
-import { Button, Checkbox, Form, Input, Modal } from "antd";
+import { Button, Form, Input, Modal } from "antd";
 import React, { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -9,7 +9,7 @@ import {
 
 const ManageProfile = () => {
   const dispatch = useDispatch();
-  const { loading, error, user } = useSelector((state) => state.auth);
+  const { loading, user } = useSelector((state) => state.auth);
 
   const formRef = useRef(null);
   const [form] = Form.useForm();
@@ -38,7 +38,6 @@ const ManageProfile = () => {
   };
 
   const handleUpdatePasswordFinish = async (values) => {
-    // console.log(values);
     const res = await dispatch(updatePasswordRequest(values));
     if (res) {
       form2.resetFields();

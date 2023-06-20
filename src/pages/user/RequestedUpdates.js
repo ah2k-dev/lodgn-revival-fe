@@ -62,8 +62,6 @@ const RequestedUpdates = () => {
 };
 
 const RequestComponent = ({ request, update }) => {
-  // console.log(update);
-
   return (
     <div className="ongoingStays w-100 d-flex flex-column gap-lg-5 gap-2 rounded-container bg-white p-xl-5 p-lg-4 p-4 shadow position-relative">
       <div className="d-flex flex-md-row flex-column-reverse justify-content-between align-items-center flex-md-nowrap flex-wrap gap-md-0 gap-3">

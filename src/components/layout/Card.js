@@ -1,7 +1,5 @@
 import React from "react";
-import { useDispatch } from "react-redux";
-import { Link, useLocation } from "react-router-dom";
-import { bookOffer } from "../../actions/requestActions";
+import { useLocation } from "react-router-dom";
 import { Button } from "antd";
 import HotelPhotosCarousel from "./HotelPhotosCarousel";
 
@@ -11,13 +9,10 @@ const Card = (props) => {
     singlePrice,
     doublePrice,
     description,
-    svgTxt,
     title,
     animalSupport,
     paymentLink,
     images,
-    id,
-    request,
   } = props;
 
   return (
@@ -49,7 +44,7 @@ const Card = (props) => {
                 </span>
               ) : null}
             </span>
-            <a href={paymentLink} target="_blank">
+            <a className="cursor-pointer" href={paymentLink} target="_blank" rel="noreferrer">
               <Button className="book-now-btn text-white">Book now</Button>
             </a>
           </span>

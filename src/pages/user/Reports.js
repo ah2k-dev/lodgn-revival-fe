@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ReportsTable from "../../components/layout/ReportsTable";
 import { LoadingOutlined } from "@ant-design/icons";
-import { clearErrors, fetchReports, getPreviousStays } from "../../actions/requestActions";
+import { clearErrors, fetchReports } from "../../actions/requestActions";
 import { message } from "antd";
 
 const Reports = () => {
@@ -28,8 +28,6 @@ const Reports = () => {
       dispatch(clearErrors());
     }
   }, [error]);
-
-  // console.log(reports);
 
   return (
     <div className="min-vh-100 w-100 px-lg-5 px-md-3 px-4 py-5">

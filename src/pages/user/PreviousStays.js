@@ -61,7 +61,6 @@ const PreviousRequests = ({ stay }) => {
       <div className="d-flex justify-content-md-between align-items-start flex-wrap items justify-content-center">
         <JobDetailsGrid
           jobLocation={stay?.request?.location?.string}
-            // jobAddress="Sarasota,FL. 33178"
           start_date={moment(stay?.request?.dateRange[0]).format("DD")}
           end_date={moment(stay?.request?.dateRange[1]).format("DD")}
           start_date_month={moment(stay?.request?.dateRange[0]).format("MMM")}

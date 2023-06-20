@@ -10,7 +10,7 @@ import { LoadingOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router";
 
 const CurrentRequest = () => {
-  const navigator = useNavigate();
+  const navigate = useNavigate();
 
   const dispatch = useDispatch();
   const { error, loading, requests } = useSelector((state) => state.request);
@@ -43,7 +43,7 @@ const CurrentRequest = () => {
             <h2>You currently have {requests.length} requests</h2>
             <button
               className="create-request-btn font-poppins fw-bold align-self-end"
-              onClick={() => navigator("/dashboard/user/create-request")}
+              onClick={() => navigate("/dashboard/user/create-request")}
             >
               Create Request
             </button>
@@ -82,16 +82,7 @@ const RequestComponent = ({ request }) => {
         </div>
       </div>
       {request.offerings.length > 0 && (
-        <div
-          // className={`cards-container ${
-          //   request.offerings.length >= 3
-          //     ? "columns-3"
-          //     : request.offerings.length === 2
-          //     ? "columns-2"
-          //     : "columns-1"
-          // } mt-4 justify-content-center`}
-          className="cards-container d-flex mt-4 justify-content-center"
-        >
+        <div className="cards-container d-flex mt-4 justify-content-center">
           {request.offerings.map((offering, i) => (
             <div className="card" key={i}>
               <Card

@@ -1,6 +1,7 @@
 import { message } from "antd";
 import { authConstants } from "../constants/authConstants";
 import custAxios from "../services/axiosConfig";
+import { clearState } from "./mapActions";
 
 export const signup =
   (firstname, lastname, email, password, phone, company) =>
@@ -77,7 +78,7 @@ export const requestToken = (email, type) => async (dispatch) => {
   });
   try {
     const res = await custAxios.post(
-      `/auth/${type == "request" ? "requestEmailToken" : "forgotPassword"}`,
+      `/auth/${type === "request" ? "requestEmailToken" : "forgotPassword"}`,
       { email }
     );
     if (res) {
@@ -100,37 +101,47 @@ export const requestToken = (email, type) => async (dispatch) => {
   }
 };
 
-export const verifyEmail = (token, email) => async (dispatch) => {
-  dispatch({
-    type: authConstants.VERIFY_EMAIL_REQUEST,
-  });
-  try {
-    const res = await custAxios.post("/auth/verifyEmail", {
-      emailVerificationToken: token,
-      email,
-    });
-    if (res) {
-      localStorage.setItem("token", res.data.data.jwtToken);
-      localStorage.setItem("user", JSON.stringify(res.data.data.userData));
-      dispatch({
-        type: authConstants.VERIFY_EMAIL_SUCCESS,
-        payload: res.data.data,
-      });
-      message.success({
-        content: `Email verified`,
-        style: {
-          marginTop: "10vh",
-        },
-      });
-      return true;
-    }
-  } catch (error) {
+export const verifyEmail =
+  (token, email, request, password) => async (dispatch) => {
     dispatch({
-      type: authConstants.VERIFY_EMAIL_FAILURE,
-      payload: error?.response?.data?.message || "Server Error",
+      type: authConstants.VERIFY_EMAIL_REQUEST,
     });
-  }
-};
+    try {
+      const res = await custAxios.post("/auth/verifyEmail", {
+        emailVerificationToken: token,
+        email,
+      });
+      if (res) {
+        request.location.string
+          ? await dispatch(
+              loginWithRequestPayload({
+                email: email,
+                password: password,
+                location: request?.location,
+                dateRange: request?.dateRange,
+                roomRequirements: request?.roomRequirements,
+              })
+            )
+          : await dispatch(login(email, password));
+        await dispatch({
+          type: authConstants.VERIFY_EMAIL_SUCCESS,
+          payload: res.data.data,
+        });
+        message.success({
+          content: `Email verified`,
+          style: {
+            marginTop: "10vh",
+          },
+        });
+        return true;
+      }
+    } catch (error) {
+      dispatch({
+        type: authConstants.VERIFY_EMAIL_FAILURE,
+        payload: error?.response?.data?.message || "Server Error",
+      });
+    }
+  };
 
 export const resetPassword = (token, email, password) => async (dispatch) => {
   dispatch({
@@ -188,17 +199,13 @@ export const loginWithRequestPayload = (payload) => async (dispatch) => {
         type: authConstants.LOGIN_SUCCESS,
         payload: res.data.data,
       });
-      localStorage.removeItem("email");
-      localStorage.removeItem("password");
-      localStorage.removeItem("location");
-      localStorage.removeItem("dateRange");
-      localStorage.removeItem("roomRequirements");
       message.success({
         content: "Login Successful",
         style: {
           marginTop: "10vh",
         },
       });
+      await dispatch(clearState());
       return true;
     }
   } catch (error) {

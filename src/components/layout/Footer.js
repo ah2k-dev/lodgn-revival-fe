@@ -3,7 +3,6 @@ import React, { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import moment from "moment";
 import { clearErrors, createRequest } from "../../actions/requestActions";
-import { clearState } from "../../actions/mapActions";
 import { useDispatch, useSelector } from "react-redux";
 
 const Footer = () => {
@@ -25,17 +24,13 @@ const Footer = () => {
     }
   }, [error, dispatch]);
 
-  const { hotels, center, roomRequirements, dateRange } = useSelector(
+  const { center, roomRequirements, dateRange } = useSelector(
     (state) => state.map
   );
 
   const totalRooms = roomRequirements.single + roomRequirements.double;
 
   const handleBookingRequest = () => {
-    localStorage.setItem("location", JSON.stringify(center));
-    localStorage.setItem("dateRange", JSON.stringify(dateRange));
-    localStorage.setItem("roomRequirements", JSON.stringify(roomRequirements));
-
     navigate("/auth", {
       state: {
         location: center,
@@ -43,7 +38,6 @@ const Footer = () => {
         roomRequirements,
       },
     });
-    dispatch(clearState());
   };
 
   return (

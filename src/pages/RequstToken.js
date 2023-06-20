@@ -1,5 +1,5 @@
 import { Button, Form, Input, Row, Typography, message } from "antd";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import BackButton from "../components/BackButton";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -10,14 +10,11 @@ const RequstToken = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-  const [email, setEmail] = useState("");
-  const [resendToken, setResendToken] = useState(false);
-  const { loading, error, isAuthenticated } = useSelector(
+  const { loading, error, } = useSelector(
     (state) => state.auth
   );
 
   const onFinish = async (values) => {
-    setEmail(values.email);
     let type;
     if (pathname === "/auth/requestToken") {
       type = "request";
@@ -28,11 +25,17 @@ const RequstToken = () => {
     if (res) {
       if (type === "request") {
         navigate("/auth/verifyEmail/" + values.email, {
-          state: location?.state,
+          state: {
+            password: location?.state?.password,
+            email: location?.state?.email,
+          },
         });
       } else {
         navigate("/auth/resetPassword/" + values.email, {
-          state: location?.state,
+          state: {
+            password: location?.state?.password,
+            email: location?.state?.email,
+          },
         });
       }
     }
@@ -48,10 +51,6 @@ const RequstToken = () => {
       });
       dispatch(clearErrors());
     }
-
-    setTimeout(() => {
-      setResendToken(true);
-    }, 1000 * 60);
   }, [error, dispatch]);
 
   return (
@@ -64,12 +63,13 @@ const RequstToken = () => {
           <div className="col-8 col-sm-6 col-md-9 col-lg-8 col-xl-8">
             <Typography.Title level={3}>Find your Account</Typography.Title>
             <Typography.Paragraph>
-              Enter your email address and we'll send you a link to get back
-              into your account.
+              Enter your email address and we'll send you a verification token
+              to get back into your account.
             </Typography.Paragraph>
             <Form
               className="ant-row"
               onFinish={onFinish}
+              initialValues={{ email: location?.state?.email }}
               onFinishFailed={(errorInfo) => {
                 console.log("Failed:", errorInfo);
               }}
@@ -97,26 +97,9 @@ const RequstToken = () => {
                     className="activeBtn verify-btn"
                     loading={loading}
                   >
-                    Send Link
+                    Send Verification Token
                   </Button>
                 </Form.Item>
-                {resendToken && (
-                  <a
-                    className="resend-token-text"
-                    onClick={() =>
-                      dispatch(
-                        requestToken(
-                          email,
-                          location.pathname === "/auth/requestToken"
-                            ? "request"
-                            : "reset"
-                        )
-                      )
-                    }
-                  >
-                    Resend verification token
-                  </a>
-                )}
               </div>
             </Form>
           </div>

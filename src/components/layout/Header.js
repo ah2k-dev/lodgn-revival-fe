@@ -1,8 +1,8 @@
 import { Col, Row, message } from "antd";
 import React, { useRef, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { FaUserAlt } from "react-icons/fa";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import coloredLogo from "../../assets/images/colored logo.png";
 import whiteLogo from "../../assets/images/white logo.png";
 import searchIcon from "../../assets/images/search-icon.svg";
@@ -42,12 +42,8 @@ const Header = () => {
 
   const location = useLocation();
 
-  const jobDetails = location.state;
-
   const [search, setSearch] = useState("");
   const [places, setPlaces] = useState([]);
-  const [center, setCenter] = useState({ lat: 37.7749, lng: -122.4194 });
-  const [hotels, setHotels] = useState([]);
   const [dateRange, setDateRange] = useState([]);
 
   const [singleRoom, setSingleRoom] = useState(0);
@@ -118,10 +114,6 @@ const Header = () => {
             zipCode = addressComponents[i].short_name;
           }
         }
-        setCenter({
-          lat: result.geometry.location.lat(),
-          lng: result.geometry.location.lng(),
-        });
         dispatch(
           setCenterData({
             lat: result.geometry.location.lat(),
@@ -139,7 +131,6 @@ const Header = () => {
           },
           (results, status) => {
             if (status === "OK") {
-              setHotels(results);
               dispatch(setHotelsData(results));
             }
           }
@@ -231,12 +222,17 @@ const Header = () => {
       location.pathname.includes("auth") ||
       location.pathname.includes("verifyEmail") ||
       location.pathname.includes("resetPassword") ? (
-        <div className="header-left col-4">
-          <img
-            src={!location.pathname.includes("auth") ? coloredLogo : whiteLogo}
-            width={100}
-          />
-        </div>
+        <Link to="/">
+          <div className="header-left col-4">
+            <img
+              src={
+                !location.pathname.includes("auth") ? coloredLogo : whiteLogo
+              }
+              alt="lodgn"
+              width={100}
+            />
+          </div>
+        </Link>
       ) : null}
       {location.pathname === "/" ||
       location.pathname === "/dashboard/user/create-request" ? (
@@ -356,61 +352,13 @@ const Header = () => {
           </Col>
         </div>
       ) : null}
-      {(location.pathname === "/auth" && jobDetails) ||
-      (location.pathname === "/auth/forgot-password" && jobDetails) ||
-      (location.pathname.includes("verifyEmail") && jobDetails) ||
-      (location.pathname.includes("resetPassword") && jobDetails) ? (
-        <div className="col-md-8 col-12 header-right details">
-          <div className="detail pl-0">
-            <span className="title location-title">
-              {jobDetails?.location.string}
-            </span>
-            <span className="description">{`${jobDetails?.location?.state}, ${
-              jobDetails?.location?.zipCode
-                ? jobDetails?.location?.zipCode
-                : "N/A"
-            }`}</span>
-          </div>
-          <div className="detail flex">
-            <div>
-              <span className="title">
-                {moment(jobDetails?.dateRange[0]).format("DD")}
-              </span>
-              <span className="description">
-                {moment(jobDetails?.dateRange[0]).format("MMMM")}
-              </span>
-            </div>
-            <span className="title">-</span>
-            <div>
-              <span className="title">
-                {moment(jobDetails?.dateRange[1]).format("DD")}
-              </span>
-              <span className="description">
-                {moment(jobDetails?.dateRange[1]).format("MMMM")}
-              </span>
-            </div>
-          </div>
-          <div className="detail">
-            <span className="title">
-              {jobDetails?.roomRequirements.single +
-                jobDetails?.roomRequirements.double}{" "}
-              Rooms
-            </span>
-            <span className="description">
-              {jobDetails?.roomRequirements.single} Single,{" "}
-              {jobDetails?.roomRequirements.double} Double,{" "}
-              {jobDetails?.roomRequirements.animalSupport > 0
-                ? jobDetails?.roomRequirements.animalSupport
-                : "No"}{" "}
-              Support Animal
-            </span>
-          </div>
-        </div>
-      ) : null}
+      {
+        location.pathname.includes("/auth") ? <RequestsDetails /> : null
+      }
       {location.pathname === "/" ? (
-        <a className="login-icon" onClick={() => navigate("/auth")}>
+        <span className="login-icon cursor-pointer" onClick={() => navigate("/auth")}>
           <FaUserAlt className="header-icons" />
-        </a>
+        </span>
       ) : null}
 
       {showTodayModal && (
@@ -420,6 +368,55 @@ const Header = () => {
         />
       )}
     </Row>
+  );
+};
+
+const RequestsDetails = () => {
+  const { center, dateRange, roomRequirements } = useSelector(
+    (state) => state.map
+  );
+
+  return (
+    <>
+      {center.string && (
+        <div className="col-md-8 col-12 header-right details">
+          <div className="detail pl-0">
+            <span className="title location-title">{center?.string}</span>
+            <span className="description">{`${center?.state}, ${
+              center?.zipCode ? center?.zipCode : "N/A"
+            }`}</span>
+          </div>
+          <div className="detail flex">
+            <div>
+              <span className="title">{moment(dateRange[0]).format("DD")}</span>
+              <span className="description">
+                {moment(dateRange[0]).format("MMMM")}
+              </span>
+            </div>
+            <span className="title">-</span>
+            <div>
+              <span className="title">{moment(dateRange[1]).format("DD")}</span>
+              <span className="description">
+                {moment(dateRange[1]).format("MMMM")}
+              </span>
+            </div>
+          </div>
+          <div className="detail">
+            <span className="title">
+              {roomRequirements?.single + roomRequirements?.double} Rooms
+            </span>
+            <span className="description">
+              {roomRequirements?.single} Single, {roomRequirements?.double}{" "}
+              Double,{" "}
+              {roomRequirements?.animalSupport > 0
+                ? roomRequirements?.animalSupport
+                : "No"}{" "}
+              Support Animal
+            </span>
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 

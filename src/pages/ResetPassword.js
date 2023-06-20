@@ -1,7 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { clearErrors, resetPassword } from "../actions/authActions";
+import {
+  clearErrors,
+  requestToken,
+  resetPassword,
+} from "../actions/authActions";
 import { Button, Form, Input, Row, Typography, message } from "antd";
 import BackButton from "../components/BackButton";
 
@@ -10,9 +14,8 @@ const ResetPassword = () => {
   const location = useLocation();
   const { email } = useParams();
   const dispatch = useDispatch();
-  const { loading, error, isAuthenticated } = useSelector(
-    (state) => state.auth
-  );
+  const [resendToken, setResendToken] = useState(false);
+  const { loading, error } = useSelector((state) => state.auth);
   const onFinish = async (values) => {
     if (values.password !== values.confirmPassword) {
       message.error({
@@ -40,6 +43,10 @@ const ResetPassword = () => {
       });
       dispatch(clearErrors());
     }
+
+    setTimeout(() => {
+      setResendToken(true);
+    }, 1000 * 60);
   }, [error, dispatch]);
 
   return (
@@ -140,6 +147,14 @@ const ResetPassword = () => {
                   </Button>
                 </Form.Item>
               </div>
+              {resendToken && (
+                <span
+                  className="resend-token-text"
+                  onClick={() => dispatch(requestToken(email, "reset"))}
+                >
+                  Resend verification token
+                </span>
+              )}
             </Form>
           </div>
         </Row>
