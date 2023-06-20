@@ -1,8 +1,8 @@
 import { Col, Row, message } from "antd";
 import React, { useRef, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { FaUserAlt } from "react-icons/fa";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import coloredLogo from "../../assets/images/colored logo.png";
 import whiteLogo from "../../assets/images/white logo.png";
 import searchIcon from "../../assets/images/search-icon.svg";
@@ -231,12 +231,16 @@ const Header = () => {
       location.pathname.includes("auth") ||
       location.pathname.includes("verifyEmail") ||
       location.pathname.includes("resetPassword") ? (
-        <div className="header-left col-4">
-          <img
-            src={!location.pathname.includes("auth") ? coloredLogo : whiteLogo}
-            width={100}
-          />
-        </div>
+        <Link to="/">
+          <div className="header-left col-4">
+            <img
+              src={
+                !location.pathname.includes("auth") ? coloredLogo : whiteLogo
+              }
+              width={100}
+            />
+          </div>
+        </Link>
       ) : null}
       {location.pathname === "/" ||
       location.pathname === "/dashboard/user/create-request" ? (
@@ -356,56 +360,12 @@ const Header = () => {
           </Col>
         </div>
       ) : null}
-      {(location.pathname === "/auth" && jobDetails) ||
-      (location.pathname === "/auth/forgot-password" && jobDetails) ||
-      (location.pathname.includes("verifyEmail") && jobDetails) ||
-      (location.pathname.includes("resetPassword") && jobDetails) ? (
-        <div className="col-md-8 col-12 header-right details">
-          <div className="detail pl-0">
-            <span className="title location-title">
-              {jobDetails?.location.string}
-            </span>
-            <span className="description">{`${jobDetails?.location?.state}, ${
-              jobDetails?.location?.zipCode
-                ? jobDetails?.location?.zipCode
-                : "N/A"
-            }`}</span>
-          </div>
-          <div className="detail flex">
-            <div>
-              <span className="title">
-                {moment(jobDetails?.dateRange[0]).format("DD")}
-              </span>
-              <span className="description">
-                {moment(jobDetails?.dateRange[0]).format("MMMM")}
-              </span>
-            </div>
-            <span className="title">-</span>
-            <div>
-              <span className="title">
-                {moment(jobDetails?.dateRange[1]).format("DD")}
-              </span>
-              <span className="description">
-                {moment(jobDetails?.dateRange[1]).format("MMMM")}
-              </span>
-            </div>
-          </div>
-          <div className="detail">
-            <span className="title">
-              {jobDetails?.roomRequirements.single +
-                jobDetails?.roomRequirements.double}{" "}
-              Rooms
-            </span>
-            <span className="description">
-              {jobDetails?.roomRequirements.single} Single,{" "}
-              {jobDetails?.roomRequirements.double} Double,{" "}
-              {jobDetails?.roomRequirements.animalSupport > 0
-                ? jobDetails?.roomRequirements.animalSupport
-                : "No"}{" "}
-              Support Animal
-            </span>
-          </div>
-        </div>
+      {
+      // (location.pathname === "/auth" && jobDetails) ||
+      // (location.pathname === "/auth/forgot-password" && jobDetails) ||
+      // (location.pathname.includes("verifyEmail") && jobDetails) ||
+      (location.pathname.includes("auth") && jobDetails) ? (
+        <RequestsDetails />
       ) : null}
       {location.pathname === "/" ? (
         <a className="login-icon" onClick={() => navigate("/auth")}>
@@ -420,6 +380,50 @@ const Header = () => {
         />
       )}
     </Row>
+  );
+};
+
+const RequestsDetails = () => {
+  const { center, dateRange, roomRequirements } = useSelector(
+    (state) => state.map
+  );
+
+  return (
+    <div className="col-md-8 col-12 header-right details">
+      <div className="detail pl-0">
+        <span className="title location-title">{center?.string}</span>
+        <span className="description">{`${center?.state}, ${
+          center?.zipCode ? center?.zipCode : "N/A"
+        }`}</span>
+      </div>
+      <div className="detail flex">
+        <div>
+          <span className="title">{moment(dateRange[0]).format("DD")}</span>
+          <span className="description">
+            {moment(dateRange[0]).format("MMMM")}
+          </span>
+        </div>
+        <span className="title">-</span>
+        <div>
+          <span className="title">{moment(dateRange[1]).format("DD")}</span>
+          <span className="description">
+            {moment(dateRange[1]).format("MMMM")}
+          </span>
+        </div>
+      </div>
+      <div className="detail">
+        <span className="title">
+          {roomRequirements?.single + roomRequirements?.double} Rooms
+        </span>
+        <span className="description">
+          {roomRequirements?.single} Single, {roomRequirements?.double} Double,{" "}
+          {roomRequirements?.animalSupport > 0
+            ? roomRequirements?.animalSupport
+            : "No"}{" "}
+          Support Animal
+        </span>
+      </div>
+    </div>
   );
 };
 

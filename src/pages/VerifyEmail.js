@@ -19,17 +19,35 @@ const VerifyEmail = () => {
 
   const [resendToken, setResendToken] = useState(false);
 
-  const { loading, error, isAuthenticated, user } = useSelector(
-    (state) => state.auth
+  const {
+    loading,
+    error,
+    isAuthenticated,
+    user,
+    center,
+    dateRange,
+    roomRequirements,
+  } = useSelector(
+    (state) => state.auth,
+    (state) => state.map
   );
+
+  const request = {
+    location: center,
+    dateRange: dateRange,
+    roomRequirements: roomRequirements,
+  };
+
   const onFinish = async (values) => {
-    const res = await dispatch(verifyEmail(values.token, email));
-    if (res) {
-      console.log("working");
-      // localStorage.setItem("token", res.data.data.token);
-      // localStorage.setItem("user", res.data.data.user);
-      // navigate("/auth", { state: location?.state });
-    }
+    const res = await dispatch(
+      verifyEmail(values.token, email, request, location?.state?.password)
+    );
+    // if (res) {
+    // console.log("working");
+    // localStorage.setItem("token", res.data.data.token);
+    // localStorage.setItem("user", res.data.data.user);
+    // navigate("/auth", { state: location?.state });
+    // }
   };
   useEffect(() => {
     if (error) {

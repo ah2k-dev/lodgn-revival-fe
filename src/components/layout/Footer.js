@@ -32,9 +32,9 @@ const Footer = () => {
   const totalRooms = roomRequirements.single + roomRequirements.double;
 
   const handleBookingRequest = () => {
-    localStorage.setItem("location", JSON.stringify(center));
-    localStorage.setItem("dateRange", JSON.stringify(dateRange));
-    localStorage.setItem("roomRequirements", JSON.stringify(roomRequirements));
+    // localStorage.setItem("location", JSON.stringify(center));
+    // localStorage.setItem("dateRange", JSON.stringify(dateRange));
+    // localStorage.setItem("roomRequirements", JSON.stringify(roomRequirements));
 
     navigate("/auth", {
       state: {
@@ -43,7 +43,7 @@ const Footer = () => {
         roomRequirements,
       },
     });
-    dispatch(clearState());
+    // dispatch(clearState());
   };
 
   return (

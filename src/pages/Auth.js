@@ -15,6 +15,10 @@ import firebase from "../services/firebase";
 const Auth = () => {
   const [active, setActive] = useState("login");
   const [emailVerify, setEmailVerify] = useState(false);
+  const [credentials, setCredentials] = useState({
+    email: "",
+    password: "",
+  });
   const [user, setUser] = useState(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -55,7 +59,10 @@ const Auth = () => {
         setActive("signup");
       } else {
         navigate("/auth/verifyEmail/" + values.email, {
-          state: location.state,
+          state: {
+            // request: location.state,
+            password: values.password,
+          },
         });
       }
     }
@@ -185,7 +192,13 @@ const Auth = () => {
                     },
                   ]}
                 >
-                  <Input type="email" placeholder="Email" />
+                  <Input
+                    type="email"
+                    placeholder="Email"
+                    onChange={(e) =>
+                      setCredentials({ ...credentials, email: e.target.value })
+                    }
+                  />
                 </Form.Item>
               </div>
               <div className="col-12">
@@ -209,7 +222,15 @@ const Auth = () => {
                   ]}
                   style={{ marginBottom: "0" }}
                 >
-                  <Input.Password placeholder="Password" />
+                  <Input.Password
+                    placeholder="Password"
+                    onChange={(e) =>
+                      setCredentials({
+                        ...credentials,
+                        password: e.target.value,
+                      })
+                    }
+                  />
                 </Form.Item>
               </div>
               {active === "signup" && (
@@ -249,7 +270,15 @@ const Auth = () => {
                   {emailVerify && active !== "signup" && (
                     <a
                       className="verify-email"
-                      onClick={() => navigate("/auth/requestToken")}
+                      onClick={() =>
+                        navigate("/auth/requestToken", {
+                          state: {
+                            // request: location?.state,
+                            password: credentials?.password,
+                            email: credentials?.email,
+                          },
+                        })
+                      }
                     >
                       Request email token
                     </a>
@@ -259,7 +288,11 @@ const Auth = () => {
                       className="forgot-password"
                       onClick={() => {
                         navigate("/auth/forgot-password", {
-                          state: location?.state,
+                          state: {
+                            // request: location?.state,
+                            password: credentials?.password,
+                            email: credentials?.email,
+                          },
                         });
                       }}
                     >
