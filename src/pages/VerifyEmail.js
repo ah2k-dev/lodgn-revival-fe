@@ -1,34 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  clearErrors,
-  login,
-  loginWithRequestPayload,
-  requestToken,
-  verifyEmail,
-} from "../actions/authActions";
+import { clearErrors, requestToken, verifyEmail } from "../actions/authActions";
 import { Button, Form, Input, Row, Typography, message } from "antd";
 import BackButton from "../components/BackButton";
 
 const VerifyEmail = () => {
-  const navigate = useNavigate();
   const location = useLocation();
   const { email } = useParams();
   const dispatch = useDispatch();
 
   const [resendToken, setResendToken] = useState(false);
 
-  const {
-    loading,
-    error,
-    isAuthenticated,
-    user,
-    center,
-    dateRange,
-    roomRequirements,
-  } = useSelector(
-    (state) => state.auth,
+  const { loading, error } = useSelector((state) => state.auth);
+
+  const { center, dateRange, roomRequirements } = useSelector(
     (state) => state.map
   );
 
@@ -39,15 +25,9 @@ const VerifyEmail = () => {
   };
 
   const onFinish = async (values) => {
-    const res = await dispatch(
+    await dispatch(
       verifyEmail(values.token, email, request, location?.state?.password)
     );
-    // if (res) {
-    // console.log("working");
-    // localStorage.setItem("token", res.data.data.token);
-    // localStorage.setItem("user", res.data.data.user);
-    // navigate("/auth", { state: location?.state });
-    // }
   };
   useEffect(() => {
     if (error) {
@@ -119,12 +99,12 @@ const VerifyEmail = () => {
                   </Button>
                 </Form.Item>
                 {resendToken && (
-                  <a
-                    className="resend-token-text"
+                  <span
+                    className="resend-token-text cursor-pointer"
                     onClick={() => dispatch(requestToken(email, "request"))}
                   >
                     Resend verification token
-                  </a>
+                  </span>
                 )}
               </div>
             </Form>

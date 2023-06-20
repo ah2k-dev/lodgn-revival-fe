@@ -1,6 +1,7 @@
 import { message } from "antd";
 import { authConstants } from "../constants/authConstants";
 import custAxios from "../services/axiosConfig";
+import { clearState } from "./mapActions";
 
 export const signup =
   (firstname, lastname, email, password, phone, company) =>
@@ -77,7 +78,7 @@ export const requestToken = (email, type) => async (dispatch) => {
   });
   try {
     const res = await custAxios.post(
-      `/auth/${type == "request" ? "requestEmailToken" : "forgotPassword"}`,
+      `/auth/${type === "request" ? "requestEmailToken" : "forgotPassword"}`,
       { email }
     );
     if (res) {
@@ -111,7 +112,7 @@ export const verifyEmail =
         email,
       });
       if (res) {
-        request !== null
+        request.location.string
           ? await dispatch(
               loginWithRequestPayload({
                 email: email,
@@ -122,8 +123,6 @@ export const verifyEmail =
               })
             )
           : await dispatch(login(email, password));
-        // localStorage.setItem("token", res.data.data.jwtToken);
-        // localStorage.setItem("user", JSON.stringify(res.data.data.userData));
         await dispatch({
           type: authConstants.VERIFY_EMAIL_SUCCESS,
           payload: res.data.data,
@@ -200,17 +199,13 @@ export const loginWithRequestPayload = (payload) => async (dispatch) => {
         type: authConstants.LOGIN_SUCCESS,
         payload: res.data.data,
       });
-      localStorage.removeItem("email");
-      localStorage.removeItem("password");
-      localStorage.removeItem("location");
-      localStorage.removeItem("dateRange");
-      localStorage.removeItem("roomRequirements");
       message.success({
         content: "Login Successful",
         style: {
           marginTop: "10vh",
         },
       });
+      await dispatch(clearState());
       return true;
     }
   } catch (error) {

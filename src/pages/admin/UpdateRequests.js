@@ -9,7 +9,6 @@ import {
 } from "../../actions/requestActions";
 import { LoadingOutlined } from "@ant-design/icons";
 import moment from "moment";
-import { baseURL } from "../../services/axiosConfig";
 import { GetPermissions, UseGetRole } from "../../hooks/auth";
 
 const UpdateRequests = () => {

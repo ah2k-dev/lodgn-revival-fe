@@ -11,7 +11,6 @@ import {
   Checkbox,
   Col,
   Row,
-  Tag,
 } from "antd";
 import { useRef, useState } from "react";
 import Highlighter from "react-highlight-words";
@@ -28,7 +27,7 @@ import { LoadingOutlined } from "@ant-design/icons";
 const ManageUsers = () => {
   const role = UseGetRole();
 
-  const { error, loading, users, moderators } = useSelector(
+  const { loading, users, moderators } = useSelector(
     (state) => state.user
   );
 
@@ -43,7 +42,6 @@ const ManageUsers = () => {
   const [form] = Form.useForm();
 
   const handleFinish = async (values) => {
-    // console.log(values);
     let res;
     if (showPasswordField) {
       res = await dispatch(
@@ -442,15 +440,12 @@ const UsersTable = ({ tabIndex, data, handleEditModal }) => {
 
   const handleBlockUnblock = (id, status) => {
     let newStatus = !status ? true : false;
-    // console.log(id, newStatus);
     dispatch(blockUnblockUser(id, newStatus));
   };
 
   const columns = [
     {
       title: "Full Name",
-      // dataIndex: "username",
-      // key: "username",
       ...getColumnSearchProps("firstname"),
       sorter: (a, b) => a.firstname.length - b.firstname.length,
       sortDirections: ["descend", "ascend"],

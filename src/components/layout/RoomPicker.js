@@ -7,10 +7,10 @@ const RoomPicker = ({ singleRooms, doubleRooms, animals, onSingleRoomChange, onD
   const [supportAnimal, setSupportAnimal] = useState(animals);
 
   const increament = (state) => {
-    if (state == 'singleRoom') {
+    if (state === 'singleRoom') {
       setSingleRoom(singleRoom + 1);
       onSingleRoomChange(singleRoom + 1);
-    } else if (state == 'doubleRoom') {
+    } else if (state === 'doubleRoom') {
       setDoubleRoom(doubleRoom + 1);
       onDoubleRoomChange(doubleRoom + 1);
     } else {
@@ -20,10 +20,10 @@ const RoomPicker = ({ singleRooms, doubleRooms, animals, onSingleRoomChange, onD
   }
 
   const decreament = (state) => {
-    if (state == 'singleRoom') {
+    if (state === 'singleRoom') {
       setSingleRoom(singleRoom === 0 ? singleRoom : singleRoom - 1);
       onSingleRoomChange(singleRoom === 0 ? singleRoom : singleRoom - 1);
-    } else if (state == 'doubleRoom') {
+    } else if (state === 'doubleRoom') {
       setDoubleRoom(doubleRoom === 0 ? doubleRoom : doubleRoom - 1);
       onDoubleRoomChange(doubleRoom === 0 ? doubleRoom : doubleRoom - 1);
     } else {

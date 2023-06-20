@@ -97,7 +97,7 @@ const Sidebar = ({ activeClass, setActiveClass }) => {
     >
       <ul className="relative m-0 list-none py-4 px-0">
         <div className="col-6 mb-4">
-          <img src={whiteLogo} className="w-100" />
+          <img src={whiteLogo} className="w-100" alt="lodgn" />
         </div>
 
         {navs.map((nav, i) => {

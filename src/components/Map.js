@@ -2,29 +2,12 @@ import React from "react";
 import GoogleMapReact from "google-map-react";
 import mapMarker from "../assets/images/marker.svg";
 
-const Marker = ({ text, color }) => (
-  <div
-    style={{
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      width: "25px",
-      height: "25px",
-      borderRadius: "50%",
-      backgroundColor: color,
-      color: "white",
-      fontWeight: "bold",
-      fontSize: "16px",
-    }}
-  >
-    {text}
-  </div>
-);
-const Marker2 = () => (
+const Marker = () => (
   <div style={{ color: "red", fontSize: "20px" }}>
     <img src={mapMarker} alt="map-marker" width={22} />
   </div>
 );
+
 const Map = ({ hotels, center }) => {
   return (
     <GoogleMapReact
@@ -41,7 +24,7 @@ const Map = ({ hotels, center }) => {
       }}
     >
       {hotels?.map((hotel, index) => (
-        <Marker2
+        <Marker
           key={hotel.place_id}
           lat={hotel.geometry.location.lat()}
           lng={hotel.geometry.location.lng()}

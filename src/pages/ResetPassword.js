@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { clearErrors, requestToken, resetPassword } from "../actions/authActions";
+import {
+  clearErrors,
+  requestToken,
+  resetPassword,
+} from "../actions/authActions";
 import { Button, Form, Input, Row, Typography, message } from "antd";
 import BackButton from "../components/BackButton";
 
@@ -11,9 +15,7 @@ const ResetPassword = () => {
   const { email } = useParams();
   const dispatch = useDispatch();
   const [resendToken, setResendToken] = useState(false);
-  const { loading, error, isAuthenticated } = useSelector(
-    (state) => state.auth
-  );
+  const { loading, error } = useSelector((state) => state.auth);
   const onFinish = async (values) => {
     if (values.password !== values.confirmPassword) {
       message.error({
@@ -146,12 +148,12 @@ const ResetPassword = () => {
                 </Form.Item>
               </div>
               {resendToken && (
-                <a
+                <span
                   className="resend-token-text"
                   onClick={() => dispatch(requestToken(email, "reset"))}
                 >
                   Resend verification token
-                </a>
+                </span>
               )}
             </Form>
           </div>

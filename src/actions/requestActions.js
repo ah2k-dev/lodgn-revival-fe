@@ -236,7 +236,6 @@ export const updateRequest = (data) => async (dispatch) => {
           marginTop: "10vh",
         },
       });
-      // dispatch(getOneRequest(id));
       return true;
     }
     return true;
@@ -269,7 +268,6 @@ export const approveRejectUpdate = (data) => async (dispatch) => {
       dispatch(getRequestUpdates());
       return true;
     }
-    // return true;
   } catch (error) {
     dispatch({
       type: requestConstants.APPROVE_REJECT_UPDATE_FAILURE,
@@ -290,16 +288,8 @@ export const getRequestUpdates = () => async (dispatch) => {
         type: requestConstants.GET_REQUEST_UPDATES_SUCCESS,
         payload: res.data.data.updates,
       });
-      // message.success({
-      //   content: "Request Updated Successfully",
-      //   style: {
-      //     marginTop: "10vh",
-      //   },
-      // });
-      // dispatch(getOneRequest(id));
-      return true;
+     return true;
     }
-    // return true;
   } catch (error) {
     dispatch({
       type: requestConstants.GET_REQUEST_UPDATES_FAILURE,
@@ -320,16 +310,8 @@ export const getRejectedReuests = () => async (dispatch) => {
         type: requestConstants.GET_REJECTED_REQUESTS_SUCCESS,
         payload: res.data.data.requests,
       });
-      // message.success({
-      //   content: "Request Updated Successfully",
-      //   style: {
-      //     marginTop: "10vh",
-      //   },
-      // });
-      // dispatch(getOneRequest(id));
       return true;
     }
-    // return true;
   } catch (error) {
     dispatch({
       type: requestConstants.GET_REJECTED_REQUESTS_FAILURE,
@@ -359,7 +341,6 @@ export const rejectReuest = (id) => async (dispatch) => {
       dispatch(getRequests());
       return true;
     }
-    // return true;
   } catch (error) {
     dispatch({
       type: requestConstants.REJECT_REQUEST_FAILURE,
@@ -380,16 +361,8 @@ export const fetchReports = () => async (dispatch) => {
         type: requestConstants.GET_REPORTS_SUCCESS,
         payload: res.data.data.response,
       });
-      // message.success({
-      //   content: "Request Updated Successfully",
-      //   style: {
-      //     marginTop: "10vh",
-      //   },
-      // });
-      // dispatch(getOneRequest(id));
       return true;
     }
-    // return true;
   } catch (error) {
     dispatch({
       type: requestConstants.GET_REPORTS_FAILURE,

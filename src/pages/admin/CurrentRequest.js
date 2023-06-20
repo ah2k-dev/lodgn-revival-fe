@@ -133,8 +133,29 @@ const RequestComponent = ({ request, status, index }) => {
 
   const handleFile = (event) => {
     const fileUploaded = event.target.files[0];
-    // console.log(fileUploaded);
-    setReceipt(fileUploaded);
+    console.log(fileUploaded);
+
+    if (fileUploaded) {
+      const fileType = fileUploaded.type;
+      const fileSizeInBytes = fileUploaded.size;
+      const fileSizeInMB = fileSizeInBytes / (1024 * 1024); // Convert bytes to megabytes
+
+      if (fileSizeInMB > 1) {
+        message.error(`The file size shouldn't be greater than 1MB`);
+      } else if (
+        fileType === "application/pdf" ||
+        fileType === "image/png" ||
+        fileType === "image/jpeg" ||
+        fileType === "image/jpg"
+      ) {
+        message.success(`${fileUploaded.name} is selected`);
+        setReceipt(fileUploaded);
+      } else {
+        message.error(
+          `${fileUploaded.name} is not a valid file format`
+        );
+      }
+    }
   };
 
   return (
@@ -218,7 +239,7 @@ const RequestComponent = ({ request, status, index }) => {
                 value="paymentVerified"
                 defaultChecked={"paymentVerfied" === request.status}
                 disabled={
-                  request.status != "completed" ||
+                  request.status !== "completed" ||
                   (role === "moderator" &&
                     !permissions.includes("verifyPayment"))
                 }
@@ -287,7 +308,7 @@ const RequestComponent = ({ request, status, index }) => {
             loading={loading}
             onClick={() => handleUpdate(request._id)}
             disabled={
-              (newStatus === "completed" && offerings.length == 0) ||
+              (newStatus === "completed" && offerings.length === 0) ||
               (newStatus === "paymentVerified" && selectedOffer === "") ||
               (newStatus === "paymentVerified" && !receipt)
             }

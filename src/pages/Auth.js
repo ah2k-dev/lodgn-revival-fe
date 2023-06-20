@@ -24,8 +24,12 @@ const Auth = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const { loading, error, isAuthenticated } = useSelector(
+  const { loading, error } = useSelector(
     (state) => state.auth
+  );
+
+  const { center, dateRange, roomRequirements } = useSelector(
+    (state) => state.map
   );
 
   const formRef = useRef(null);
@@ -36,9 +40,9 @@ const Auth = () => {
           loginWithRequestPayload({
             email: values.email,
             password: values.password,
-            location: location.state?.location,
-            dateRange: location.state?.dateRange,
-            roomRequirements: location.state?.roomRequirements,
+            location: center,
+            dateRange: dateRange,
+            roomRequirements: roomRequirements,
           })
         );
       } else {
@@ -60,7 +64,6 @@ const Auth = () => {
       } else {
         navigate("/auth/verifyEmail/" + values.email, {
           state: {
-            // request: location.state,
             password: values.password,
           },
         });
@@ -83,7 +86,6 @@ const Auth = () => {
   useEffect(() => {
     firebase.auth().onAuthStateChanged((user) => {
       setUser(user);
-      // console.log(user);
     });
   }, []);
 
@@ -104,7 +106,6 @@ const Auth = () => {
 
   useEffect(() => {
     if (user) {
-      // console.log(user);
       dispatch(
         googleAuth({
           email: user.email,
@@ -149,7 +150,7 @@ const Auth = () => {
               }}
               autoComplete="off"
             >
-              {active == "signup" && (
+              {active === "signup" && (
                 <div className="col-12 d-flex justify-content-between">
                   <div className="col-6 pe-2">
                     <label htmlFor="firstname">First Name</label>
@@ -268,12 +269,11 @@ const Auth = () => {
               <div className="email-senders">
                 <Form.Item>
                   {emailVerify && active !== "signup" && (
-                    <a
-                      className="verify-email"
+                    <span
+                      className="verify-email cursor-pointer"
                       onClick={() =>
                         navigate("/auth/requestToken", {
                           state: {
-                            // request: location?.state,
                             password: credentials?.password,
                             email: credentials?.email,
                           },
@@ -281,15 +281,14 @@ const Auth = () => {
                       }
                     >
                       Request email token
-                    </a>
+                    </span>
                   )}
                   {!emailVerify && active !== "signup" && (
-                    <a
-                      className="forgot-password"
+                    <span
+                      className="forgot-password cursor-pointer"
                       onClick={() => {
                         navigate("/auth/forgot-password", {
                           state: {
-                            // request: location?.state,
                             password: credentials?.password,
                             email: credentials?.email,
                           },
@@ -297,27 +296,26 @@ const Auth = () => {
                       }}
                     >
                       Forgot password?
-                    </a>
+                    </span>
                   )}
                 </Form.Item>
               </div>
               <div className="mt-1 col-12">
                 <Form.Item>
                   <div className="auth-buttons">
-                    {active == "login" ? (
+                    {active === "login" ? (
                       <Button
                         className="authBtn activeBtn"
-                        type={active == "login" ? "primary" : "button"}
+                        type={active === "login" ? "primary" : "button"}
                         onClick={handleLogin}
                         loading={loading}
-                        // htmlType="submit"
                       >
                         Log - in
                       </Button>
                     ) : (
                       <Button
                         className="authBtn "
-                        type={active == "login" ? "primary" : "button"}
+                        type={active === "login" ? "primary" : "button"}
                         onClick={() => {
                           setActive("login");
                         }}
@@ -325,10 +323,10 @@ const Auth = () => {
                         Log - in
                       </Button>
                     )}
-                    {active == "signup" ? (
+                    {active === "signup" ? (
                       <Button
                         className="authBtn activeBtn"
-                        type={active == "signup" ? "primary" : "button"}
+                        type={active === "signup" ? "primary" : "button"}
                         onClick={handleSignUp}
                         loading={loading}
                       >
@@ -337,7 +335,7 @@ const Auth = () => {
                     ) : (
                       <Button
                         className="authBtn"
-                        type={active == "signup" ? "primary" : "button"}
+                        type={active === "signup" ? "primary" : "button"}
                         onClick={() => {
                           setActive("signup");
                         }}

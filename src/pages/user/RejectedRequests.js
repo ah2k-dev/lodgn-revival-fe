@@ -1,17 +1,10 @@
-import React, { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
-import Card from "../../components/layout/Card";
-import JobDetailsGrid from "../../components/layout/JobDetailsGrid";
-import PaidPerNight from "../../components/layout/PaidPerNight";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Button, Form, InputNumber, message } from "antd";
-import {
-  clearErrors,
-  getOngoingRequests,
-  getRejectedReuests,
-} from "../../actions/requestActions";
+import { message } from "antd";
+import { clearErrors, getRejectedReuests } from "../../actions/requestActions";
 import { LoadingOutlined } from "@ant-design/icons";
 import moment from "moment";
+import JobDetailsGrid from "../../components/layout/JobDetailsGrid";
 
 const RejectedRequests = () => {
   const dispatch = useDispatch();
@@ -84,7 +77,8 @@ const RequestComponent = ({ request }) => {
             start_date_month={moment(request?.dateRange[0])?.format("MMM")}
             end_date_month={moment(request?.dateRange[1])?.format("MMM")}
             total_rooms={
-              request?.roomRequirements?.single + request?.roomRequirements?.double
+              request?.roomRequirements?.single +
+              request?.roomRequirements?.double
             }
             single_rooms={request?.roomRequirements?.single}
             double_rooms={request?.roomRequirements?.double}

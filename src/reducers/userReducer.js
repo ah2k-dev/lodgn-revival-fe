@@ -4,7 +4,6 @@ export const userReducer = (
   state = {
     users: [],
     moderators: [],
-    // personalInfo: {},
     loading: false,
     error: null,
   },
@@ -22,7 +21,6 @@ export const userReducer = (
       };
 
     case userConstants.FETCH_USERS_SUCCESS:
-      // console.log(action.payload);
       return {
         ...state,
         loading: false,
@@ -32,7 +30,6 @@ export const userReducer = (
     case userConstants.BLOCKUNBLOCK_USER_SUCCESS:
     case userConstants.CREATE_MODERATOR_SUCCESS:
     case userConstants.UPDATE_PERSONAL_INFO_SUCCESS:
-    case userConstants.UPDATE_PASSWORD_SUCCESS:
     case userConstants.UPDATE_PASSWORD_SUCCESS:
     case userConstants.UPDATE_MODERATOR_SUCCESS:
       return {

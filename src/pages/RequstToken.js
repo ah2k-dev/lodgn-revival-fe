@@ -1,5 +1,5 @@
 import { Button, Form, Input, Row, Typography, message } from "antd";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import BackButton from "../components/BackButton";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -10,15 +10,11 @@ const RequstToken = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-  const [email, setEmail] = useState("");
-  const { loading, error, isAuthenticated } = useSelector(
+  const { loading, error, } = useSelector(
     (state) => state.auth
   );
 
-  // console.log(location.state);
-
   const onFinish = async (values) => {
-    setEmail(values.email);
     let type;
     if (pathname === "/auth/requestToken") {
       type = "request";
