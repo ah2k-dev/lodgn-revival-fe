@@ -15,6 +15,7 @@ const ManageProfile = () => {
   const [form] = Form.useForm();
   const formRef2 = useRef(null);
   const [form2] = Form.useForm();
+  const isAuthorizedWithGoogle = localStorage.getItem("googleAuth");
 
   const [updatePassword, setUpdatePassword] = useState(false);
 
@@ -148,12 +149,14 @@ const ManageProfile = () => {
               </Form.Item>
             </div>
             <div className="update-btns col-12 d-flex justify-content-end gap-2 px-3">
-              <Button
-                className="update-password-btn mt-3"
-                onClick={handleUpdatePasswordModal}
-              >
-                Update Password
-              </Button>
+              {!isAuthorizedWithGoogle && (
+                <Button
+                  className="update-password-btn mt-3"
+                  onClick={handleUpdatePasswordModal}
+                >
+                  Update Password
+                </Button>
+              )}
               <Button
                 className="update-btn mt-3"
                 loading={loading}

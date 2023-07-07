@@ -23,7 +23,7 @@ const { RangePicker } = DatePicker;
 
 dayjs.extend(customParseFormat);
 
-const Header = () => {
+const Header = React.forwardRef((props, ref) => {
   const [showTodayModal, setShowTodayModal] = useState(false);
 
   const [showRoomPicker, setShowRoomPicker] = useState(false);
@@ -209,107 +209,108 @@ const Header = () => {
   };
 
   return (
-    <Row
-      className={
-        location.pathname === "/dashboard/user/create-request"
-          ? "header-container w-100 justify-content-end position-relative"
-          : location.pathname.includes("auth")
-          ? "header-container dark-green-header justify-content-md-between justify-content-center align-items-center position-relative"
-          : "header-container position-relative justify-content-md-between justify-content-center align-items-center"
-      }
-    >
-      {location.pathname === "/" ||
-      location.pathname.includes("auth") ||
-      location.pathname.includes("verifyEmail") ||
-      location.pathname.includes("resetPassword") ? (
-        <Link to="/">
-          <div className="header-left col-4">
-            <img
-              src={
-                !location.pathname.includes("auth") ? coloredLogo : whiteLogo
-              }
-              alt="lodgn"
-              width={100}
-            />
-          </div>
-        </Link>
-      ) : null}
-      {location.pathname === "/" ||
-      location.pathname === "/dashboard/user/create-request" ? (
-        <div
-          className={
-            location.pathname === "/dashboard/user/create-request"
-              ? "header-middle col-lg-7 col-md-9 col-12 mt-md-0 mt-5 d-flex justify-content-center align-items-center top-0 h-100"
-              : "header-middle landing-page-searchbar top-0 align-items-center h-100"
-          }
-        >
-          <Col
+    <header ref={ref}>
+      <Row
+        className={
+          location.pathname === "/dashboard/user/create-request"
+            ? "header-container w-100 justify-content-end position-relative"
+            : location.pathname.includes("auth")
+            ? "header-container dark-green-header justify-content-md-between justify-content-center align-items-center position-relative"
+            : "header-container position-relative justify-content-md-between justify-content-center align-items-center"
+        }
+      >
+        {location.pathname === "/" ||
+        location.pathname.includes("auth") ||
+        location.pathname.includes("verifyEmail") ||
+        location.pathname.includes("resetPassword") ? (
+          <Link to="/">
+            <div className="header-left col-4">
+              <img
+                src={
+                  !location.pathname.includes("auth") ? coloredLogo : whiteLogo
+                }
+                alt="lodgn"
+                width={100}
+              />
+            </div>
+          </Link>
+        ) : null}
+        {location.pathname === "/" ||
+        location.pathname === "/dashboard/user/create-request" ? (
+          <div
             className={
               location.pathname === "/dashboard/user/create-request"
-                ? "search-bar col-12"
-                : "search-bar col-xl-5 col-md-7 col-sm-10 col-12"
+                ? "header-middle col-lg-7 col-md-9 col-12 mt-md-0 mt-5 d-flex justify-content-center align-items-center top-0 h-100"
+                : "header-middle landing-page-searchbar top-0 align-items-center h-100"
             }
           >
-            <span>
-              <input
-                type="text"
-                value={search}
-                onChange={handleSearch}
-                onKeyDown={handleSelection}
-                placeholder="Search job location"
-              />
-              {places.length > 0 && (
-                <ul className="auto-complete-list position-absolute mt-3 bg-white py-2 px-0">
-                  {places.map((place, index) => (
-                    <li
-                      key={place.place_id}
-                      onClick={() => handleSelect(index, place)}
-                      className={index === selectedIndex ? "selected" : ""}
-                    >
-                      {place.description}
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </span>
-            <span className="position-relative">
-              <span className="date cursor-pointer">
-                {dateRange.length > 0
-                  ? `${
-                      dateRange[0] !== null
-                        ? moment(dateRange[0]).format("DD")
-                        : ""
-                    } ${
-                      dateRange[0] !== null
-                        ? moment(dateRange[0]).format("MMMM")
-                        : ""
-                    } ${dateRange[1] !== null ? "-" : ""} ${
-                      dateRange[1] !== null
-                        ? moment(dateRange[1]).format("DD")
-                        : ""
-                    } ${
-                      dateRange[1] !== null
-                        ? moment(dateRange[1]).format("MMMM")
-                        : ""
-                    }`
-                  : "Dates"}
+            <Col
+              className={
+                location.pathname === "/dashboard/user/create-request"
+                  ? "search-bar col-12"
+                  : "search-bar col-xl-5 col-md-7 col-sm-10 col-12"
+              }
+            >
+              <span>
+                <input
+                  type="text"
+                  value={search}
+                  onChange={handleSearch}
+                  onKeyDown={handleSelection}
+                  placeholder="Search job location"
+                />
+                {places.length > 0 && (
+                  <ul className="auto-complete-list position-absolute mt-3 bg-white py-2 px-0">
+                    {places.map((place, index) => (
+                      <li
+                        key={place.place_id}
+                        onClick={() => handleSelect(index, place)}
+                        className={index === selectedIndex ? "selected" : ""}
+                      >
+                        {place.description}
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </span>
-              <RangePicker
-                onChange={handleCalendarChange}
-                onCalendarChange={handleCalendarChange}
-                disabledDate={disabledDate}
-              />
-            </span>
-            <span onClick={() => handleRoomPickerToggle()}>
-              {singleRoom > 0 || doubleRoom > 0 || supportAnimal > 0
-                ? `${
-                    (singleRoom > 0 && doubleRoom > 0) ||
-                    (singleRoom > 0 && supportAnimal > 0)
-                      ? "S-" + singleRoom + ","
-                      : singleRoom > 0
-                      ? "S-" + singleRoom
-                      : ""
-                  } 
+              <span className="position-relative">
+                <span className="date cursor-pointer">
+                  {dateRange.length > 0
+                    ? `${
+                        dateRange[0] !== null
+                          ? moment(dateRange[0]).format("DD")
+                          : ""
+                      } ${
+                        dateRange[0] !== null
+                          ? moment(dateRange[0]).format("MMMM")
+                          : ""
+                      } ${dateRange[1] !== null ? "-" : ""} ${
+                        dateRange[1] !== null
+                          ? moment(dateRange[1]).format("DD")
+                          : ""
+                      } ${
+                        dateRange[1] !== null
+                          ? moment(dateRange[1]).format("MMMM")
+                          : ""
+                      }`
+                    : "Dates"}
+                </span>
+                <RangePicker
+                  onChange={handleCalendarChange}
+                  onCalendarChange={handleCalendarChange}
+                  disabledDate={disabledDate}
+                />
+              </span>
+              <span onClick={() => handleRoomPickerToggle()}>
+                {singleRoom > 0 || doubleRoom > 0 || supportAnimal > 0
+                  ? `${
+                      (singleRoom > 0 && doubleRoom > 0) ||
+                      (singleRoom > 0 && supportAnimal > 0)
+                        ? "S-" + singleRoom + ","
+                        : singleRoom > 0
+                        ? "S-" + singleRoom
+                        : ""
+                    } 
                     ${
                       doubleRoom > 0 && supportAnimal > 0
                         ? "D-" + doubleRoom + ","
@@ -318,58 +319,63 @@ const Header = () => {
                         : ""
                     } 
                     ${supportAnimal > 0 ? "A-" + supportAnimal : ""}`
-                : "Add rooms"}
-            </span>
-            <div
-              style={{ zIndex: 100 }}
-              className="position-absolute w-100 mt-5 row justify-content-end ms-0"
-            >
+                  : "Add rooms"}
+              </span>
               <div
-                tabIndex="1"
-                onBlur={() => setShowRoomPicker(false)}
-                ref={roomPickerRef}
-                className={
-                  location.pathname === "/dashboard/user/create-request"
-                    ? "col-md-11 col-12 outline-none"
-                    : "col-12 col-sm-8 col-md-7 col-lg-8 px-0 outline-none"
-                }
+                style={{ zIndex: 100 }}
+                className="position-absolute w-100 mt-5 row justify-content-end ms-0"
               >
-                {showRoomPicker && (
-                  <RoomPicker
-                    onSingleRoomChange={handleSingleRoom}
-                    onDoubleRoomChange={handleDoubleRoom}
-                    onAnimalChange={handleAnimal}
-                    singleRooms={singleRoom}
-                    doubleRooms={doubleRoom}
-                    animals={supportAnimal}
-                  />
-                )}
+                <div
+                  tabIndex="1"
+                  onBlur={() => setShowRoomPicker(false)}
+                  ref={roomPickerRef}
+                  className={
+                    location.pathname === "/dashboard/user/create-request"
+                      ? "col-md-11 col-12 outline-none"
+                      : "col-12 col-sm-8 col-md-7 col-lg-8 px-0 outline-none"
+                  }
+                >
+                  {showRoomPicker && (
+                    <RoomPicker
+                      onSingleRoomChange={handleSingleRoom}
+                      onDoubleRoomChange={handleDoubleRoom}
+                      onAnimalChange={handleAnimal}
+                      singleRooms={singleRoom}
+                      doubleRooms={doubleRoom}
+                      animals={supportAnimal}
+                    />
+                  )}
+                </div>
               </div>
-            </div>
-            <span className="search-icon" onClick={() => handleSearchResult()}>
-              <img src={searchIcon} alt="search-icon" />
-            </span>
-          </Col>
-        </div>
-      ) : null}
-      {
-        location.pathname.includes("/auth") ? <RequestsDetails /> : null
-      }
-      {location.pathname === "/" ? (
-        <span className="login-icon cursor-pointer" onClick={() => navigate("/auth")}>
-          <FaUserAlt className="header-icons" />
-        </span>
-      ) : null}
+              <span
+                className="search-icon"
+                onClick={() => handleSearchResult()}
+              >
+                <img src={searchIcon} alt="search-icon" />
+              </span>
+            </Col>
+          </div>
+        ) : null}
+        {location.pathname.includes("/auth") ? <RequestsDetails /> : null}
+        {location.pathname === "/" ? (
+          <span
+            className="login-icon cursor-pointer"
+            onClick={() => navigate("/auth")}
+          >
+            <FaUserAlt className="header-icons" />
+          </span>
+        ) : null}
 
-      {showTodayModal && (
-        <UrgentBookingModal
-          showModal={showTodayModal}
-          setShowModal={setShowTodayModal}
-        />
-      )}
-    </Row>
+        {showTodayModal && (
+          <UrgentBookingModal
+            showModal={showTodayModal}
+            setShowModal={setShowTodayModal}
+          />
+        )}
+      </Row>
+    </header>
   );
-};
+});
 
 const RequestsDetails = () => {
   const { center, dateRange, roomRequirements } = useSelector(
