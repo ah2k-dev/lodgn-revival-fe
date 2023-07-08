@@ -4,19 +4,3 @@
     height: fit-content;
     overflow: hidden;
 }
-
-.map-container {
-    height: calc(100vh - 200px);
-}
-
-@media screen and (max-width: 1024px) {
-    .map-container {
-        height: calc(100vh - 200px)
-    }
-}
-
-@media screen and (max-width: 660px) {
-    .map-container {
-        height: calc(100vh - 239px)
-    }
-}

@@ -5,7 +5,7 @@ import moment from "moment";
 import { clearErrors, createRequest } from "../../actions/requestActions";
 import { useDispatch, useSelector } from "react-redux";
 
-const Footer = () => {
+const Footer = React.forwardRef((props, ref) => {
   const location = useLocation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -42,13 +42,14 @@ const Footer = () => {
 
   return (
     <footer
+      ref={ref}
       className={
         location.pathname === "/dashboard/user"
           ? "footer-container w-100 ms-auto"
           : "footer-container w-100 ms-0"
       }
     >
-      <Row justify="space-between" align="start" className="gap-4">
+      <Row align="start" className="gap-4 justify-content-md-between justify-content-center">
         <div className="details col-md-7 col-12 d-flex justify-content-start">
           {center?.string && (
             <div className="detail pl-0">
@@ -139,6 +140,6 @@ const Footer = () => {
       </Row>
     </footer>
   );
-};
+});
 
 export default Footer;
