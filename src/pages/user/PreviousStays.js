@@ -65,6 +65,7 @@ const PreviousRequests = ({ stay }) => {
           end_date={moment(stay?.request?.dateRange[1]).format("DD")}
           start_date_month={moment(stay?.request?.dateRange[0]).format("MMM")}
           end_date_month={moment(stay?.request?.dateRange[1]).format("MMM")}
+          user={stay?.user}
           total_rooms={stay?.request?.roomRequirements?.single + stay?.request?.roomRequirements?.double}
           single_rooms={stay?.request?.roomRequirements?.single}
           double_rooms={stay?.request?.roomRequirements?.double}

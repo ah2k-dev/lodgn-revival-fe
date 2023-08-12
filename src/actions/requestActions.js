@@ -3,6 +3,40 @@ import { requestConstants } from "../constants/requestConstants";
 import { message } from "antd";
 import { attachToken } from "../services/axiosConfig";
 
+export const sendNotification =
+  (userId, message) => async (dispatch) => {
+    try {
+      const url = "https://onesignal.com/api/v1/notifications";
+      const headers = {
+        "Content-Type": "application/json; charset=utf-8",
+        Authorization: "Basic app_key_goes_here", // from OneSignal auth key
+      };
+      const body = JSON.stringify({
+        app_id: "app_key_goes_here", // make sure this variable is defined
+        contents: { en: message },
+        include_external_user_ids: [userId],
+      });
+
+      const response = await fetch(url, {
+        method: "POST",
+        headers,
+        body,
+      });
+
+      if (response.status === 200) {
+        console.log(
+          `OneSignal Notification sent successfully to ${userId}`
+        );
+        return 1;
+      } else {
+        console.error(`Error sending notification: ${response.status}`);
+        return 0;
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
 export const createRequest = (data) => async (dispatch) => {
   dispatch({
     type: requestConstants.CREATE_REQUEST_REQUEST,
@@ -166,9 +200,9 @@ export const bookOffer = (request, offering, file) => async (dispatch) => {
   });
   try {
     let form = new FormData();
-    form.append('requestId', request);
-    form.append('offering', offering);
-    form.append('receipt', file);
+    form.append("requestId", request);
+    form.append("offering", offering);
+    form.append("receipt", file);
     attachToken();
     const res = await custAxios.post("/booking/bookOffer", form);
     if (res) {
@@ -288,7 +322,7 @@ export const getRequestUpdates = () => async (dispatch) => {
         type: requestConstants.GET_REQUEST_UPDATES_SUCCESS,
         payload: res.data.data.updates,
       });
-     return true;
+      return true;
     }
   } catch (error) {
     dispatch({
