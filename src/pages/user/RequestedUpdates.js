@@ -77,6 +77,7 @@ const RequestComponent = ({ request, update }) => {
                 end_date={moment(request?.dateRange[1])?.format("DD")}
                 start_date_month={moment(request?.dateRange[0])?.format("MMM")}
                 end_date_month={moment(request?.dateRange[1])?.format("MMM")}
+                user={request?.user}
                 total_rooms={
                   request?.roomRequirements?.single +
                   request?.roomRequirements?.double
@@ -100,6 +101,7 @@ const RequestComponent = ({ request, update }) => {
               end_date={moment(update?.dateRange[1]).format("DD")}
               start_date_month={moment(update?.dateRange[0]).format("MMM")}
               end_date_month={moment(update?.dateRange[1]).format("MMM")}
+              user={request?.user}
               total_rooms={
                 update?.roomRequirements.single +
                 update?.roomRequirements.double

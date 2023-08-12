@@ -167,6 +167,7 @@ const RequestComponent = ({ request, status, index }) => {
           end_date={moment(request?.dateRange[1]).format("DD")}
           start_date_month={moment(request?.dateRange[0]).format("MMMM")}
           end_date_month={moment(request?.dateRange[1]).format("MMMM")}
+          user={request?.user}
           total_rooms={
             request?.roomRequirements?.single +
             request?.roomRequirements?.double
